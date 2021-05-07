@@ -1,18 +1,27 @@
-// miniprogram/pages/scout/scout.js
+import { get } from '../../utils/https';
+import { getPlayerList } from '../../utils/utils';
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-
+    event: "",
+    elementType: 0,
+    playerList: [],
+    pickGkp: "",
+    pickDef: "",
+    pickMid: "",
+    pickFwd: "",
+    pickCap: ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-
+    this.getCurrentEvent()
   },
 
   /**
@@ -62,5 +71,30 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  /**
+   * 获取当前周
+   */
+  getCurrentEvent() {
+    get('common/getCurrentEvent')
+    .then(res =>{
+      thishat.setData({
+        event: res.data
+      })
+    })
+  },
+
+  /**
+   * 获取推荐球员
+   */
+  getScoutPlayer(e){
+    let elementType = e.currentTarget.id
+    let list = getPlayerList(elementType)
+    // this.setData({
+    //   playerList: list
+    // })
+    console.log(list.length)
+  },
+
 })

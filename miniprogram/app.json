@@ -1,15 +1,16 @@
 {
   "pages": [
-    "pages/index/index",
     "pages/entry/entry",
+    "pages/index/index",
     "pages/me/me",
     "pages/scout/scout"
   ],
+  "entryPagePath": "pages/entry/entry",
   "tabBar": {
     "list": [
       {
-        "pagePath": "pages/index/index",
-        "text": "首页"
+        "pagePath": "pages/scout/scout",
+        "text": "推荐"
       },
       {
         "pagePath": "pages/me/me",
@@ -35,7 +36,8 @@
     "van-col": "@vant/weapp/col/index",
     "van-image": "@vant/weapp/image/index",
     "van-button": "@vant/weapp/button/index",
-    "van-divider": "@vant/weapp/divider/index"
+    "van-divider": "@vant/weapp/divider/index",
+    "van-field": "@vant/weapp/field/index"
   },
   "sitemapLocation": "sitemap.json"
 }

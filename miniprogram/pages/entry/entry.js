@@ -1,7 +1,8 @@
-import utils from '../../utils/utils'
+import {showOverallRank} from '../../utils/utils';
+import {get} from '../../utils/https';
 
 Page({
-  
+
   data: {
     entry: "",
     entryInfo: {
@@ -44,28 +45,21 @@ Page({
     if (!this.checkEntry()) {
       return false;
     }
-    wx.request({
-      url: 'https://letletme.top/common/qryEntryInfoData',
-      data: {
+    get('common/qryEntryInfoData', {
         entry: this.data.entry
-      },
-      method: 'GET',
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        that.setData({
+      })
+      .then(res => {
+        this.setData({
           entryInfo: res.data
         })
-        let overallRank = utils.showOverallRank( that.data.entryInfo.overallRank)
+        let overallRank = showOverallRank(that.data.entryInfo.overallRank)
         this.setData({
           "entryInfo.overallRank": overallRank
         })
         wx.redirectTo({
-          url: '../scout/scout'
+          url: '../index/index'
         })
-      }
-    })
+      })
   }
 
 })

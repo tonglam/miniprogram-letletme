@@ -1,3 +1,4 @@
+import https from './https'
 import moment from 'moment'
 
 function getDeadline(time) {
@@ -13,7 +14,19 @@ function showOverallRank(rank) {
   return Math.floor(rank / 100000) / 10 + 'm'
 }
 
-module.exports = {
-  getDeadline: getDeadline,
-  showOverallRank: showOverallRank
+function getPlayerList(elementType) {
+  https('https://letletme.top/common/qryPlayerInfoByElementType', 'GET', {
+      elementType: elementType
+    })
+    .then(res => {
+      return res.data
+    }).catch(res => {
+      console.log('fail:', res);
+    })
+}
+
+export {
+  getDeadline,
+  showOverallRank,
+  getPlayerList
 }

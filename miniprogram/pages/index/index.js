@@ -1,4 +1,5 @@
-import utils from '../../utils/utils'
+import {getDeadline} from '../../utils/utils'
+import {get} from '../../utils/https'
 
 Page({
 
@@ -20,39 +21,22 @@ Page({
   },
 
   getNextEvent() {
-    let that = this
-    wx.request({
-      url: 'https://letletme.top/common/getNextEvent',
-      method: 'GET',
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        that.setData({
-          nextGw: res.data
-        })
-        that.getUtcDeadline()
-      }
+    get('common/getNextEvent')
+    .then(res => {
+      this.setData({
+        nextGw: res.data
+      })
+      this.getUtcDeadline()
     })
   },
 
   getUtcDeadline() {
-    let that = this
-    wx.request({
-      url: 'https://letletme.top/common/getUtcDeadlineByEvent',
-      data: {
-        event: this.data.nextGw
-      },
-      method: 'GET',
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        let deadline = utils.getDeadline(res.data)
-        that.setData({
-          deadline: deadline
-        })
-      }
+    get('common/getUtcDeadlineByEvent')
+    .then(res =>{
+      let deadline = getDeadline(res.data)
+      this.setData({
+        deadline: deadline
+      })
     })
   }
 
