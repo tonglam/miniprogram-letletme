@@ -1,0 +1,22 @@
+.index {
+  padding-top: 20%;
+  text-align: center;
+}
+
+.index .item {
+  display: inline-block;
+  width: 65px;
+  height: 50px;
+  line-height:50px;
+  margin-right: 10px;
+  color: #fff;
+  font-size: 20px;
+  text-align: center;
+  background-color: #009688;
+  border-radius: 2px;
+}
+
+.index .begbeg {
+  width: 100px;
+  height: 100px;
+}
