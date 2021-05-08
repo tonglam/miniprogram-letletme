@@ -1,0 +1,23 @@
+<template name="midDetail">
+  <text>上场时间：{{playerDetailData.minutes}}（分钟）</text>
+  <text>\n</text>
+  <text>进球：{{playerDetailData.goalsScored}}</text>
+  <text>\n</text>
+  <text>助攻：{{playerDetailData.assists}}</text>
+  <text>\n</text>
+  <text>BONUS：{{playerDetailData.bonus}}</text>
+  <text>\n</text>
+  <text>BPS：{{playerDetailData.bps}}</text>
+  <text>\n</text>
+  <text>零封：{{playerDetailData.cleanSheets}}</text>
+  <text>\n</text>
+  <text>乌龙：{{playerDetailData.ownGoals}}</text>
+  <text>\n</text>
+  <text>黄宝石：{{playerDetailData.yellowCards}}</text>
+  <text>\n</text>
+  <text>红宝石：{{playerDetailData.redCards}}</text>
+  <text>\n</text>
+  <text>本周转入：{{playerDetailData.transfersInEvent}}</text>
+  <text>\n</text>
+  <text>本周转出：{{playerDetailData.transfersOutEvent}}</text>
+</template>

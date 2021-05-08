@@ -1,5 +1,4 @@
-import {getDeadline} from '../../utils/utils'
-import {get} from '../../utils/https'
+const app = getApp();
 
 Page({
 
@@ -11,7 +10,6 @@ Page({
   },
 
   onLoad: function () {
-    this.getNextEvent();
   },
 
   onChange(event) {
@@ -19,25 +17,5 @@ Page({
       timeData: event.detail,
     });
   },
-
-  getNextEvent() {
-    get('common/getNextEvent')
-    .then(res => {
-      this.setData({
-        nextGw: res.data
-      });
-      this.getUtcDeadline();
-    });
-  },
-
-  getUtcDeadline() {
-    get('common/getUtcDeadlineByEvent')
-    .then(res =>{
-      let deadline = getDeadline(res.data);
-      this.setData({
-        deadline: deadline
-      });
-    });
-  }
 
 });

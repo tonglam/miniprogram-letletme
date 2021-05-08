@@ -1,23 +1,17 @@
-import {showOverallRank} from '../../utils/utils';
-import {get} from '../../utils/https';
+const app = getApp();
 
 Page({
 
-  data: {
-    entry: "",
-    entryInfo: {
-      entry: 0,
-      entryName: "",
-      playerName: "",
-      region: "",
-      startedEvent: 1,
-      overallPoints: 0,
-      overallRank: 0,
-      bank: 0,
-      teamValue: 0
-    },
+  data: { 
+    entry:0,
     errorMsg: "",
     activeNames: ['1']
+  },
+
+  onLoad: function (options) {
+    this.setData({
+      entry : app.globalData.entryInfo.entry
+    })
   },
 
   onChange(event) {
@@ -41,25 +35,15 @@ Page({
   },
 
   saveEntry: function () {
-    let that = this;
     if (!this.checkEntry()) {
       return false;
     }
-    get('common/qryEntryInfoData', {
-        entry: this.data.entry
-      })
-      .then(res => {
-        this.setData({
-          entryInfo: res.data
-        })
-        let overallRank = showOverallRank(that.data.entryInfo.overallRank);
-        this.setData({
-          "entryInfo.overallRank": overallRank
-        });
-        wx.redirectTo({
-          url: '../index/index'
-        });
-      })
-  }
+    this.setData({
+      entryInfo: app.globalData.entryInfo
+    });
+    wx.redirectTo({
+      url: '../index/index'
+    });
+  },
 
 })

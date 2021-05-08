@@ -1,7 +1,3 @@
 {
-  "usingComponents": {
-    "van-field": "@vant/weapp/field/index",
-    "van-collapse": "@vant/weapp/collapse/index",
-    "van-collapse-item": "@vant/weapp/collapse-item/index"
-  }
+  "usingComponents": {}
 }

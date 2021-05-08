@@ -38,7 +38,13 @@
     "van-image": "@vant/weapp/image/index",
     "van-button": "@vant/weapp/button/index",
     "van-divider": "@vant/weapp/divider/index",
-    "van-field": "@vant/weapp/field/index"
+    "van-field": "@vant/weapp/field/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-collapse": "@vant/weapp/collapse/index",
+    "van-collapse-item": "@vant/weapp/collapse-item/index",
+    "van-picker": "@vant/weapp/picker/index",
+    "van-count-down": "@vant/weapp/count-down/index",
+    "van-transition": "@vant/weapp/transition/index"
   },
   "sitemapLocation": "sitemap.json"
 }

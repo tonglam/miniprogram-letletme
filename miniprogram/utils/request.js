@@ -1,4 +1,4 @@
- const baseUrl = 'https://letletme.top/'
+ const baseUrl = 'https://letletme.top/api/'
  
  function get(url, data={}) {
    var promise = new Promise((resolve, reject) => {
