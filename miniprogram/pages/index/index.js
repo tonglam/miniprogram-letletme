@@ -11,7 +11,7 @@ Page({
   },
 
   onLoad: function () {
-    this.getNextEvent()
+    this.getNextEvent();
   },
 
   onChange(event) {
@@ -25,19 +25,19 @@ Page({
     .then(res => {
       this.setData({
         nextGw: res.data
-      })
-      this.getUtcDeadline()
-    })
+      });
+      this.getUtcDeadline();
+    });
   },
 
   getUtcDeadline() {
     get('common/getUtcDeadlineByEvent')
     .then(res =>{
-      let deadline = getDeadline(res.data)
+      let deadline = getDeadline(res.data);
       this.setData({
         deadline: deadline
-      })
-    })
+      });
+    });
   }
 
 });

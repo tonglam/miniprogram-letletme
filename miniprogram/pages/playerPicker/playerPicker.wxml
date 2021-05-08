@@ -1,0 +1,8 @@
+<van-picker 
+show-toolbar
+title="选择球员"
+columns="{{ columns }}" 
+bind:change="onChange"
+bind:confirm="onConfirm"
+bind:cancel="onCancel"
+/>

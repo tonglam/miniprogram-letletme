@@ -30,18 +30,18 @@ Page({
     if (!new RegExp("^[1-9]\\d*$").test(this.data.entry)) {
       this.setData({
         errorMsg: 'team_id需为正整数'
-      })
+      });
       return false;
     } else {
       this.setData({
         errorMsg: ''
-      })
+      });
       return true;
     }
   },
 
   saveEntry: function () {
-    let that = this
+    let that = this;
     if (!this.checkEntry()) {
       return false;
     }
@@ -52,13 +52,13 @@ Page({
         this.setData({
           entryInfo: res.data
         })
-        let overallRank = showOverallRank(that.data.entryInfo.overallRank)
+        let overallRank = showOverallRank(that.data.entryInfo.overallRank);
         this.setData({
           "entryInfo.overallRank": overallRank
-        })
+        });
         wx.redirectTo({
           url: '../index/index'
-        })
+        });
       })
   }
 

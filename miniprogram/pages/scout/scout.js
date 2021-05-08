@@ -1,5 +1,4 @@
 import { get } from '../../utils/https';
-import { getPlayerList } from '../../utils/utils';
 
 Page({
 
@@ -21,7 +20,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    this.getCurrentEvent()
+    this.getCurrentEvent();
   },
 
   /**
@@ -79,22 +78,22 @@ Page({
   getCurrentEvent() {
     get('common/getCurrentEvent')
     .then(res =>{
-      thishat.setData({
+      this.setData({
         event: res.data
       })
-    })
+    });
   },
 
   /**
    * 获取推荐球员
    */
   getScoutPlayer(e){
-    let elementType = e.currentTarget.id
-    let list = getPlayerList(elementType)
+    let elementType = e.currentTarget.id;
+    // let list = getPlayerList(elementType)
     // this.setData({
     //   playerList: list
     // })
-    console.log(list.length)
+    console.log(list.length);
   },
 
 })

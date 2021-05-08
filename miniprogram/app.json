@@ -3,9 +3,10 @@
     "pages/entry/entry",
     "pages/index/index",
     "pages/me/me",
-    "pages/scout/scout"
+    "pages/scout/scout",
+    "pages/playerPicker/playerPicker"
   ],
-  "entryPagePath": "pages/entry/entry",
+  "entryPagePath": "pages/playerPicker/playerPicker",
   "tabBar": {
     "list": [
       {
