@@ -11,7 +11,7 @@ Page({
   },
 
   onLoad: function (options) {
-    this.getCurrentEvent();
+  
   },
  
   getScoutPlayer(e){

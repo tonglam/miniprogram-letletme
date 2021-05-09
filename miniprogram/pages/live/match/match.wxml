@@ -1,0 +1,5 @@
+<van-tabs bind:change="onChange">
+  <van-tab title="比赛中" name="0">内容 1</van-tab>
+  <van-tab title="已完赛" name="1">内容 2</van-tab>
+  <van-tab title="未开始" name="2">内容 3</van-tab>
+</van-tabs>

@@ -1,0 +1,25 @@
+<template name="fixture">
+  <swiper indicator-dots="true" autoplay="true" interval="3000">
+    <block wx:for="{{teamGwFixtureMap}}" wx:key="index">
+      <swiper-item style="text-align: center;">
+        <text class="swiperTitle">GW{{index}}</text>
+        <text>\n</text>
+        <text>\n</text>
+        <block wx:for="{{item}}" wx:key="index">
+          <block wx:if="{{item.bgw}}">
+            <text class="blankFixture">BLANK</text>
+          </block>
+          <block wx:elif="{{item.wasHome}}">
+            <text class="homeFixture"
+              style="background-color:{{item.difficultyColor}};">{{item.againstTeamShortName}}(H)</text>
+          </block>
+          <block wx:else>
+            <text class="awayFixture"
+              style="background-color:{{item.difficultyColor}};">{{item.againstTeamShortName}}(A)</text>
+          </block>
+          <text>\n</text>
+        </block>
+      </swiper-item>
+    </block>
+  </swiper>
+</template>

@@ -1,14 +1,17 @@
 import {
   get
 } from './utils/request';
-import {getDeadline} from './utils/utils';
+import {
+  getDeadline
+} from './utils/utils';
 
 App({
   globalData: {
-    event: 0,
-    nextEvent: 0,
+    gw: 0,
+    nextGw: 0,
+    utcDeadline: "",
     deadline: "",
-    entryInfo: {
+    entryInfoData: {
       entry: 0,
       entryName: "",
       playerName: "",
@@ -22,44 +25,46 @@ App({
   },
 
   onLaunch: function () {
+
     wx.cloud.init({
       env: 'cloud1',
       traceUser: true,
     });
 
-    this.setCurrentEvent();
+    this.setCurrentGw();
 
-    this.setNextEvent();
+    this.setNextGw();
 
   },
 
-  setCurrentEvent() {
+  setCurrentGw() {
     get('common/getCurrentEvent')
       .then(res => {
-        let event = res.data;
-        this.globalData.event = event;
-        this.setDeadline(event);
+        this.globalData.gw = res.data;
       })
       .catch(res => {
         console.log('fail:', res);
       })
   },
 
-  setNextEvent() {
+  setNextGw() {
     get('common/getNextEvent')
       .then(res => {
-        this.globalData.nextEvent = res.data;
+        let nextGw = res.data;
+        this.globalData.nextGw = nextGw;
+        this.setDeadline(nextGw);
       })
       .catch(res => {
         console.log('fail:', res);
       })
   },
 
-  setDeadline(event) {
+  setDeadline(gw) {
     get('common/getUtcDeadlineByEvent', {
-        event: event
+        event: gw
       })
       .then(res => {
+        this.globalData.utcDeadline = res.data;
         this.globalData.deadline = getDeadline(res.data);
       });
   },

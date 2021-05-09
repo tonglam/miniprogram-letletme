@@ -1,21 +1,25 @@
 {
   "pages": [
-    "pages/entry/entry",
     "pages/index/index",
+    "pages/entry/entry",
     "pages/me/me",
     "pages/scout/scout",
-    "pages/playerPicker/playerPicker"
+    "pages/playerPicker/playerPicker",
+    "pages/live/match/match"
   ],
-  "entryPagePath": "pages/playerPicker/playerPicker",
+  "entryPagePath": "pages/live/match/match",
   "tabBar": {
-    "list": [
+    "list": [{
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
       {
         "pagePath": "pages/scout/scout",
         "text": "推荐"
       },
       {
-        "pagePath": "pages/me/me",
-        "text": "我的"
+        "pagePath": "pages/playerPicker/playerPicker",
+        "text": "球员选择"
       }
     ]
   },
@@ -44,7 +48,9 @@
     "van-collapse-item": "@vant/weapp/collapse-item/index",
     "van-picker": "@vant/weapp/picker/index",
     "van-count-down": "@vant/weapp/count-down/index",
-    "van-transition": "@vant/weapp/transition/index"
+    "van-transition": "@vant/weapp/transition/index",
+    "van-tab": "@vant/weapp/tab/index",
+    "van-tabs": "@vant/weapp/tabs/index"
   },
   "sitemapLocation": "sitemap.json"
 }

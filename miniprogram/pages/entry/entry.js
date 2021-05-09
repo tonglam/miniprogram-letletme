@@ -1,17 +1,17 @@
 const app = getApp();
 
+import {
+  get
+} from '../../utils/request'
+
 Page({
 
-  data: { 
-    entry:0,
+  data: {
+    entryInfoData: {
+      entry : 0
+    },
     errorMsg: "",
     activeNames: ['1']
-  },
-
-  onLoad: function (options) {
-    this.setData({
-      entry : app.globalData.entryInfo.entry
-    })
   },
 
   onChange(event) {
@@ -20,8 +20,8 @@ Page({
     });
   },
 
-  checkEntry: function () {
-    if (!new RegExp("^[1-9]\\d*$").test(this.data.entry)) {
+  checkEntry: function (entry) {
+    if (!new RegExp("^[1-9]\\d*$").test(entry)) {
       this.setData({
         errorMsg: 'team_id需为正整数'
       });
@@ -35,13 +35,22 @@ Page({
   },
 
   saveEntry: function () {
-    if (!this.checkEntry()) {
+    let entry = this.data.entry;
+    if (!this.checkEntry(entry)) {
       return false;
     }
-    this.setData({
-      entryInfo: app.globalData.entryInfo
-    });
-    wx.redirectTo({
+    app.globalData.entryInfoData.entry = entry;
+    get('common/qryEntryInfoData', {
+        entry: entry
+      })
+      .then(res => {
+        let entryInfoData = res.data;
+        this.setData({
+          entryInfoData: entryInfoData
+        });
+        app.globalData.entryInfoData = entryInfoData;
+      })
+    wx.switchTab({
       url: '../index/index'
     });
   },
