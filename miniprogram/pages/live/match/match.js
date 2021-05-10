@@ -1,17 +1,12 @@
 import {
   get
 } from "../../../utils/request";
-
-const matchPlayStatus = {
-  'playing': 0,
-  'finished': 1,
-  'notStart': 2
-};
-
+ 
 Page({
 
   data: {
-    playStatus: '0',
+    tabbarActive : 'playing',
+    playStatus: 'playing',
     liveMatchList: [],
     liveBonusList: [],
   },
@@ -20,23 +15,29 @@ Page({
     this.initLiveMatch();
   },
 
-  onChange(event) {
+  // tabbar
+  tabbarOnChange(event) {
+    this.setData({ tabbarActive: event.detail });
     this.setData({
-      playStatus: event.detail.name
+      playStatus: event.detail
     });
     this.initLiveMatch();
   },
 
+  // tab
+  tabOnChange(event) {
+   
+  },
+
   initLiveMatch() {
-    get('live/qryLiveTeamData', {
-        statusId: this.data.playStatus
+    get('live/qryLiveMatchDataByStatus', {
+      playStatus: this.data.playStatus
       })
       .then(res => {
         this.setData({
           liveMatchList: res.data
         });
         console.log(this.data.liveMatchList);
-        this.initLiveBonus();
       })
       .catch(res => {
         console.log('fail:', res);

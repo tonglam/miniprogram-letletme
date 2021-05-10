@@ -1,5 +1,13 @@
-<van-tabs bind:change="onChange">
-  <van-tab title="比赛中" name="0">内容 1</van-tab>
-  <van-tab title="已完赛" name="1">内容 2</van-tab>
-  <van-tab title="未开始" name="2">内容 3</van-tab>
+<van-tabs swipeable bind:change="tabOnChange">
+  <van-tab title="比赛" name="info">info</van-tab>
+  <van-tab title="BONUS" name="bonus">bonus</van-tab>
+  <van-tab title="BPS" name="bps">bps</van-tab>
+  <van-tab title="进球" name="score">score</van-tab>
+  <van-tab title="详情" name="detail">detail</van-tab>
 </van-tabs>
+
+<van-tabbar active="{{ tabbarActive }}" bind:change="tabbarOnChange">
+  <van-tabbar-item name="playing">比赛中</van-tabbar-item>
+  <van-tabbar-item name="finished">已完赛</van-tabbar-item>
+  <van-tabbar-item name="not_start">未开始</van-tabbar-item>
+</van-tabbar>

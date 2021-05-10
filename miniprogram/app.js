@@ -8,6 +8,7 @@ import {
 App({
   globalData: {
     gw: 0,
+    lastGw: 0,
     nextGw: 0,
     utcDeadline: "",
     deadline: "",
@@ -25,48 +26,30 @@ App({
   },
 
   onLaunch: function () {
-
     wx.cloud.init({
       env: 'cloud1',
       traceUser: true,
     });
 
-    this.setCurrentGw();
-
-    this.setNextGw();
+    this.setCurrentEventAndNextUtcDeadline();
 
   },
 
-  setCurrentGw() {
-    get('common/getCurrentEvent')
+  setCurrentEventAndNextUtcDeadline() {
+    get('common/qryCurrentEventAndNextUtcDeadline')
       .then(res => {
-        this.globalData.gw = res.data;
+        let gw = res.data["event"];
+        this.globalData.gw = gw;
+        this.globalData.lastGw = parseInt(gw) - 1;
+        this.globalData.nextGw = parseInt(gw) + 1;
+        let utcDeadline = res.data["utcDeadline"];
+        this.globalData.utcDeadline = utcDeadline;
+        let deadline = getDeadline(utcDeadline);
+        this.globalData.deadline = deadline;
       })
       .catch(res => {
         console.log('fail:', res);
       })
-  },
-
-  setNextGw() {
-    get('common/getNextEvent')
-      .then(res => {
-        let nextGw = res.data;
-        this.globalData.nextGw = nextGw;
-        this.setDeadline(nextGw);
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      })
-  },
-
-  setDeadline(gw) {
-    get('common/getUtcDeadlineByEvent', {
-        event: gw
-      })
-      .then(res => {
-        this.globalData.utcDeadline = res.data;
-        this.globalData.deadline = getDeadline(res.data);
-      });
   },
 
 })

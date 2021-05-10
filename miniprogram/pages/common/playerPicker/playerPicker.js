@@ -2,10 +2,10 @@ const app = getApp();
 
 import {
   get
-} from '../../utils/request';
+} from '../../../utils/request';
 import {
   getDifficultyColor
-} from '../../utils/utils';
+} from '../../../utils/utils';
 
 const position = {
   'GKP': 1,
@@ -69,7 +69,7 @@ Page({
 
   // team_fixture
   setTeamFixture(shortName) {
-    get('common/qryTeamFixture', {
+    get('player/qryTeamFixtureByShortName', {
         shortName: shortName
       })
       .then(res => {
@@ -128,7 +128,7 @@ Page({
     this.setData({
       loading: true
     });
-    get('common/qryPlayerInfoByElementType', {
+    get('player/qryPlayerInfoByElementType', {
         elementType: elementType
       })
       .then(res => {
@@ -152,7 +152,7 @@ Page({
   },
 
   setPlayerDetail(element) {
-    get('common/qryPlayerDetailData', {
+    get('player/qryPlayerDetailData', {
         element: element
       })
       .then(res => {

@@ -2,7 +2,7 @@ const app = getApp();
 
 import {
   get
-} from '../../utils/request'
+} from '../../../utils/request'
 
 Page({
 
@@ -40,7 +40,7 @@ Page({
       return false;
     }
     app.globalData.entryInfoData.entry = entry;
-    get('common/qryEntryInfoData', {
+    get('entry/qryEntryInfoData', {
         entry: entry
       })
       .then(res => {
