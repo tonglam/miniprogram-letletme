@@ -1,29 +1,14 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/common/entry/entry",
+    "pages/common/entryInput/entryInput",
     "pages/common/playerPicker/playerPicker",
     "pages/group/scout/scout",
+    "pages/live/entry/entry",
     "pages/live/match/match",
     "pages/me/me"
-   
   ],
   "entryPagePath": "pages/live/match/match",
-  "tabBar": {
-    "list": [{
-        "pagePath": "pages/index/index",
-        "text": "首页"
-      },
-      {
-        "pagePath": "pages/group/scout/scout",
-        "text": "推荐"
-      },
-      {
-        "pagePath": "pages/common/playerPicker/playerPicker",
-        "text": "球员选择"
-      }
-    ]
-  },
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
@@ -53,7 +38,9 @@
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",
     "van-tabbar": "@vant/weapp/tabbar/index",
-    "van-tabbar-item": "@vant/weapp/tabbar-item/index"
+    "van-tabbar-item": "@vant/weapp/tabbar-item/index",
+    "i-icon": "./dist/icon/index",
+    "i-button": "./dist/button/index"
   },
   "sitemapLocation": "sitemap.json"
 }

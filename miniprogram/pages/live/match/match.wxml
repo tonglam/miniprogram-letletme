@@ -1,13 +1,17 @@
-<van-tabs swipeable bind:change="tabOnChange">
-  <van-tab title="比赛" name="info">info</van-tab>
-  <van-tab title="BONUS" name="bonus">bonus</van-tab>
-  <van-tab title="BPS" name="bps">bps</van-tab>
-  <van-tab title="进球" name="score">score</van-tab>
-  <van-tab title="详情" name="detail">detail</van-tab>
-</van-tabs>
+<view class="tab">
+  <van-tabs swipeable bind:change="tabOnChange">
+    <van-tab title="比赛" name="info">info</van-tab>
+    <van-tab title="BONUS" name="bonus">bonus</van-tab>
+    <van-tab title="BPS" name="bps">bps</van-tab>
+    <van-tab title="进球" name="score">score</van-tab>
+    <van-tab title="详情" name="detail">detail</van-tab>
+  </van-tabs>
+</view>
 
-<van-tabbar active="{{ tabbarActive }}" bind:change="tabbarOnChange">
-  <van-tabbar-item name="playing">比赛中</van-tabbar-item>
-  <van-tabbar-item name="finished">已完赛</van-tabbar-item>
-  <van-tabbar-item name="not_start">未开始</van-tabbar-item>
-</van-tabbar>
+<view class="tabBar">
+  <van-tabbar active="{{ tabBarActive }}" bind:change="tabBarOnChange">
+    <van-tabbar-item name="playing" icon="live">比赛中</van-tabbar-item>
+    <van-tabbar-item name="finished" icon="lock">已完赛</van-tabbar-item>
+    <van-tabbar-item name="not_start" icon="underway">未开始</van-tabbar-item>
+  </van-tabbar>
+</view>

@@ -31,3 +31,7 @@
     <van-button id="5" slot="button" size="small" type="primary" custom-class="button">选择</van-button>
   </van-field>
 </van-cell-group>
+
+<view class="bottemNavBar">
+  <component-tag-name active='group'></component-tag-name>
+</view>

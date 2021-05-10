@@ -8,7 +8,7 @@ Page({
 
   data: {
     entryInfoData: {
-      entry : 0
+      entry: 0
     },
     errorMsg: "",
     activeNames: ['1']
@@ -50,8 +50,8 @@ Page({
         });
         app.globalData.entryInfoData = entryInfoData;
       })
-    wx.switchTab({
-      url: '../index/index'
+    wx.navigateTo({
+      url: '../../index/index'
     });
   },
 

@@ -1,11 +1,11 @@
 import {
   get
 } from "../../../utils/request";
- 
+
 Page({
 
   data: {
-    tabbarActive : 'playing',
+    tabBarActive: 'playing',
     playStatus: 'playing',
     liveMatchList: [],
     liveBonusList: [],
@@ -15,9 +15,9 @@ Page({
     this.initLiveMatch();
   },
 
-  // tabbar
-  tabbarOnChange(event) {
-    this.setData({ tabbarActive: event.detail });
+  // tabBar
+  tabBarOnChange(event) {
+    this.setData({ tabBarActive: event.detail });
     this.setData({
       playStatus: event.detail
     });
@@ -26,12 +26,21 @@ Page({
 
   // tab
   tabOnChange(event) {
-   
+
+  },
+
+  // tabBar
+  handleChange({
+    detail
+  }) {
+    this.setData({
+      current: detail.key
+    });
   },
 
   initLiveMatch() {
     get('live/qryLiveMatchDataByStatus', {
-      playStatus: this.data.playStatus
+        playStatus: this.data.playStatus
       })
       .then(res => {
         this.setData({

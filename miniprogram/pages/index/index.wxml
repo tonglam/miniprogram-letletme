@@ -35,3 +35,7 @@
   </van-row>
 
 </view>
+
+<view class="bottemNavBar">
+  <component-tag-name active='home'></component-tag-name>
+</view>

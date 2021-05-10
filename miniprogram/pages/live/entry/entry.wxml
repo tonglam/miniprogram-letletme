@@ -1,0 +1,3 @@
+<view class="bottemNavBar">
+  <component-tag-name active='live'></component-tag-name>
+</view>

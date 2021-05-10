@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "球探推荐"
+  "navigationBarTitleText": "球探推荐",
+  "usingComponents": {
+    "component-tag-name": "../../../components/navigation/bottomNavBar/bottomNavBar"
+  }
 }

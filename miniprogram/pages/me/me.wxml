@@ -1,2 +1,5 @@
-<!--miniprogram/pages/me/me.wxml-->
 <text>miniprogram/pages/me/me.wxml</text>
+
+<view class="bottemNavBar">
+  <component-tag-name active='me'></component-tag-name>
+</view>
