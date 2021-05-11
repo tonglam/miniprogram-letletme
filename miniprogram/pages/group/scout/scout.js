@@ -16,6 +16,7 @@ Page({
     elementType: 0,
     page: '../../group/scout/scout',
     showPicker: false,
+    scoutList: [],
     scoutEntry: {},
     fund: 28,
     pickGkpInfo: {},
@@ -46,14 +47,14 @@ Page({
   initScout() {
     get('group/qryScoutEntry')
       .then(res => {
-        // let entry = app.globalData.entryInfoData.entry;
-        let entry = 1870;
-        if (Object.keys(res.data).indexOf(entry + '') === 0) {
+        let entry = app.globalData.entryInfoData.entry;
+        if (Object.keys(res.data).indexOf(entry + '') != -1) {
           let scoutEntry = {
             entry: entry,
             name: res.data[entry]
           };
           this.setData({
+            scoutList: Object.keys(res.data),
             scoutEntry: scoutEntry
           });
         }
@@ -171,6 +172,10 @@ Page({
 
   // 提交
   onClickConfirm() {
+    if (!this.checkScout()) {
+      Toast.fail('请先加入让让群球探');
+      return false;
+    }
     let scoutData = {
       event: app.globalData.nextGw,
       entry: this.data.scoutEntry.entry,
@@ -182,15 +187,36 @@ Page({
       captain: this.data.pickCapInfo.element,
       reason: this.data.reason,
     };
+    console.log(scoutData.gkp);
+    if (scoutData.gkp === '' || scoutData.gkp === undefined ||
+      scoutData.def === '' || scoutData.def === undefined ||
+      scoutData.mid === '' || scoutData.mid === undefined ||
+      scoutData.fwd === '' || scoutData.fwd === undefined ||
+      scoutData.captain === '' || scoutData.captain === undefined) {
+      Toast.fail('还没选完呢');
+      return false;
+    }
     post('group/upsertEventScout', {
         scoutData: scoutData
       })
       .then(res => {
-        Toast.success('提交成功');
+        console.log('code:'+res.data.code);
+        if(res.data.code===200){
+          Toast.success('提交成功');
+        }else{
+          Toast.fail('提交失败');
+        }
       })
       .catch(res => {
         console.log('fail:', res);
       });
+  },
+
+  checkScout() {
+    if (this.data.scoutList.indexOf(this.data.scoutEntry.entry + '') != -1) {
+      return true;
+    }
+    return false;
   },
 
   // 重选

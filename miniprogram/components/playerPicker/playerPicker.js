@@ -108,8 +108,8 @@ Component({
     },
 
     setTeamGwFixtureMap() {
-      let gw = app.globalData.gw;
-      for (let i = gw; i < i + 5; i++) {
+      let nextGw = app.globalData.nextGw;
+      for (let i = nextGw; i < i + 5; i++) {
         if (i >= 39) {
           break;
         }
