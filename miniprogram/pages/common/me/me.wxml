@@ -1,4 +1,27 @@
-<text>miniprogram/pages/me/me.wxml</text>
+<view class="navBar">
+  <van-nav-bar title="我的球队" left-text="" right-text="切换球队" safe-area-inset-top="{{false}}"
+    bind:click-right="onClickRight" />
+</view>
+
+<view class="entryInfo">
+  <van-collapse value="{{ activeNames }}" bind:change="onChange">
+    <van-collapse-item name="1">
+      <view slot="title">{{entryInfoData.entryName}} ({{entryInfoData.playerName}})
+      </view>
+      <p>总分：{{entryInfoData.overallPoints}}</p>
+      <van-divider/>
+      <p>全球排名：{{entryInfoData.overallRank}}</p>
+      <van-divider/>
+      <p>地区：{{entryInfoData.region}}</p>
+      <van-divider/>
+      <p>开始时间：GW{{entryInfoData.startedEvent}}</p>
+      <van-divider/>
+      <p>阵容身价：{{entryInfoData.teamValue/10}}m</p>
+      <van-divider/>
+      <p>银行余额：{{entryInfoData.bank/10}}m</p>
+    </van-collapse-item>
+  </van-collapse>
+</view>
 
 <view class="bottemNavBar">
   <bottomNavBar active="me"></bottomNavBar>

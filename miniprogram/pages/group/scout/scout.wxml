@@ -1,53 +1,63 @@
-<view class="notice">
-  <van-notice-bar scrollable="{{ false }}" left-icon="volume-o" text="剩余资金：{{fund}}m" border="{{false}}" />
+<view class="navBar">
+  <van-nav-bar title="{{scoutEntry.name}}" left-text="重选" right-text="提交" safe-area-inset-top="{{false}}"
+    bind:click-left="onClickRefresh" bind:click-right="onClickConfirm" />
 </view>
 
-<view class="navBar">
-  <van-nav-bar title="{{scout.name}}" left-text="重新选择" right-text="提交" safe-area-inset-top="{{false}}"
-    bind:click-left="onClickRefresh" bind:click-right="onClickConfirm" />
+<view class="notice">
+  <van-notice-bar scrollable="{{ false }}" left-icon="balance-o" text="剩余资金：£{{fund}}m" border="{{false}}" />
 </view>
 
 <view class="cellGroup">
   <van-cell-group>
-    <van-field model:value="{{ pickGkp }}" center disabled label="门将" use-button-slot border="{{ false }}">
+    <van-field model:value="{{ pickGkp }}" center readonly label="门将" use-button-slot border="{{ false }}">
       <van-button id="1" slot="button" size="small" type="primary" custom-class="button" bind:click="getScoutPlayer">选择
       </van-button>
     </van-field>
   </van-cell-group>
 
   <van-cell-group>
-    <van-field model:value="{{ pickDef }}" center disabled label="后卫" use-button-slot border="{{ false }}">
+    <van-field model:value="{{ pickDef }}" center readonly label="后卫" use-button-slot border="{{ false }}">
       <van-button id="2" slot="button" size="small" type="primary" custom-class="button" bind:click="getScoutPlayer">选择
       </van-button>
     </van-field>
   </van-cell-group>
 
   <van-cell-group>
-    <van-field model:value="{{ pickMid }}" center disabled label="中场" use-button-slot border="{{ false }}">
+    <van-field model:value="{{ pickMid }}" center readonly label="中场" use-button-slot border="{{ false }}">
       <van-button id="3" slot="button" size="small" type="primary" custom-class="button" bind:click="getScoutPlayer">选择
       </van-button>
     </van-field>
   </van-cell-group>
 
   <van-cell-group>
-    <van-field model:value="{{ pickFwd }}" center disabled label="前锋" use-button-slot border="{{ false }}">
+    <van-field model:value="{{ pickFwd }}" center readonly label="前锋" use-button-slot border="{{ false }}">
       <van-button id="4" slot="button" size="small" type="primary" custom-class="button" bind:click="getScoutPlayer">选择
       </van-button>
     </van-field>
   </van-cell-group>
 
   <van-cell-group>
-    <van-field value="{{ pickCap }}" center disabled label="队长" use-button-slot border="{{ false }}">
+    <van-field value="{{ pickCap }} " center readonly label="队长" use-button-slot border="{{ false }}">
       <van-button id="5" slot="button" size="small" type="primary" custom-class="button" bind:click="getScoutPlayer">选择
       </van-button>
     </van-field>
   </van-cell-group>
 </view>
 
-<view class="playerPicker" wx:if="{{showPicker}}">
-  <playerPicker type="{{elementType}}" page="{{page}}"  bind:pickResult="onPickResult"></playerPicker>
+<view class="reason">
+  <van-cell-group>
+    <van-field type="textarea" model:value="{{ reason }}" center clearable show-word-limit maxlength="200" label="理由"
+      placeholder="这个人很懒什么都没有留下还不肯打标点" border="{{ false }}" use-button-slot>
+    </van-field>
+  </van-cell-group>
 </view>
 
-<!-- <view class="bottemNavBar">
+<view class="playerPicker" wx:if="{{showPicker}}">
+  <playerPicker type="{{elementType}}" page="{{page}}" bind:pickResult="onPickResult"></playerPicker>
+</view>
+
+<view class="bottemNavBar">
   <bottomNavBar active="group"></bottomNavBar>
-</view> -->
+</view>
+
+<van-toast id="van-toast" />

@@ -25,14 +25,12 @@ App({
     },
   },
 
-  onLaunch: function () {
+  onLaunch() {
     wx.cloud.init({
       env: 'cloud1',
       traceUser: true,
     });
-
     this.setCurrentEventAndNextUtcDeadline();
-
   },
 
   setCurrentEventAndNextUtcDeadline() {

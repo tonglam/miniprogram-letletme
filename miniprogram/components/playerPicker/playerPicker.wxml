@@ -1,52 +1,47 @@
-<view class="page-container">
+<van-popup show="{{ true }}" overlay="{{false}}" position="top"
+    custom-style="height: 100%" bind:close="onClose">
 
-<van-row>
   <view class="picker">
-    <van-picker show-toolbar item-height = "30" title="选择球员" columns="{{ columns }}" bind:change="pickerOnChange"
-      bind:confirm="pickerOnConfirm" 
-      bind:cancel="pickerOnCancel" 
-      loading="{{loading}}" 
-      />
+    <view class="picker">
+      <van-picker show-toolbar item-height="30" title="选择球员" columns="{{ columns }}" bind:change="pickerOnChange"
+        bind:confirm="pickerOnConfirm" bind:cancel="pickerOnCancel" loading="{{loading}}" />
+    </view>
+
+    <view class="card">
+      <van-collapse value="{{ activeNames }}" bind:open="cardOnOpen" bind:change="cardOnChange">
+
+        <van-collapse-item name="{{playerInfoData.element}}">
+          <view slot="title">【{{playerInfoData.teamShortName}}】{{playerInfoData.webName}} -
+            £{{playerInfoData.price}}m
+          </view>
+          <block class="detailCard" wx:if="{{playerInfoData.elementType==1}}">
+            <import src="../../template/gkpDetail.wxml" />
+            <template is="gkpDetail" data="{{playerDetailData}}" />
+          </block>
+          <block class="detailCard" wx:if="{{playerInfoData.elementType==2}}">
+            <import src="../../template/defDetail.wxml" />
+            <template is="defDetail" data="{{playerDetailData}}" />
+          </block>
+          <block class="detailCard" wx:if="{{playerInfoData.elementType==3}}">
+            <import src="../../template/midDetail.wxml" />
+            <template is="midDetail" data="{{playerDetailData}}" />
+          </block>
+          <block class="detailCard" wx:if="{{playerInfoData.elementType==4}}">
+            <import src="../../template/fwdDetail.wxml" />
+            <template is="fwdDetail" data="{{playerDetailData}}" />
+          </block>
+        </van-collapse-item>
+
+        <van-collapse-item name="fixture">
+          <view slot="title">【{{playerInfoData.teamShortName}}】 - 赛程</view>
+          <block class="fixtureCard">
+            <import src="../../template/fixture.wxml" />
+            <template is="fixture" data="{{teamGwFixtureMap}}" />
+          </block>
+        </van-collapse-item>
+
+      </van-collapse>
+    </view>
   </view>
-</van-row>
 
-<van-row>
-  <view class="card">
-    <van-collapse value="{{ activeNames }}" bind:open="cardOnOpen" bind:change="cardOnChange">
-
-      <van-collapse-item name="fixture">
-        <view slot="title">【{{playerInfoData.teamShortName}}】 - 赛程</view>
-
-        <block class="fixtureCard">
-          <import src="../../template/fixture.wxml" />
-          <template is="fixture" data="{{teamGwFixtureMap}}" />
-        </block>
-
-      </van-collapse-item>
-
-      <van-collapse-item name="{{playerInfoData.element}}">
-        <view slot="title">【{{playerInfoData.teamShortName}}】{{playerInfoData.webName}} - £{{playerInfoData.price}}m
-        </view>
-        <block class="detailCard" wx:if="{{playerInfoData.elementType==1}}">
-          <import src="../../template/gkpDetail.wxml" />
-          <template is="gkpDetail" data="{{playerDetailData}}" />
-        </block>
-        <block class="detailCard" wx:if="{{playerInfoData.elementType==2}}">
-          <import src="../../template/defDetail.wxml" />
-          <template is="defDetail" data="{{playerDetailData}}" />
-        </block>
-        <block class="detailCard" wx:if="{{playerInfoData.elementType==3}}">
-          <import src="../../template/midDetail.wxml" />
-          <template is="midDetail" data="{{playerDetailData}}" />
-        </block>
-        <block class="detailCard" wx:if="{{playerInfoData.elementType==4}}">
-          <import src="../../template/fwdDetail.wxml" />
-          <template is="fwdDetail" data="{{playerDetailData}}" />
-        </block>
-      </van-collapse-item>
-
-    </van-collapse>
-  </view>
-</van-row>
-
-</view>
+</van-popup>

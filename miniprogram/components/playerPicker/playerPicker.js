@@ -7,13 +7,6 @@ import {
   getDifficultyColor
 } from '../../utils/utils';
 
-const position = {
-  'GKP': 1,
-  'DEF': 2,
-  'MID': 3,
-  'FWD': 4
-}
-
 Component({
 
   properties: {
@@ -24,7 +17,7 @@ Component({
   data: {
     elementType: 1,
     gw: app.globalData.gw,
-    showPosition: {},
+    position: {},
     columns: [],
     loading: false,
     teamFixtureMap: {},
@@ -33,19 +26,26 @@ Component({
     playerInfoData: {},
     playerDetailData: {},
     activeNames: ['fixture'],
+    show: false,
+
   },
 
   lifetimes: {
     attached: function () {
       this.data.elementType = this.properties.type;
       // 初始化选项
-      this.initShowPosition();
+      this.initPosition();
       this.initPlayerInfo();
     },
 
   },
 
   methods: {
+
+    onClose() {
+      this.setData({ show: false });
+    },
+
     // picker
     pickerOnChange(event) {
       const {
@@ -56,10 +56,9 @@ Component({
       let playerInfo = this.data.playerInfoMap;
       if (index == 0) {
         this.setData({
-          elementType: this.data.showPosition[value[0]]
+          elementType: this.data.position[value[0]]
         });
         this.getPlayerInfo();
-        // picker.setColumnValues(1, playerInfo[Object.keys(playerInfo)[0]]);
         this.setPlayerInfoData(picker.getIndexes());
       } else if (index == 1) {
         this.setTeamFixture(value[1]);
@@ -98,8 +97,8 @@ Component({
     // team_fixture
     setTeamFixture(shortName) {
       get('player/qryTeamFixtureByShortName', {
-        shortName: shortName
-      })
+          shortName: shortName
+        })
         .then(res => {
           this.setData({
             teamFixtureMap: res.data,
@@ -169,8 +168,8 @@ Component({
     getPlayerInfo() {
       let elementType = this.data.elementType;
       get('player/qryPlayerInfoByElementType', {
-        elementType: elementType
-      })
+          elementType: elementType
+        })
         .then(res => {
           this.setData({
             playerInfoMap: res.data,
@@ -196,8 +195,8 @@ Component({
 
     setPlayerDetail(element) {
       get('player/qryPlayerDetailData', {
-        element: element
-      })
+          element: element
+        })
         .then(res => {
           this.setData({
             playerDetailData: res.data
@@ -209,38 +208,37 @@ Component({
     },
 
     // others
-    initShowPosition() {
-      let showPosition = {};
+    initPosition() {
+      let position = {};
       switch (this.data.elementType) {
         case 1:
-          showPosition["GKP"] = 1;
+          position["GKP"] = 1;
           break;
         case 2:
-          showPosition["DEF"] = 2;
+          position["DEF"] = 2;
           break;
         case 3:
-          showPosition["MID"] = 3;
+          position["MID"] = 3;
           break;
         case 4:
-          showPosition["FWD"] = 4;
+          position["FWD"] = 4;
           break;
         default:
-          showPosition["GKP"] = 1;
-          showPosition["DEF"] = 2;
-          showPosition["MID"] = 3;
-          showPosition["FWD"] = 4;
+          position["GKP"] = 1;
+          position["DEF"] = 2;
+          position["MID"] = 3;
+          position["FWD"] = 4;
       }
       this.setData({
-        showPosition: showPosition
+        position: position
       });
     },
 
     initColumns() {
       let playerInfo = this.data.playerInfoMap;
       this.setData({
-        columns: [
-          {
-            values: Object.keys(this.data.showPosition),
+        columns: [{
+            values: Object.keys(this.data.position),
             className: 'position',
           },
           {

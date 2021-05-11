@@ -7,7 +7,7 @@
     "pages/live/match/match",
     "pages/common/me/me"
   ],
-  "entryPagePath":  "pages/group/scout/scout",
+  "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
@@ -22,13 +22,14 @@
     "downloadFile": 20000
   },
   "usingComponents": {
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index",
     "van-row": "@vant/weapp/row/index",
     "van-col": "@vant/weapp/col/index",
     "van-image": "@vant/weapp/image/index",
     "van-button": "@vant/weapp/button/index",
     "van-divider": "@vant/weapp/divider/index",
     "van-field": "@vant/weapp/field/index",
-    "van-popup": "@vant/weapp/popup/index",
     "van-collapse": "@vant/weapp/collapse/index",
     "van-collapse-item": "@vant/weapp/collapse-item/index",
     "van-picker": "@vant/weapp/picker/index",
@@ -39,10 +40,10 @@
     "van-tabs": "@vant/weapp/tabs/index",
     "van-tabbar": "@vant/weapp/tabbar/index",
     "van-tabbar-item": "@vant/weapp/tabbar-item/index",
-    "van-swipe-cell": "@vant/weapp/swipe-cell/index",
+    "van-popup": "@vant/weapp/popup/index",
+    "van-overlay": "@vant/weapp/overlay/index",
     "van-notice-bar": "@vant/weapp/notice-bar/index",
-    "i-icon": "./dist/icon/index",
-    "i-button": "./dist/button/index"
+    "van-toast": "@vant/weapp/toast/index"
   },
   "sitemapLocation": "sitemap.json"
 }

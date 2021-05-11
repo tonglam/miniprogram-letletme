@@ -1,4 +1,4 @@
-<view wx:if="{{entryInfoData.entry == 0}}" class="entryInput">
+<view class="entryInput">
   <van-cell-group>
     <van-field size="large" type="number" left-icon="manager" model:value="{{entry}}" placeholder="请输入team_id"
       error-message="{{errorMsg}}" border="{{ false }}" clearable use-button-slot bind:blur="checkEntry">
@@ -7,25 +7,4 @@
       </van-button>
     </van-field>
   </van-cell-group>
-</view>
-
-<view wx:if="{{entryInfoData.entry > 0}}" class="entryInfo">
-  <van-collapse value="{{ activeNames }}" bind:change="onChange">
-    <van-collapse-item name="1">
-      <view slot="title">{{entryInfoData.entryName}} ({{entryInfoData.playerName}})
-        <van-icon name="question-o" />
-      </view>
-      <p>总分：{{entryInfoData.overallPoints}}</p>
-      <van-divider/>
-      <p>全球排名：{{entryInfoData.overallRank}}</p>
-      <van-divider/>
-      <p>地区：{{entryInfoData.region}}</p>
-      <van-divider/>
-      <p>开始时间：GW{{entryInfoData.startedEvent}}</p>
-      <van-divider/>
-      <p>阵容身价：{{entryInfoData.teamValue/10}}m</p>
-      <van-divider/>
-      <p>银行余额：{{entryInfoData.bank/10}}m</p>
-    </van-collapse-item>
-  </van-collapse>
 </view>
