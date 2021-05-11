@@ -1,6 +1,6 @@
 <view class="index">
   <van-row class="indexRow">
-    <image class="begbeg" src="../../images/begbeg.jpg" mode="aspectFit"></image>
+    <image class="begbeg" src="../../../images/begbeg.jpg" mode="aspectFit"></image>
   </van-row>
 
   <van-row>
@@ -37,5 +37,5 @@
 </view>
 
 <view class="bottemNavBar">
-  <component-tag-name active='home'></component-tag-name>
+  <bottomNavBar active="home"></bottomNavBar>
 </view>

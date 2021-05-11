@@ -1,8 +1,8 @@
 const urlMap = {
-  "home": "../index/index",
-  "live": "../live/entry/entry",
-  "group": "../group/scout/scout",
-  "me": "../me/me"
+  "home": "../../../pages/common/index/index",
+  "live": "../../../pages/live/entry/entry",
+  "group": "../../../pages/group/scout/scout",
+  "me": "../../../pages/common/me/me"
 }
 
 Component({
@@ -12,15 +12,12 @@ Component({
   },
 
   data: {
-    active: '',
   },
 
   methods: {
     onChange(event) {
       let name = event.detail;
-      this.setData({
-        active: name
-      });
+      this.properties.active = name;
       let url = urlMap[name];
       wx.navigateTo({
         url: url

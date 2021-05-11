@@ -50,6 +50,9 @@ Page({
         });
         app.globalData.entryInfoData = entryInfoData;
       })
+      .catch(res => {
+        console.log('fail:', res);
+      });
     wx.navigateTo({
       url: '../../index/index'
     });

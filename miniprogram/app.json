@@ -1,14 +1,13 @@
 {
   "pages": [
-    "pages/index/index",
+    "pages/common/index/index",
     "pages/common/entryInput/entryInput",
-    "pages/common/playerPicker/playerPicker",
     "pages/group/scout/scout",
     "pages/live/entry/entry",
     "pages/live/match/match",
-    "pages/me/me"
+    "pages/common/me/me"
   ],
-  "entryPagePath": "pages/live/match/match",
+  "entryPagePath":  "pages/group/scout/scout",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
@@ -35,10 +34,13 @@
     "van-picker": "@vant/weapp/picker/index",
     "van-count-down": "@vant/weapp/count-down/index",
     "van-transition": "@vant/weapp/transition/index",
+    "van-nav-bar": "@vant/weapp/nav-bar/index",
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",
     "van-tabbar": "@vant/weapp/tabbar/index",
     "van-tabbar-item": "@vant/weapp/tabbar-item/index",
+    "van-swipe-cell": "@vant/weapp/swipe-cell/index",
+    "van-notice-bar": "@vant/weapp/notice-bar/index",
     "i-icon": "./dist/icon/index",
     "i-button": "./dist/button/index"
   },

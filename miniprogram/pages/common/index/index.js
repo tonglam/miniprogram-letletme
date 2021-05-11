@@ -2,7 +2,7 @@ const app = getApp();
 
 import {
   diffDeadlineTime
-} from '../../utils/utils';
+} from '../../../utils/utils';
 
 Page({
 

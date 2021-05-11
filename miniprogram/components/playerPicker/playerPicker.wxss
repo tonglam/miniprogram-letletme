@@ -1,0 +1,35 @@
+.picker {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.card {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+.card .swiperTitle {
+  color: black;
+  font-size: 18px;
+}
+
+.card .blankFixture {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: gray;
+}
+
+.card .homeFixture {
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.card .awayFixture {
+  color: white;
+  font-size: 16px;
+  font-style: oblique;
+}

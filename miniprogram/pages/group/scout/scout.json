@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "球探推荐",
   "usingComponents": {
-    "component-tag-name": "../../../components/navigation/bottomNavBar/bottomNavBar"
-  }
+    "playerPicker": "../../../components/playerPicker/playerPicker",
+    "bottomNavBar": "../../../components/navigation/bottomNavBar/bottomNavBar"
+    }
 }
