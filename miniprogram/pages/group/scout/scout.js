@@ -41,6 +41,7 @@ Page({
 
   onLoad() {
     this.initScout();
+    this.initScoutResult();
   },
 
   // 拉取球探信息
@@ -64,6 +65,66 @@ Page({
       });
   },
 
+  // 拉取推荐结果
+  initScoutResult() {
+    get('group/qryEventEntryScoutResult', {
+      event: app.globalData.gw,
+      entry: app.globalData.entryInfoData.entry
+    })
+      .then(res => {
+        this.setInitData(res.data);
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  setInitData(data) {
+    let fund = this.data.fund, gkpInfo = data.gkpInfo, defInfo = data.defInfo, midInfo = data.midInfo, fwdInfo = data.fwdInfo, captainInfo = data.captainInfo;
+    if (gkpInfo.element > 0) {
+      fund = this.calcLeftFund(fund,gkpInfo.elementType, gkpInfo.price);
+      this.setData({
+        pickGkp: this.setShowWebName(gkpInfo.webName, gkpInfo.price),
+        pickGkpPrice: gkpInfo.price,
+        pickGkpInfo: gkpInfo
+      });
+    }
+    if (defInfo.element > 0) {
+      fund = this.calcLeftFund(fund,defInfo.elementType, defInfo.price);
+      this.setData({
+        pickDef: this.setShowWebName(defInfo.webName, defInfo.price),
+        pickDefPrice: defInfo.price,
+        pickDefInfo: defInfo,
+      });
+    }
+    if (midInfo.element > 0) {
+      fund = this.calcLeftFund(fund,midInfo.elementType, midInfo.price);
+      this.setData({
+        pickMid: this.setShowWebName(midInfo.webName, midInfo.price),
+        pickMidPrice: midInfo.price,
+        pickMidInfo: midInfo
+      });
+    }
+    if (fwdInfo.element > 0) {
+      fund = this.calcLeftFund(fund,fwdInfo.elementType, fwdInfo.price);
+      this.setData({
+        pickFwd: this.setShowWebName(fwdInfo.webName, data.fwdInfo.price),
+        pickFwdPrice: fwdInfo.price,
+        pickFwdInfo: fwdInfo
+      });
+    }
+    if (captainInfo.element > 0) {
+      this.setData({
+        pickCap: this.setShowWebName(captainInfo.webName, data.captainInfo.price),
+        pickCapPrice: captainInfo.price,
+        pickCapInfo: captainInfo
+      });
+    }
+    this.setData({
+      fund: fund
+    });
+  },
+
   // 选择推荐球员
   getScoutPlayer(event) {
     this.setData({
@@ -82,7 +143,7 @@ Page({
       price = entryInfo.price,
       elementType = this.data.elementType;
     // 校验
-    let fund = this.calcLeftFund(elementType, price);
+    let fund = this.calcLeftFund(this.data.fund,elementType, price);
     if (!this.checkAvailable(webName, elementType, fund)) {
       return false;
     }
@@ -92,7 +153,7 @@ Page({
         this.setData({
           pickGkpInfo: entryInfo,
           pickGkpPrice: price,
-          pickGkp: webName + "  " + "£" + price + "m",
+          pickGkp: this.setShowWebName(webName, price),
           fund: fund
         });
         break;
@@ -100,7 +161,7 @@ Page({
         this.setData({
           pickDefInfo: entryInfo,
           pickDefPrice: price,
-          pickDef: webName + "  " + "£" + price + "m",
+          pickDef: this.setShowWebName(webName, price),
           fund: fund
         });
         break;
@@ -108,7 +169,7 @@ Page({
         this.setData({
           pickMidInfo: entryInfo,
           pickMidPrice: price,
-          pickMid: webName + "  " + "£" + price + "m",
+          pickMid: this.setShowWebName(webName, price),
           fund: fund
         });
         break;
@@ -116,7 +177,7 @@ Page({
         this.setData({
           pickFwdInfo: entryInfo,
           pickFwdPrice: price,
-          pickFwd: webName + "  " + "£" + price + "m",
+          pickFwd: this.setShowWebName(webName, price),
           fund: fund
         });
         break;
@@ -124,12 +185,16 @@ Page({
         this.setData({
           pickCapInfo: entryInfo,
           pickCapPrice: price,
-          pickCap: webName + "  " + "£" + price + "m"
+          pickCap: this.setShowWebName(webName, price)
         });
         break;
       default:
         console.log('method: onPickResult, something wrong');
     }
+  },
+
+  setShowWebName(webName, price) {
+    return webName + "  " + "£" + price + "m";
   },
 
   // 检查规则
@@ -150,9 +215,8 @@ Page({
   },
 
   // 资金计算
-  calcLeftFund(elementType, price) {
-    let fund = this.data.fund,
-      oldPrice = 0;
+  calcLeftFund(fund,elementType, price) {
+    let oldPrice = 0;
     switch (elementType) {
       case '1':
         oldPrice = this.data.pickGkpPrice;
@@ -197,13 +261,13 @@ Page({
       return false;
     }
     post('group/upsertEventScout', {
-        scoutData: scoutData
-      })
+      scoutData: scoutData
+    })
       .then(res => {
-        console.log('code:'+res.data.code);
-        if(res.data.code===200){
+        console.log('code:' + res.data.code);
+        if (res.data.code === 200) {
           Toast.success('提交成功');
-        }else{
+        } else {
           Toast.fail('提交失败');
         }
       })
