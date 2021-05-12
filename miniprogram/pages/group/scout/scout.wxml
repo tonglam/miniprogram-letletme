@@ -56,8 +56,8 @@
 
       <view class="reason">
         <van-cell-group>
-          <van-field type="textarea" model:value="{{ reason }}" center clearable show-word-limit maxlength="200"
-            label="理由" placeholder="这个人很懒什么都没有留下还不肯打标点" border="{{ false }}" use-button-slot>
+          <van-field type="textarea" model:value="{{ reason }}" center clearable label="推荐理由" placeholder="这个人很懒什么都没留下甚至不打标点"
+            border="{{ false }}" use-button-slot>
           </van-field>
         </van-cell-group>
       </view>
@@ -73,8 +73,11 @@
 
     <van-tab title="得分" name="得分">
 
-      <table-view headers="{{tableEventScoutHeader}}" data="{{ tableEventScoutData }}"
-        no-data-msg="{{ tableEventScoutMsg }}" stripe="{{true}}" border="{{ true }}" />
+      <view class="scoutResult" wx:if="{{showResult}}">
+        <block wx:for="{{scoutResultList}}" wx:key="index">
+          <scoutResult scoutData="{{item}}"></scoutResult>
+        </block>
+      </view>
 
     </van-tab>
 

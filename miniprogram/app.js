@@ -13,7 +13,7 @@ App({
     utcDeadline: "",
     deadline: "",
     entryInfoData: {
-      entry: 0,
+      entry: 1870,
       entryName: "",
       playerName: "",
       region: "",

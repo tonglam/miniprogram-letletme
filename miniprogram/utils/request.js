@@ -1,12 +1,12 @@
  const baseUrl = 'https://letletme.top/api/'
- 
- function get(url, data={}) {
+
+ function get(url, data = {}) {
    var promise = new Promise((resolve, reject) => {
      wx.showLoading({
        title: '加载中'
      });
      wx.request({
-       url: baseUrl+url,
+       url: baseUrl + url,
        data: data,
        method: 'GET',
        header: {
@@ -39,12 +39,13 @@
      wx.showLoading({
        title: '加载中'
      });
+     console.log(data);
      wx.request({
-       url: baseUrl+url,
+       url: baseUrl + url,
        data: data,
        method: 'POST',
        header: {
-        'content-type': 'application/json'
+         'content-type': 'application/json'
        },
        success: function (res) {
          wx.hideLoading();

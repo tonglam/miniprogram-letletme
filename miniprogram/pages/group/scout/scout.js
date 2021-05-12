@@ -17,9 +17,9 @@ Page({
     elementType: 0,
     page: '../../group/scout/scout',
     showPicker: false,
-    scoutList: [],
-    scoutEntry: {},
+    showResult: false,
     scoutResultList: [],
+    scoutEntry: {},
     fund: 28,
     pickGkpInfo: {},
     pickDefInfo: {},
@@ -41,11 +41,6 @@ Page({
     // tabBar
     tab: "推荐",
 
-    // 表格
-    tableEventScoutHeader: [],
-    tableEventScoutData: [],
-    tableEventScoutMsg: '没有数据',
-
   },
 
   onLoad() {
@@ -57,9 +52,11 @@ Page({
   tabBarOnChange(event) {
     let tab = event.detail.name;
     if (tab === '得分') {
-      if (this.data.scoutResultList === null || this.data.scoutResultList.length === 0) {
-        this.initEventScoutResult();
-      }
+      console.log("tab切换到得分");
+      this.setData({
+        showResult: true
+      });
+      this.initEventScoutResult();
     } else if (tab === '排行')
       console.log("tab切换到排行");
   },
@@ -85,12 +82,12 @@ Page({
       });
   },
 
-  // 拉取当前id推荐结果
+  // 拉取推荐结果
   initEntryScoutResult() {
     get('group/qryEventEntryScoutResult', {
-      event: app.globalData.nextGw,
-      entry: app.globalData.entryInfoData.entry
-    })
+        event: app.globalData.nextGw,
+        entry: app.globalData.entryInfoData.entry
+      })
       .then(res => {
         this.setInitData(res.data);
       })
@@ -100,7 +97,12 @@ Page({
   },
 
   setInitData(data) {
-    let fund = this.data.fund, gkpInfo = data.gkpInfo, defInfo = data.defInfo, midInfo = data.midInfo, fwdInfo = data.fwdInfo, captainInfo = data.captainInfo;
+    let fund = this.data.fund,
+      gkpInfo = data.gkpInfo,
+      defInfo = data.defInfo,
+      midInfo = data.midInfo,
+      fwdInfo = data.fwdInfo,
+      captainInfo = data.captainInfo;
     if (gkpInfo !== null && gkpInfo.element > 0) {
       fund = this.calcLeftFund(fund, gkpInfo.elementType, gkpInfo.price);
       this.setData({
@@ -145,27 +147,25 @@ Page({
     });
   },
 
-  // 推荐结果
-  initEventScoutResult() {
-    this.getEventScoutResult();
-  },
-
-  // 拉取本周所有推荐结果
-  getEventScoutResult() {
-    get('group/qryEventScoutResult', {
-      event: app.globalData.gw,
-    })
-      .then(res => {
-        this.setData({
-          scoutResultList: res.data
-        });
-        this.setTableEventScoutHeader();
-        this.setTableEventScoutData();
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
-  },
+   // 推荐结果 
+   initEventScoutResult() { 
+    this.getEventScoutResult(); 
+  }, 
+ 
+  // 拉取本周所有推荐结果 
+  getEventScoutResult() { 
+    get('group/qryEventScoutResult', { 
+      event: app.globalData.gw, 
+    }) 
+      .then(res => { 
+        this.setData({ 
+          scoutResultList: res.data 
+        }); 
+      }) 
+      .catch(res => { 
+        console.log('fail:', res); 
+      }); 
+  }, 
 
   // 选择推荐球员
   getScoutPlayer(event) {
@@ -293,7 +293,6 @@ Page({
       captain: this.data.pickCapInfo.element,
       reason: this.data.reason,
     };
-    console.log(scoutData.gkp);
     if (scoutData.gkp === '' || scoutData.gkp === undefined ||
       scoutData.def === '' || scoutData.def === undefined ||
       scoutData.mid === '' || scoutData.mid === undefined ||
@@ -302,11 +301,8 @@ Page({
       Toast.fail('还没选完呢');
       return false;
     }
-    post('group/upsertEventScout', {
-      scoutData: scoutData
-    })
+    post('group/upsertEventScout', scoutData)
       .then(res => {
-        console.log('code:' + res.data.code);
         if (res.data.code === 200) {
           Toast.success('提交成功');
         } else {
@@ -349,82 +345,5 @@ Page({
 
     });
   },
-
-  // 表格
-  setTableEventScoutHeader() {
-    let header = [
-      {
-        prop: 'name',
-        width: 50,
-        label: '球探',
-        color: '#55C355'
-      },
-      {
-        prop: 'gkp',
-        width: 50,
-        label: '门将'
-      },
-      {
-        prop: 'def',
-        width: 50,
-        label: '后卫'
-      },
-      {
-        prop: 'mid',
-        width: 50,
-        label: '中场'
-      },
-      {
-        prop: 'fwd',
-        width: 50,
-        label: '前锋'
-      },
-      {
-        prop: 'cap',
-        width: 50,
-        label: '队长'
-      },
-      {
-        prop: 'eventPoints',
-        width: 50,
-        label: '周得分'
-      },
-      {
-        prop: 'totalPoints',
-        width: 50,
-        label: '总得分'
-      }
-    ];
-    this.setData({
-      tableEventScoutHeader: header
-    });
-  },
-
-  setTableEventScoutData() {
-    let list = [];
-    console.log(this.data.scoutResultList);
-    this.data.scoutResultList.forEach(o => {
-      let data = {
-        name: o.scoutName,
-        gkp: o.gkpInfo.webName,
-        def: o.defInfo.webName,
-        mid: o.midInfo.webName,
-        fwd: o.fwdInfo.webName,
-        cap: o.captainInfo.webName,
-        reason: o.reason,
-        eventPoints: o.eventPoints,
-        totalPoints: o.totalPoints,
-      };
-      list.push(data);
-    });
-    console.log(list);
-    this.setData({
-      tableEventScoutData: list
-    });
-  },
-
-  setScoutReultWebName(webName, shortName) {
-    return webName + "(" + shortName + ")";
-  }
 
 })
