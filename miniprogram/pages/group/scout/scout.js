@@ -13,11 +13,13 @@ import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 Page({
 
   data: {
+    deadline: "",
     elementType: 0,
     page: '../../group/scout/scout',
     showPicker: false,
     scoutList: [],
     scoutEntry: {},
+    scoutResultList: [],
     fund: 28,
     pickGkpInfo: {},
     pickDefInfo: {},
@@ -36,12 +38,30 @@ Page({
     pickCap: "",
     pickCapPrice: "",
     reason: "",
+    // tabBar
+    tab: "推荐",
+
+    // 表格
+    tableEventScoutHeader: [],
+    tableEventScoutData: [],
+    tableEventScoutMsg: '没有数据',
 
   },
 
   onLoad() {
     this.initScout();
-    this.initScoutResult();
+    this.initEntryScoutResult();
+  },
+
+  // tabBar
+  tabBarOnChange(event) {
+    let tab = event.detail.name;
+    if (tab === '得分') {
+      if (this.data.scoutResultList === null || this.data.scoutResultList.length === 0) {
+        this.initEventScoutResult();
+      }
+    } else if (tab === '排行')
+      console.log("tab切换到排行");
   },
 
   // 拉取球探信息
@@ -65,10 +85,10 @@ Page({
       });
   },
 
-  // 拉取推荐结果
-  initScoutResult() {
+  // 拉取当前id推荐结果
+  initEntryScoutResult() {
     get('group/qryEventEntryScoutResult', {
-      event: app.globalData.gw,
+      event: app.globalData.nextGw,
       entry: app.globalData.entryInfoData.entry
     })
       .then(res => {
@@ -81,39 +101,39 @@ Page({
 
   setInitData(data) {
     let fund = this.data.fund, gkpInfo = data.gkpInfo, defInfo = data.defInfo, midInfo = data.midInfo, fwdInfo = data.fwdInfo, captainInfo = data.captainInfo;
-    if (gkpInfo.element > 0) {
-      fund = this.calcLeftFund(fund,gkpInfo.elementType, gkpInfo.price);
+    if (gkpInfo !== null && gkpInfo.element > 0) {
+      fund = this.calcLeftFund(fund, gkpInfo.elementType, gkpInfo.price);
       this.setData({
         pickGkp: this.setShowWebName(gkpInfo.webName, gkpInfo.price),
         pickGkpPrice: gkpInfo.price,
         pickGkpInfo: gkpInfo
       });
     }
-    if (defInfo.element > 0) {
-      fund = this.calcLeftFund(fund,defInfo.elementType, defInfo.price);
+    if (defInfo !== null && defInfo.element > 0) {
+      fund = this.calcLeftFund(fund, defInfo.elementType, defInfo.price);
       this.setData({
         pickDef: this.setShowWebName(defInfo.webName, defInfo.price),
         pickDefPrice: defInfo.price,
         pickDefInfo: defInfo,
       });
     }
-    if (midInfo.element > 0) {
-      fund = this.calcLeftFund(fund,midInfo.elementType, midInfo.price);
+    if (midInfo !== null && midInfo.element > 0) {
+      fund = this.calcLeftFund(fund, midInfo.elementType, midInfo.price);
       this.setData({
         pickMid: this.setShowWebName(midInfo.webName, midInfo.price),
         pickMidPrice: midInfo.price,
         pickMidInfo: midInfo
       });
     }
-    if (fwdInfo.element > 0) {
-      fund = this.calcLeftFund(fund,fwdInfo.elementType, fwdInfo.price);
+    if (fwdInfo !== null && fwdInfo.element > 0) {
+      fund = this.calcLeftFund(fund, fwdInfo.elementType, fwdInfo.price);
       this.setData({
         pickFwd: this.setShowWebName(fwdInfo.webName, data.fwdInfo.price),
         pickFwdPrice: fwdInfo.price,
         pickFwdInfo: fwdInfo
       });
     }
-    if (captainInfo.element > 0) {
+    if (captainInfo !== null && captainInfo.element > 0) {
       this.setData({
         pickCap: this.setShowWebName(captainInfo.webName, data.captainInfo.price),
         pickCapPrice: captainInfo.price,
@@ -123,6 +143,28 @@ Page({
     this.setData({
       fund: fund
     });
+  },
+
+  // 推荐结果
+  initEventScoutResult() {
+    this.getEventScoutResult();
+  },
+
+  // 拉取本周所有推荐结果
+  getEventScoutResult() {
+    get('group/qryEventScoutResult', {
+      event: app.globalData.gw,
+    })
+      .then(res => {
+        this.setData({
+          scoutResultList: res.data
+        });
+        this.setTableEventScoutHeader();
+        this.setTableEventScoutData();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
   },
 
   // 选择推荐球员
@@ -143,7 +185,7 @@ Page({
       price = entryInfo.price,
       elementType = this.data.elementType;
     // 校验
-    let fund = this.calcLeftFund(this.data.fund,elementType, price);
+    let fund = this.calcLeftFund(this.data.fund, elementType, price);
     if (!this.checkAvailable(webName, elementType, fund)) {
       return false;
     }
@@ -215,7 +257,7 @@ Page({
   },
 
   // 资金计算
-  calcLeftFund(fund,elementType, price) {
+  calcLeftFund(fund, elementType, price) {
     let oldPrice = 0;
     switch (elementType) {
       case '1':
@@ -307,5 +349,82 @@ Page({
 
     });
   },
+
+  // 表格
+  setTableEventScoutHeader() {
+    let header = [
+      {
+        prop: 'name',
+        width: 50,
+        label: '球探',
+        color: '#55C355'
+      },
+      {
+        prop: 'gkp',
+        width: 50,
+        label: '门将'
+      },
+      {
+        prop: 'def',
+        width: 50,
+        label: '后卫'
+      },
+      {
+        prop: 'mid',
+        width: 50,
+        label: '中场'
+      },
+      {
+        prop: 'fwd',
+        width: 50,
+        label: '前锋'
+      },
+      {
+        prop: 'cap',
+        width: 50,
+        label: '队长'
+      },
+      {
+        prop: 'eventPoints',
+        width: 50,
+        label: '周得分'
+      },
+      {
+        prop: 'totalPoints',
+        width: 50,
+        label: '总得分'
+      }
+    ];
+    this.setData({
+      tableEventScoutHeader: header
+    });
+  },
+
+  setTableEventScoutData() {
+    let list = [];
+    console.log(this.data.scoutResultList);
+    this.data.scoutResultList.forEach(o => {
+      let data = {
+        name: o.scoutName,
+        gkp: o.gkpInfo.webName,
+        def: o.defInfo.webName,
+        mid: o.midInfo.webName,
+        fwd: o.fwdInfo.webName,
+        cap: o.captainInfo.webName,
+        reason: o.reason,
+        eventPoints: o.eventPoints,
+        totalPoints: o.totalPoints,
+      };
+      list.push(data);
+    });
+    console.log(list);
+    this.setData({
+      tableEventScoutData: list
+    });
+  },
+
+  setScoutReultWebName(webName, shortName) {
+    return webName + "(" + shortName + ")";
+  }
 
 })

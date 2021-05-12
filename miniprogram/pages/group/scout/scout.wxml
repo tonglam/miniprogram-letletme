@@ -1,59 +1,86 @@
-<view class="navBar">
-  <van-nav-bar title="{{scoutEntry.name}}" left-text="重选" right-text="提交" safe-area-inset-top="{{false}}"
-    bind:click-left="onClickRefresh" bind:click-right="onClickConfirm" />
-</view>
+<view class="tabBar">
+  <van-tabs active="{{ tab }}" bind:change="tabBarOnChange">
 
-<view class="notice">
-  <van-notice-bar scrollable="{{ false }}" left-icon="balance-o" text="剩余资金：£{{fund}}m" border="{{false}}" />
-</view>
+    <van-tab title="推荐" name="推荐">
 
-<view class="cellGroup">
-  <van-cell-group>
-    <van-field model:value="{{ pickGkp }}" center readonly label="门将" use-button-slot border="{{ false }}">
-      <van-button id="1" slot="button" size="small" type="primary" custom-class="button" bind:click="getScoutPlayer">选择
-      </van-button>
-    </van-field>
-  </van-cell-group>
+      <view class="navBar">
+        <van-nav-bar title="{{scoutEntry.name}}" left-text="重选" right-text="提交" safe-area-inset-top="{{false}}"
+          bind:click-left="onClickRefresh" bind:click-right="onClickConfirm" />
+      </view>
 
-  <van-cell-group>
-    <van-field model:value="{{ pickDef }}" center readonly label="后卫" use-button-slot border="{{ false }}">
-      <van-button id="2" slot="button" size="small" type="primary" custom-class="button" bind:click="getScoutPlayer">选择
-      </van-button>
-    </van-field>
-  </van-cell-group>
+      <view class="notice">
+        <van-notice-bar scrollable="{{ false }}" left-icon="balance-o" text="剩余资金：£{{fund}}m" border="{{false}}" />
+      </view>
 
-  <van-cell-group>
-    <van-field model:value="{{ pickMid }}" center readonly label="中场" use-button-slot border="{{ false }}">
-      <van-button id="3" slot="button" size="small" type="primary" custom-class="button" bind:click="getScoutPlayer">选择
-      </van-button>
-    </van-field>
-  </van-cell-group>
+      <view class="cellGroup">
+        <van-cell-group>
+          <van-field model:value="{{ pickGkp }}" center readonly label="门将" use-button-slot border="{{ false }}">
+            <van-button id="1" slot="button" size="small" type="primary" custom-class="button"
+              bind:click="getScoutPlayer">选择
+            </van-button>
+          </van-field>
+        </van-cell-group>
 
-  <van-cell-group>
-    <van-field model:value="{{ pickFwd }}" center readonly label="前锋" use-button-slot border="{{ false }}">
-      <van-button id="4" slot="button" size="small" type="primary" custom-class="button" bind:click="getScoutPlayer">选择
-      </van-button>
-    </van-field>
-  </van-cell-group>
+        <van-cell-group>
+          <van-field model:value="{{ pickDef }}" center readonly label="后卫" use-button-slot border="{{ false }}">
+            <van-button id="2" slot="button" size="small" type="primary" custom-class="button"
+              bind:click="getScoutPlayer">选择
+            </van-button>
+          </van-field>
+        </van-cell-group>
 
-  <van-cell-group>
-    <van-field value="{{ pickCap }} " center readonly label="队长" use-button-slot border="{{ false }}">
-      <van-button id="5" slot="button" size="small" type="primary" custom-class="button" bind:click="getScoutPlayer">选择
-      </van-button>
-    </van-field>
-  </van-cell-group>
-</view>
+        <van-cell-group>
+          <van-field model:value="{{ pickMid }}" center readonly label="中场" use-button-slot border="{{ false }}">
+            <van-button id="3" slot="button" size="small" type="primary" custom-class="button"
+              bind:click="getScoutPlayer">选择
+            </van-button>
+          </van-field>
+        </van-cell-group>
 
-<view class="reason">
-  <van-cell-group>
-    <van-field type="textarea" model:value="{{ reason }}" center clearable show-word-limit maxlength="200" label="理由"
-      placeholder="这个人很懒什么都没有留下还不肯打标点" border="{{ false }}" use-button-slot>
-    </van-field>
-  </van-cell-group>
-</view>
+        <van-cell-group>
+          <van-field model:value="{{ pickFwd }}" center readonly label="前锋" use-button-slot border="{{ false }}">
+            <van-button id="4" slot="button" size="small" type="primary" custom-class="button"
+              bind:click="getScoutPlayer">选择
+            </van-button>
+          </van-field>
+        </van-cell-group>
 
-<view class="playerPicker" wx:if="{{showPicker}}">
-  <playerPicker type="{{elementType}}" page="{{page}}" bind:pickResult="onPickResult"></playerPicker>
+        <van-cell-group>
+          <van-field value="{{ pickCap }} " center readonly label="队长" use-button-slot border="{{ false }}">
+            <van-button id="5" slot="button" size="small" type="primary" custom-class="button"
+              bind:click="getScoutPlayer">选择
+            </van-button>
+          </van-field>
+        </van-cell-group>
+      </view>
+
+      <view class="reason">
+        <van-cell-group>
+          <van-field type="textarea" model:value="{{ reason }}" center clearable show-word-limit maxlength="200"
+            label="理由" placeholder="这个人很懒什么都没有留下还不肯打标点" border="{{ false }}" use-button-slot>
+          </van-field>
+        </van-cell-group>
+      </view>
+
+      <text>\n</text>
+      <text>\n</text>
+
+      <view class="playerPicker" wx:if="{{showPicker}}">
+        <playerPicker type="{{elementType}}" page="{{page}}" bind:pickResult="onPickResult"></playerPicker>
+      </view>
+
+    </van-tab>
+
+    <van-tab title="得分" name="得分">
+
+      <table-view headers="{{tableEventScoutHeader}}" data="{{ tableEventScoutData }}"
+        no-data-msg="{{ tableEventScoutMsg }}" stripe="{{true}}" border="{{ true }}" />
+
+    </van-tab>
+
+    <van-tab title="排行"></van-tab>
+
+  </van-tabs>
 </view>
 
 <view class="bottemNavBar">

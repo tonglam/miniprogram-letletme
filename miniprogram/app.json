@@ -22,6 +22,7 @@
     "downloadFile": 20000
   },
   "usingComponents": {
+    "table-view": "miniprogram-table-component",
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index",
     "van-row": "@vant/weapp/row/index",
