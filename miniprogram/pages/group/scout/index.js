@@ -14,7 +14,7 @@ Page({
 
   data: {
     // 公共
-    gw: app.globalData.gw,
+    gw: 0,
     deadline: "",
     elementType: 0,
     showPlayerPicker: false,
@@ -44,13 +44,21 @@ Page({
     // tabBar
     tab: "推荐",
     // 得分页
-    resultGw: app.globalData.gw,
+    resultGw: 0,
     // action
     showActionSheet: false,
-    actions: [{ name: '刷新得分'},{name: '切换GW'}],
+    actions: [{
+      name: '刷新得分'
+    }, {
+      name: '切换GW'
+    }],
   },
 
   onLoad() {
+    this.setData({
+      gw: app.globalData.gw,
+      resultGw: app.globalData.gw
+    });
     this.initScout();
     this.initEntryScoutResult();
   },
@@ -93,9 +101,9 @@ Page({
   // 拉取推荐结果
   initEntryScoutResult() {
     get('group/qryEventEntryScoutResult', {
-      event: app.globalData.nextGw,
-      entry: app.globalData.entryInfoData.entry
-    })
+        event: app.globalData.nextGw,
+        entry: app.globalData.entryInfoData.entry
+      })
       .then(res => {
         this.setInitData(res.data);
       })
@@ -164,8 +172,8 @@ Page({
   // 拉取比赛周所有推荐结果 
   getEventScoutResult(gw) {
     get('group/qryEventScoutResult', {
-      event: parseInt(gw),
-    })
+        event: parseInt(gw),
+      })
       .then(res => {
         let list = res.data;
         if (list.length === 0) {
@@ -394,8 +402,8 @@ Page({
   // 更新当前周得分数据
   updateEventScoutResult() {
     get('group/updateEventScoutResult', {
-      event: app.globalData.gw
-    })
+        event: app.globalData.gw
+      })
       .then(() => {
         Toast.success('更新成功');
       })
@@ -406,7 +414,9 @@ Page({
 
   // GW选择回填
   onPickGw(event) {
-    this.setData({ showGwPicker: false });
+    this.setData({
+      showGwPicker: false
+    });
     let gw = event.detail;
     if (gw === '' || gw === null) {
       return false;
@@ -414,7 +424,9 @@ Page({
     if (gw === this.data.resultGw) {
       return false;
     }
-    this.setData({ resultGw: gw });
+    this.setData({
+      resultGw: gw
+    });
     // 更新得分数据
     this.getEventScoutResult(gw);
   },

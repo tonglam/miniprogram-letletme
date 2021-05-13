@@ -11,13 +11,13 @@ Component({
 
   properties: {
     type: Number,
-    show:Boolean
+    show: Boolean
   },
 
   data: {
     event: 'pickResult',
     elementType: 1,
-    gw: app.globalData.gw,
+    gw: 0,
     position: {},
     columns: [],
     loading: false,
@@ -34,11 +34,14 @@ Component({
   lifetimes: {
     attached: function () {
       this.data.elementType = this.properties.type;
+      this.setData({
+        gw: app.globalData.gw,
+      });
       // 初始化选项
       this.initPosition();
       this.initPlayerInfo();
     },
-   
+
   },
 
   methods: {
