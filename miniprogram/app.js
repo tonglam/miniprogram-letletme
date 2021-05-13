@@ -13,7 +13,7 @@ App({
     utcDeadline: "",
     deadline: "",
     entryInfoData: {
-      entry: 1870,
+      entry: 0,
       entryName: "",
       playerName: "",
       region: "",
@@ -23,6 +23,7 @@ App({
       bank: 0,
       teamValue: 0
     },
+    userInfo: {},
   },
 
   onLaunch() {

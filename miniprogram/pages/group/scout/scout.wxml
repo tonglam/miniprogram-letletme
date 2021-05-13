@@ -56,22 +56,31 @@
 
       <view class="reason">
         <van-cell-group>
-          <van-field type="textarea" model:value="{{ reason }}" center clearable label="推荐理由" placeholder="这个人很懒什么都没留下甚至不打标点"
-            border="{{ false }}" use-button-slot>
+          <van-field type="textarea" model:value="{{ reason }}" center clearable label="推荐理由"
+            placeholder="这个人很懒什么都没留下甚至不打标点" border="{{ false }}" use-button-slot>
           </van-field>
         </van-cell-group>
       </view>
 
-      <text>\n</text>
-      <text>\n</text>
+      <view class="playerPicker" wx:if="{{showPlayerPicker}}">
+        <playerPicker type="{{elementType}}" bind:pickResult="onPickResult"></playerPicker>
+      </view>
 
-      <view class="playerPicker" wx:if="{{showPicker}}">
-        <playerPicker type="{{elementType}}" page="{{page}}" bind:pickResult="onPickResult"></playerPicker>
+      <view class="bottemNavBar">
+        <bottomNavBar active="group"></bottomNavBar>
       </view>
 
     </van-tab>
 
     <van-tab title="得分" name="得分">
+
+      <van-row custom-class="scoreTitle">
+        <van-col span="4" offset="10">
+          <van-button plain hairline type="info"  bind:click="onScoreClick">GW{{resultGw}}</van-button>
+          <van-action-sheet show="{{ showActionSheet }}" actions="{{ actions }}" cancel-text="取消"
+            bind:close="onActionSheetClose" bind:cancel="onActionSheetClose" bind:select="onSelect" />
+        </van-col>
+      </van-row>
 
       <view class="scoutResult" wx:if="{{showResult}}">
         <block wx:for="{{scoutResultList}}" wx:key="index">
@@ -79,15 +88,15 @@
         </block>
       </view>
 
+      <view class="gwPicker" wx:if="{{showGwPicker}}">
+        <gwPicker gw="{{gw}}" bind:pickGw="onPickGw"></gwPicker>
+      </view>
+
     </van-tab>
 
     <van-tab title="排行"></van-tab>
 
   </van-tabs>
-</view>
-
-<view class="bottemNavBar">
-  <bottomNavBar active="group"></bottomNavBar>
 </view>
 
 <van-toast id="van-toast" />

@@ -2,19 +2,19 @@ const app = getApp();
 
 import {
   get
-} from '../../utils/request';
+} from '../../../utils/request';
 import {
   getDifficultyColor
-} from '../../utils/utils';
+} from '../../../utils/utils';
 
 Component({
 
   properties: {
     type: Number,
-    page: String
   },
 
   data: {
+    event : 'pickResult',
     elementType: 1,
     gw: app.globalData.gw,
     position: {},
@@ -26,7 +26,7 @@ Component({
     playerInfoData: {},
     playerDetailData: {},
     activeNames: ['fixture'],
-    show: false,
+    triggered: false,
 
   },
 
@@ -41,10 +41,6 @@ Component({
   },
 
   methods: {
-
-    onClose() {
-      this.setData({ show: false });
-    },
 
     // picker
     pickerOnChange(event) {
@@ -69,18 +65,12 @@ Component({
       }
     },
 
-    pickerOnConfirm(event) {
-      this.pickResult();
+    pickerOnConfirm() {
+      this.triggerEvent(this.data.event, this.data.playerInfoData);
     },
 
     pickerOnCancel() {
-      wx.navigateTo({
-        url: this.properties.page,
-      });
-    },
-
-    pickResult() {
-      this.triggerEvent('pickResult', this.data.playerInfoData);
+      this.triggerEvent(this.data.event, '');
     },
 
     // card
@@ -97,8 +87,8 @@ Component({
     // team_fixture
     setTeamFixture(shortName) {
       get('player/qryTeamFixtureByShortName', {
-          shortName: shortName
-        })
+        shortName: shortName
+      })
         .then(res => {
           this.setData({
             teamFixtureMap: res.data,
@@ -168,8 +158,8 @@ Component({
     getPlayerInfo() {
       let elementType = this.data.elementType;
       get('player/qryPlayerInfoByElementType', {
-          elementType: elementType
-        })
+        elementType: elementType
+      })
         .then(res => {
           this.setData({
             playerInfoMap: res.data,
@@ -195,8 +185,8 @@ Component({
 
     setPlayerDetail(element) {
       get('player/qryPlayerDetailData', {
-          element: element
-        })
+        element: element
+      })
         .then(res => {
           this.setData({
             playerDetailData: res.data
@@ -238,17 +228,17 @@ Component({
       let playerInfo = this.data.playerInfoMap;
       this.setData({
         columns: [{
-            values: Object.keys(this.data.position),
-            className: 'position',
-          },
-          {
-            values: Object.keys(playerInfo),
-            className: 'team',
-          },
-          {
-            values: playerInfo[Object.keys(playerInfo)[0]].map(o => o.webName),
-            className: 'player',
-          }
+          values: Object.keys(this.data.position),
+          className: 'position',
+        },
+        {
+          values: Object.keys(playerInfo),
+          className: 'team',
+        },
+        {
+          values: playerInfo[Object.keys(playerInfo)[0]].map(o => o.webName),
+          className: 'player',
+        }
         ],
       });
       this.setTeamFixture(Object.keys(playerInfo)[0]);

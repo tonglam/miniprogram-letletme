@@ -11,7 +11,29 @@ Page({
   data: {
     entry: "",
     errorMsg: "",
+    userInfo: app.globalData.userInfo,
+  },
 
+  onClick() {
+    if (!this.checkEntry(this.data.entry)) {
+      return false;
+    }
+    this.saveEntry();
+    // if (this.data.app.globalData.userInfo===null) {
+    // this.getUserProfile();
+    // }
+  },
+
+  getUserProfile() {
+    wx.getUserProfile({
+      desc: "展示个人资料，并于team_id绑定",
+      success: (res) => {
+        this.setData({
+          userInfo: res.userInfo
+        });
+        app.globalData.userInfo = res.userInfo;
+      }
+    })
   },
 
   checkEntry() {
@@ -30,13 +52,10 @@ Page({
 
   saveEntry() {
     let entry = this.data.entry;
-    if (!this.checkEntry(entry)) {
-      return false;
-    }
     app.globalData.entryInfoData.entry = entry;
     get('entry/qryEntryInfoData', {
-        entry: entry
-      })
+      entry: entry
+    })
       .then(res => {
         let entryInfoData = res.data;
         this.setData({

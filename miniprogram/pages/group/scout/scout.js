@@ -13,11 +13,14 @@ import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 Page({
 
   data: {
+    // 公共
+    gw: app.globalData.gw,
     deadline: "",
     elementType: 0,
-    page: '../../group/scout/scout',
-    showPicker: false,
+    showPlayerPicker: false,
+    showGwPicker: false,
     showResult: false,
+    // 推荐页
     scoutResultList: [],
     scoutEntry: {},
     fund: 28,
@@ -26,7 +29,7 @@ Page({
     pickMidInfo: {},
     pickFwdInfo: {},
     pickCapInfo: {},
-    // 垃圾双向绑定
+    // 推荐页垃圾双向绑定
     pickGkp: "",
     pickGkpPrice: "",
     pickDef: "",
@@ -40,7 +43,18 @@ Page({
     reason: "",
     // tabBar
     tab: "推荐",
-
+    // 得分页
+    resultGw: app.globalData.gw,
+    // action
+    showActionSheet: false,
+    actions: [
+      {
+        name: '刷新得分',
+      },
+      {
+        name: '切换GW',
+      },
+    ],
   },
 
   onLoad() {
@@ -52,11 +66,12 @@ Page({
   tabBarOnChange(event) {
     let tab = event.detail.name;
     if (tab === '得分') {
-      console.log("tab切换到得分");
       this.setData({
         showResult: true
       });
-      this.initEventScoutResult();
+      if (this.data.scoutResultList.length === 0) {
+        this.initEventScoutResult();
+      }
     } else if (tab === '排行')
       console.log("tab切换到排行");
   },
@@ -85,9 +100,9 @@ Page({
   // 拉取推荐结果
   initEntryScoutResult() {
     get('group/qryEventEntryScoutResult', {
-        event: app.globalData.nextGw,
-        entry: app.globalData.entryInfoData.entry
-      })
+      event: app.globalData.nextGw,
+      entry: app.globalData.entryInfoData.entry
+    })
       .then(res => {
         this.setInitData(res.data);
       })
@@ -147,39 +162,47 @@ Page({
     });
   },
 
-   // 推荐结果 
-   initEventScoutResult() { 
-    this.getEventScoutResult(); 
-  }, 
- 
-  // 拉取本周所有推荐结果 
-  getEventScoutResult() { 
-    get('group/qryEventScoutResult', { 
-      event: app.globalData.gw, 
-    }) 
-      .then(res => { 
-        this.setData({ 
-          scoutResultList: res.data 
-        }); 
-      }) 
-      .catch(res => { 
-        console.log('fail:', res); 
-      }); 
-  }, 
+  // 推荐结果 
+  initEventScoutResult() {
+    let gw = app.globalData.gw;
+    this.getEventScoutResult(gw);
+  },
+
+  // 拉取比赛周所有推荐结果 
+  getEventScoutResult(gw) {
+    get('group/qryEventScoutResult', {
+      event: parseInt(gw),
+    })
+      .then(res => {
+        let list = res.data;
+        if (list.length === 0) {
+          Toast('无数据');
+        }
+        this.setData({
+          scoutResultList: res.data
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
 
   // 选择推荐球员
   getScoutPlayer(event) {
     this.setData({
       elementType: event.currentTarget.id,
-      showPicker: true
+      showPlayerPicker: true
     });
   },
 
   // 球员选择回填
   onPickResult(event) {
     this.setData({
-      showPicker: false
+      showPlayerPicker: false
     });
+    if (event.detail === '' || event.detail === null) {
+      return false;
+    }
     let entryInfo = event.detail,
       webName = entryInfo.webName,
       price = entryInfo.price,
@@ -344,6 +367,63 @@ Page({
       reason: ""
 
     });
+  },
+
+  // tab(得分)
+
+  // 按钮
+  onScoreClick() {
+    this.setData({
+      showActionSheet: true
+    });
+  },
+
+  // 关闭action
+  onActionSheetClose() {
+    this.setData({
+      showActionSheet: false
+    });
+  },
+
+  // action选择
+  onSelect(event) {
+    let action = event.detail.name;
+    if (action === this.data.actions[0].name) { // 刷新得分
+      this.updateEventScoutResult();
+    } else if (action === this.data.actions[1].name) { // 切换gw
+      // 调gwPicker
+      this.setData({
+        showGwPicker: true
+      });
+    }
+  },
+
+  // 更新当前周得分数据
+  updateEventScoutResult() {
+    get('group/updateEventScoutResult', {
+      event: app.globalData.gw
+    })
+      .then(() => {
+        Toast.success('更新成功');
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  // GW选择回填
+  onPickGw(event) {
+    this.setData({ showGwPicker: false });
+    let gw = event.detail;
+    if (gw === '' || gw === null) {
+      return false;
+    }
+    if (gw === this.data.resultGw) {
+      return false;
+    }
+    this.setData({ resultGw: gw });
+    // 更新得分数据
+    this.getEventScoutResult(gw);
   },
 
 })
