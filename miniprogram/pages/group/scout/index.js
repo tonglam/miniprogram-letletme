@@ -122,7 +122,7 @@ Page({
     if (gkpInfo !== null && gkpInfo.element > 0) {
       fund = this.calcLeftFund(fund, gkpInfo.elementType, gkpInfo.price);
       this.setData({
-        pickGkp: this.setShowWebName(gkpInfo.webName, gkpInfo.price),
+        pickGkp: this.setShowWebName(gkpInfo.teamShortName, gkpInfo.webName, gkpInfo.price),
         pickGkpPrice: gkpInfo.price,
         pickGkpInfo: gkpInfo
       });
@@ -130,7 +130,7 @@ Page({
     if (defInfo !== null && defInfo.element > 0) {
       fund = this.calcLeftFund(fund, defInfo.elementType, defInfo.price);
       this.setData({
-        pickDef: this.setShowWebName(defInfo.webName, defInfo.price),
+        pickDef: this.setShowWebName(defInfo.teamShortName, defInfo.webName, defInfo.price),
         pickDefPrice: defInfo.price,
         pickDefInfo: defInfo,
       });
@@ -138,7 +138,7 @@ Page({
     if (midInfo !== null && midInfo.element > 0) {
       fund = this.calcLeftFund(fund, midInfo.elementType, midInfo.price);
       this.setData({
-        pickMid: this.setShowWebName(midInfo.webName, midInfo.price),
+        pickMid: this.setShowWebName(midInfo.teamShortName, midInfo.webName, midInfo.price),
         pickMidPrice: midInfo.price,
         pickMidInfo: midInfo
       });
@@ -146,14 +146,14 @@ Page({
     if (fwdInfo !== null && fwdInfo.element > 0) {
       fund = this.calcLeftFund(fund, fwdInfo.elementType, fwdInfo.price);
       this.setData({
-        pickFwd: this.setShowWebName(fwdInfo.webName, data.fwdInfo.price),
+        pickFwd: this.setShowWebName(fwdInfo.teamShortName, fwdInfo.webName, data.fwdInfo.price),
         pickFwdPrice: fwdInfo.price,
         pickFwdInfo: fwdInfo
       });
     }
     if (captainInfo !== null && captainInfo.element > 0) {
       this.setData({
-        pickCap: this.setShowWebName(captainInfo.webName, data.captainInfo.price),
+        pickCap: this.setShowWebName(captainInfo.teamShortName, captainInfo.webName, data.captainInfo.price),
         pickCapPrice: captainInfo.price,
         pickCapInfo: captainInfo
       });
@@ -204,10 +204,12 @@ Page({
     if (event.detail === '' || event.detail === null) {
       return false;
     }
-    let entryInfo = event.detail,
-      webName = entryInfo.webName,
-      price = entryInfo.price,
+    let playerInfo = event.detail,
+      teamShortName = playerInfo.teamShortName,
+      webName = playerInfo.webName,
+      price = playerInfo.price,
       elementType = this.data.elementType;
+    console.log(playerInfo);
     // 校验
     let fund = this.calcLeftFund(this.data.fund, elementType, price);
     if (!this.checkAvailable(webName, elementType, fund)) {
@@ -217,41 +219,41 @@ Page({
     switch (elementType) {
       case '1':
         this.setData({
-          pickGkpInfo: entryInfo,
+          pickGkpInfo: playerInfo,
           pickGkpPrice: price,
-          pickGkp: this.setShowWebName(webName, price),
+          pickGkp: this.setShowWebName(teamShortName, webName, price),
           fund: fund
         });
         break;
       case '2':
         this.setData({
-          pickDefInfo: entryInfo,
+          pickDefInfo: playerInfo,
           pickDefPrice: price,
-          pickDef: this.setShowWebName(webName, price),
+          pickDef: this.setShowWebName(teamShortName, webName, price),
           fund: fund
         });
         break;
       case '3':
         this.setData({
-          pickMidInfo: entryInfo,
+          pickMidInfo: playerInfo,
           pickMidPrice: price,
-          pickMid: this.setShowWebName(webName, price),
+          pickMid: this.setShowWebName(teamShortName, webName, price),
           fund: fund
         });
         break;
       case '4':
         this.setData({
-          pickFwdInfo: entryInfo,
+          pickFwdInfo: playerInfo,
           pickFwdPrice: price,
-          pickFwd: this.setShowWebName(webName, price),
+          pickFwd: this.setShowWebName(teamShortName, webName, price),
           fund: fund
         });
         break;
       case '5':
         this.setData({
-          pickCapInfo: entryInfo,
+          pickCapInfo: playerInfo,
           pickCapPrice: price,
-          pickCap: this.setShowWebName(webName, price)
+          pickCap: this.setShowWebName(teamShortName, webName, price)
         });
         break;
       default:
@@ -259,8 +261,8 @@ Page({
     }
   },
 
-  setShowWebName(webName, price) {
-    return webName + "  " + "£" + price + "m";
+  setShowWebName(teamShortName, webName, price) {
+    return "【" + teamShortName + "】" + webName + "  " + "£" + price + "m";
   },
 
   // 检查规则
