@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "身价变化",
+  "usingComponents": {
+    "bottomNavBar": "../../../components/navigation/bottomNavBar/index"
+  }
+}

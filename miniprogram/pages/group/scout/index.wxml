@@ -63,7 +63,7 @@
       </view>
 
       <view class="playerPicker" wx:if="{{showPlayerPicker}}">
-        <playerPicker type="{{elementType}}" bind:pickResult="onPickResult"></playerPicker>
+        <playerPicker type="{{elementType}}" show="true" bind:pickResult="onPickResult"></playerPicker>
       </view>
 
       <view class="bottemNavBar">
@@ -76,7 +76,7 @@
 
       <van-row custom-class="scoreTitle">
         <van-col span="4" offset="10">
-          <van-button plain hairline type="info"  bind:click="onScoreClick">GW{{resultGw}}</van-button>
+          <van-button plain hairline type="info" size="small" bind:click="onScoreClick">GW{{resultGw}}</van-button>
           <van-action-sheet show="{{ showActionSheet }}" actions="{{ actions }}" cancel-text="取消"
             bind:close="onActionSheetClose" bind:cancel="onActionSheetClose" bind:select="onSelect" />
         </van-col>
@@ -89,7 +89,7 @@
       </view>
 
       <view class="gwPicker" wx:if="{{showGwPicker}}">
-        <gwPicker gw="{{gw}}" bind:pickGw="onPickGw"></gwPicker>
+        <gwPicker gw="{{gw}}" show="true" bind:pickGw="onPickGw"></gwPicker>
       </view>
 
     </van-tab>

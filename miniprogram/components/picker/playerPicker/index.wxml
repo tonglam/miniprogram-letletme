@@ -1,11 +1,9 @@
-<cover-view class="cover-view">
-
-  <van-popup show="{{ true }}" overlay="{{false}}" position="top" custom-style="height: 100%">
+  <van-popup show="{{ show }}" overlay="{{false}}" position="top" custom-style="height: 100%">
 
     <view class="playerPicker">
 
       <view class="picker">
-        <van-picker show-toolbar toolbar-position="top" item-height="30" title="" columns="{{ columns }}"
+        <van-picker show-toolbar toolbar-position="bottom" item-height="30" title="" columns="{{ columns }}"
           bind:change="pickerOnChange" bind:confirm="pickerOnConfirm" bind:cancel="pickerOnCancel"
           loading="{{loading}}" />
       </view>
@@ -49,5 +47,3 @@
     </view>
 
   </van-popup>
-
-</cover-view>

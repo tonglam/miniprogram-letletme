@@ -68,7 +68,7 @@ Page({
         console.log('fail:', res);
       });
     wx.redirectTo({
-      url: '../../common/index/index'
+      url: '../../common/home/index'
     });
   },
 

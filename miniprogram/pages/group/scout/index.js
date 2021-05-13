@@ -47,14 +47,7 @@ Page({
     resultGw: app.globalData.gw,
     // action
     showActionSheet: false,
-    actions: [
-      {
-        name: '刷新得分',
-      },
-      {
-        name: '切换GW',
-      },
-    ],
+    actions: [{ name: '刷新得分'},{name: '切换GW'}],
   },
 
   onLoad() {

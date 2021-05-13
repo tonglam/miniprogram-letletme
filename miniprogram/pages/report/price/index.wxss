@@ -1,0 +1,12 @@
+.price .info {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.price .rise{
+  color: green;
+}
+
+.price .faller{
+  color: red;
+}

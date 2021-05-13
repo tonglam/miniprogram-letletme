@@ -11,10 +11,11 @@ Component({
 
   properties: {
     type: Number,
+    show:Boolean
   },
 
   data: {
-    event : 'pickResult',
+    event: 'pickResult',
     elementType: 1,
     gw: app.globalData.gw,
     position: {},
@@ -37,7 +38,7 @@ Component({
       this.initPosition();
       this.initPlayerInfo();
     },
-
+   
   },
 
   methods: {
@@ -87,8 +88,8 @@ Component({
     // team_fixture
     setTeamFixture(shortName) {
       get('player/qryTeamFixtureByShortName', {
-        shortName: shortName
-      })
+          shortName: shortName
+        })
         .then(res => {
           this.setData({
             teamFixtureMap: res.data,
@@ -158,8 +159,8 @@ Component({
     getPlayerInfo() {
       let elementType = this.data.elementType;
       get('player/qryPlayerInfoByElementType', {
-        elementType: elementType
-      })
+          elementType: elementType
+        })
         .then(res => {
           this.setData({
             playerInfoMap: res.data,
@@ -185,8 +186,8 @@ Component({
 
     setPlayerDetail(element) {
       get('player/qryPlayerDetailData', {
-        element: element
-      })
+          element: element
+        })
         .then(res => {
           this.setData({
             playerDetailData: res.data
@@ -228,17 +229,17 @@ Component({
       let playerInfo = this.data.playerInfoMap;
       this.setData({
         columns: [{
-          values: Object.keys(this.data.position),
-          className: 'position',
-        },
-        {
-          values: Object.keys(playerInfo),
-          className: 'team',
-        },
-        {
-          values: playerInfo[Object.keys(playerInfo)[0]].map(o => o.webName),
-          className: 'player',
-        }
+            values: Object.keys(this.data.position),
+            className: 'position',
+          },
+          {
+            values: Object.keys(playerInfo),
+            className: 'team',
+          },
+          {
+            values: playerInfo[Object.keys(playerInfo)[0]].map(o => o.webName),
+            className: 'player',
+          }
         ],
       });
       this.setTeamFixture(Object.keys(playerInfo)[0]);

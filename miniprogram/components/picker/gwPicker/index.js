@@ -1,12 +1,13 @@
 Component({
 
   properties: {
-    gw: Number
+    gw: Number,
+    show: Boolean
   },
 
   data: {
-    event : 'pickGw',
-    columns: []
+    event: 'pickGw',
+    columns: [],
   },
 
   lifetimes: {
@@ -24,14 +25,14 @@ Component({
           list.push(i);
         }
       }
-      let columns = [
-        {
-          values: list,
-          className: 'gw',
-          defaultIndex: list.length - 1,
-        }
-      ];
-      this.setData({ columns: columns });
+      let columns = [{
+        values: list,
+        className: 'gw',
+        defaultIndex: list.length - 1,
+      }];
+      this.setData({
+        columns: columns
+      });
     },
 
     onClose() {
@@ -42,7 +43,9 @@ Component({
       const {
         value
       } = event.detail;
-      this.setData({ gw: value });
+      this.setData({
+        gw: value
+      });
     },
 
     onConfirm() {

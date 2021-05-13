@@ -1,0 +1,3 @@
+.tabBar .scoreTitle {
+  margin-top: 10px;
+}

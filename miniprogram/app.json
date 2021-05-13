@@ -1,13 +1,14 @@
 {
   "pages": [
-    "pages/common/index/index",
-    "pages/common/entryInput/entryInput",
-    "pages/group/scout/scout",
-    "pages/live/entry/entry",
-    "pages/live/match/match",
-    "pages/common/me/me"
+    "pages/common/home/index",
+    "pages/common/entryInput/index",
+    "pages/live/entry/index",
+    "pages/live/match/index",
+    "pages/report/price/index",
+    "pages/group/scout/index",
+    "pages/common/me/index"
   ],
-  "entryPagePath": "pages/common/entryInput/entryInput",
+  "entryPagePath": "pages/report/price/index",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
@@ -34,6 +35,7 @@
     "van-collapse": "@vant/weapp/collapse/index",
     "van-collapse-item": "@vant/weapp/collapse-item/index",
     "van-picker": "@vant/weapp/picker/index",
+    "van-datetime-picker": "@vant/weapp/datetime-picker/index",
     "van-count-down": "@vant/weapp/count-down/index",
     "van-transition": "@vant/weapp/transition/index",
     "van-nav-bar": "@vant/weapp/nav-bar/index",
@@ -45,7 +47,11 @@
     "van-overlay": "@vant/weapp/overlay/index",
     "van-notice-bar": "@vant/weapp/notice-bar/index",
     "van-toast": "@vant/weapp/toast/index",
-    "van-action-sheet": "@vant/weapp/action-sheet/index"
+    "van-action-sheet": "@vant/weapp/action-sheet/index",
+    "i-cell-group": "../../dist/cell-group/index",
+    "i-cell": "../../dist/cell/index",
+    "i-panel": "../../dist/panel/index",
+    "i-icon": "../../dist/icon/index"
   },
   "sitemapLocation": "sitemap.json"
 }

@@ -5,7 +5,9 @@
     <i-cell title="中场" value="{{scoutData.midInfo.webName}}({{scoutData.midInfo.points}})"></i-cell>
     <i-cell title="前锋" value="{{scoutData.fwdInfo.webName}}({{scoutData.fwdInfo.points}})"></i-cell>
     <i-cell title="队长" value="{{scoutData.captainInfo.webName}}({{scoutData.captainInfo.points}})"></i-cell>
-    <i-cell title="推荐理由" value="{{scoutData.reason}}"></i-cell>
+    <block wx:if="{{scoutData.reason!==''}}">
+      <i-cell title="推荐理由" value="{{scoutData.reason}}"></i-cell>
+    </block>
     <i-cell title="周得分" value="{{scoutData.eventPoints}}"></i-cell>
     <i-cell title="总得分" value="{{scoutData.totalPoints}}"></i-cell>
   </i-cell-group>

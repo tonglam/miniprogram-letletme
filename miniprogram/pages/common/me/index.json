@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "我的球队",
+  "usingComponents": {
+    "bottomNavBar": "../../../components/navigation/bottomNavBar/index"
+  }
+}

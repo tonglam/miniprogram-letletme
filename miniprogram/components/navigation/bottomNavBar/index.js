@@ -1,8 +1,9 @@
 const urlMap = {
-  "home": "../../../pages/common/index/index",
-  "live": "../../../pages/live/entry/entry",
-  "group": "../../../pages/group/scout/scout",
-  "me": "../../../pages/common/me/me"
+  "tournament": "../../../pages/common/home/index",
+  "live": "../../../pages/live/entry/index",
+  "report": "../../../pages/report/price/index",
+  "group": "../../../pages/group/scout/index",
+  "me": "../../../pages/common/me/index"
 }
 
 Component({
@@ -12,6 +13,7 @@ Component({
   },
 
   data: {
+
   },
 
   methods: {
@@ -19,7 +21,7 @@ Component({
       let name = event.detail;
       this.properties.active = name;
       let url = urlMap[name];
-      wx.navigateTo({
+      wx.redirectTo({
         url: url
       });
     },
