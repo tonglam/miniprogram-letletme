@@ -85,6 +85,22 @@ function numSub(num1, num2) {
   return ((num1 * baseNum - num2 * baseNum) / baseNum).toFixed(precision);
 };
 
+function compareAscSort(property) {
+  return function (a, b) {
+    var value1 = a[property];
+    var value2 = b[property];
+    return value1 - value2;
+  }
+};
+
+function compareDescSort(property) {
+  return function (a, b) {
+    var value1 = a[property];
+    var value2 = b[property];
+    return value2 - value1;
+  }
+};
+
 export {
   getDeadline,
   diffDeadlineTime,
@@ -92,5 +108,7 @@ export {
   showChip,
   getDifficultyColor,
   numAdd,
-  numSub
+  numSub,
+  compareAscSort,
+  compareDescSort,
 }

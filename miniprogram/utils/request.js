@@ -39,7 +39,6 @@
      wx.showLoading({
        title: '加载中'
      });
-     console.log(data);
      wx.request({
        url: baseUrl + url,
        data: data,

@@ -1,5 +1,5 @@
 <view class="tabBar">
-  <van-tabs active="{{ tab }}" bind:change="tabBarOnChange">
+  <van-tabs type="card" active="{{ tab }}" bind:change="tabBarOnChange">
 
     <van-tab title="推荐" name="推荐">
 

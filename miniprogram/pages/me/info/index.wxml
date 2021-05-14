@@ -8,18 +8,20 @@
     <van-collapse-item name="1">
       <view slot="title">{{entryInfoData.entryName}}</view>
       <p>总分：{{entryInfoData.overallPoints}}</p>
-      <van-divider/>
+      <van-divider />
       <p>全球排名：{{entryInfoData.overallRank}}</p>
-      <van-divider/>
+      <van-divider />
       <p>地区：{{entryInfoData.region}}</p>
-      <van-divider/>
+      <van-divider />
       <p>开始时间：GW{{entryInfoData.startedEvent}}</p>
-      <van-divider/>
-      <p>转会总数：{{entryInfoData.teamValue/10}}m</p>
-      <van-divider/>
-      <p>阵容身价：{{entryInfoData.teamValue/10}}m</p>
-      <van-divider/>
-      <p>银行余额：{{entryInfoData.bank/10}}m</p>
+      <van-divider />
+      <p>转会总数：{{entryInfoData.totalTransfers}}</p>
+      <van-divider />
+      <p>阵容身价：{{entryInfoData.teamValue}}m</p>
+      <van-divider />
+      <p>银行余额：{{entryInfoData.bank}}m</p>
+      <van-divider />
+      <p>总价值：{{entryInfoData.value}}m</p>
     </van-collapse-item>
   </van-collapse>
 </view>

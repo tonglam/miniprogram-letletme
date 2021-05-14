@@ -20,8 +20,10 @@ App({
       startedEvent: 1,
       overallPoints: 0,
       overallRank: 0,
-      bank: 0,
-      teamValue: 0
+      totalTransfers: 0,
+      value: 0.0,
+      bank: 0.0,
+      teamValue: 0.0
     },
     userInfo: {},
   },

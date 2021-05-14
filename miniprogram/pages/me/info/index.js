@@ -29,7 +29,7 @@ Page({
   entryInput() {
     app.globalData.entryInfoData = {};
     wx.redirectTo({
-      url: '../../common/entryInput/entryInput'
+      url: '../../common/entryInput/index'
     });
   },
 

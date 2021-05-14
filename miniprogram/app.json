@@ -8,13 +8,14 @@
     "pages/group/scout/index",
     "pages/me/info/index"
   ],
-  "entryPagePath": "pages/common/entryInput/index",
+  "entryPagePath": "pages/live/match/index",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "light",
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTitleText": "letletme",
-    "navigationBarTextStyle": "black"
+    "navigationBarTextStyle": "black",
+    "enablePullDownRefresh":true
   },
   "networkTimeout": {
     "request": 20000,
@@ -24,6 +25,7 @@
   },
   "usingComponents": {
     "table-view": "miniprogram-table-component",
+    "van-icon": "@vant/weapp/icon/index",
     "van-cell": "@vant/weapp/cell/index",
     "van-cell-group": "@vant/weapp/cell-group/index",
     "van-row": "@vant/weapp/row/index",

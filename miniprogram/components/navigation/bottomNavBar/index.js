@@ -1,6 +1,6 @@
 const urlMap = {
   "tournament": "../../../pages/common/home/index",
-  "live": "../../../pages/live/entry/index",
+  "live": "../../../pages/live/match/index",
   "report": "../../../pages/report/price/index",
   "group": "../../../pages/group/scout/index",
   "me": "../../../pages/me/info/index"

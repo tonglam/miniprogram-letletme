@@ -1,18 +1,43 @@
 <view class="entryInput">
-  <van-cell-group>
-    <van-field size="large" type="number" left-icon="manager" model:value="{{entry}}" placeholder="请输入team_id"
-      error-message="{{errorMsg}}" border="{{ false }}" clearable use-button-slot bind:blur="checkEntry">
-      <van-button slot="button" size="small" type="primary" bind:click="onClick">
-        确定
-      </van-button>
-    </van-field>
-  </van-cell-group>
-</view>
 
-<!-- <view class="container">
-  <view class="userinfo">
-    <block wx:if="{{!hasUserInfo}}">
-      <van-button slot="button" size="small" type="primary" bind:click="getUserProfile">aaa</van-button>
-    </block> 
+  <view class="navBar">
+    <van-nav-bar title="让让我吧" left-text="" right-text="忘记id" safe-area-inset-top="{{false}}"
+      bind:click-right="onClickForget">
+    </van-nav-bar>
   </view>
-</view> -->
+
+  <view class="pop" style="text-align:center;">
+    <van-popup show="{{ popShow }}" position="top" bind:close="onPopClose">
+      <text>\n</text>
+      <text>输入任选一项进行模糊查询</text>
+      <text>\n\n</text>
+      <van-field size="large" left-icon="search" model:value="{{entryName}}" placeholder="球队名字" border="{{ true }}"
+        clearable />
+      <van-field size="large" left-icon="search" model:value="{{playerName}}" placeholder="玩家名字" border="{{ true }}"
+        clearable />
+      <text>\n</text>
+      <van-button type="primary" plain size="normal" bind:click="onClickQuery">查询</van-button>
+      <text>\n\n</text>
+    </van-popup>
+  </view>
+
+  <view class="picker">
+    <van-popup show="{{ pickerShow }}" position="top">
+      <van-picker show-toolbar toolbar-position="bottom" columns="{{ columns }}" cancel-button-text="重新输入" bind:cancel="onPickerCancel" bind:confirm="onPickerConfirm" />
+    </van-popup>
+  </view>
+
+  <text>\n</text>
+
+  <view class="input">
+    <van-cell-group>
+      <van-field size="large" type="number" left-icon="manager" model:value="{{entry}}" placeholder="请输入team_id"
+        error-message="{{errorMsg}}" border="{{ false }}" clearable use-button-slot bind:blur="checkEntry">
+        <van-button slot="button" size="small" type="primary" bind:click="onClickInput">
+          确定
+        </van-button>
+      </van-field>
+    </van-cell-group>
+  </view>
+
+</view>

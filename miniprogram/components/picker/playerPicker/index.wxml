@@ -16,19 +16,19 @@
               £{{playerInfoData.price}}m
             </view>
             <block class="detailCard" wx:if="{{playerInfoData.elementType==1}}">
-              <import src="../../../template/gkpDetail.wxml" />
+              <import src="../../../template/playerDetail.wxml" />
               <template is="gkpDetail" data="{{playerDetailData}}" />
             </block>
             <block class="detailCard" wx:if="{{playerInfoData.elementType==2}}">
-              <import src="../../../template/defDetail.wxml" />
+              <import src="../../../template/playerDetail.wxml" />
               <template is="defDetail" data="{{playerDetailData}}" />
             </block>
             <block class="detailCard" wx:if="{{playerInfoData.elementType==3}}">
-              <import src="../../../template/midDetail.wxml" />
+              <import src="../../../template/playerDetail.wxml" />
               <template is="midDetail" data="{{playerDetailData}}" />
             </block>
             <block class="detailCard" wx:if="{{playerInfoData.elementType==4}}">
-              <import src="../../../template/fwdDetail.wxml" />
+              <import src="../../../template/playerDetail.wxml" />
               <template is="fwdDetail" data="{{playerDetailData}}" />
             </block>
           </van-collapse-item>
