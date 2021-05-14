@@ -42,7 +42,7 @@ Page({
   },
 
   getPirceList() {
-    get('report/qryPlayerValueByChangeDate', {
+    get('report/qryPlayerValueByDate', {
         date: this.data.date
       })
       .then(res => {

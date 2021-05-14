@@ -6,7 +6,7 @@
     "pages/live/match/index",
     "pages/report/price/index",
     "pages/group/scout/index",
-    "pages/common/me/index"
+    "pages/me/info/index"
   ],
   "entryPagePath": "pages/common/entryInput/index",
   "window": {
@@ -48,10 +48,10 @@
     "van-notice-bar": "@vant/weapp/notice-bar/index",
     "van-toast": "@vant/weapp/toast/index",
     "van-action-sheet": "@vant/weapp/action-sheet/index",
-    "i-cell-group": "../../dist/cell-group/index",
-    "i-cell": "../../dist/cell/index",
-    "i-panel": "../../dist/panel/index",
-    "i-icon": "../../dist/icon/index"
+    "i-cell-group": "./dist/cell-group/index",
+    "i-cell": "./dist/cell/index",
+    "i-panel": "./dist/panel/index",
+    "i-icon": "./dist/icon/index"
   },
   "sitemapLocation": "sitemap.json"
 }

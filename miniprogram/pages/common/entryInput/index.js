@@ -53,7 +53,7 @@ Page({
   saveEntry() {
     let entry = this.data.entry;
     app.globalData.entryInfoData.entry = entry;
-    get('entry/qryEntryInfoData', {
+    get('entry/qryEntryInfo', {
       entry: entry
     })
       .then(res => {

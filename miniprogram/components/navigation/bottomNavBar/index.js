@@ -3,7 +3,7 @@ const urlMap = {
   "live": "../../../pages/live/entry/index",
   "report": "../../../pages/report/price/index",
   "group": "../../../pages/group/scout/index",
-  "me": "../../../pages/common/me/index"
+  "me": "../../../pages/me/info/index"
 }
 
 Component({

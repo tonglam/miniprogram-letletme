@@ -101,9 +101,9 @@ Page({
   // 拉取推荐结果
   initEntryScoutResult() {
     get('group/qryEventEntryScoutResult', {
-        event: app.globalData.nextGw,
-        entry: app.globalData.entryInfoData.entry
-      })
+      event: app.globalData.nextGw,
+      entry: app.globalData.entryInfoData.entry
+    })
       .then(res => {
         this.setInitData(res.data);
       })
@@ -159,7 +159,8 @@ Page({
       });
     }
     this.setData({
-      fund: fund
+      fund: fund,
+      reason: data.reason
     });
   },
 
@@ -172,8 +173,8 @@ Page({
   // 拉取比赛周所有推荐结果 
   getEventScoutResult(gw) {
     get('group/qryEventScoutResult', {
-        event: parseInt(gw),
-      })
+      event: parseInt(gw),
+    })
       .then(res => {
         let list = res.data;
         if (list.length === 0) {
@@ -209,15 +210,14 @@ Page({
       webName = playerInfo.webName,
       price = playerInfo.price,
       elementType = this.data.elementType;
-    console.log(playerInfo);
     // 校验
     let fund = this.calcLeftFund(this.data.fund, elementType, price);
     if (!this.checkAvailable(webName, elementType, fund)) {
       return false;
     }
     // 设置
-    switch (elementType) {
-      case '1':
+    switch (parseInt(elementType)) {
+      case 1:
         this.setData({
           pickGkpInfo: playerInfo,
           pickGkpPrice: price,
@@ -225,7 +225,7 @@ Page({
           fund: fund
         });
         break;
-      case '2':
+      case 2:
         this.setData({
           pickDefInfo: playerInfo,
           pickDefPrice: price,
@@ -233,7 +233,7 @@ Page({
           fund: fund
         });
         break;
-      case '3':
+      case 3:
         this.setData({
           pickMidInfo: playerInfo,
           pickMidPrice: price,
@@ -241,7 +241,7 @@ Page({
           fund: fund
         });
         break;
-      case '4':
+      case 4:
         this.setData({
           pickFwdInfo: playerInfo,
           pickFwdPrice: price,
@@ -249,7 +249,7 @@ Page({
           fund: fund
         });
         break;
-      case '5':
+      case 5:
         this.setData({
           pickCapInfo: playerInfo,
           pickCapPrice: price,
@@ -268,38 +268,75 @@ Page({
   // 检查规则
   checkAvailable(webName, elementType, fund) {
     // 队长不能重复
-    if (webName === this.data.pickGkpInfo.webName) {
+    if (webName === this.data.pickCapInfo.webName) {
       Toast.fail('选择的队长不能和队员重复');
       return false;
     }
-    // 检查余额
-    if (elementType === '1' || elementType === '2' || elementType === '3' || elementType === '4') {
-      if (fund < 0) {
-        Toast.fail('钱不够啦');
-        return false;
-      }
+    // 检查重复
+    switch (parseInt(elementType)) {
+      case 1:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      case 2:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      case 3:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      case 4:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      default:
+        return true;
     }
-    return true;
   },
 
   // 资金计算
   calcLeftFund(fund, elementType, price) {
     let oldPrice = 0;
     switch (elementType) {
-      case '1':
+      case 1:
         oldPrice = this.data.pickGkpPrice;
-        break;
-      case '2':
+        return numSub(numAdd(fund, oldPrice), price);
+      case 2:
         oldPrice = this.data.pickDefPrice;
-        break;
-      case '3':
+        return numSub(numAdd(fund, oldPrice), price);
+      case 3:
         oldPrice = this.data.pickMidPrice;
-        break;
-      case '4':
+        return numSub(numAdd(fund, oldPrice), price);
+      case 4:
         oldPrice = this.data.pickFwdPrice;
-        break;
+        return numSub(numAdd(fund, oldPrice), price);
     }
-    return numSub(numAdd(fund, oldPrice), price);
+    return fund;
   },
 
   // 提交
@@ -349,27 +386,7 @@ Page({
 
   // 重选
   onClickRefresh() {
-    this.setData({
-      fund: 28,
-      pickGkpInfo: {},
-      pickDefInfo: {},
-      pickMidInfo: {},
-      pickFwdInfo: {},
-      pickCapInfo: {},
-      // 垃圾双向绑定
-      pickGkp: "",
-      pickGkpPrice: "",
-      pickDef: "",
-      pickDefPrice: "",
-      pickMid: "",
-      pickMidPrice: "",
-      pickFwd: "",
-      pickFwdPrice: "",
-      pickCap: "",
-      pickCapPrice: "",
-      reason: ""
-
-    });
+    this.initEntryScoutResult();
   },
 
   // tab(得分)
@@ -404,8 +421,8 @@ Page({
   // 更新当前周得分数据
   updateEventScoutResult() {
     get('group/updateEventScoutResult', {
-        event: app.globalData.gw
-      })
+      event: app.globalData.gw
+    })
       .then(() => {
         Toast.success('更新成功');
       })

@@ -14,7 +14,7 @@
 
       <view class="cellGroup">
         <van-cell-group>
-          <van-field model:value="{{ pickGkp }}" center readonly label="门将" use-button-slot border="{{ false }}">
+          <van-field model:value="{{ pickGkp }}" center clearable label="门将" use-button-slot border="{{ false }}">
             <van-button id="1" slot="button" size="small" type="primary" custom-class="button"
               bind:click="getScoutPlayer">选择
             </van-button>
