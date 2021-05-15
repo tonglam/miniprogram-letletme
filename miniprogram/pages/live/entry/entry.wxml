@@ -1,0 +1,12 @@
+<view class="entry">
+
+  <view class="navBar">
+    <van-nav-bar title="{{entryInfoData.entryName}} - GW{{gw}}" left-text="" right-text=""
+      safe-area-inset-top="{{false}}" />
+  </view>
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="live"></bottomNavBar>
+  </view>
+
+</view>

@@ -2,7 +2,8 @@ import {
   get
 } from './utils/request';
 import {
-  getDeadline
+  getDeadline,
+  showOverallRank
 } from './utils/utils';
 
 App({
@@ -33,7 +34,16 @@ App({
       env: 'cloud1',
       traceUser: true,
     });
+  },
+
+  onShow() {
+    // get gw
     this.setCurrentEventAndNextUtcDeadline();
+    // get entry_info
+    let entry = wx.getStorageSync('entry');
+    if (entry > 0) {
+      this.setEntryInfo(entry);
+    }
   },
 
   setCurrentEventAndNextUtcDeadline() {
@@ -51,6 +61,20 @@ App({
       .catch(res => {
         console.log('fail:', res);
       })
+  },
+
+  setEntryInfo(entry) {
+    get('entry/qryEntryInfo', {
+        entry: entry
+      })
+      .then(res => {
+        let entryInfoData = res.data;
+        entryInfoData['overallRank'] = showOverallRank(entryInfoData.overallRank);
+        this.globalData.entryInfoData = entryInfoData;
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
   },
 
 })

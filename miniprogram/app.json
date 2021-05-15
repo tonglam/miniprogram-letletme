@@ -1,21 +1,21 @@
 {
   "pages": [
-    "pages/common/home/index",
-    "pages/common/entryInput/index",
-    "pages/live/entry/index",
-    "pages/live/match/index",
-    "pages/report/price/index",
-    "pages/group/scout/index",
-    "pages/me/info/index"
+    "pages/common/home/home",
+    "pages/common/entryInput/entryInput",
+    "pages/live/entry/entry",
+    "pages/live/match/match",
+    "pages/live/tournament/tournament",
+    "pages/stat/price/price",
+    "pages/group/scout/scout",
+    "pages/me/info/info"
   ],
-  "entryPagePath": "pages/live/match/index",
+  "entryPagePath": "pages/live/match/match",
   "window": {
     "backgroundColor": "#F6F6F6",
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "letletme",
-    "navigationBarTextStyle": "black",
-    "enablePullDownRefresh":true
+    "navigationBarTitleText": "let let me",
+    "navigationBarTextStyle": "black"
   },
   "networkTimeout": {
     "request": 20000,

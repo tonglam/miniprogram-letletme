@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "实时赛果",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "bottomNavBar": "../../../components/navigation/bottomNavBar/bottomNavBar"
+  }
+}

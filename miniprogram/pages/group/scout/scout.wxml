@@ -1,0 +1,109 @@
+<view class="scout">
+
+  <view class="tabBar">
+    <text>\n</text>
+    <van-tabs type="card" active="{{ tab }}" bind:change="tabBarOnChange">
+
+      <van-tab title="推荐" name="推荐">
+
+        <view class="navBar">
+          <van-nav-bar title="{{scoutEntry.name}}" left-text="重选" right-text="提交" safe-area-inset-top="{{false}}"
+            bind:click-left="onClickRefresh" bind:click-right="onClickConfirm" />
+        </view>
+
+        <view class="notice">
+          <van-notice-bar scrollable="{{ false }}" left-icon="balance-o" text="GW{{nextGw}} - 剩余资金：£{{fund}}m"
+            border="{{false}}" />
+        </view>
+
+        <view class="cellGroup">
+          <van-cell-group>
+            <van-field model:value="{{ pickGkp }}" center clearable label="门将" use-button-slot border="{{ false }}">
+              <van-button id="1" slot="button" size="small" type="primary" custom-class="button"
+                bind:click="getScoutPlayer">选择
+              </van-button>
+            </van-field>
+          </van-cell-group>
+
+          <van-cell-group>
+            <van-field model:value="{{ pickDef }}" center readonly label="后卫" use-button-slot border="{{ false }}">
+              <van-button id="2" slot="button" size="small" type="primary" custom-class="button"
+                bind:click="getScoutPlayer">选择
+              </van-button>
+            </van-field>
+          </van-cell-group>
+
+          <van-cell-group>
+            <van-field model:value="{{ pickMid }}" center readonly label="中场" use-button-slot border="{{ false }}">
+              <van-button id="3" slot="button" size="small" type="primary" custom-class="button"
+                bind:click="getScoutPlayer">选择
+              </van-button>
+            </van-field>
+          </van-cell-group>
+
+          <van-cell-group>
+            <van-field model:value="{{ pickFwd }}" center readonly label="前锋" use-button-slot border="{{ false }}">
+              <van-button id="4" slot="button" size="small" type="primary" custom-class="button"
+                bind:click="getScoutPlayer">选择
+              </van-button>
+            </van-field>
+          </van-cell-group>
+
+          <van-cell-group>
+            <van-field value="{{ pickCap }} " center readonly label="队长" use-button-slot border="{{ false }}">
+              <van-button id="5" slot="button" size="small" type="primary" custom-class="button"
+                bind:click="getScoutPlayer">选择
+              </van-button>
+            </van-field>
+          </van-cell-group>
+        </view>
+
+        <view class="reason">
+          <van-cell-group>
+            <van-field type="textarea" model:value="{{ reason }}" center clearable label="推荐理由"
+              placeholder="这个人很懒什么都没留下甚至不打标点" border="{{ false }}" use-button-slot>
+            </van-field>
+          </van-cell-group>
+        </view>
+
+        <view class="playerPicker" wx:if="{{showPlayerPicker}}">
+          <playerPicker type="{{elementType}}" show="true" bind:pickResult="onPickResult"></playerPicker>
+        </view>
+
+      </van-tab>
+
+      <van-tab title="得分" name="得分">
+
+        <view class="navBar">
+          <van-nav-bar title="GW{{resultGw}}" left-text="刷新" right-text="更换GW" safe-area-inset-top="{{false}}"
+            bind:click-left="onClickRefresh" bind:click-right="onClickChangeGw" />
+        </view>
+
+        <swiper indicator-dots="true" interval="3000" style="height:500px">
+          <view class="scoutResult" wx:if="{{showResult}}">
+            <block wx:for="{{scoutResultList}}" wx:key="index">
+              <swiper-item>
+                <scoutResult scoutData="{{item}}"></scoutResult>
+              </swiper-item>
+            </block>
+          </view>
+        </swiper>
+
+        <view class="gwPicker" wx:if="{{showGwPicker}}">
+          <gwPicker gw="{{gw}}" show="true" bind:pickGw="onPickGw"></gwPicker>
+        </view>
+
+      </van-tab>
+
+      <van-tab title="排行"></van-tab>
+
+    </van-tabs>
+  </view>
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="group"></bottomNavBar>
+  </view>
+
+  <van-toast id="van-toast" />
+
+</view>

@@ -1,0 +1,41 @@
+<view class="home">
+  <van-row class="indexRow">
+    <image class="begbeg" src="../../../images/begbeg.jpg" mode="aspectFit"></image>
+  </van-row>
+
+  <van-row>
+  <text>\n\n</text>
+  </van-row>
+
+  <van-row>
+    <text>GW{{nextGw}}\n\ndeadline: {{deadline}}</text>
+  </van-row>
+
+  <van-row>
+  <text>\n\n</text>
+  </van-row>
+
+  <van-row>
+    <van-count-down use-slot time="{{ time }}" bind:change="onChange">
+      <text class="item">{{ timeData.days }}天</text>
+      <text class="item">{{ timeData.hours }}时</text>
+      <text class="item">{{ timeData.minutes }}分</text>
+      <text class="item">{{ timeData.seconds }}秒</text>
+    </van-count-down>
+  </van-row>
+
+  <van-row>
+  <text>\n\n</text>
+  </van-row>
+
+  <van-row>
+    <van-transition show="{{ true }}" custom-class="block">
+      让让我吧
+    </van-transition>
+  </van-row>
+
+</view>
+
+<view class="bottemNavBar">
+  <bottomNavBar active="home"></bottomNavBar>
+</view>

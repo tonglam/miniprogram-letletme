@@ -1,0 +1,7 @@
+<view class="tournament">
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="live"></bottomNavBar>
+  </view>
+
+</view>
