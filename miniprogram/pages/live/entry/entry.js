@@ -39,6 +39,7 @@ Page({
 
   // nav
   onClickRefresh() {
+    this.refreshLiveMatch();
     this.initEntryLive();
   },
 
@@ -138,6 +139,18 @@ Page({
           entryName: entryInfoData.entryName,
           playerName: entryInfoData.playerName
         });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  refreshLiveMatch() {
+    get('common/insertEventLive', {
+        event: app.globalData.gw
+      })
+      .then(() => {
+        this.initLiveMatch();
       })
       .catch(res => {
         console.log('fail:', res);
