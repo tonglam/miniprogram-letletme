@@ -1,9 +1,0 @@
-{
-  "navigationBarTitleText": "球探推荐",
-  "usingComponents": {
-    "playerPicker": "../../../components/picker/playerPicker/index",
-    "gwPicker": "../../../components/picker/gwPicker/index",
-    "scoutResult":"../../../components/scoutResult/index",
-    "bottomNavBar": "../../../components/navigation/bottomNavBar/index"
-    }
-}
