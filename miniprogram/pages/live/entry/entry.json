@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "实时得分",
   "usingComponents": {
     "bottomNavBar": "../../../components/navigation/bottomNavBar/bottomNavBar"
   }

@@ -1,4 +1,7 @@
+const app = getApp();
+
 import moment from 'moment'
+import {get} from './request'
 
 function getDeadline(time) {
   return moment(time).utcOffset(-1 * new Date().getTimezoneOffset()).format('YYYY/MM/DD HH:mm:ss')

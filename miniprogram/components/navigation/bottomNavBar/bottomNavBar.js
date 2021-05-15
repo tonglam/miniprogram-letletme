@@ -1,4 +1,22 @@
 const map = {
+  "live": {
+    "pages": [{
+      name: "球队",
+      subname: '查看球队实时得分',
+    }, {
+      name: "小联赛",
+      subname: '查看小联赛实时得分和排名',
+    }, {
+      name: "比赛",
+      subname: '查看实时更新的比赛结果',
+    }],
+    "url": {
+      "球队": "../../../pages/live/entry/entry",
+      "小联赛": "../../../pages/live/tournament/tournament",
+      "比赛": "../../../pages/live/match/match"
+    },
+    "show": true
+  },
   "tournament": {
     "pages": [{
       name: "首页"
@@ -8,24 +26,10 @@ const map = {
     },
     "show": true
   },
-  "live": {
-    "pages": [{
-      name: "我的球队"
-    }, {
-      name: "小联赛"
-    }, {
-      name: "比赛"
-    }],
-    "url": {
-      "我的球队": "../../../pages/live/entry/entry",
-      "小联赛": "../../../pages/live/tournament/tournament",
-      "比赛": "../../../pages/live/match/match"
-    },
-    "show": true
-  },
   "stat": {
     "pages": [{
-      name: "身价变化"
+      name: "身价变化",
+      subname: '查看每日价格涨跌',
     }],
     "url": {
       "身价变化": "../../../pages/stat/price/price"

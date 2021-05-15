@@ -1,1 +1,45 @@
-/* miniprogram/pages/live/entry/entry.wxss */
+.entry .entryInfoTitle {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.entry .pickNotStart {
+  font-weight: bold;
+}
+
+.entry .pickPlaying {
+  color: red;
+  background-color: #FFB800;
+  font-weight: bold;
+}
+
+.entry .pickFinished {
+  color: blue;
+  font-weight: bold;
+}
+
+.entry .pickBlank {
+  color: grey;
+  font-weight: bold;
+}
+
+.entry .unPickNotStart {
+  background-color: #e9eaec;
+}
+
+.entry .unPickPlaying {
+  color: red;
+  background-color: #e9eaec;
+}
+
+.entry .unPickFinished {
+  color: blue;
+  background-color: #e9eaec;
+}
+
+.entry .unPickBlank {
+  color: grey;
+  background-color: #e9eaec;
+}

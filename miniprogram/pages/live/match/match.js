@@ -23,7 +23,7 @@ Page({
     liveFixtureList: [],
   },
 
-  onLoad: function () {
+  onShow: function () {
     this.initLiveMatch();
   },
 
@@ -66,7 +66,7 @@ Page({
     get('common/insertEventLive', {
         event: app.globalData.gw
       })
-      .then(res => {
+      .then(() => {
         this.initLiveMatch();
       })
       .catch(res => {
@@ -94,7 +94,7 @@ Page({
       })
       .catch(res => {
         console.log('fail:', res);
-      })
+      });
   },
 
   initLiveBonus() {

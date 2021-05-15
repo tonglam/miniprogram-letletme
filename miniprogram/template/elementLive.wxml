@@ -1,0 +1,31 @@
+<template name="gkp">
+  <i-cell i-class="{{data.style}}"
+    label="时间:{{data.minutes}}分钟;零封:{{data.cleanSheets}};扑救:{{data.saves}};黄牌:{{data.yellowCards}};红牌:{{data.redCards}}"
+    title="【{{data.teamShortName}}】{{data.webName}} ({{data.elementTypeName}})"
+    value="得分:{{data.totalPoints}}({{data.bonus}})">
+  </i-cell>
+</template>
+
+<template name="def">
+  <i-cell i-class="{{data.style}}"
+    label="时间:{{data.minutes}}分钟;零封:{{data.cleanSheets}};进球:{{data.goalsScored}};助攻:{{data.assists}};黄牌:{{data.yellowCards}};红牌:{{data.redCards}}"
+    title="【{{data.teamShortName}}】{{data.webName}} ({{data.elementTypeName}})"
+    value="得分:{{data.totalPoints}}({{data.bonus}})">
+  </i-cell>
+</template>
+
+<template name="mid">
+  <i-cell i-class="{{data.style}}"
+    label="时间:{{data.minutes}}分钟;进球:{{data.goalsScored}};助攻:{{data.assists}};零封:{{data.cleanSheets}};黄牌:{{data.yellowCards}};红牌:{{data.redCards}}"
+    title="【{{data.teamShortName}}】{{data.webName}} ({{data.elementTypeName}})"
+    value="得分:{{data.totalPoints}}({{data.bonus}})">
+  </i-cell>
+</template>
+
+<template name="fwd">
+  <i-cell i-class="{{data.style}}"
+    label="时间:{{data.minutes}}分钟;进球:{{data.goalsScored}};助攻:{{data.assists}};黄牌:{{data.yellowCards}};红牌:{{data.redCards}}"
+    title="【{{data.teamShortName}}】{{data.webName}} ({{data.elementTypeName}})"
+    value="得分:{{data.totalPoints}}({{data.bonus}})">
+  </i-cell>
+</template>

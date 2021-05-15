@@ -9,7 +9,7 @@
     "pages/group/scout/scout",
     "pages/me/info/info"
   ],
-  "entryPagePath": "pages/live/match/match",
+  "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",
@@ -50,6 +50,7 @@
     "van-notice-bar": "@vant/weapp/notice-bar/index",
     "van-toast": "@vant/weapp/toast/index",
     "van-action-sheet": "@vant/weapp/action-sheet/index",
+    "van-submit-bar": "@vant/weapp/submit-bar/index",
     "i-cell-group": "./dist/cell-group/index",
     "i-cell": "./dist/cell/index",
     "i-panel": "./dist/panel/index",

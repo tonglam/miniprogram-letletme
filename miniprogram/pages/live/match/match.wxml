@@ -21,7 +21,9 @@
 
         <van-tab title="比赛" name="match">
 
-          <text wx:if="{{infoShow}}">\n暂无数据</text>
+          <view class="info">
+            <text wx:if="{{infoShow}}">\n暂无数据</text>
+          </view>
 
           <block wx:for="{{liveMatchList}}" wx:for-item="matchData" wx:key="dataMatchId">
             <van-collapse value="{{ activeNames }}" bind:change="onChange">
@@ -50,7 +52,9 @@
 
         <van-tab title="BONUS" name="bonus">
 
-          <text wx:if="{{infoShow}}">\n暂无数据</text>
+          <view class="info">
+            <text wx:if="{{infoShow}}">\n暂无数据</text>
+          </view>
 
           <block wx:for="{{liveBonusList}}" wx:for-item="bonusData" wx:key="bonusMatchId">
             <van-collapse value="{{ activeNames }}" bind:change="onChange">
@@ -72,7 +76,9 @@
 
         <van-tab title="BPS" name="bps">
 
-          <text wx:if="{{infoShow}}">\n暂无数据</text>
+          <view class="info">
+            <text wx:if="{{infoShow}}">\n暂无数据</text>
+          </view>
 
           <block wx:for="{{liveBpsList}}" wx:for-item="bpsData" wx:key="bpsMatchId">
             <van-collapse value="{{ activeNames }}" bind:change="onChange">
@@ -92,8 +98,10 @@
 
         </van-tab>
 
-        <van-tab title="详情" name="info">
-          <text wx:if="{{infoShow}}">\n暂无数据</text>
+        <van-tab title="详情" name="detail">
+          <view class="info">
+            <text wx:if="{{infoShow}}">\n暂无数据</text>
+          </view>
         </van-tab>
 
       </van-tabs>

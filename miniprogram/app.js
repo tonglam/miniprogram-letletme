@@ -71,7 +71,7 @@ App({
         let entryInfoData = res.data;
         entryInfoData['overallRank'] = showOverallRank(entryInfoData.overallRank);
         this.globalData.entryInfoData = entryInfoData;
-      })
+            })
       .catch(res => {
         console.log('fail:', res);
       });

@@ -1,3 +1,7 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "实时联赛",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "bottomNavBar": "../../../components/navigation/bottomNavBar/bottomNavBar"
+  }
 }

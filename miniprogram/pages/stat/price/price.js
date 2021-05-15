@@ -81,18 +81,17 @@ Page({
         date: this.data.date
       })
       .then(res => {
-        let result = res.data,
-          riseList = result[type[0]],
+        let result = res.data;
+        if (JSON.stringify(result) === '{}') {
+          this.setData({
+            riseInfoShow: true,
+            fallerInfoShow: true,
+            startInfoShow: true
+          });
+        }
+        let riseList = result[type[0]],
           fallerList = result[type[1]],
           startList = result[type[2]];
-        this.setData({
-          riseList: riseList,
-          fallerList: fallerList,
-          startList: startList,
-          riseInfoShow: false,
-          fallserInfoShow: false,
-          startInfoShow: false
-        });
         // rise
         if (riseList.length === 0) {
           this.setData({
@@ -111,6 +110,14 @@ Page({
             startInfoShow: true
           });
         }
+        this.setData({
+          riseList: riseList,
+          fallerList: fallerList,
+          startList: startList,
+          riseInfoShow: false,
+          fallerInfoShow: false,
+          startInfoShow: false
+        });
       })
       .catch(res => {
         console.log('fail:', res);
