@@ -28,7 +28,6 @@ Component({
     playerDetailData: {},
     activeNames: ['fixture'],
     triggered: false,
-
   },
 
   lifetimes: {
@@ -41,7 +40,6 @@ Component({
       this.initPosition();
       this.initPlayerInfo();
     },
-
   },
 
   methods: {

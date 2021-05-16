@@ -7,31 +7,38 @@ import {
   compareAscSort,
   compareDescSort
 } from '../../../utils/utils';
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 Page({
 
   data: {
+    gw: 0,
     tabBarActive: 'playing',
     playStatus: 'playing',
     infoShow: false,
     contentShow: true,
     fixtureShow: false,
-    activeNames: ['1','2','3'],
+    activeNames: ['1', '2', '3'],
     liveMatchList: [],
     liveBonusList: [],
     liveBpsList: [],
     liveFixtureList: [],
+    // refrsh
+    pullDownRefresh: false
   },
 
   onShow: function () {
+    this.setData({
+      gw: app.globalData.gw
+    });
     this.initLiveMatch();
   },
 
   onPullDownRefresh: function () {
-    if (this.data.playStatus === 'playing') {
-      this.refreshLiveMatch();
-    }
-    this.initLiveMatch();
+    this.setData({
+      pullDownRefresh: true
+    });
+    this.refreshEventLive();
   },
 
   // navBar
@@ -62,9 +69,9 @@ Page({
     });
   },
 
-  refreshLiveMatch() {
-    get('common/insertEventLive', {
-        event: app.globalData.gw
+  refreshEventLive() {
+    get('common/insertEventLiveCache', {
+        event: this.data.gw
       })
       .then(() => {
         this.initLiveMatch();
@@ -79,6 +86,19 @@ Page({
         playStatus: this.data.playStatus
       })
       .then(res => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 400,
+                message: "刷新成功"
+              });
+            },
+          });
+        }
+        // 更新
         let list = res.data,
           infoShow = false;
         if (list.length === 0) {

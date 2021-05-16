@@ -1,4 +1,11 @@
 const app = getApp();
+const chipName = {
+  "n/a": "无",
+  "bboost": "BB",
+  "freehit": "FH",
+  "wildcard": "WC",
+  "3xc": "3C"
+};
 
 import moment from 'moment'
 import {get} from './request'
@@ -104,6 +111,16 @@ function compareDescSort(property) {
   }
 };
 
+function getChipName(chip) {
+  return chipName[chip];
+};
+
+function redirectToEntryInput() {
+  wx.redirectTo({
+    url: '/pages/common/entryInput/entryInput'
+  });
+};
+
 export {
   getDeadline,
   diffDeadlineTime,
@@ -114,4 +131,6 @@ export {
   numSub,
   compareAscSort,
   compareDescSort,
+  getChipName,
+  redirectToEntryInput,
 }

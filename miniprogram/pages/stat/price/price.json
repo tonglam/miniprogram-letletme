@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "身价变化",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "bottomNavBar": "../../../components/navigation/bottomNavBar/bottomNavBar"
   }

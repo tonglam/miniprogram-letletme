@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "实时得分",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "bottomNavBar": "../../../components/navigation/bottomNavBar/bottomNavBar"
   }

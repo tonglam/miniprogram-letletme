@@ -1,62 +1,65 @@
 <view class="price">
 
   <view class="navBar">
-    <van-nav-bar title="日期：{{date}}" left-text="刷新" right-text="更换" safe-area-inset-top="{{false}}" bind:click-left="onClickRefresh" bind:click-right="onClickDate" />
+    <van-nav-bar title="日期：{{date}}" left-text="" right-text="更换" safe-area-inset-top="{{false}}"
+      bind:click-right="onClickDate" />
   </view>
 
-  <text>\n</text>
+  <view class="tabs">
+    <van-tabs swipeable type="card" active="{{ tab }}">
 
-  <van-tabs swipeable type="card" active="{{ tab }}">
-
-    <view>
-      <van-popup show="{{ pickerShow }}" overlay="{{true}}" position="top" custom-style="height: 50%" bind:close="onPopClose">
-        <van-datetime-picker type="date" value="{{ currentDate }}" max-date="{{ maxDate }}" formatter="{{ formatter }}" bind:confirm="onPickerConfirm" bind:cancel="onPickerCancel" />
+      <van-popup show="{{ pickerShow }}" overlay="{{true}}" position="top" custom-style="height: 50%"
+        bind:close="onPopClose">
+        <van-datetime-picker type="date" value="{{ currentDate }}" max-date="{{ maxDate }}" formatter="{{ formatter }}"
+          bind:confirm="onPickerConfirm" bind:cancel="onPickerCancel" />
       </van-popup>
-    </view>
 
-    <van-tab title="涨价" name="涨价">
-      <view class="info">
-        <text wx:if="{{riseInfoShow}}">今日暂无数据</text>
-      </view>
-      <i-cell-group>
-        <block wx:for="{{riseList}}" wx:key="index">
-          <i-cell class="rise" title="涨价"
-            value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m"></i-cell>
-        </block>
-      </i-cell-group>
-      <text>\n</text>
-    </van-tab>
+      <van-tab title="涨价" name="涨价">
+        <view class="info">
+          <text wx:if="{{riseInfoShow}}">今日暂无数据</text>
+        </view>
+        <i-cell-group>
+          <block wx:for="{{riseList}}" wx:key="index">
+            <i-cell class="rise" title="涨价"
+              value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m"></i-cell>
+          </block>
+        </i-cell-group>
+        <text>\n</text>
+      </van-tab>
 
-    <van-tab title="降价" name="降价">
-      <view class="info">
-        <text wx:if="{{fallerInfoShow}}">今日暂无数据</text>
-      </view>
-      <i-cell-group wx:for="{{fallerList}}" wx:key="index">
-        <block>
-          <i-cell class="faller" title="降价"
-            value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m"></i-cell>
-        </block>
-      </i-cell-group>
-      <text>\n</text>
-    </van-tab>
+      <van-tab title="降价" name="降价">
+        <view class="info">
+          <text wx:if="{{fallerInfoShow}}">今日暂无数据</text>
+        </view>
+        <i-cell-group wx:for="{{fallerList}}" wx:key="index">
+          <block>
+            <i-cell class="faller" title="降价"
+              value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m"></i-cell>
+          </block>
+        </i-cell-group>
+        <text>\n</text>
+      </van-tab>
 
-    <van-tab title="新增" name="新增">
-      <view class="info">
-        <text wx:if="{{startInfoShow}}">今日暂无数据</text>
-      </view>
-      <i-cell-group wx:for="{{startList}}" wx:key="index">
-        <block>
-          <i-cell title="新增"
-            value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m">
-          </i-cell>
-        </block>
-      </i-cell-group>
-    </van-tab>
+      <van-tab title="新增" name="新增">
+        <view class="info">
+          <text wx:if="{{startInfoShow}}">今日暂无数据</text>
+        </view>
+        <i-cell-group wx:for="{{startList}}" wx:key="index">
+          <block>
+            <i-cell title="新增"
+              value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m">
+            </i-cell>
+          </block>
+        </i-cell-group>
+      </van-tab>
 
-  </van-tabs>
+    </van-tabs>
+  </view>
 
   <view class="bottemNavBar">
     <bottomNavBar active="report"></bottomNavBar>
   </view>
+
+  <van-toast id="van-toast" />
 
 </view>

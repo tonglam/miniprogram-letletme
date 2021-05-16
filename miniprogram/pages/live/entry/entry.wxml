@@ -1,14 +1,14 @@
 <view class="entry">
 
   <view class="navBar">
-    <van-nav-bar title="GW{{gw}}" safe-area-inset-top="{{false}}" left-text="刷新" right-text="更换id"
-      bind:click-left="onClickRefresh" bind:click-right="onClickChange" />
+    <van-nav-bar title="{{entryName}}({{playerName}})" title-class="title" safe-area-inset-top="{{false}}"
+      left-text="GW{{gw}}" right-text="更换id" bind:click-right="onClickChange" />
   </view>
 
   <view class="pop" style="text-align:center;">
     <van-popup show="{{ popShow }}" position="top" bind:close="onPopClose">
       <text>\n</text>
-      <text>更换要查询的team_id</text>
+      <text>输入要查看得分的team_id</text>
       <text>\n\n</text>
       <van-field size="large" left-icon="search" model:value="{{entry}}" placeholder="team_id" border="{{ true }}"
         clearable />
@@ -18,42 +18,43 @@
     </van-popup>
   </view>
 
-  <text>\n</text>
+  <view class="content">
 
-  <view class="entryInfoTitle">
-    <text>{{entryName}} ({{playerName}})</text>
+    <view class="info">
+      <van-cell title="得分(净得分)：{{liveData.livePoints}}({{liveData.liveNetPoints}})"
+        value="剁手:{{liveData.transferCost}}" />
+      <van-cell title="上场队长：{{liveData.captainName}}" value="开卡：{{liveData.chip}}" />
+      <van-cell title="总分：{{liveData.liveTotalPoints}}" value="上周排名:{{liveData.lastOverallRank}}" />
+      <van-cell title="已上场：{{liveData.played}}" value="待出场：{{liveData.toPlay}}" />
+    </view>
+
+    <i-cell-group wx:for="{{liveData.pickList}}" wx:for-item="data" wx:key="index">
+
+      <block wx:if="{{data.elementType === 1}}">
+        <import src="../../../template/elementLive.wxml" />
+        <template is="gkp" data="{{data}}" />
+      </block>
+
+      <block wx:elif="{{data.elementType===2}}">
+        <import src="../../../template/elementLive.wxml" />
+        <template is="def" data="{{data}}" />
+      </block>
+
+      <block wx:elif="{{data.elementType===3}}">
+        <import src="../../../template/elementLive.wxml" />
+        <template is="mid" data="{{data}}" />
+      </block>
+
+      <block wx:elif="{{data.elementType===4}}">
+        <import src="../../../template/elementLive.wxml" />
+        <template is="fwd" data="{{data}}" />
+      </block>
+
+    </i-cell-group>
+
+    <text>\n\n\n\n</text>
+
   </view>
-
-  <van-cell title="实时得分：{{liveData.livePoints}}(-{{liveData.transferCost}})" value="队长：{{liveData.captainName}}" />
-  <van-cell title="实时总分：{{liveData.lastOverallPoints}}" value="开卡：{{liveData.chip}}" />
-  <van-cell title="已上场：{{liveData.played}}" value="待出场：{{liveData.toPlay}}" />
-  <text>\n</text>
-
-  <i-cell-group wx:for="{{liveData.pickList}}" wx:for-item="data" wx:key="index">
-
-    <block wx:if="{{data.elementType === 1}}">
-      <import src="../../../template/elementLive.wxml" />
-      <template is="gkp" data="{{data}}" />
-    </block>
-
-    <block wx:elif="{{data.elementType===2}}">
-      <import src="../../../template/elementLive.wxml" />
-      <template is="def" data="{{data}}" />
-    </block>
-
-    <block wx:elif="{{data.elementType===3}}">
-      <import src="../../../template/elementLive.wxml" />
-      <template is="mid" data="{{data}}" />
-    </block>
-
-    <block wx:elif="{{data.elementType===4}}">
-      <import src="../../../template/elementLive.wxml" />
-      <template is="fwd" data="{{data}}" />
-    </block>
-
-  </i-cell-group>
-
-  <text>\n\n\n\n</text>
 
   <view class="bottemNavBar">
     <bottomNavBar active="live"></bottomNavBar>

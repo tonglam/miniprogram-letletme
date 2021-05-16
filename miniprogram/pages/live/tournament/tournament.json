@@ -2,6 +2,7 @@
   "navigationBarTitleText": "实时联赛",
   "enablePullDownRefresh": true,
   "usingComponents": {
+    "tournamentPicker": "../../../components/picker/tournamentPicker/tournamentPicker",
     "bottomNavBar": "../../../components/navigation/bottomNavBar/bottomNavBar"
   }
 }

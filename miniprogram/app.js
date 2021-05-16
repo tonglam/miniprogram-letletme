@@ -3,7 +3,8 @@ import {
 } from './utils/request';
 import {
   getDeadline,
-  showOverallRank
+  showOverallRank,
+  redirectToEntryInput
 } from './utils/utils';
 
 App({
@@ -63,6 +64,16 @@ App({
       })
   },
 
+  changeEntry(entry) {
+    if (!new RegExp("^[1-9]\\d*$").test(entry)) {
+      return false;
+    }
+    // 缓存entry
+    wx.setStorageSync('entry', entry);
+    // 保存entry_info
+    this.setEntryInfo(entry);
+  },
+
   setEntryInfo(entry) {
     get('entry/qryEntryInfo', {
         entry: entry
@@ -71,7 +82,7 @@ App({
         let entryInfoData = res.data;
         entryInfoData['overallRank'] = showOverallRank(entryInfoData.overallRank);
         this.globalData.entryInfoData = entryInfoData;
-            })
+      })
       .catch(res => {
         console.log('fail:', res);
       });

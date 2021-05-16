@@ -4,15 +4,15 @@ const map = {
       name: "球队",
       subname: '查看球队实时得分',
     }, {
-      name: "小联赛",
-      subname: '查看小联赛实时得分和排名',
+      name: "联赛",
+      subname: '查看联赛实时得分和排名',
     }, {
       name: "比赛",
       subname: '查看实时更新的比赛结果',
     }],
     "url": {
       "球队": "../../../pages/live/entry/entry",
-      "小联赛": "../../../pages/live/tournament/tournament",
+      "联赛": "../../../pages/live/tournament/tournament",
       "比赛": "../../../pages/live/match/match"
     },
     "show": true

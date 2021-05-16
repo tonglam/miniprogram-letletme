@@ -1,12 +1,16 @@
+.price .tabs {
+  margin: 10px 0;
+}
+
 .price .info {
   text-align: center;
   margin-top: 20px;
 }
 
-.price .rise{
+.price .rise {
   color: green;
 }
 
-.price .faller{
+.price .faller {
   color: red;
 }

@@ -399,15 +399,21 @@ Page({
 
   // 更新当前周得分数据
   updateEventScoutResult() {
-    get('group/updateEventScoutResult', {
-        event: app.globalData.gw
+    let gw = this.data.gw;
+    get('common/insertEventLiveCache', {
+        event: gw
       })
       .then(() => {
-        Toast.success('更新成功');
+        get('group/updateEventScoutResult', {
+            event: gw
+          })
+          .then(() => {
+            Toast.success('更新成功');
+          })
+          .catch(res => {
+            console.log('fail:', res);
+          });
       })
-      .catch(res => {
-        console.log('fail:', res);
-      });
   },
 
   // GW选择回填

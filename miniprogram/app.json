@@ -18,7 +18,7 @@
     "navigationBarTextStyle": "black"
   },
   "networkTimeout": {
-    "request": 20000,
+    "request": 200000,
     "connectSocket": 20000,
     "uploadFile": 20000,
     "downloadFile": 20000
@@ -45,12 +45,15 @@
     "van-tabs": "@vant/weapp/tabs/index",
     "van-tabbar": "@vant/weapp/tabbar/index",
     "van-tabbar-item": "@vant/weapp/tabbar-item/index",
+    "van-dropdown-menu": "@vant/weapp/dropdown-menu/index",
+    "van-dropdown-item": "@vant/weapp/dropdown-item/index",
     "van-popup": "@vant/weapp/popup/index",
     "van-overlay": "@vant/weapp/overlay/index",
     "van-notice-bar": "@vant/weapp/notice-bar/index",
     "van-toast": "@vant/weapp/toast/index",
     "van-action-sheet": "@vant/weapp/action-sheet/index",
     "van-submit-bar": "@vant/weapp/submit-bar/index",
+    "van-search": "@vant/weapp/search/index",
     "i-cell-group": "./dist/cell-group/index",
     "i-cell": "./dist/cell/index",
     "i-panel": "./dist/panel/index",

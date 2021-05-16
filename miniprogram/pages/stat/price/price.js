@@ -2,6 +2,7 @@ import moment from 'moment';
 import {
   get
 } from '../../../utils/request';
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 const type = ['Rise', 'Faller', 'Start'];
 
@@ -29,20 +30,22 @@ Page({
       }
       return `${value}日`;
     },
-
+    // refrsh
+    pullDownRefresh: false
   },
 
-  onLoad: function () {
+  onShow: function () {
     this.getPirceList();
   },
 
-  onShareAppMessage: function () {
-    console.log('share');
-  },
-
-  onClickRefresh() {
+  onPullDownRefresh: function () {
+    this.setData({
+      pullDownRefresh: true
+    });
     this.getPirceList();
   },
+
+  onShareAppMessage: function () {},
 
   onClickDate() {
     this.setData({
@@ -81,42 +84,57 @@ Page({
         date: this.data.date
       })
       .then(res => {
-        let result = res.data;
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 600,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        // 更新
+        let result = res.data,
+          riseInfoShow = false,
+          fallerInfoShow = false,
+          startInfoShow = false;
         if (JSON.stringify(result) === '{}') {
           this.setData({
             riseInfoShow: true,
             fallerInfoShow: true,
             startInfoShow: true
           });
+          return false;
         }
         let riseList = result[type[0]],
           fallerList = result[type[1]],
           startList = result[type[2]];
         // rise
         if (riseList.length === 0) {
-          this.setData({
-            riseInfoShow: true
-          });
+          riseInfoShow = true;
         }
         // faller
         if (fallerList.length === 0) {
-          this.setData({
-            fallerInfoShow: true
-          });
+          fallerInfoShow = true;
         }
         // start
         if (startList.length === 0) {
-          this.setData({
-            startInfoShow: true
-          });
+          startInfoShow = true;
         }
         this.setData({
+          refreshDone: true,
           riseList: riseList,
           fallerList: fallerList,
           startList: startList,
-          riseInfoShow: false,
-          fallerInfoShow: false,
-          startInfoShow: false
+          riseInfoShow: riseInfoShow,
+          fallerInfoShow: fallerInfoShow,
+          startInfoShow: startInfoShow
         });
       })
       .catch(res => {

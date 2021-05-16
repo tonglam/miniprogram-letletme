@@ -1,8 +1,10 @@
-.entry .entryInfoTitle {
-  text-align: center;
-  font-size: 16px;
+.entry .title {
+  font-size: 14px;
   font-weight: bold;
-  margin-bottom: 20px;
+}
+
+.entry .info {
+  margin: 10px 0;
 }
 
 .entry .pickNotStart {

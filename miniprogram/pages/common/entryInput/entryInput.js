@@ -18,7 +18,6 @@ Page({
   },
 
   onShow: function () {
-    console.log("entryInput: " + app.globalData.entryInfoData.entry);
     if (app.globalData.entryInfoData.entry > 0) {
       this.redirect();
     }
@@ -124,17 +123,14 @@ Page({
   },
 
   saveEntry() {
-    let entry = this.data.entry;
-    app.globalData.entryInfoData.entry = this.data.entry;
-    // 缓存entry
-    wx.setStorageSync('entry', entry);
+    app.changeEntry(this.data.entry)
     // 跳转首页
     this.redirect();
   },
 
   redirect() {
     wx.redirectTo({
-      url: '../../common/home/home'
+      url: '../home/home'
     });
   },
 

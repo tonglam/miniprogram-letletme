@@ -18,23 +18,6 @@ Component({
 
   methods: {
 
-    initGwList() {
-      let list = [];
-      for (let i = 1; i < this.properties.gw + 1; i++) {
-        if (i < 39) {
-          list.push(i);
-        }
-      }
-      let columns = [{
-        values: list,
-        className: 'gw',
-        defaultIndex: list.length - 1,
-      }];
-      this.setData({
-        columns: columns
-      });
-    },
-
     onClose() {
       this.triggerEvent(this.data.event, '');
     },
@@ -54,6 +37,23 @@ Component({
 
     onCancel() {
       this.triggerEvent(this.data.event, '');
+    },
+
+    initGwList() {
+      let list = [];
+      for (let i = 1; i < this.properties.gw + 1; i++) {
+        if (i < 39) {
+          list.push(i);
+        }
+      }
+      let columns = [{
+        values: list,
+        className: 'gw',
+        defaultIndex: list.length - 1,
+      }];
+      this.setData({
+        columns: columns
+      });
     },
 
   }
