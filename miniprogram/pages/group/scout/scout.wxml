@@ -75,8 +75,7 @@
       <van-tab title="得分" name="得分">
 
         <view class="navBar">
-          <van-nav-bar title="GW{{resultGw}}" left-text="刷新" right-text="更换GW" safe-area-inset-top="{{false}}"
-            bind:click-left="onClickRefresh" bind:click-right="onClickChangeGw" />
+          <van-nav-bar title="GW{{resultGw}}" left-text="" right-text="更换GW" safe-area-inset-top="{{false}}" bind:click-right="onClickChangeGw" />
         </view>
 
         <swiper indicator-dots="true" interval="3000" style="height:500px">

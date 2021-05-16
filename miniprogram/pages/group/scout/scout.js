@@ -46,9 +46,11 @@ Page({
     tab: "推荐",
     // 得分页
     resultGw: 0,
+     // refrsh
+     pullDownRefresh: false,
   },
 
-  onLoad() {
+  onShow() {
     this.setData({
       gw: app.globalData.gw,
       nextGw: app.globalData.nextGw,
@@ -56,6 +58,13 @@ Page({
     });
     this.initScout();
     this.initEntryScoutResult();
+  },
+
+  onPullDownRefresh: function () {
+    this.setData({
+      pullDownRefresh: true
+    });
+    this.updateEventScoutResult();
   },
 
   // tabBar
@@ -161,8 +170,7 @@ Page({
 
   // 推荐结果 
   initEventScoutResult() {
-    let gw = app.globalData.gw;
-    this.getEventScoutResult(gw);
+    this.getEventScoutResult(this.data.gw);
   },
 
   // 拉取比赛周所有推荐结果 
@@ -386,10 +394,6 @@ Page({
 
   // tab(得分)
 
-  onClickRefresh() {
-    this.updateEventScoutResult();
-  },
-
   onClickChangeGw() {
     // 调gwPicker
     this.setData({
@@ -408,7 +412,22 @@ Page({
             event: gw
           })
           .then(() => {
-            Toast.success('更新成功');
+             // 下拉刷新
+             if (this.data.pullDownRefresh) {
+              wx.stopPullDownRefresh({
+                success: () => {
+                  Toast({
+                    type: 'success',
+                    duration: 400,
+                    message: "刷新成功"
+                  });
+                  this.setData({
+                    pullDownRefresh: false
+                  });
+                },
+              });
+            }
+            this.initEventScoutResult();
           })
           .catch(res => {
             console.log('fail:', res);
