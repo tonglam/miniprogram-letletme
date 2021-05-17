@@ -20,7 +20,7 @@
           <van-cell-group>
             <van-field model:value="{{ pickGkp }}" center clearable label="门将" use-button-slot border="{{ false }}">
               <van-button id="1" slot="button" size="small" type="primary" custom-class="button"
-                bind:click="getScoutPlayer">选择
+                bind:click="onPickScoutPlayer">选择
               </van-button>
             </van-field>
           </van-cell-group>
@@ -75,7 +75,8 @@
       <van-tab title="得分" name="得分">
 
         <view class="navBar">
-          <van-nav-bar title="GW{{resultGw}}" left-text="" right-text="更换GW" safe-area-inset-top="{{false}}" bind:click-right="onClickChangeGw" />
+          <van-nav-bar title="GW{{resultGw}}" left-text="" right-text="更换GW" safe-area-inset-top="{{false}}"
+            bind:click-right="onClickChangeGw" />
         </view>
 
         <swiper indicator-dots="true" interval="3000" style="height:500px">
@@ -94,7 +95,9 @@
 
       </van-tab>
 
-      <van-tab title="排行"></van-tab>
+      <van-tab title="排行" name="排行">
+        <text>here</text>
+      </van-tab>
 
     </van-tabs>
   </view>
@@ -105,4 +108,8 @@
 
   <van-toast id="van-toast" />
 
+</view>
+
+<view class="container" wx:if="{{chartShow}}">
+  <ec-canvas id="rankChart" canvas-id="rankChart" ec="{{ ec }}"></ec-canvas>
 </view>

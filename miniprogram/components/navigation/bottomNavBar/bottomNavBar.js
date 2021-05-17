@@ -46,7 +46,7 @@ const map = {
     "url": "../../../pages/me/info/info",
     "show": false
   }
-}
+};
 
 Component({
 

@@ -11,32 +11,34 @@ import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 Page({
 
   data: {
-    gw: 0,
-    entry: {},
-    showTournamentPicker: false,
+    // 数据
+    gw: app.globalData.gw,
+    entry: app.globalData.entryInfoData.entry,
     tournamentId: 0,
     tournamentName: "",
     tournamentInfoData: {},
     liveDataList: [],
+    // picker
+    showTournamentPicker: false,
     // refrsh
     pullDownRefresh: false,
     // dropdown
     sortOptions: [{
-        text: "实时得分",
-        value: "points"
-      },
-      {
-        text: "实时净得分",
-        value: "netPoints"
-      },
-      {
-        text: "实时总分",
-        value: "totalPoints"
-      },
-      {
-        text: "剁手",
-        value: "cost"
-      }
+      text: "实时得分",
+      value: "points"
+    },
+    {
+      text: "实时净得分",
+      value: "netPoints"
+    },
+    {
+      text: "实时总分",
+      value: "totalPoints"
+    },
+    {
+      text: "剁手",
+      value: "cost"
+    }
     ],
     sortValue: "points",
     sortTypeOptions: [{
@@ -50,51 +52,43 @@ Page({
     captainOptions: [],
     captainValue: "",
     chipOptions: [{
-        text: "全部",
-        value: "all"
-      }, {
+      text: "全部",
+      value: "all"
+    }, {
 
-        text: "TC",
-        value: "tc"
-      },
-      {
-        text: "BB",
-        value: "bb"
-      },
-      {
-        text: "FH",
-        value: "fh"
-      },
-      {
-        text: "WC",
-        value: "wc"
-      }
+      text: "TC",
+      value: "tc"
+    },
+    {
+      text: "BB",
+      value: "bb"
+    },
+    {
+      text: "FH",
+      value: "fh"
+    },
+    {
+      text: "WC",
+      value: "wc"
+    }
     ],
     chipValue: "all",
 
   },
 
+  /**
+   * 原生
+   */
+
   onShow: function () {
-    let gw = app.globalData.gw,
-      entry = app.globalData.entryInfoData.entry;
-    if (gw === 0 || entry === 0) {
-      wx.redirectTo({
-        url: '../../common/entryInput/entryInput'
-      });
-    }
-    this.setData({
-      gw: gw,
-      entry: entry,
-    });
     let showTournamentPicker = false;
     // 取缓存
     let tournamentId = wx.getStorageSync('tournamentId');
     if (tournamentId > 0) {
       this.setTournamentInfo(tournamentId);
     } else {
-      showTournamentPicker = true;
+      showTournamentPicker = true; // 缓存没有时从picker中选择
     }
-    // 设置
     this.setData({
       showTournamentPicker: showTournamentPicker
     });
@@ -111,6 +105,11 @@ Page({
 
   },
 
+  /**
+   * 操作
+   */
+
+  // 更换联赛
   onClickChange() {
     this.setData({
       showTournamentPicker: true
@@ -139,84 +138,48 @@ Page({
     this.initLiveTournament();
   },
 
-  // cell
-  onCellClick(event) {
-    console.log("cell click:" + event)
-  },
-
+  /**
+   * 数据
+   */
   initLiveTournament() {
-    let gw = this.data.gw,
-      tournamentId = this.data.tournamentId;
-    if (gw <= 0 || tournamentId <= 0) {
-      return false;
-    }
-    get('common/insertEventLiveCache', {
-        event: gw
-      })
-      .then(() => {
-        // 刷新live
-        get('live/calcLivePointsByTournament', {
-            event: gw,
-            tournamentId: tournamentId
-          })
-          .then(res => {
-            // 下拉刷新
-            if (this.data.pullDownRefresh) {
-              wx.stopPullDownRefresh({
-                success: () => {
-                  Toast({
-                    type: 'success',
-                    duration: 400,
-                    message: "刷新成功"
-                  });
-                  this.setData({
-                    pullDownRefresh: false
-                  });
-                },
-              });
-            }
-            // 更新
-            let list = [];
-            res.data.forEach(element => {
-              element.chip = getChipName(element.chip);
-              list.push(element);
-            });
-            this.setData({
-              liveDataList: list
-            });
-            // 更新排序
-            this.initDropDown();
-          })
-          .catch(res => {
-            console.log('fail:', res);
-          })
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
-  },
-
-  setTournamentInfo(id) {
-    if (id <= 0) {
-      return false;
-    }
-    get('tournament/qryTournamentInfoById', {
-        id: id
-      })
+    get('live/calcLivePointsByTournament', {
+      event: this.data.gw,
+      tournamentId: this.data.tournamentId
+    })
       .then(res => {
-        let data = res.data
-        this.setData({
-          tournamentId: data.id,
-          tournamentName: data.name
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 400,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        // 更新
+        let list = [];
+        res.data.forEach(element => {
+          element.chip = getChipName(element.chip);
+          list.push(element);
         });
-        // 刷新live
-        this.initLiveTournament();
+        this.setData({
+          liveDataList: list
+        });
+        // 更新排序
+        this.initDropDown();
       })
       .catch(res => {
         console.log('fail:', res);
       });
   },
 
+  // 组装下拉选项
   initDropDown() {
     let captainList = [],
       nameList = [];
@@ -234,6 +197,38 @@ Page({
       captainOptions: captainList,
       captainValue: captainList[0]
     });
+  },
+
+  // 刷新再拉取数据
+  refreshLiveTournament() {
+    get('common/insertEventLiveCache', {
+      event: gw
+    }, false)
+      .then(() => {
+        this.initLiveTournament();
+      });
+  },
+
+  // 拉取tournament_info
+  setTournamentInfo(id) {
+    if (id <= 0) {
+      return false;
+    }
+    get('tournament/qryTournamentInfoById', {
+      id: id
+    })
+      .then(res => {
+        let data = res.data
+        this.setData({
+          tournamentId: data.id,
+          tournamentName: data.name
+        });
+        // 刷新live
+        this.initLiveTournament();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
   },
 
 })

@@ -7,11 +7,16 @@ import {
 Page({
 
   data: {
+    // 数据
     time: 0,
     nextGw: 0,
     deadline: "",
     timeData: {},
   },
+
+  /**
+   * 原生
+   */
 
   onLoad: function () {
     let nextGw = app.globalData.nextGw,
@@ -24,6 +29,11 @@ Page({
     });
   },
 
+  /**
+   * 操作
+   */
+
+  // 倒计时变化
   onChange(event) {
     this.setData({
       timeData: event.detail,

@@ -3,8 +3,7 @@ import {
 } from './utils/request';
 import {
   getDeadline,
-  showOverallRank,
-  redirectToEntryInput
+  showOverallRank
 } from './utils/utils';
 
 App({
@@ -72,12 +71,16 @@ App({
     wx.setStorageSync('entry', entry);
     // 保存entry_info
     this.setEntryInfo(entry);
+    // 跳转首页
+    wx.redirectTo({
+      url: '../home/home'
+    });
   },
 
   setEntryInfo(entry) {
     get('entry/qryEntryInfo', {
-        entry: entry
-      })
+      entry: entry
+    })
       .then(res => {
         let entryInfoData = res.data;
         entryInfoData['overallRank'] = showOverallRank(entryInfoData.overallRank);

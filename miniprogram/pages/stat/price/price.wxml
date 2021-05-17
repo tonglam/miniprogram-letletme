@@ -5,7 +5,7 @@
       bind:click-right="onClickDate" />
   </view>
 
-  <view class="tabs">
+  <view class="content">
     <van-tabs swipeable type="card" active="{{ tab }}">
 
       <van-popup show="{{ pickerShow }}" overlay="{{true}}" position="top" custom-style="height: 50%"

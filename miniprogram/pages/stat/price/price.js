@@ -9,16 +9,16 @@ const type = ['Rise', 'Faller', 'Start'];
 Page({
 
   data: {
-    date: moment().format("YYYY-MM-DD"),
+    // 数据
     riseInfoShow: false,
     fallerInfoShow: false,
     startInfoShow: false,
-    pickerShow: false,
-    // player_value
     riseList: [],
     fallerList: [],
     startList: [],
-    // date picker
+    // picker
+    pickerShow: false,
+    date: moment().format("YYYY-MM-DD"),
     currentDate: new Date().getTime(),
     maxDate: new Date().getTime(),
     formatter(type, value) {
@@ -30,11 +30,16 @@ Page({
       }
       return `${value}日`;
     },
-    // refrsh
-    pullDownRefresh: false
+    // refresh
+    pullDownRefresh: false,
   },
 
+  /**
+   * 原生
+   */
+
   onShow: function () {
+    // 拉取当日身价
     this.getPirceList();
   },
 
@@ -42,23 +47,38 @@ Page({
     this.setData({
       pullDownRefresh: true
     });
+    // 拉取当日身价
     this.getPirceList();
   },
 
-  onShareAppMessage: function () {},
+  onShareAppMessage: function () {
+    return {
+      title: '身价变化(' + this.data.date + ')',
+      desc: "",
+      path: '',
+      imageUrl: '****.png'
+    }
+  },
 
+  /**
+   * 操作
+   */
+
+  // 更换日期
   onClickDate() {
     this.setData({
       pickerShow: true
     });
   },
 
+  // 关闭弹出层
   onPopClose() {
     this.setData({
       pickerShow: false
     });
   },
 
+  // picker确认
   onPickerConfirm(event) {
     let date = moment(event.detail).format("YYYY-MM-DD");
     this.setData({
@@ -79,10 +99,15 @@ Page({
     });
   },
 
+  /**
+   * 数据
+   */
+
+  // 拉取球员身价
   getPirceList() {
     get('stat/qryPlayerValueByDate', {
-        date: this.data.date
-      })
+      date: this.data.date
+    })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {

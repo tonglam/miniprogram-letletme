@@ -12,20 +12,26 @@ import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 Page({
 
   data: {
+    // 数据
     gw: 0,
-    tabBarActive: 'playing',
-    playStatus: 'playing',
     infoShow: false,
     contentShow: true,
     fixtureShow: false,
-    activeNames: ['1', '2', '3'],
     liveMatchList: [],
     liveBonusList: [],
     liveBpsList: [],
     liveFixtureList: [],
+    playStatus: 'playing',
+    // tarBar
+    tabBarActive: 'playing',
+    activeNames: ['1', '2', '3'],
     // refrsh
     pullDownRefresh: false
   },
+
+  /**
+   * 原生
+   */
 
   onShow: function () {
     this.setData({
@@ -38,10 +44,14 @@ Page({
     this.setData({
       pullDownRefresh: true
     });
-    this.refreshEventLive();
+    this.refreshLiveMatch();
   },
 
-  // navBar
+  /**
+   * 操作
+   */
+
+  //比赛状态标签页切换
   navBarOnChange(event) {
     let status = event.detail.name;
     if (status === 'not_start') {
@@ -59,32 +69,26 @@ Page({
       tabBarActive: status,
       playStatus: status
     });
+    // 拉取对应比赛状态的数据
     this.initLiveMatch();
   },
 
-  // collapse-cards
+  // 折叠面板切换
   onChange(event) {
     this.setData({
       activeNames: event.detail,
     });
   },
 
-  refreshEventLive() {
-    get('common/insertEventLiveCache', {
-        event: this.data.gw
-      })
-      .then(() => {
-        this.initLiveMatch();
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
-  },
+  /**
+   * 数据
+   */
 
+  // 实时比赛数据
   initLiveMatch() {
     get('live/qryLiveMatchByStatus', {
-        playStatus: this.data.playStatus
-      })
+      playStatus: this.data.playStatus
+    })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
@@ -98,7 +102,7 @@ Page({
             },
           });
         }
-        // 更新
+        // 组装数据
         let list = res.data,
           infoShow = false;
         if (list.length === 0) {
@@ -117,6 +121,7 @@ Page({
       });
   },
 
+  // 组装bonus数据
   initLiveBonus() {
     let list = [];
     this.data.liveMatchList.forEach(element => {
@@ -141,6 +146,7 @@ Page({
     });
   },
 
+  // 组装bps数据
   initLiveBps() {
     let list = [];
     this.data.liveMatchList.forEach(element => {
@@ -161,6 +167,15 @@ Page({
     });
   },
 
+  // 组装fixture数据
+  initLiveFixture() {
+    let list = this.data.liveMatchList.sort(compareAscSort("matchId"));
+    this.setData({
+      liveFixtureList: list
+    });
+  },
+
+  // 组装基础数据
   initMatchBaseInfo(element) {
     let data = {};
     data.matchId = element.matchId;
@@ -177,11 +192,17 @@ Page({
     return data;
   },
 
-  initLiveFixture() {
-    let list = this.data.liveMatchList.sort(compareAscSort("matchId"));
-    this.setData({
-      liveFixtureList: list
-    });
+  // 刷新再拉取数据
+  refreshLiveMatch() {
+    get('common/insertEventLiveCache', {
+      event: this.data.gw
+    }, false)
+      .then(() => {
+        this.initLiveMatch();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
   },
 
 })

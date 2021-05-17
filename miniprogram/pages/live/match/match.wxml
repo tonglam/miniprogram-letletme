@@ -15,7 +15,7 @@
 
   <text>\n</text>
 
-  <view wx:if="{{contentShow}}">
+  <view class="content" wx:if="{{contentShow}}">
     <view class="tab">
       <van-tabs color="red">
 
@@ -108,7 +108,7 @@
     </view>
   </view>
 
-  <view wx:if="{{fixtureShow}}">
+  <view class="fixture" wx:if="{{fixtureShow}}">
     <block wx:for="{{liveFixtureList}}" wx:for-item="fixtureData" wx:key="fixtureMatchId">
       <i-cell-group>
           <i-cell title="{{fixtureData.homeTeamName}} vs {{fixtureData.awayTeamName}}" value="{{fixtureData.kickoffTime}}"></i-cell>
