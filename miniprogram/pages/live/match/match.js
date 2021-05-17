@@ -139,15 +139,10 @@ Page({
           });
           return false;
         }
-        // 默认展开
-        activeNames.push(list[0].matchId);
+        // 设置
         this.setData({
           infoShow: false,
-          liveMatchList: list,
-          activeMatchNames: activeNames,
-          activeBonusNames: activeNames,
-          activeBpsNames: activeNames,
-          activeDetailsNames: activeNames
+          liveMatchList: list
         });
         this.initLiveBonus();
         this.initLiveBps();

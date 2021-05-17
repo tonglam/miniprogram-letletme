@@ -12,8 +12,8 @@ Page({
 
   data: {
     // 数据
-    gw: app.globalData.gw,
-    entry: app.globalData.entryInfoData.entry,
+    gw: 0,
+    entry: 0,
     tournamentId: 0,
     tournamentName: "",
     tournamentInfoData: {},
@@ -24,21 +24,21 @@ Page({
     pullDownRefresh: false,
     // dropdown
     sortOptions: [{
-      text: "实时得分",
-      value: "points"
-    },
-    {
-      text: "实时净得分",
-      value: "netPoints"
-    },
-    {
-      text: "实时总分",
-      value: "totalPoints"
-    },
-    {
-      text: "剁手",
-      value: "cost"
-    }
+        text: "实时得分",
+        value: "points"
+      },
+      {
+        text: "实时净得分",
+        value: "netPoints"
+      },
+      {
+        text: "实时总分",
+        value: "totalPoints"
+      },
+      {
+        text: "剁手",
+        value: "cost"
+      }
     ],
     sortValue: "points",
     sortTypeOptions: [{
@@ -52,25 +52,25 @@ Page({
     captainOptions: [],
     captainValue: "",
     chipOptions: [{
-      text: "全部",
-      value: "all"
-    }, {
+        text: "全部",
+        value: "all"
+      }, {
 
-      text: "TC",
-      value: "tc"
-    },
-    {
-      text: "BB",
-      value: "bb"
-    },
-    {
-      text: "FH",
-      value: "fh"
-    },
-    {
-      text: "WC",
-      value: "wc"
-    }
+        text: "TC",
+        value: "tc"
+      },
+      {
+        text: "BB",
+        value: "bb"
+      },
+      {
+        text: "FH",
+        value: "fh"
+      },
+      {
+        text: "WC",
+        value: "wc"
+      }
     ],
     chipValue: "all",
 
@@ -81,6 +81,11 @@ Page({
    */
 
   onShow: function () {
+    // 设置
+    this.setData({
+      gw: app.globalData.gw,
+      entry: app.globalData.entryInfoData.entry,
+    });
     let showTournamentPicker = false;
     // 取缓存
     let tournamentId = wx.getStorageSync('tournamentId');
@@ -143,9 +148,9 @@ Page({
    */
   initLiveTournament() {
     get('live/calcLivePointsByTournament', {
-      event: this.data.gw,
-      tournamentId: this.data.tournamentId
-    })
+        event: this.data.gw,
+        tournamentId: this.data.tournamentId
+      })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
@@ -202,8 +207,8 @@ Page({
   // 刷新再拉取数据
   refreshLiveTournament() {
     get('common/insertEventLiveCache', {
-      event: gw
-    }, false)
+        event: gw
+      }, false)
       .then(() => {
         this.initLiveTournament();
       });
@@ -215,8 +220,8 @@ Page({
       return false;
     }
     get('tournament/qryTournamentInfoById', {
-      id: id
-    })
+        id: id
+      })
       .then(res => {
         let data = res.data
         this.setData({
