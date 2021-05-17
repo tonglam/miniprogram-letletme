@@ -37,7 +37,7 @@
                   <van-cell title-class="title" label-class="label"
                     title="{{homeMatch.webName}} ({{homeMatch.elementTypeName}})"
                     value="{{homeMatch.totalPoints}}({{homeMatch.bonus}})"
-                    label="【{{homeMatch.teamShortName}}】时间:{{homeMatch.minutes}}分钟" is-link link-type="navigateTo"
+                    label="【{{homeMatch.teamShortName}}】上场时间:{{homeMatch.minutes}}分钟" is-link link-type="navigateTo"
                     url="/pages/live/player/player?element={{homeMatch.element}}&&elementType={{homeMatch.elementType}}" />
                 </block>
 
@@ -47,7 +47,7 @@
                   <van-cell title-class="title" label-class="label"
                     title="{{awayMatch.webName}} ({{awayMatch.elementTypeName}})"
                     value="{{awayMatch.totalPoints}}({{awayMatch.bonus}})"
-                    label="【{{awayMatch.teamShortName}}】时间:{{awayMatch.minutes}}分钟" is-link link-type="navigateTo"
+                    label="【{{awayMatch.teamShortName}}】上场时间:{{awayMatch.minutes}}分钟" is-link link-type="navigateTo"
                     url="/pages/live/player/player?element={{awayMatch.element}}&&elementType={{awayMatch.elementType}}" />
                 </block>
 

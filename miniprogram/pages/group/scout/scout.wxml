@@ -28,7 +28,7 @@
           <van-cell-group>
             <van-field model:value="{{ pickDef }}" center readonly label="后卫" use-button-slot border="{{ false }}">
               <van-button id="2" slot="button" size="small" type="primary" custom-class="button"
-                bind:click="getScoutPlayer">选择
+                bind:click="onPickScoutPlayer">选择
               </van-button>
             </van-field>
           </van-cell-group>
@@ -36,7 +36,7 @@
           <van-cell-group>
             <van-field model:value="{{ pickMid }}" center readonly label="中场" use-button-slot border="{{ false }}">
               <van-button id="3" slot="button" size="small" type="primary" custom-class="button"
-                bind:click="getScoutPlayer">选择
+                bind:click="onPickScoutPlayer">选择
               </van-button>
             </van-field>
           </van-cell-group>
@@ -44,7 +44,7 @@
           <van-cell-group>
             <van-field model:value="{{ pickFwd }}" center readonly label="前锋" use-button-slot border="{{ false }}">
               <van-button id="4" slot="button" size="small" type="primary" custom-class="button"
-                bind:click="getScoutPlayer">选择
+                bind:click="onPickScoutPlayer">选择
               </van-button>
             </van-field>
           </van-cell-group>
@@ -52,7 +52,7 @@
           <van-cell-group>
             <van-field value="{{ pickCap }} " center readonly label="队长" use-button-slot border="{{ false }}">
               <van-button id="5" slot="button" size="small" type="primary" custom-class="button"
-                bind:click="getScoutPlayer">选择
+                bind:click="onPickScoutPlayer">选择
               </van-button>
             </van-field>
           </van-cell-group>

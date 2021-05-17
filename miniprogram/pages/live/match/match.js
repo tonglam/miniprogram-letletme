@@ -131,8 +131,7 @@ Page({
           });
         }
         // 组装数据
-        let list = res.data,
-          activeNames = [];
+        let list = res.data;
         if (list.length === 0) {
           this.setData({
             infoShow: true

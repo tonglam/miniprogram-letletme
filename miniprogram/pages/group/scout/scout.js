@@ -458,7 +458,7 @@ Page({
     let gw = this.data.gw;
     get('common/insertEventLiveCache', {
       event: gw
-    })
+    },false)
       .then(() => {
         get('group/updateEventScoutResult', {
           event: gw
