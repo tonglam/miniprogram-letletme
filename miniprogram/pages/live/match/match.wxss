@@ -1,4 +1,12 @@
 .match .info {
   text-align: center;
-  margin-top: 20px;
+  margin: 20px 0;
+}
+
+.match .title {
+  font-size: 12px;
+}
+
+.match .label {
+  font-size: 10px;
 }

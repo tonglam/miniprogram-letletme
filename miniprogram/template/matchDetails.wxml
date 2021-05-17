@@ -1,0 +1,67 @@
+<template name="matchDetail">
+
+  <van-cell-group title="进球" wx:if="{{detailsData.goals.length > 0 }}">
+    <block wx:for="{{detailsData.goals}}" wx:for-item="element" wx:key="index">
+      <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
+        value="{{element.goalsScored}}" is-link link-type="navigateTo"
+        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+    </block>
+  </van-cell-group>
+
+  <van-cell-group title="助攻" wx:if="{{detailsData.assists.length > 0 }}">
+    <block wx:for="{{detailsData.assists}}" wx:for-item="element" wx:key="index">
+      <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
+        value="{{element.assists}}" is-link link-type="navigateTo"
+        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+    </block>
+  </van-cell-group>
+
+  <van-cell-group title="红牌" wx:if="{{detailsData.redCards.length > 0 }}">
+    <block wx:for="{{detailsData.redCards}}" wx:for-item="element" wx:key="index">
+      <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
+        value="{{element.redCards}}" is-link link-type="navigateTo"
+        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+    </block>
+  </van-cell-group>
+
+  <van-cell-group title="黄牌" wx:if="{{detailsData.yellowCards.length > 0 }}">
+    <block wx:for="{{detailsData.yellowCards}}" wx:for-item="element" wx:key="index">
+      <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
+        value="{{element.yellowCards}}" is-link link-type="navigateTo"
+        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+    </block>
+  </van-cell-group>
+
+  <van-cell-group title="乌龙" wx:if="{{detailsData.ownGoals.length > 0 }}">
+    <block wx:for="{{detailsData.ownGoals}}" wx:for-item="element" wx:key="index">
+      <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
+        value="{{element.ownGoals}}" is-link link-type="navigateTo"
+        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+    </block>
+  </van-cell-group>
+
+  <van-cell-group title="扑点" wx:if="{{detailsData.penaltiesSaved.length > 0 }}">
+    <block wx:for="{{detailsData.penaltiesSaved}}" wx:for-item="element" wx:key="index">
+      <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
+        value="{{element.penaltiesSaved}}" is-link link-type="navigateTo"
+        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+    </block>
+  </van-cell-group>
+
+  <van-cell-group title="丢点" wx:if="{{detailsData.penaltiesMissed.length > 0 }}">
+    <block wx:for="{{detailsData.penaltiesMissed}}" wx:for-item="element" wx:key="index">
+      <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
+        value="{{element.penaltiesMissed}}" is-link link-type="navigateTo"
+        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+    </block>
+  </van-cell-group>
+
+  <van-cell-group title="扑救" wx:if="{{detailsData.saves.length > 0 }}">
+    <block wx:for="{{detailsData.saves}}" wx:for-item="element" wx:key="index">
+      <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
+        value="{{element.saves}}" is-link link-type="navigateTo"
+        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+    </block>
+  </van-cell-group>
+
+</template>

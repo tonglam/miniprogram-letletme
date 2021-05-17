@@ -3,7 +3,7 @@
   <text>\n</text>
 
   <view class="navBar">
-    <van-tabs type="card" color="green" bind:change="navBarOnChange">
+    <van-tabs type="card" color="green" bind:change="onNavBarChange">
       <van-tab title="比赛中" name="playing">
       </van-tab>
       <van-tab title="已完赛" name="finished">
@@ -22,26 +22,33 @@
         <van-tab title="比赛" name="match">
 
           <view class="info">
-            <text wx:if="{{infoShow}}">\n暂无数据</text>
+            <text wx:if="{{infoShow}}">暂无数据</text>
           </view>
 
           <block wx:for="{{liveMatchList}}" wx:for-item="matchData" wx:key="dataMatchId">
-            <van-collapse value="{{ activeNames }}" bind:change="onChange">
-              <van-collapse-item name="1">
+            <van-collapse value="{{activeMatchNames}}" bind:change="onMatchChange">
+              <van-collapse-item name="{{matchData.matchId}}">
 
-                <view slot="title">【{{matchData.minutes}}分钟】{{matchData.homeTeamName}} ({{matchData.homeScore}}) - ({{matchData.awayScore}}) {{matchData.awayTeamName}}
+                <view slot="title">【{{matchData.minutes}}分钟】{{matchData.homeTeamName}} ({{matchData.homeScore}}) -
+                  ({{matchData.awayScore}}) {{matchData.awayTeamName}}
                 </view>
 
                 <block wx:for="{{matchData.homeTeamDataList}}" wx:for-item="homeMatch" wx:key="homeMatchElement">
-                  <text>【{{homeMatch.teamShortName}}】【{{homeMatch.elementTypeName}}】 {{homeMatch.webName}} - {{homeMatch.totalPoints}}({{homeMatch.bonus}})</text>
-                  <text>\n</text>
+                  <van-cell title-class="title" label-class="label"
+                    title="{{homeMatch.webName}} ({{homeMatch.elementTypeName}})"
+                    value="{{homeMatch.totalPoints}}({{homeMatch.bonus}})"
+                    label="【{{homeMatch.teamShortName}}】时间:{{homeMatch.minutes}}分钟" is-link link-type="navigateTo"
+                    url="/pages/live/player/player?element={{homeMatch.element}}&&elementType={{homeMatch.elementType}}" />
                 </block>
 
-                <van-divider />
+                <van-divider borderColor="black" />
 
                 <block wx:for="{{matchData.awayTeamDataList}}" wx:for-item="awayMatch" wx:key="awayMatchElement">
-                  <text>【{{awayMatch.teamShortName}}】【{{awayMatch.elementTypeName}}】{{awayMatch.webName}} - {{awayMatch.totalPoints}}({{awayMatch.bonus}})</text>
-                  <text>\n</text>
+                  <van-cell title-class="title" label-class="label"
+                    title="{{awayMatch.webName}} ({{awayMatch.elementTypeName}})"
+                    value="{{awayMatch.totalPoints}}({{awayMatch.bonus}})"
+                    label="【{{awayMatch.teamShortName}}】时间:{{awayMatch.minutes}}分钟" is-link link-type="navigateTo"
+                    url="/pages/live/player/player?element={{awayMatch.element}}&&elementType={{awayMatch.elementType}}" />
                 </block>
 
               </van-collapse-item>
@@ -53,19 +60,22 @@
         <van-tab title="BONUS" name="bonus">
 
           <view class="info">
-            <text wx:if="{{infoShow}}">\n暂无数据</text>
+            <text wx:if="{{infoShow}}">暂无数据</text>
           </view>
 
           <block wx:for="{{liveBonusList}}" wx:for-item="bonusData" wx:key="bonusMatchId">
-            <van-collapse value="{{ activeNames }}" bind:change="onChange">
-              <van-collapse-item name="2">
+            <van-collapse value="{{activeBonusNames}}" bind:change="onBounusChange">
+              <van-collapse-item name="{{bonusData.matchId}}">
 
-                <view slot="title">【{{bonusData.minutes}}分钟】{{bonusData.homeTeamName}} ({{bonusData.homeScore}}) - ({{bonusData.awayScore}}) {{bonusData.awayTeamName}}
+                <view slot="title">【{{bonusData.minutes}}分钟】{{bonusData.homeTeamName}} ({{bonusData.homeScore}}) -
+                  ({{bonusData.awayScore}}) {{bonusData.awayTeamName}}
                 </view>
 
                 <block wx:for="{{bonusData.list}}" wx:for-item="element" wx:key="bonusElement">
-                  <text>【{{element.teamShortName}}】【{{element.elementTypeName}}】{{element.webName}} - {{element.totalPoints}}({{element.bonus}})</text>
-                  <text>\n</text>
+                  <van-cell title-class="title" label-class="label"
+                    title="【{{element.teamShortName}}】{{element.webName}}" value="{{element.bonus}}({{element.bps}})"
+                    is-link link-type="navigateTo"
+                    url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
                 </block>
 
               </van-collapse-item>
@@ -77,19 +87,22 @@
         <van-tab title="BPS" name="bps">
 
           <view class="info">
-            <text wx:if="{{infoShow}}">\n暂无数据</text>
+            <text wx:if="{{infoShow}}">暂无数据</text>
           </view>
 
           <block wx:for="{{liveBpsList}}" wx:for-item="bpsData" wx:key="bpsMatchId">
-            <van-collapse value="{{ activeNames }}" bind:change="onChange">
-              <van-collapse-item name="3">
+            <van-collapse value="{{activeBpsNames}}" bind:change="onBpsChange">
+              <van-collapse-item name="{{bpsData.matchId}}">
 
-                <view slot="title">【{{bpsData.minutes}}分钟】{{bpsData.homeTeamName}} ({{bpsData.homeScore}}) - ({{bpsData.awayScore}}) {{bpsData.awayTeamName}}
+                <view slot="title">【{{bpsData.minutes}}分钟】{{bpsData.homeTeamName}} ({{bpsData.homeScore}}) -
+                  ({{bpsData.awayScore}}) {{bpsData.awayTeamName}}
                 </view>
 
                 <block wx:for="{{bpsData.list}}" wx:for-item="element" wx:key="bpsElement">
-                  <text>【{{element.teamShortName}}】【{{element.elementTypeName}}】{{element.webName}} - {{element.bps}}</text>
-                  <text>\n</text>
+                  <van-cell title-class="title" label-class="label"
+                    title="【{{element.teamShortName}}】{{element.webName}}" value="{{element.bps}}(bps)" is-link
+                    link-type="navigateTo"
+                    url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
                 </block>
 
               </van-collapse-item>
@@ -98,10 +111,27 @@
 
         </van-tab>
 
-        <van-tab title="详情" name="detail">
+        <van-tab title="详情" name="details">
+
           <view class="info">
-            <text wx:if="{{infoShow}}">\n暂无数据</text>
+            <text wx:if="{{infoShow}}">暂无数据</text>
           </view>
+
+          <block wx:for="{{liveDetailsList}}" wx:for-item="detailsData" wx:key="detailsMatchId">
+            <van-collapse value="{{activeDetailsNames}}" bind:change="onDetailsChange">
+              <van-collapse-item name="{{detailsData.matchId}}">
+
+                <view slot="title">【{{detailsData.minutes}}分钟】{{detailsData.homeTeamName}}
+                  ({{detailsData.homeScore}}) - ({{detailsData.awayScore}}) {{detailsData.awayTeamName}}
+                </view>
+
+                <import src="../../../template/matchDetails.wxml" />
+                <template is="matchDetail" data="{{detailsData}}" />
+
+              </van-collapse-item>
+            </van-collapse>
+          </block>
+
         </van-tab>
 
       </van-tabs>
@@ -111,7 +141,8 @@
   <view class="fixture" wx:if="{{fixtureShow}}">
     <block wx:for="{{liveFixtureList}}" wx:for-item="fixtureData" wx:key="fixtureMatchId">
       <i-cell-group>
-          <i-cell title="{{fixtureData.homeTeamName}} vs {{fixtureData.awayTeamName}}" value="{{fixtureData.kickoffTime}}"></i-cell>
+        <i-cell title="{{fixtureData.homeTeamName}} vs {{fixtureData.awayTeamName}}"
+          value="{{fixtureData.kickoffTime}}"></i-cell>
       </i-cell-group>
     </block>
   </view>

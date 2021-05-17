@@ -109,7 +109,3 @@
   <van-toast id="van-toast" />
 
 </view>
-
-<view class="container" wx:if="{{chartShow}}">
-  <ec-canvas id="rankChart" canvas-id="rankChart" ec="{{ ec }}"></ec-canvas>
-</view>

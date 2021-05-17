@@ -4,13 +4,13 @@
     "pages/common/entryInput/entryInput",
     "pages/live/entry/entry",
     "pages/live/match/match",
+    "pages/live/player/player",
     "pages/live/tournament/tournament",
     "pages/stat/price/price",
     "pages/group/scout/scout",
-    "pages/me/info/info",
-    "pages/common/testttt/testttt"
+    "pages/me/info/info"
   ],
-  "entryPagePath": "pages/live/match/match",
+  "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",
@@ -57,8 +57,7 @@
     "i-cell-group": "./dist/cell-group/index",
     "i-cell": "./dist/cell/index",
     "i-icon": "./dist/icon/index",
-    "i-panel": "./dist/panel/index",
-    "table-view": "miniprogram-table-component"
+    "i-panel": "./dist/panel/index"
   },
   "sitemapLocation": "sitemap.json"
 }

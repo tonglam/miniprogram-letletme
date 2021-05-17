@@ -14,19 +14,24 @@ Page({
   data: {
     // 数据
     gw: 0,
+    playStatus: 'playing',
     infoShow: false,
     contentShow: true,
     fixtureShow: false,
     liveMatchList: [],
+    activeMatchNames: [],
     liveBonusList: [],
+    activeBonusNames: [],
     liveBpsList: [],
+    activeBpsNames: [],
     liveFixtureList: [],
-    playStatus: 'playing',
+    // match details
+    liveDetailsList: [],
+    activeDetailsNames: [],
     // tarBar
     tabBarActive: 'playing',
-    activeNames: ['1', '2', '3'],
     // refrsh
-    pullDownRefresh: false
+    pullDownRefresh: false,
   },
 
   /**
@@ -52,7 +57,7 @@ Page({
    */
 
   //比赛状态标签页切换
-  navBarOnChange(event) {
+  onNavBarChange(event) {
     let status = event.detail.name;
     if (status === 'not_start') {
       this.setData({
@@ -67,16 +72,39 @@ Page({
     }
     this.setData({
       tabBarActive: status,
-      playStatus: status
+      playStatus: status,
+      infoShow: false,
+      liveMatchList: [],
+      liveBonusList: [],
+      liveBpsList: [],
+      liveDetailsList: []
     });
     // 拉取对应比赛状态的数据
     this.initLiveMatch();
   },
 
   // 折叠面板切换
-  onChange(event) {
+  onMatchChange(event) {
     this.setData({
-      activeNames: event.detail,
+      activeMatchNames: event.detail,
+    });
+  },
+
+  onBounusChange(event) {
+    this.setData({
+      activeBonusNames: event.detail,
+    });
+  },
+
+  onBpsChange(event) {
+    this.setData({
+      activeBpsNames: event.detail,
+    });
+  },
+
+  onDetailsChange(event) {
+    this.setData({
+      activeDetailsNames: event.detail,
     });
   },
 
@@ -87,8 +115,8 @@ Page({
   // 实时比赛数据
   initLiveMatch() {
     get('live/qryLiveMatchByStatus', {
-      playStatus: this.data.playStatus
-    })
+        playStatus: this.data.playStatus
+      })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
@@ -104,16 +132,26 @@ Page({
         }
         // 组装数据
         let list = res.data,
-          infoShow = false;
+          activeNames = [];
         if (list.length === 0) {
-          infoShow = true
+          this.setData({
+            infoShow: true
+          });
+          return false;
         }
+        // 默认展开
+        activeNames.push(list[0].matchId);
         this.setData({
-          infoShow: infoShow,
-          liveMatchList: list
+          infoShow: false,
+          liveMatchList: list,
+          activeMatchNames: activeNames,
+          activeBonusNames: activeNames,
+          activeBpsNames: activeNames,
+          activeDetailsNames: activeNames
         });
         this.initLiveBonus();
         this.initLiveBps();
+        this.initLiveDetails();
         this.initLiveFixture();
       })
       .catch(res => {
@@ -167,6 +205,86 @@ Page({
     });
   },
 
+  // 组装比赛详情数据
+  initLiveDetails() {
+    let list = [];
+    this.data.liveMatchList.forEach(element => {
+      let data = this.initMatchBaseInfo(element);
+      let goalsList = [],
+        assistsList = [],
+        ownGoalsList = [],
+        penaltiesSavedList = [],
+        penaltiesMissedList = [],
+        yellowCardsList = [],
+        redCardsList = [],
+        savesList = [];
+      element.homeTeamDataList.forEach(object => {
+        if (object.goalsScored > 0) {
+          goalsList.push(object);
+        }
+        if (object.assists > 0) {
+          assistsList.push(object);
+        }
+        if (object.ownGoals > 0) {
+          ownGoalsList.push(object);
+        }
+        if (object.penaltiesSaved > 0) {
+          penaltiesSavedList.push(object);
+        }
+        if (object.penaltiesMissed > 0) {
+          penaltiesMissedList.push(object);
+        }
+        if (object.yellowCards > 0) {
+          yellowCardsList.push(object);
+        }
+        if (object.redCards > 0) {
+          redCardsList.push(object);
+        }
+        if (object.saves > 0) {
+          savesList.push(object);
+        }
+      });
+      element.awayTeamDataList.forEach(object => {
+        if (object.goalsScored > 0) {
+          goalsList.push(object);
+        }
+        if (object.assists > 0) {
+          assistsList.push(object);
+        }
+        if (object.ownGoals > 0) {
+          ownGoalsList.push(object);
+        }
+        if (object.penaltiesSaved > 0) {
+          penaltiesSavedList.push(object);
+        }
+        if (object.penaltiesMissed > 0) {
+          penaltiesMissedList.push(object);
+        }
+        if (object.yellowCards > 0) {
+          yellowCardsList.push(object);
+        }
+        if (object.redCards > 0) {
+          redCardsList.push(object);
+        }
+        if (object.saves > 0) {
+          savesList.push(object);
+        }
+      });
+      data.goals = goalsList;
+      data.assists = assistsList;
+      data.ownGoals = ownGoalsList;
+      data.penaltiesSaved = penaltiesSavedList;
+      data.penaltiesMissed = penaltiesMissedList;
+      data.yellowCards = yellowCardsList;
+      data.redCards = redCardsList;
+      data.saves = savesList;
+      list.push(data);
+    });
+    this.setData({
+      liveDetailsList: list
+    });
+  },
+
   // 组装fixture数据
   initLiveFixture() {
     let list = this.data.liveMatchList.sort(compareAscSort("matchId"));
@@ -195,8 +313,8 @@ Page({
   // 刷新再拉取数据
   refreshLiveMatch() {
     get('common/insertEventLiveCache', {
-      event: this.data.gw
-    }, false)
+        event: this.data.gw
+      }, false)
       .then(() => {
         this.initLiveMatch();
       })

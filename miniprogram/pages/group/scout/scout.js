@@ -10,38 +10,6 @@ import {
 } from '../../../utils/utils';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 // import {initChart} from './echart';
-import * as echarts from '../../../ec-canvas/echarts';
-
-let chart = null;
-
-function initChart(canvas, width, height, dpr) {
-  chart = echarts.init(canvas, null, {
-    width: width,
-    height: height,
-    devicePixelRatio: dpr // new
-  });
-  canvas.setChart(chart);
-  let option = {
-    title: {
-      text: ''
-    },
-    tooltip: {},
-    legend: {
-      data: ['销量']
-    },
-    xAxis: {
-      data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-    },
-    yAxis: {},
-    series: [{
-      name: '销量',
-      type: 'bar',
-      data: [5, 20, 36, 10, 10, 20]
-    }]
-  };
-  chart.setOption(option);
-  return chart;
-}
 
 Page({
 
@@ -83,11 +51,6 @@ Page({
     tab: "推荐",
     // refrsh
     pullDownRefresh: false,
-    // echart
-    chartShow: false,
-    ec: {
-      onInit: initChart
-    },
   },
 
   /**
