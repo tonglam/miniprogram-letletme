@@ -139,6 +139,11 @@
   </view>
 
   <view class="fixture" wx:if="{{fixtureShow}}">
+
+    <view class="info">
+      <text wx:if="{{infoShow}}">暂无数据</text>
+    </view>
+
     <block wx:for="{{liveFixtureList}}" wx:for-item="fixtureData" wx:key="fixtureMatchId">
       <i-cell-group>
         <i-cell title="{{fixtureData.homeTeamName}} vs {{fixtureData.awayTeamName}}"

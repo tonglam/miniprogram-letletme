@@ -10,7 +10,7 @@
     "pages/group/scout/scout",
     "pages/me/info/info"
   ],
-  "entryPagePath": "pages/common/entryInput/entryInput",
+  "entryPagePath": "pages/group/scout/scout",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",
@@ -56,8 +56,7 @@
     "van-transition": "@vant/weapp/transition/index",
     "i-cell-group": "./dist/cell-group/index",
     "i-cell": "./dist/cell/index",
-    "i-icon": "./dist/icon/index",
-    "i-panel": "./dist/panel/index"
+    "i-icon": "./dist/icon/index"
   },
   "sitemapLocation": "sitemap.json"
 }

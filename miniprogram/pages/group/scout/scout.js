@@ -9,7 +9,46 @@ import {
   numSub
 } from '../../../utils/utils';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
-// import {initChart} from './echart';
+import * as echarts from '../../../ec-canvas/echarts';
+
+let chart = null;
+
+function initChart(canvas, width, height, dpr) {
+  chart = echarts.init(canvas, null, {
+    width: width,
+    height: height,
+    devicePixelRatio: dpr // new 
+  });
+  canvas.setChart(chart);
+  let option = {
+    title: {
+      text: 'GW36'
+    },
+    tooltip: {},
+    legend: {},
+    xAxis: {},
+    yAxis: {},
+    series: [{
+      name: '',
+      type: 'bar',
+      data: [
+        ["studge", 18],
+        ["Menyo2daye", 23],
+        ["Mighty Reds", 17],
+        ["让让群の伯恩茅斯一美", 24],
+        ["tong话里都是骗人的", 28],
+        ["让让群女法官", 16],
+        ["让让群老股民", 31]
+      ],
+      showBackground: true,
+      label: {
+        show: true
+      }
+    }]
+  };
+  chart.setOption(option);
+  return chart;
+}
 
 Page({
 
@@ -48,9 +87,14 @@ Page({
     showGwPicker: false,
     showResult: false,
     // tabBar
-    tab: "推荐",
+    tab: "排行",
     // refrsh
     pullDownRefresh: false,
+    // echart 
+    chartShow: false,
+    ec: {
+      onInit: initChart
+    },
   },
 
   /**

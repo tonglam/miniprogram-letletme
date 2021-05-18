@@ -5,6 +5,7 @@
     "playerPicker": "../../../components/picker/playerPicker/playerPicker",
     "gwPicker": "../../../components/picker/gwPicker/gwPicker",
     "scoutResult": "../../../components/scoutResult/scoutResult",
-    "bottomNavBar": "../../../components/navigation/bottomNavBar/bottomNavBar"
+    "bottomNavBar": "../../../components/navigation/bottomNavBar/bottomNavBar",
+    "ec-canvas": "../../../ec-canvas/ec-canvas" 
   }
 }

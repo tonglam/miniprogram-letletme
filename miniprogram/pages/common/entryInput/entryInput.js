@@ -25,7 +25,7 @@ Page({
 
   onShow: function () {
     if (app.globalData.entryInfoData.entry > 0) {
-      this.redirect();
+      this.redirectHome();
     }
   },
 
@@ -123,11 +123,11 @@ Page({
   saveEntry() {
     app.changeEntry(this.data.entry)
     // 跳转首页
-    this.redirect();
+    this.redirectHome();
   },
 
   // 跳转
-  redirect() {
+  redirectHome() {
     wx.redirectTo({
       url: '../home/home'
     });

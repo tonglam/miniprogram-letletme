@@ -77,6 +77,7 @@ Page({
       liveMatchList: [],
       liveBonusList: [],
       liveBpsList: [],
+      liveFixtureList: [],
       liveDetailsList: []
     });
     // 拉取对应比赛状态的数据
