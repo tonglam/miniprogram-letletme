@@ -1,28 +1,26 @@
 <view class="scoutResult">
 
-  <i-panel i-class="cell-panel" title="{{scoutData.scoutName}}">
-    <i-cell-group>
-      <i-cell title="门将"
-        value="【{{scoutData.gkpInfo.teamShortName}}】{{scoutData.gkpInfo.webName}}({{scoutData.gkpInfo.points}})">
-      </i-cell>
-      <i-cell title="后卫"
-        value="【{{scoutData.defInfo.teamShortName}}】{{scoutData.defInfo.webName}}({{scoutData.defInfo.points}})">
-      </i-cell>
-      <i-cell title="中场"
-        value="【{{scoutData.midInfo.teamShortName}}】{{scoutData.midInfo.webName}}({{scoutData.midInfo.points}})">
-      </i-cell>
-      <i-cell title="前锋"
-        value="【{{scoutData.fwdInfo.teamShortName}}】{{scoutData.fwdInfo.webName}}({{scoutData.fwdInfo.points}})">
-      </i-cell>
-      <i-cell title="队长"
-        value="【{{scoutData.captainInfo.teamShortName}}】{{scoutData.captainInfo.webName}}({{scoutData.captainInfo.points}})">
-      </i-cell>
-      <block wx:if="{{scoutData.reason!==''}}">
-        <i-cell title="推荐理由" value="{{scoutData.reason}}"></i-cell>
-      </block>
-      <i-cell title="周得分" value="{{scoutData.eventPoints}}"></i-cell>
-      <i-cell title="总得分" value="{{scoutData.totalPoints}}"></i-cell>
-    </i-cell-group>
-  </i-panel>
+  <van-cell-group title="{{scoutData.scoutName}}">
+    <van-cell title="门将"
+      value="【{{scoutData.gkpInfo.teamShortName}}】{{scoutData.gkpInfo.webName}}({{scoutData.gkpInfo.points}})">
+    </van-cell>
+    <van-cell title="后卫"
+      value="【{{scoutData.defInfo.teamShortName}}】{{scoutData.defInfo.webName}}({{scoutData.defInfo.points}})">
+    </van-cell>
+    <van-cell title="中场"
+      value="【{{scoutData.midInfo.teamShortName}}】{{scoutData.midInfo.webName}}({{scoutData.midInfo.points}})">
+    </van-cell>
+    <van-cell title="前锋"
+      value="【{{scoutData.fwdInfo.teamShortName}}】{{scoutData.fwdInfo.webName}}({{scoutData.fwdInfo.points}})">
+    </van-cell>
+    <van-cell title="队长"
+      value="【{{scoutData.captainInfo.teamShortName}}】{{scoutData.captainInfo.webName}}({{scoutData.captainInfo.points}})">
+    </van-cell>
+    <block wx:if="{{scoutData.reason!==''}}">
+      <van-cell title="推荐理由" value="{{scoutData.reason}}"></van-cell>
+    </block>
+    <van-cell title="周得分" value="{{scoutData.eventPoints}}"></van-cell>
+    <van-cell title="总得分" value="{{scoutData.totalPoints}}"></van-cell>
+  </van-cell-group>
 
 </view>

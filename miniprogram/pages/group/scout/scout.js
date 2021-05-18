@@ -98,8 +98,8 @@ Page({
   },
 
   /**
-  * 原生
-  */
+   * 原生
+   */
 
   onShow() {
     this.setData({
@@ -123,7 +123,7 @@ Page({
 
   /**
    * 操作（公共）
-  */
+   */
 
   // tab切换
   tabOnChange(event) {
@@ -148,8 +148,8 @@ Page({
   },
 
   /**
-  * 操作（推荐页）
-  */
+   * 操作（推荐页）
+   */
 
   // 推荐重选
   onClickRefresh() {
@@ -293,38 +293,38 @@ Page({
           Toast.fail('钱不够啦');
           return false;
         }
-      case 2:
-        if (webName === this.data.pickGkpInfo.webName) {
-          Toast.fail('选了一样的');
-          return false;
-        }
-        // 检查余额
-        if (fund < 0) {
-          Toast.fail('钱不够啦');
-          return false;
-        }
-      case 3:
-        if (webName === this.data.pickGkpInfo.webName) {
-          Toast.fail('选了一样的');
-          return false;
-        }
-        // 检查余额
-        if (fund < 0) {
-          Toast.fail('钱不够啦');
-          return false;
-        }
-      case 4:
-        if (webName === this.data.pickGkpInfo.webName) {
-          Toast.fail('选了一样的');
-          return false;
-        }
-        // 检查余额
-        if (fund < 0) {
-          Toast.fail('钱不够啦');
-          return false;
-        }
-      default:
-        return true;
+        case 2:
+          if (webName === this.data.pickGkpInfo.webName) {
+            Toast.fail('选了一样的');
+            return false;
+          }
+          // 检查余额
+          if (fund < 0) {
+            Toast.fail('钱不够啦');
+            return false;
+          }
+          case 3:
+            if (webName === this.data.pickGkpInfo.webName) {
+              Toast.fail('选了一样的');
+              return false;
+            }
+            // 检查余额
+            if (fund < 0) {
+              Toast.fail('钱不够啦');
+              return false;
+            }
+            case 4:
+              if (webName === this.data.pickGkpInfo.webName) {
+                Toast.fail('选了一样的');
+                return false;
+              }
+              // 检查余额
+              if (fund < 0) {
+                Toast.fail('钱不够啦');
+                return false;
+              }
+              default:
+                return true;
     }
   },
 
@@ -354,8 +354,8 @@ Page({
   },
 
   /**
-  * 数据（推荐页）
-  */
+   * 数据（推荐页）
+   */
 
   // 拉取球探信息
   initScout() {
@@ -381,9 +381,9 @@ Page({
   // 拉取推荐结果
   initEntryScoutResult() {
     get('group/qryEventEntryScoutResult', {
-      event: this.data.nextGw,
-      entry: app.globalData.entryInfoData.entry
-    })
+        event: this.data.nextGw,
+        entry: app.globalData.entryInfoData.entry
+      })
       .then(res => {
         this.setInitData(res.data);
       })
@@ -447,9 +447,24 @@ Page({
   // 拉取比赛周所有推荐结果 
   initEventScoutResult() {
     get('group/qryEventScoutResult', {
-      event: this.data.gw,
-    })
+        event: this.data.gw,
+      })
       .then(res => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 400,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
         let list = res.data;
         if (list.length === 0) {
           Toast('无数据');
@@ -495,35 +510,20 @@ Page({
   },
 
   /**
-  * 数据（得分页）
-  */
+   * 数据（得分页）
+   */
 
   // 更新当前周得分数据
   updateEventScoutResult() {
     let gw = this.data.gw;
     get('common/insertEventLiveCache', {
-      event: gw
-    },false)
+        event: gw
+      }, false)
       .then(() => {
         get('group/updateEventScoutResult', {
-          event: gw
-        })
+            event: gw
+          }, false)
           .then(() => {
-            // 下拉刷新
-            if (this.data.pullDownRefresh) {
-              wx.stopPullDownRefresh({
-                success: () => {
-                  Toast({
-                    type: 'success',
-                    duration: 400,
-                    message: "刷新成功"
-                  });
-                  this.setData({
-                    pullDownRefresh: false
-                  });
-                },
-              });
-            }
             this.initEventScoutResult();
           })
           .catch(res => {

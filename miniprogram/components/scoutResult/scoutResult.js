@@ -9,7 +9,7 @@ Component({
   },
 
   methods: {
-   
+
   },
 
 })
