@@ -87,7 +87,7 @@ Page({
     showGwPicker: false,
     showResult: false,
     // tabBar
-    tab: "排行",
+    tab: "推荐",
     // refrsh
     pullDownRefresh: false,
     // echart 
@@ -125,8 +125,8 @@ Page({
    * 操作（公共）
   */
 
-  // tabBar切换
-  tabBarOnChange(event) {
+  // tab切换
+  tabOnChange(event) {
     let tab = event.detail.name;
     if (tab === '推荐') {
       this.setData({
@@ -194,6 +194,7 @@ Page({
       });
   },
 
+  // 检查时候否为球探
   checkScout() {
     if (this.data.scoutList.indexOf(this.data.scoutEntry.entry + '') != -1) {
       return true;

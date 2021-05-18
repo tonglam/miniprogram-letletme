@@ -6,11 +6,11 @@
   </view>
 
   <view class="content">
-    <van-tabs swipeable type="card" active="{{ tab }}">
+    <van-tabs swipeable type="card">
 
-      <van-popup show="{{ pickerShow }}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      <van-popup show="{{pickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
         bind:close="onPopClose">
-        <van-datetime-picker type="date" value="{{ currentDate }}" max-date="{{ maxDate }}" formatter="{{ formatter }}"
+        <van-datetime-picker type="date" value="{{currentDate}}" max-date="{{maxDate}}" formatter="{{formatter}}"
           bind:confirm="onPickerConfirm" bind:cancel="onPickerCancel" />
       </van-popup>
 
@@ -24,7 +24,6 @@
               value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m"></i-cell>
           </block>
         </i-cell-group>
-        <text>\n</text>
       </van-tab>
 
       <van-tab title="降价" name="降价">
@@ -37,7 +36,6 @@
               value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m"></i-cell>
           </block>
         </i-cell-group>
-        <text>\n</text>
       </van-tab>
 
       <van-tab title="新增" name="新增">

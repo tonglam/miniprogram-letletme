@@ -7,13 +7,13 @@
   </view>
 
   <view class="pop" style="text-align:center;">
-    <van-popup show="{{ popShow }}" position="top" bind:close="onPopClose">
-      <text>\n</text>
-      <text>输入任选一项进行模糊查询</text>
-      <text>\n\n</text>
-      <van-field size="large" left-icon="search" model:value="{{entryName}}" placeholder="球队名字" border="{{ true }}"
+    <van-popup show="{{popShow}}" position="top" bind:close="onPopClose">
+      <view class="popInfo">
+        <text>任意输入一项</text>
+      </view>
+      <van-field size="large" left-icon="search" model:value="{{entryName}}" placeholder="球队名字" border="{{true}}"
         clearable />
-      <van-field size="large" left-icon="search" model:value="{{playerName}}" placeholder="玩家名字" border="{{ true }}"
+      <van-field size="large" left-icon="search" model:value="{{playerName}}" placeholder="玩家名字" border="{{true}}"
         clearable />
       <text>\n</text>
       <van-button type="primary" plain size="normal" bind:click="onClickQuery">查询</van-button>
@@ -23,11 +23,10 @@
 
   <view class="picker">
     <van-popup show="{{ pickerShow }}" position="top">
-      <van-picker show-toolbar toolbar-position="bottom" columns="{{ columns }}" cancel-button-text="重新输入" bind:cancel="onPickerCancel" bind:confirm="onPickerConfirm" />
+      <van-picker show-toolbar toolbar-position="bottom" columns="{{ columns }}" cancel-button-text="重新输入"
+        bind:cancel="onPickerCancel" bind:confirm="onPickerConfirm" />
     </van-popup>
   </view>
-
-  <text>\n</text>
 
   <view class="input">
     <van-cell-group>

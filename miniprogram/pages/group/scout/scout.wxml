@@ -1,8 +1,8 @@
 <view class="scout">
 
   <view class="tabBar">
-    <text>\n</text>
-    <van-tabs type="card" active="{{ tab }}" bind:change="tabBarOnChange">
+
+    <van-tabs type="card" active="{{tab}}" bind:change="tabOnChange">
 
       <van-tab title="推荐" name="推荐">
 
@@ -12,13 +12,13 @@
         </view>
 
         <view class="notice">
-          <van-notice-bar scrollable="{{ false }}" left-icon="balance-o" text="GW{{nextGw}} - 剩余资金：£{{fund}}m"
+          <van-notice-bar scrollable="{{false}}" left-icon="balance-o" text="GW{{nextGw}} - 剩余资金：£{{fund}}m"
             border="{{false}}" />
         </view>
 
         <view class="cellGroup">
           <van-cell-group>
-            <van-field model:value="{{ pickGkp }}" center clearable label="门将" use-button-slot border="{{ false }}">
+            <van-field model:value="{{pickGkp}}" center clearable label="门将" use-button-slot border="{{false}}">
               <van-button id="1" slot="button" size="small" type="primary" custom-class="button"
                 bind:click="onPickScoutPlayer">选择
               </van-button>
@@ -26,7 +26,7 @@
           </van-cell-group>
 
           <van-cell-group>
-            <van-field model:value="{{ pickDef }}" center readonly label="后卫" use-button-slot border="{{ false }}">
+            <van-field model:value="{{pickDef}}" center readonly label="后卫" use-button-slot border="{{false}}">
               <van-button id="2" slot="button" size="small" type="primary" custom-class="button"
                 bind:click="onPickScoutPlayer">选择
               </van-button>
@@ -34,7 +34,7 @@
           </van-cell-group>
 
           <van-cell-group>
-            <van-field model:value="{{ pickMid }}" center readonly label="中场" use-button-slot border="{{ false }}">
+            <van-field model:value="{{pickMid}}" center readonly label="中场" use-button-slot border="{{false}}">
               <van-button id="3" slot="button" size="small" type="primary" custom-class="button"
                 bind:click="onPickScoutPlayer">选择
               </van-button>
@@ -42,7 +42,7 @@
           </van-cell-group>
 
           <van-cell-group>
-            <van-field model:value="{{ pickFwd }}" center readonly label="前锋" use-button-slot border="{{ false }}">
+            <van-field model:value="{{pickFwd}}" center readonly label="前锋" use-button-slot border="{{false}}">
               <van-button id="4" slot="button" size="small" type="primary" custom-class="button"
                 bind:click="onPickScoutPlayer">选择
               </van-button>
@@ -50,7 +50,7 @@
           </van-cell-group>
 
           <van-cell-group>
-            <van-field value="{{ pickCap }} " center readonly label="队长" use-button-slot border="{{ false }}">
+            <van-field value="{{pickCap}} " center readonly label="队长" use-button-slot border="{{false}}">
               <van-button id="5" slot="button" size="small" type="primary" custom-class="button"
                 bind:click="onPickScoutPlayer">选择
               </van-button>
@@ -60,8 +60,8 @@
 
         <view class="reason">
           <van-cell-group>
-            <van-field type="textarea" model:value="{{ reason }}" center clearable label="推荐理由"
-              placeholder="这个人很懒什么都没留下甚至不打标点" border="{{ false }}" use-button-slot>
+            <van-field type="textarea" model:value="{{reason}}" center clearable label="推荐理由"
+              placeholder="这个人很懒什么都没留下甚至不打标点" border="{{false}}" use-button-slot>
             </van-field>
           </van-cell-group>
         </view>
@@ -79,6 +79,10 @@
             bind:click-right="onClickChangeGw" />
         </view>
 
+        <view class="gwPicker" wx:if="{{showGwPicker}}">
+          <gwPicker gw="{{gw}}" show="true" bind:pickGw="onPickGw"></gwPicker>
+        </view>
+
         <swiper indicator-dots="true" interval="3000" style="height:500px">
           <view class="scoutResult" wx:if="{{showResult}}">
             <block wx:for="{{scoutResultList}}" wx:key="index">
@@ -88,10 +92,6 @@
             </block>
           </view>
         </swiper>
-
-        <view class="gwPicker" wx:if="{{showGwPicker}}">
-          <gwPicker gw="{{gw}}" show="true" bind:pickGw="onPickGw"></gwPicker>
-        </view>
 
       </van-tab>
 
@@ -108,7 +108,7 @@
   <van-toast id="van-toast" />
 
   <view class="container" wx:if="{{chartShow}}">
-    <ec-canvas id="rankChart" canvas-id="rankChart" ec="{{ ec }}"></ec-canvas>
+    <ec-canvas id="rankChart" canvas-id="rankChart" ec="{{ec}}"></ec-canvas>
   </view>
 
 </view>

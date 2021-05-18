@@ -13,19 +13,8 @@ App({
     nextGw: 0,
     utcDeadline: "",
     deadline: "",
-    entryInfoData: {
-      entry: 0,
-      entryName: "",
-      playerName: "",
-      region: "",
-      startedEvent: 1,
-      overallPoints: 0,
-      overallRank: 0,
-      totalTransfers: 0,
-      value: 0.0,
-      bank: 0.0,
-      teamValue: 0.0
-    },
+    entry: 0,
+    entryInfoData: {},
     userInfo: {},
   },
 
@@ -41,7 +30,9 @@ App({
     this.setCurrentEventAndNextUtcDeadline();
     // get entry_info
     let entry = wx.getStorageSync('entry');
+    console.log("app entry:" + entry);
     if (entry > 0) {
+      this.globalData.entry = entry;
       this.setEntryInfo(entry);
     }
   },
@@ -75,25 +66,16 @@ App({
 
   setEntryInfo(entry) {
     get('entry/qryEntryInfo', {
-      entry: entry
-    })
+        entry: entry
+      })
       .then(res => {
         let entryInfoData = res.data;
         entryInfoData['overallRank'] = showOverallRank(entryInfoData.overallRank);
         this.globalData.entryInfoData = entryInfoData;
-        // // 跳转首页
-        // this.redirectHome();
       })
       .catch(res => {
         console.log('fail:', res);
       });
-  },
-
-  // 跳转首页
-  redirectHome() {
-    wx.redirectTo({
-      url: '/pages/common/home/home'
-    });
   },
 
 })

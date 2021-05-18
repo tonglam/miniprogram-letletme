@@ -41,7 +41,7 @@ Page({
       let entryInfoData = app.globalData.entryInfoData;
       this.setData({
         entryInfoData: entryInfoData,
-        entry: entryInfoData.entry,
+        entry: app.globalData.entry,
         entryName: entryInfoData.entryName,
         playerName: entryInfoData.playerName
       });

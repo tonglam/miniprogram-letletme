@@ -1,0 +1,15 @@
+.info .content {
+  margin: 10px 0;
+}
+
+.info .summary {
+  margin: 10px 0;
+}
+
+.info .league {
+  margin: 10px 0;
+}
+
+.info .history {
+  margin: 10px 0;
+}

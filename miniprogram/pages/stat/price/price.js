@@ -93,6 +93,7 @@ Page({
     this.getPirceList();
   },
 
+  // picker取消
   onPickerCancel() {
     this.setData({
       pickerShow: false

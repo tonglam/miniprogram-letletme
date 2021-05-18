@@ -1,31 +1,93 @@
 <view class="info">
 
   <view class="navBar">
-    <van-nav-bar title="{{entryInfoData.playerName}}" left-text="" right-text="切换球队" safe-area-inset-top="{{false}}"
-      bind:click-right="onClickChangeEntry" />
+    <van-nav-bar title="{{entryInfoData.entryName}}" left-text="GW{{gw}}" right-text="切换球队"
+      safe-area-inset-top="{{false}}" bind:click-left="onClickChangeGw" bind:click-right="onClickChangeEntry" />
+  </view>
+
+  <view class="gwPicker" wx:if="{{showGwPicker}}">
+    <gwPicker gw="{{gw}}" show="true" bind:pickGw="onPickGw"></gwPicker>
   </view>
 
   <view class="content">
-    <van-collapse value="{{ activeNames }}" bind:change="onChange">
-      <van-collapse-item name="1">
-        <view slot="title">{{entryInfoData.entryName}}</view>
-        <p>总分：{{entryInfoData.overallPoints}}</p>
-        <van-divider />
-        <p>全球排名：{{entryInfoData.overallRank}}</p>
-        <van-divider />
-        <p>地区：{{entryInfoData.region}}</p>
-        <van-divider />
-        <p>开始时间：GW{{entryInfoData.startedEvent}}</p>
-        <van-divider />
-        <p>转会总数：{{entryInfoData.totalTransfers}}</p>
-        <van-divider />
-        <p>阵容身价：{{entryInfoData.teamValue}}m</p>
-        <van-divider />
-        <p>银行余额：{{entryInfoData.bank}}m</p>
-        <van-divider />
-        <p>总价值：{{entryInfoData.value}}m</p>
-      </van-collapse-item>
-    </van-collapse>
+
+    <van-tabs type="card" bind:change="tabOnChange">
+
+      <van-tab title="简介" name="简介">
+
+        <view class="summary">
+          <van-cell title="总分：{{entryInfoData.overallPoints}}" value="全球排名：{{entryInfoData.overallRank}}" />
+          <van-cell title="开始时间：GW{{entryInfoData.startedEvent}}" value="地区：{{entryInfoData.region}}" />
+          <van-cell title="阵容身价：{{entryInfoData.value}}m" value="银行余额：{{entryInfoData.bank}}m" />
+          <van-cell title="总价值：{{entryInfoData.teamValue}}m" value="转会总数：{{entryInfoData.totalTransfers}}" />
+        </view>
+
+        <view class="league">
+          <van-cell-group title="Classic联赛">
+            <block wx:for="{{classicList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{data.name}}" value="{{data.entry_rank}}({{data.entry_last_rank}})" />
+            </block>
+          </van-cell-group>
+          <van-cell-group title="H2H联赛">
+            <block wx:for="{{h2hList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{data.name}}" value="{{data.entry_rank}}({{data.entry_last_rank}})" />
+            </block>
+          </van-cell-group>
+          <van-cell-group title="官方杯赛">
+            <block wx:for="{{cupList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{data.entry_1_name}} vs {{data.entry_2_name}}"
+                value="{{data.entry_1_points}} - {{data.entry_2_points}}" />
+            </block>
+          </van-cell-group>
+        </view>
+
+        <view class="history">
+          <van-cell-group title="历史战绩">
+            <block wx:for="{{historyInfoList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{data.season_name}}" value="{{data.total_points}}({{data.rank}})" />
+            </block>
+          </van-cell-group>
+        </view>
+
+      </van-tab>
+
+      <van-tab title="得分" name="得分">
+
+        <van-cell title="得分(净得分)：{{entryResultData.points}}({{entryResultData.netPoints}})"
+          value="剁手:{{entryResultData.transfersCost}}" />
+        <van-cell title="上场队长:{{entryResultData.captainName}}" value="开卡:{{entryResultData.chip}}" />
+        <van-cell title="总分:{{entryResultData.liveTotalPoints}}" value="上周排名:{{entryResultData.lastOverallRank}}" />
+
+        <i-cell-group wx:for="{{entryResultData.pickList}}" wx:for-item="data" wx:key="index">
+
+          <block wx:if="{{data.elementType === 1}}">
+            <import src="../../../template/elementLive.wxml" />
+            <template is="gkp" data="{{data}}" />
+          </block>
+
+          <block wx:elif="{{data.elementType===2}}">
+            <import src="../../../template/elementLive.wxml" />
+            <template is="def" data="{{data}}" />
+          </block>
+
+          <block wx:elif="{{data.elementType===3}}">
+            <import src="../../../template/elementLive.wxml" />
+            <template is="mid" data="{{data}}" />
+          </block>
+
+          <block wx:elif="{{data.elementType===4}}">
+            <import src="../../../template/elementLive.wxml" />
+            <template is="fwd" data="{{data}}" />
+          </block>
+
+        </i-cell-group>
+
+      </van-tab>
+
+      <van-tab title="排名" name="排名">
+      </van-tab>
+
+    </van-tabs>
   </view>
 
   <view class="bottemNavBar">

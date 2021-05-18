@@ -1,3 +1,5 @@
+<view class="scoutResult">
+
   <i-panel i-class="cell-panel" title="{{scoutData.scoutName}}">
     <i-cell-group>
       <i-cell title="门将"
@@ -22,3 +24,5 @@
       <i-cell title="总得分" value="{{scoutData.totalPoints}}"></i-cell>
     </i-cell-group>
   </i-panel>
+
+</view>

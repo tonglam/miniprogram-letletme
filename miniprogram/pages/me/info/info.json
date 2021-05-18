@@ -1,6 +1,6 @@
 {
-  "navigationBarTitleText": "我的球队",
   "usingComponents": {
+    "gwPicker": "../../../components/picker/gwPicker/gwPicker",
     "bottomNavBar": "../../../components/navigation/bottomNavBar/bottomNavBar"
   }
 }

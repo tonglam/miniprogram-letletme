@@ -20,11 +20,12 @@ Page({
   },
 
   /**
-  * 原生
-  */
+   * 原生
+   */
 
   onShow: function () {
-    if (app.globalData.entryInfoData.entry > 0) {
+    console.log('entryInput:' + app.globalData.entry);
+    if (app.globalData.entry > 0) {
       this.redirectHome();
     }
   },

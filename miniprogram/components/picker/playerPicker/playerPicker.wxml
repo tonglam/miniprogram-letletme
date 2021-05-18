@@ -1,14 +1,14 @@
 <view class="playerPicker">
-  <van-popup show="{{ show }}" overlay="{{false}}" position="top" custom-style="height: 100%">
+  <van-popup show="{{show}}" overlay="{{false}}" position="top" custom-style="height: 100%">
 
     <view class="picker">
-      <van-picker show-toolbar toolbar-position="bottom" item-height="30" title="" columns="{{ columns }}"
+      <van-picker show-toolbar toolbar-position="bottom" item-height="30" title="" columns="{{columns}}"
         bind:change="pickerOnChange" bind:confirm="pickerOnConfirm" bind:cancel="pickerOnCancel"
         loading="{{loading}}" />
     </view>
 
     <view class="card">
-      <van-collapse value="{{ activeNames }}" bind:open="cardOnOpen" bind:change="cardOnChange">
+      <van-collapse value="{{activeNames}}" bind:open="cardOnOpen" bind:change="cardOnChange">
       
         <van-collapse-item name="{{playerInfoData.element}}">
           <view slot="title">【{{playerInfoData.teamShortName}}】{{playerInfoData.webName}} -
@@ -44,4 +44,5 @@
     </view>
 
   </van-popup>
+  
 </view>

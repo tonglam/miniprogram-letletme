@@ -1,41 +1,31 @@
 <view class="home">
-  <van-row class="indexRow">
+  <view class="img">
     <image class="begbeg" src="../../../images/begbeg.jpg" mode="aspectFit"></image>
-  </van-row>
+  </view>
 
-  <van-row>
-  <text>\n\n</text>
-  </van-row>
-
-  <van-row>
+  <view class="info">
     <text>GW{{nextGw}}\n\ndeadline: {{deadline}}</text>
-  </van-row>
+  </view>
 
-  <van-row>
-  <text>\n\n</text>
-  </van-row>
-
-  <van-row>
-    <van-count-down use-slot time="{{ time }}" bind:change="onChange">
-      <text class="item">{{ timeData.days }}天</text>
-      <text class="item">{{ timeData.hours }}时</text>
-      <text class="item">{{ timeData.minutes }}分</text>
-      <text class="item">{{ timeData.seconds }}秒</text>
+  <view class="countDown">
+    <van-count-down use-slot time="{{time}}" bind:change="onChange">
+      <text class="item">{{timeData.days}}天</text>
+      <text class="item">{{timeData.hours}}时</text>
+      <text class="item">{{timeData.minutes}}分</text>
+      <text class="item">{{timeData.seconds}}秒</text>
     </van-count-down>
-  </van-row>
+  </view>
 
-  <van-row>
-  <text>\n\n</text>
-  </van-row>
+  <view class="bottom">
+    <van-row>
+      <van-transition show="{{true}}" custom-class="block">
+        让让我吧
+      </van-transition>
+    </van-row>
+  </view>
 
-  <van-row>
-    <van-transition show="{{ true }}" custom-class="block">
-      让让我吧
-    </van-transition>
-  </van-row>
+  <view class="bottemNavBar">
+    <bottomNavBar active="home"></bottomNavBar>
+  </view>
 
-</view>
-
-<view class="bottemNavBar">
-  <bottomNavBar active="home"></bottomNavBar>
 </view>

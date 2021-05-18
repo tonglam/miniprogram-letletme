@@ -6,11 +6,14 @@
     "pages/live/match/match",
     "pages/live/player/player",
     "pages/live/tournament/tournament",
+    "pages/tournament/select/select",
     "pages/stat/price/price",
+    "pages/stat/player/player",
+    "pages/stat/team/team",
     "pages/group/scout/scout",
     "pages/me/info/info"
   ],
-  "entryPagePath": "pages/group/scout/scout",
+  "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",

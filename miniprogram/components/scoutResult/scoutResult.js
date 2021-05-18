@@ -6,13 +6,6 @@ Component({
 
   data: {
     activeKey: 0,
-
-  },
-
-  lifetimes: {
-    attached: function () {
-    },
-
   },
 
   methods: {

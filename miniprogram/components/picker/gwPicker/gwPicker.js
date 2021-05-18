@@ -1,3 +1,5 @@
+const app = getApp();
+
 Component({
 
   properties: {
@@ -6,12 +8,16 @@ Component({
   },
 
   data: {
+    current: 0,
     event: 'pickGw',
     columns: [],
   },
 
   lifetimes: {
     attached: function () {
+      this.setData({
+        current: app.globalData.gw
+      });
       this.initGwList();
     }
   },
@@ -41,7 +47,7 @@ Component({
 
     initGwList() {
       let list = [];
-      for (let i = 1; i < this.properties.gw + 1; i++) {
+      for (let i = 1; i <= this.data.current; i++) {
         if (i < 39) {
           list.push(i);
         }

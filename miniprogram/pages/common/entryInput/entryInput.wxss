@@ -1,0 +1,7 @@
+.entryInput .navBar {
+  margin-bottom: 10px;
+}
+
+.entryInput .popInfo {
+  margin: 20px 20px;
+}

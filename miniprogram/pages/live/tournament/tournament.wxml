@@ -1,15 +1,16 @@
 <view class="tournament">
 
   <view class="navBar">
-    <van-nav-bar title="{{tournamentName}}" title-class="title" safe-area-inset-top="{{false}}" left-text="GW{{gw}}" right-text="更换联赛" bind:click-right="onClickChange" />
+    <van-nav-bar title="{{tournamentName}}" title-class="title" safe-area-inset-top="{{false}}" left-text="GW{{gw}}"
+      right-text="更换联赛" bind:click-right="onClickChange" />
   </view>
 
   <view class="dropdown">
     <van-dropdown-menu>
-      <van-dropdown-item value="{{ sortValue }}" options="{{ sortOptions }}" />
-      <van-dropdown-item value="{{ sortTypeValue }}" options="{{ sortTypeOptions }}" />
-      <van-dropdown-item title="队长" value="{{ captainValue }}" options="{{ captainOptions }}" />
-      <van-dropdown-item value="{{ chipValue }}" options="{{ chipOptions }}" />
+      <van-dropdown-item value="{{sortValue}}" options="{{sortOptions}}" />
+      <van-dropdown-item value="{{sortTypeValue}}" options="{{sortTypeOptions}}" />
+      <van-dropdown-item title="队长" value="{{captainValue}}" options="{{captainOptions}}" />
+      <van-dropdown-item value="{{chipValue}}" options="{{chipOptions}}" />
     </van-dropdown-menu>
   </view>
 

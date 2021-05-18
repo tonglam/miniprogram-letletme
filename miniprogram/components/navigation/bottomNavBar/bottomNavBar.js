@@ -11,18 +11,19 @@ const map = {
       subname: '查看实时更新的比赛结果',
     }],
     "url": {
-      "球队": "../../../pages/live/entry/entry",
-      "联赛": "../../../pages/live/tournament/tournament",
-      "比赛": "../../../pages/live/match/match"
+      "球队": "/pages/live/entry/entry",
+      "联赛": "/pages/live/tournament/tournament",
+      "比赛": "/pages/live/match/match"
     },
     "show": true
   },
   "tournament": {
     "pages": [{
-      name: "首页"
+      name: "阵容选择",
+      subname: '查看联赛每轮阵容选择结果'
     }],
     "url": {
-      "首页": "../../../pages/common/home/home",
+      "阵容选择": "/pages/tournament/select/select",
     },
     "show": true
   },
@@ -32,18 +33,18 @@ const map = {
       subname: '查看每日价格涨跌',
     }],
     "url": {
-      "身价变化": "../../../pages/stat/price/price"
+      "身价变化": "/pages/stat/price/price"
     },
     "show": true
   },
   "group": {
     "pages": [],
-    "url": "../../../pages/group/scout/scout",
+    "url": "/pages/group/scout/scout",
     "show": false
   },
   "me": {
     "pages": [],
-    "url": "../../../pages/me/info/info",
+    "url": "/pages/me/info/info",
     "show": false
   }
 };
