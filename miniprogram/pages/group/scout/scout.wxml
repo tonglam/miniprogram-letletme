@@ -96,7 +96,6 @@
       </van-tab>
 
       <van-tab title="排行" name="排行">
-        <text>here</text>
       </van-tab>
 
     </van-tabs>
@@ -107,5 +106,9 @@
   </view>
 
   <van-toast id="van-toast" />
+
+  <view class="container" wx:if="{{chartShow}}">
+    <ec-canvas id="rankChart" canvas-id="rankChart" ec="{{ ec }}"></ec-canvas>
+  </view>
 
 </view>

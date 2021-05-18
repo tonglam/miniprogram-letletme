@@ -77,6 +77,7 @@ Page({
       liveMatchList: [],
       liveBonusList: [],
       liveBpsList: [],
+      liveFixtureList: [],
       liveDetailsList: []
     });
     // 拉取对应比赛状态的数据
@@ -131,8 +132,7 @@ Page({
           });
         }
         // 组装数据
-        let list = res.data,
-          activeNames = [];
+        let list = res.data;
         if (list.length === 0) {
           this.setData({
             infoShow: true

@@ -71,10 +71,6 @@ App({
     wx.setStorageSync('entry', entry);
     // 保存entry_info
     this.setEntryInfo(entry);
-    // 跳转首页
-    wx.redirectTo({
-      url: '../home/home'
-    });
   },
 
   setEntryInfo(entry) {
@@ -85,10 +81,19 @@ App({
         let entryInfoData = res.data;
         entryInfoData['overallRank'] = showOverallRank(entryInfoData.overallRank);
         this.globalData.entryInfoData = entryInfoData;
+        // // 跳转首页
+        // this.redirectHome();
       })
       .catch(res => {
         console.log('fail:', res);
       });
+  },
+
+  // 跳转首页
+  redirectHome() {
+    wx.redirectTo({
+      url: '/pages/common/home/home'
+    });
   },
 
 })
