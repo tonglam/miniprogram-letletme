@@ -1,8 +1,7 @@
 <view class="tournament">
 
   <view class="navBar">
-    <van-nav-bar title="{{tournamentName}}" title-class="title" safe-area-inset-top="{{false}}" left-text="GW{{gw}}"
-      right-text="更换联赛" bind:click-right="onClickChange" />
+    <van-nav-bar title="{{tournamentName}}" title-class="title" safe-area-inset-top="{{false}}" left-text="" right-text="更换联赛" bind:click-right="onClickChange" />
   </view>
 
   <view class="dropdown">

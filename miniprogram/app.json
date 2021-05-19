@@ -59,7 +59,8 @@
     "van-transition": "@vant/weapp/transition/index",
     "i-cell-group": "./dist/cell-group/index",
     "i-cell": "./dist/cell/index",
-    "i-icon": "./dist/icon/index"
+    "i-icon": "./dist/icon/index",
+    "bottomNavBar": "./components/navigation/bottomNavBar/bottomNavBar"
   },
   "sitemapLocation": "sitemap.json"
 }

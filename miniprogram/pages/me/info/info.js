@@ -16,13 +16,17 @@ Page({
     gw: 0,
     entry: 0,
     entryInfoData: {},
+    tab: "简介",
     // 简介页
     classicList: {},
     h2hList: {},
     cupList: {},
     historyInfoList: {},
+    chips: [],
     // 得分页
     entryResultData: {},
+    // 转会页
+    entryTransfersList: {},
     // 排名页
     // picker
     showGwPicker: false,
@@ -60,8 +64,13 @@ Page({
   // tab切换
   tabOnChange(event) {
     let tab = event.detail.name;
+    this.setData({
+      tab: tab
+    });
     if (tab === '得分') {
-      this.getEventResult();
+      this.getEntryEventResult();
+    } else if (tab === '转会') {
+      this.getEntryEventTransfers();
     } else if (tab === '排名') {
       console.log('排名');
     }
@@ -99,11 +108,15 @@ Page({
     this.setData({
       gw: gw
     });
-    // 拉取周得分数据
-    this.getEventResult(gw);
+    if (this.data.tab === '得分') {
+      // 拉取周得分数据
+      this.getEntryEventResult(gw);
+    } else if (this.data.tab === '转会') {
+      // 拉取周转会数据
+      this.getEntryEventTransfers(gw);
+    }
+
   },
-
-
 
   /**
    * 数据
@@ -119,9 +132,31 @@ Page({
         if (list.entry <= 0) {
           return false;
         }
+        let classicList = [],
+          h2hList = [];
+        list.classic.forEach(element => {
+          if (element.entry_rank > element.entry_last_rank) {
+            element.redArrow = true;
+          } else if (element.entry_rank < element.entry_last_rank) {
+            element.greenArrow = true;
+          } else {
+            element.noArrow = true;
+          }
+          classicList.push(element);
+        });
+        list.h2h.forEach(element => {
+          if (element.entry_rank > element.entry_last_rank) {
+            element.greenArrow = true;
+          } else if (element.entry_rank < element.entry_last_rank) {
+            element.redArrow = true;
+          } else {
+            element.noArrow = true;
+          }
+          h2hList.push(element);
+        });
         this.setData({
-          classicList: list.classic,
-          h2hList: list.h2h,
+          classicList: classicList,
+          h2hList: h2hList,
           cupList: list.cup.matches,
         });
       })
@@ -136,11 +171,23 @@ Page({
         entry: this.data.entryInfoData.entry
       })
       .then(res => {
-        let list = [];
-        if (list.entry <= 0) {
+        let historyData = res.data;
+        if (historyData.entry <= 0) {
           return false;
         }
-        res.data.past.forEach(element => {
+        // chips
+        let chips = [];
+        historyData.chips.forEach(element => {
+          element.name = showChip(element.name);
+          element.event = 'GW' + element.event;
+          chips.push(element);
+        })
+        this.setData({
+          chips: chips
+        });
+        // past
+        let list = [];
+        historyData.past.forEach(element => {
           element.rank = showOverallRank(element.rank);
           list.push(element);
         });
@@ -154,14 +201,25 @@ Page({
   },
 
   // 拉取周得分数据
-  getEventResult() {
+  getEntryEventResult() {
     get('entry/qryEntryEventResult', {
         event: this.data.gw,
-        entry: this.data.entryInfoData.entry
+        entry: this.data.entry
       })
       .then(res => {
         let data = res.data;
+        data.overallRank = showOverallRank(data.overallRank);
         data.chip = showChip(data.chip);
+        let pickList = [];
+        data.pickList.forEach(element => {
+          if (element.pickActive) {
+            element.style = "pickFinished";
+          } else {
+            element.style = "unPick";
+          }
+          pickList.push(element);
+        })
+        data.pickList = pickList;
         this.setData({
           entryResultData: data
         });
@@ -169,6 +227,22 @@ Page({
       .catch(res => {
         console.log('fail:', res);
       });
-  }
+  },
+
+  // 拉取周转会数据
+  getEntryEventTransfers() {
+    get('entry/qryEntryEventTransfers', {
+        event: this.data.gw,
+        entry: this.data.entry
+      })
+      .then(res => {
+        this.setData({
+          entryTransfersList: res.data
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
 
 })

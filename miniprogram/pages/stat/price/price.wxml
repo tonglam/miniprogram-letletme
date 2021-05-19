@@ -1,9 +1,13 @@
 <view class="price">
 
   <view class="navBar">
-    <van-nav-bar title="日期：{{date}}" left-text="" right-text="更换" safe-area-inset-top="{{false}}"
+    <van-nav-bar title="{{date}}" left-text="{{mode}}" right-text="更换" safe-area-inset-top="{{false}}"
       bind:click-right="onClickDate" />
   </view>
+
+  <!-- <view class="picker">
+    <van-picker columns="{{modes}}" bind:change="onChangeMode" />
+  </view> -->
 
   <view class="content">
     <van-tabs swipeable type="card">

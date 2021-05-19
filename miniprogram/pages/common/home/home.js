@@ -18,7 +18,7 @@ Page({
    * 原生
    */
 
-  onLoad: function () {
+  onShow: function () {
     let nextGw = app.globalData.nextGw,
       deadline = app.globalData.deadline,
       time = diffDeadlineTime(app.globalData.utcDeadline);

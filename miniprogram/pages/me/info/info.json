@@ -1,6 +1,5 @@
 {
   "usingComponents": {
-    "gwPicker": "../../../components/picker/gwPicker/gwPicker",
-    "bottomNavBar": "../../../components/navigation/bottomNavBar/bottomNavBar"
+    "gwPicker": "../../../components/picker/gwPicker/gwPicker"
   }
 }

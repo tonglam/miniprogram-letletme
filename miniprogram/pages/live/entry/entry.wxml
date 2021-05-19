@@ -2,7 +2,7 @@
 
   <view class="navBar">
     <van-nav-bar title="{{entryName}}({{playerName}})" title-class="title" safe-area-inset-top="{{false}}"
-      left-text="GW{{gw}}" right-text="更换id" bind:click-right="onClickChange" />
+      left-text="" right-text="更换id" bind:click-right="onClickChange" />
   </view>
 
   <view class="pop" style="text-align:center;">

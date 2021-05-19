@@ -22,10 +22,22 @@
           <van-cell title="总价值：{{entryInfoData.teamValue}}m" value="转会总数：{{entryInfoData.totalTransfers}}" />
         </view>
 
+        <view class="chip">
+          <van-cell-group title="已开卡">
+            <block wx:for="{{chips}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{data.name}}" value="{{data.event}}" />
+            </block>
+          </van-cell-group>
+        </view>
+
         <view class="league">
           <van-cell-group title="Classic联赛">
             <block wx:for="{{classicList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.name}}" value="{{data.entry_rank}}({{data.entry_last_rank}})" />
+              <van-cell title="{{data.name}}" value="{{data.entry_rank}}({{data.entry_last_rank}})">
+                <van-icon wx:if="{{data.greenArrow}}" class="greenArrow" slot="icon" name="arrow-up" />
+                <van-icon wx:if="{{data.redArrow}}" class="redArrow" slot="icon" name="arrow-down" />
+                <van-icon wx:if="{{data.noArrow}}" class="noArrow" slot="icon" name="minus" />
+              </van-cell>
             </block>
           </van-cell-group>
           <van-cell-group title="H2H联赛">
@@ -53,34 +65,53 @@
 
       <van-tab title="得分" name="得分">
 
-        <van-cell title="得分(净得分)：{{entryResultData.points}}({{entryResultData.netPoints}})"
-          value="剁手:{{entryResultData.transfersCost}}" />
-        <van-cell title="上场队长:{{entryResultData.captainName}}" value="开卡:{{entryResultData.chip}}" />
-        <van-cell title="总分:{{entryResultData.liveTotalPoints}}" value="上周排名:{{entryResultData.lastOverallRank}}" />
+        <view class="result">
+          <van-cell title="得分(净得分)：{{entryResultData.points}}({{entryResultData.netPoints}})"
+            value="剁手：{{entryResultData.transfersCost}}" />
+          <van-cell title="上场队长：{{entryResultData.captainName}}" value="开卡：{{entryResultData.chip}}" />
+          <van-cell title="转会数：{{entryResultData.transfers}}" value="板凳得分：{{entryResultData.benchPoints}}" />
+          <van-cell title="总分：{{entryResultData.overallPoints}}" value="总排名：{{entryResultData.overallRank}}" />
+          <van-cell title="阵容身价：£{{entryResultData.teamValue}}m" value="银行余额：£{{entryResultData.bank}}m" />
+        </view>
 
-        <i-cell-group wx:for="{{entryResultData.pickList}}" wx:for-item="data" wx:key="index">
+        <view class="pick">
+          <i-cell-group wx:for="{{entryResultData.pickList}}" wx:for-item="data" wx:key="index">
 
-          <block wx:if="{{data.elementType === 1}}">
-            <import src="../../../template/elementLive.wxml" />
-            <template is="gkp" data="{{data}}" />
+            <block wx:if="{{data.elementType === 1}}">
+              <import src="../../../template/elementLive.wxml" />
+              <template is="gkp" data="{{data}}" />
+            </block>
+
+            <block wx:elif="{{data.elementType===2}}">
+              <import src="../../../template/elementLive.wxml" />
+              <template is="def" data="{{data}}" />
+            </block>
+
+            <block wx:elif="{{data.elementType===3}}">
+              <import src="../../../template/elementLive.wxml" />
+              <template is="mid" data="{{data}}" />
+            </block>
+
+            <block wx:elif="{{data.elementType===4}}">
+              <import src="../../../template/elementLive.wxml" />
+              <template is="fwd" data="{{data}}" />
+            </block>
+
+          </i-cell-group>
+        </view>
+
+      </van-tab>
+
+      <van-tab title="转会" name="转会">
+
+        <view class="transfers">
+          <block wx:for="{{entryTransfersList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="转入：{{data.elementInName}}({{data.elementInPoints}})"
+              value="转出：{{data.elementOutName}}({{data.elementOutPoints}})"
+              label="转入:£{{data.elementInCost}}m -> 转出:£{{data.elementOutCost}}m" />
           </block>
+        </view>
 
-          <block wx:elif="{{data.elementType===2}}">
-            <import src="../../../template/elementLive.wxml" />
-            <template is="def" data="{{data}}" />
-          </block>
-
-          <block wx:elif="{{data.elementType===3}}">
-            <import src="../../../template/elementLive.wxml" />
-            <template is="mid" data="{{data}}" />
-          </block>
-
-          <block wx:elif="{{data.elementType===4}}">
-            <import src="../../../template/elementLive.wxml" />
-            <template is="fwd" data="{{data}}" />
-          </block>
-
-        </i-cell-group>
 
       </van-tab>
 

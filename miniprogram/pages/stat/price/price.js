@@ -9,6 +9,8 @@ const type = ['Rise', 'Faller', 'Start'];
 Page({
 
   data: {
+    // 公共
+    mode: '日期',
     // 数据
     riseInfoShow: false,
     fallerInfoShow: false,
@@ -30,6 +32,7 @@ Page({
       }
       return `${value}日`;
     },
+    modes: ['日期', '球员', '球队'],
     // refresh
     pullDownRefresh: false,
   },
@@ -107,8 +110,8 @@ Page({
   // 拉取球员身价
   getPirceList() {
     get('stat/qryPlayerValueByDate', {
-      date: this.data.date
-    })
+        date: this.data.date
+      })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {

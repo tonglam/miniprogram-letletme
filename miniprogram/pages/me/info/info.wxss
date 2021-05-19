@@ -1,3 +1,18 @@
+.info .greenArrow {
+  margin-right: 10px;
+  color: green;
+}
+
+.info .redArrow {
+  margin-right: 10px;
+  color: red;
+}
+
+.info .noArrow {
+  margin-right: 10px;
+  color: gray;
+}
+
 .info .content {
   margin: 10px 0;
 }
@@ -12,4 +27,26 @@
 
 .info .history {
   margin: 10px 0;
+}
+
+.info .result {
+  margin: 10px 0;
+}
+
+.info .pick {
+  margin: 10px 0;
+}
+
+.info .transfers {
+  margin: 10px 0;
+}
+
+.info .pickFinished {
+  color: blue;
+  font-weight: bold;
+}
+
+.info .unPick {
+  color: blue;
+  background-color: #e9eaec;
 }
