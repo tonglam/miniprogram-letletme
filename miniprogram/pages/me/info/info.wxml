@@ -118,7 +118,7 @@
 
       </van-tab>
 
-      <van-tab title="排名" name="排名">
+      <van-tab title="排行" name="排行">
       </van-tab>
 
     </van-tabs>

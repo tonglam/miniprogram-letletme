@@ -3,26 +3,35 @@
     <image class="begbeg" src="../../../images/begbeg.jpg" mode="aspectFit"></image>
   </view>
 
-  <view class="info">
-    <text>GW{{nextGw}}\n\ndeadline: {{deadline}}</text>
-  </view>
+  <block wx:if="{{nextGw > 38}}">
+    <text>下赛季见</text>
+  </block>
 
-  <view class="countDown">
-    <van-count-down use-slot time="{{time}}" bind:change="onChange">
-      <text class="item">{{timeData.days}}天</text>
-      <text class="item">{{timeData.hours}}时</text>
-      <text class="item">{{timeData.minutes}}分</text>
-      <text class="item">{{timeData.seconds}}秒</text>
-    </van-count-down>
-  </view>
+  <block wx:else>
+    <view class="info">
+      <text>GW{{nextGw}}\n\ndeadline: {{deadline}}</text>
+    </view>
 
-  <view class="bottom">
-    <van-row>
-      <van-transition show="{{true}}" custom-class="block">
-        让让我吧
-      </van-transition>
-    </van-row>
-  </view>
+    <view class="countDown">
+      <van-count-down use-slot time="{{time}}" bind:change="onChange">
+        <text class="item">{{timeData.days}}天</text>
+        <text class="item">{{timeData.hours}}时</text>
+        <text class="item">{{timeData.minutes}}分</text>
+        <text class="item">{{timeData.seconds}}秒</text>
+      </van-count-down>
+    </view>
+
+    <view class="bottom">
+      <van-row>
+        <van-transition show="{{true}}" custom-class="block">
+          让让我吧
+        </van-transition>
+      </van-row>
+    </view>
+
+  </block>
+
+
 
   <view class="bottemNavBar">
     <bottomNavBar active="home"></bottomNavBar>

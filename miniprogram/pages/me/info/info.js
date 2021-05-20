@@ -9,7 +9,24 @@ import {
 import * as echarts from '../../../ec-canvas/echarts';
 
 const app = getApp();
-var barec = null;
+let chart = null;
+const option = {
+  title: {
+    text: 'GW36'
+  },
+  tooltip: {}
+};
+
+function initChart(canvas, width, height, dpr) {
+  chart = echarts.init(canvas, null, {
+    width: width,
+    height: height,
+    devicePixelRatio: dpr // new 
+  });
+  canvas.setChart(chart);
+  chart.setOption(option);
+  return chart;
+}
 
 Page({
 
@@ -40,25 +57,17 @@ Page({
     xAxis: [],
     yAxis: [],
     datas: [],
-    chartBar: { //图表
-      onInit: function (canvas, width, height) {
-        barec = echarts.init(canvas, null, {
-          width: width,
-          height: height
-        });
-        canvas.setChart(barec);
-        return barec;
-      }
+    recordId: '',
+    firstData: {},
+    ec: {
+      lazyLoad: true,
+      onInit: initChart
     },
   },
 
   /**
    * 原生
    */
-
-  onLoad: function () {
-    
-  },
 
   onShow: function () {
     let entry = app.globalData.entry;
@@ -79,8 +88,21 @@ Page({
     this.initEntryLeagueInfo();
     // 拉取历史数据
     this.initEntryHistoryInfo();
+  },
 
-    this.getchartData();
+  onReady: function () {
+    // chart.setOption({
+    //   xAxis: {
+    //     data: month  //全局变量
+    //   },
+    //   series: [{
+    //     name: '蒸发量',
+    //     data: evaporation //全局变量
+    //   }, {
+    //     name: '降水量',
+    //     data: precipitation //全局变量
+    //   }]
+    // });
   },
 
   onPullDownRefresh: function () {
@@ -105,12 +127,34 @@ Page({
       this.getEntryEventResult();
     } else if (tab === '转会') {
       this.getEntryEventTransfers();
-    } else if (tab === '排名') {
+    } else if (tab === '排行') {
       // this.getEntryEventSummary();
       this.setData({
         chartShow: true,
         xAxis: ['GW1', 'GW2', 'GW3', 'GW4', 'GW5', 'GW6', 'GW7'],
         datas: [18, 23, 17, 24, 28, 16, 31]
+      });
+      chart.setOption({
+        title: {
+          text: 'GW36'
+        },
+        tooltip: {},
+        legend: {
+          data: ['销量']
+        },
+        xAxis: {
+          data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        },
+        yAxis: {},
+        series: [{
+          name: '销量',
+          type: 'bar',
+          data: [5, 20, 36, 10, 10, 20]
+        }],
+        showBackground: true,
+        label: {
+          show: true
+        }
       });
     }
   },
@@ -120,6 +164,7 @@ Page({
     // 清缓存
     wx.setStorageSync('entry', 0);
     // 清全局变量
+    app.globalData.entry = 0;
     app.globalData.entryInfoData = {};
     // 跳转输入
     redirectToEntryInput();
@@ -154,7 +199,6 @@ Page({
       // 拉取周转会数据
       this.getEntryEventTransfers(gw);
     }
-
   },
 
   /**
@@ -312,43 +356,6 @@ Page({
       .catch(res => {
         console.log('fail:', res);
       });
-  },
-
-  getchartData() {
-    barec.setOption({
-      title: {
-        text: "近7日接诊趋势图：单位(人)",
-        textStyle: {
-          color: '#333',
-          fontWeight: 'bold',
-          fontSize: 14,
-        }
-      },
-      legend: {
-        show: true,
-        top: "20rpx"
-      },
-      tooltip: {},
-      dataset: {
-        source: [
-          ['', '线下', '电话'],
-          ['Matcha Latte', 43.3, 85.8],
-          ['Milk Tea', 83.1, 73.4]
-        ]
-      },
-      xAxis: {
-        type: 'category'
-      },
-      yAxis: {},
-      series: [{
-          type: 'bar',
-          color: '#ffc300'
-        },
-        {
-          type: 'bar'
-        }
-      ]
-    })
   },
 
 })
