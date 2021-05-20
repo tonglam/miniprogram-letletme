@@ -1,8 +1,8 @@
-const app = getApp();
-
 import {
   post
 } from '../../../utils/request';
+
+const app = getApp();
 
 Page({
   data: {

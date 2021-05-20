@@ -1,11 +1,11 @@
-const app = getApp();
-
 import {
   get
 } from '../../../utils/request';
 import {
   getDifficultyColor
 } from '../../../utils/utils';
+
+const app = getApp();
 
 Component({
 

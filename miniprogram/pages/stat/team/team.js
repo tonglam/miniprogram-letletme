@@ -1,4 +1,3 @@
-// miniprogram/pages/stat/team/team.js
 Page({
 
   /**

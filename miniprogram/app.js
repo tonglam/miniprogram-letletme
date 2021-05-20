@@ -23,18 +23,15 @@ App({
       env: 'cloud1',
       traceUser: true,
     });
-  },
-
-  onShow() {
-    // get gw
-    this.setCurrentEventAndNextUtcDeadline();
-    // get entry_info
-    let entry = wx.getStorageSync('entry');
-    console.log("app entry:" + entry);
-    if (entry > 0) {
-      this.globalData.entry = entry;
-      this.setEntryInfo(entry);
-    }
+      // get gw
+      this.setCurrentEventAndNextUtcDeadline();
+      // get entry_info
+      let entry = wx.getStorageSync('entry');
+      console.log("app entry:" + entry);
+      if (entry > 0) {
+        this.globalData.entry = entry;
+        this.setEntryInfo(entry);
+      }
   },
 
   setCurrentEventAndNextUtcDeadline() {
@@ -55,10 +52,12 @@ App({
   },
 
   changeEntry(entry) {
+    console.log("change entry:"+entry);
     if (!new RegExp("^[1-9]\\d*$").test(entry)) {
       return false;
     }
     // 缓存entry
+    this.globalData.entry = entry;
     wx.setStorageSync('entry', entry);
     // 保存entry_info
     this.setEntryInfo(entry);

@@ -1,5 +1,3 @@
-const app = getApp();
-
 import {
   get
 } from "../../../utils/request";
@@ -8,6 +6,8 @@ import {
   getChipName
 } from '../../../utils/utils';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
+
+const app = getApp();
 
 Page({
 

@@ -1,5 +1,7 @@
 {
+  "enablePullDownRefresh": true,
   "usingComponents": {
-    "gwPicker": "../../../components/picker/gwPicker/gwPicker"
+    "gwPicker": "../../../components/picker/gwPicker/gwPicker",
+    "ec-canvas": "../../../ec-canvas/ec-canvas" 
   }
 }

@@ -1,4 +1,3 @@
-// miniprogram/pages/stat/select/select.js
 Page({
 
   /**

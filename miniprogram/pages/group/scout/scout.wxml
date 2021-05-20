@@ -108,7 +108,7 @@
   <van-toast id="van-toast" />
 
   <view class="container" wx:if="{{chartShow}}">
-    <ec-canvas id="rankChart" canvas-id="rankChart" ec="{{ec}}"></ec-canvas>
+    <ec-canvas id="myChart" canvas-id="myChart" ec="{{ec}}"></ec-canvas>
   </view>
 
 </view>

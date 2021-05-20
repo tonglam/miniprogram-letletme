@@ -1,5 +1,3 @@
-const app = getApp();
-
 import {
   get
 } from '../../../utils/request';
@@ -8,6 +6,10 @@ import {
   showChip,
   redirectToEntryInput
 } from '../../../utils/utils';
+import * as echarts from '../../../ec-canvas/echarts';
+
+const app = getApp();
+var barec = null;
 
 Page({
 
@@ -28,13 +30,35 @@ Page({
     // 转会页
     entryTransfersList: {},
     // 排名页
+    entryEventSummaryList: [],
     // picker
     showGwPicker: false,
+    // refrsh
+    pullDownRefresh: false,
+    // echart 
+    chartShow: false,
+    xAxis: [],
+    yAxis: [],
+    datas: [],
+    chartBar: { //图表
+      onInit: function (canvas, width, height) {
+        barec = echarts.init(canvas, null, {
+          width: width,
+          height: height
+        });
+        canvas.setChart(barec);
+        return barec;
+      }
+    },
   },
 
   /**
    * 原生
    */
+
+  onLoad: function () {
+    
+  },
 
   onShow: function () {
     let entry = app.globalData.entry;
@@ -55,6 +79,16 @@ Page({
     this.initEntryLeagueInfo();
     // 拉取历史数据
     this.initEntryHistoryInfo();
+
+    this.getchartData();
+  },
+
+  onPullDownRefresh: function () {
+    this.setData({
+      pullDownRefresh: true
+    });
+    // 拉取联赛数据
+    this.initEntryLeagueInfo();
   },
 
   /**
@@ -72,7 +106,12 @@ Page({
     } else if (tab === '转会') {
       this.getEntryEventTransfers();
     } else if (tab === '排名') {
-      console.log('排名');
+      // this.getEntryEventSummary();
+      this.setData({
+        chartShow: true,
+        xAxis: ['GW1', 'GW2', 'GW3', 'GW4', 'GW5', 'GW6', 'GW7'],
+        datas: [18, 23, 17, 24, 28, 16, 31]
+      });
     }
   },
 
@@ -125,9 +164,24 @@ Page({
   // 拉取联赛数据
   initEntryLeagueInfo() {
     get('entry/qryEntryLeagueInfo', {
-        entry: this.data.entryInfoData.entry
+        entry: this.data.entry
       })
       .then(res => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 400,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
         let list = res.data;
         if (list.entry <= 0) {
           return false;
@@ -168,7 +222,7 @@ Page({
   // 拉取历史数据
   initEntryHistoryInfo() {
     get('entry/qryEntryHistoryInfo', {
-        entry: this.data.entryInfoData.entry
+        entry: this.data.entry
       })
       .then(res => {
         let historyData = res.data;
@@ -243,6 +297,58 @@ Page({
       .catch(res => {
         console.log('fail:', res);
       });
+  },
+
+  // 拉取周得分数据总和
+  getEntryEventSummary() {
+    get('entry/qryEntryEventSummary', {
+        entry: this.data.entry
+      })
+      .then(res => {
+        this.setData({
+          entryEventSummaryList: res.data
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  getchartData() {
+    barec.setOption({
+      title: {
+        text: "近7日接诊趋势图：单位(人)",
+        textStyle: {
+          color: '#333',
+          fontWeight: 'bold',
+          fontSize: 14,
+        }
+      },
+      legend: {
+        show: true,
+        top: "20rpx"
+      },
+      tooltip: {},
+      dataset: {
+        source: [
+          ['', '线下', '电话'],
+          ['Matcha Latte', 43.3, 85.8],
+          ['Milk Tea', 83.1, 73.4]
+        ]
+      },
+      xAxis: {
+        type: 'category'
+      },
+      yAxis: {},
+      series: [{
+          type: 'bar',
+          color: '#ffc300'
+        },
+        {
+          type: 'bar'
+        }
+      ]
+    })
   },
 
 })

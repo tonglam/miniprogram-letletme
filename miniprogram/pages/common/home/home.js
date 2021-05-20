@@ -1,8 +1,8 @@
-const app = getApp();
-
 import {
   diffDeadlineTime
 } from '../../../utils/utils';
+
+const app = getApp();
 
 Page({
 

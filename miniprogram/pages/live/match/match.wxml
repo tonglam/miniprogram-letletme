@@ -10,6 +10,8 @@
       </van-tab>
       <van-tab title="未开始" name="not_start">
       </van-tab>
+      <van-tab title="下轮比赛" name="next_event">
+      </van-tab>
     </van-tabs>
   </view>
 

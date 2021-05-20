@@ -1,8 +1,8 @@
-const app = getApp();
-
 import {
   get
 } from '../../../utils/request';
+
+const app = getApp();
 
 Component({
 

@@ -1,5 +1,9 @@
 <view class="info">
 
+  <view class="container" wx:if="{{chartShow}}">
+    <ec-canvas id="mychart" canvas-id="mychart-line" ec="{{ ec }}"></ec-canvas>
+  </view>
+
   <view class="navBar">
     <van-nav-bar title="{{entryInfoData.entryName}}" left-text="GW{{gw}}" right-text="切换球队"
       safe-area-inset-top="{{false}}" bind:click-left="onClickChangeGw" bind:click-right="onClickChangeEntry" />
@@ -111,7 +115,6 @@
               label="转入:£{{data.elementInCost}}m -> 转出:£{{data.elementOutCost}}m" />
           </block>
         </view>
-
 
       </van-tab>
 

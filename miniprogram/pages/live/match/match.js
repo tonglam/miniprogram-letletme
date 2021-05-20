@@ -1,5 +1,3 @@
-const app = getApp();
-
 import {
   get
 } from "../../../utils/request";
@@ -8,6 +6,8 @@ import {
   compareDescSort
 } from '../../../utils/utils';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
+
+const app = getApp();
 
 Page({
 
@@ -59,7 +59,7 @@ Page({
   //比赛状态标签页切换
   onNavBarChange(event) {
     let status = event.detail.name;
-    if (status === 'not_start') {
+    if (status === 'not_start' || status === 'next_event') {
       this.setData({
         contentShow: false,
         fixtureShow: true

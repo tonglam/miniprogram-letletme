@@ -1,4 +1,3 @@
-// miniprogram/pages/stat/player/player.js
 Page({
 
   /**

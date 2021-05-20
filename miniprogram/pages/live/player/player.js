@@ -1,4 +1,3 @@
-// miniprogram/pages/live/player/player.js
 Page({
 
   /**

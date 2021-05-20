@@ -1,5 +1,3 @@
-const app = getApp();
-
 import {
   get,
   post
@@ -11,7 +9,7 @@ import {
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 import * as echarts from '../../../ec-canvas/echarts';
 
-let chart = null;
+const app = getApp(), chart = null;
 
 function initChart(canvas, width, height, dpr) {
   chart = echarts.init(canvas, null, {
@@ -293,38 +291,38 @@ Page({
           Toast.fail('钱不够啦');
           return false;
         }
-        case 2:
-          if (webName === this.data.pickGkpInfo.webName) {
-            Toast.fail('选了一样的');
-            return false;
-          }
-          // 检查余额
-          if (fund < 0) {
-            Toast.fail('钱不够啦');
-            return false;
-          }
-          case 3:
-            if (webName === this.data.pickGkpInfo.webName) {
-              Toast.fail('选了一样的');
-              return false;
-            }
-            // 检查余额
-            if (fund < 0) {
-              Toast.fail('钱不够啦');
-              return false;
-            }
-            case 4:
-              if (webName === this.data.pickGkpInfo.webName) {
-                Toast.fail('选了一样的');
-                return false;
-              }
-              // 检查余额
-              if (fund < 0) {
-                Toast.fail('钱不够啦');
-                return false;
-              }
-              default:
-                return true;
+      case 2:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      case 3:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      case 4:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      default:
+        return true;
     }
   },
 
@@ -381,9 +379,9 @@ Page({
   // 拉取推荐结果
   initEntryScoutResult() {
     get('group/qryEventEntryScoutResult', {
-        event: this.data.nextGw,
-        entry: app.globalData.entryInfoData.entry
-      })
+      event: this.data.nextGw,
+      entry: app.globalData.entryInfoData.entry
+    })
       .then(res => {
         this.setInitData(res.data);
       })
@@ -447,8 +445,8 @@ Page({
   // 拉取比赛周所有推荐结果 
   initEventScoutResult() {
     get('group/qryEventScoutResult', {
-        event: this.data.gw,
-      })
+      event: this.data.gw,
+    })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
@@ -517,12 +515,12 @@ Page({
   updateEventScoutResult() {
     let gw = this.data.gw;
     get('common/insertEventLiveCache', {
-        event: gw
-      }, false)
+      event: gw
+    }, false)
       .then(() => {
         get('group/updateEventScoutResult', {
-            event: gw
-          }, false)
+          event: gw
+        }, false)
           .then(() => {
             this.initEventScoutResult();
           })
