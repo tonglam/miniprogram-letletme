@@ -7,43 +7,8 @@ import {
   numSub
 } from '../../../utils/utils';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
-import * as echarts from '../../../ec-canvas/echarts';
 
-const app = getApp(),
-  chart = null;
-
-function initChart(canvas, width, height, dpr) {
-  chart = echarts.init(canvas, null, {
-    width: width,
-    height: height,
-    devicePixelRatio: dpr // new 
-  });
-  canvas.setChart(chart);
-  let option = {
-    title: {
-      text: 'GW36'
-    },
-    tooltip: {},
-    legend: {
-      data: ['销量']
-    },
-    xAxis: {
-      data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-    },
-    yAxis: {},
-    series: [{
-      name: '销量',
-      type: 'bar',
-      data: [5, 20, 36, 10, 10, 20]
-    }],
-    showBackground: true,
-    label: {
-      show: true
-    }
-};
-chart.setOption(option);
-return chart;
-}
+const app = getApp();
 
 Page({
 
@@ -80,16 +45,12 @@ Page({
     // picker
     showPlayerPicker: false,
     showGwPicker: false,
-    showResult: false,
     // tabBar
     tab: "推荐",
     // refrsh
     pullDownRefresh: false,
-    // echart 
+    // chart
     chartShow: false,
-    ec: {
-      onInit: initChart
-    },
   },
 
   /**
@@ -113,7 +74,7 @@ Page({
       pullDownRefresh: true
     });
     // 更新球探结果
-    this.updateEventScoutResult();
+    this.updateEventScoutResult(this.data.resultGw);
   },
 
   /**
@@ -129,17 +90,21 @@ Page({
       });
     } else if (tab === '得分') {
       this.setData({
-        showResult: true,
         chartShow: false
       });
       if (this.data.scoutResultList.length === 0) {
         this.initEventScoutResult();
       }
-
-    } else if (tab === '排行')
+    } else if (tab === '排行') {
       this.setData({
         chartShow: true
       });
+      if (this.data.scoutResultList.length === 0) {
+        this.initEventScoutResult();
+      } else {
+        this.initChart();
+      }
+    }
   },
 
   /**
@@ -288,38 +253,38 @@ Page({
           Toast.fail('钱不够啦');
           return false;
         }
-        case 2:
-          if (webName === this.data.pickGkpInfo.webName) {
-            Toast.fail('选了一样的');
-            return false;
-          }
-          // 检查余额
-          if (fund < 0) {
-            Toast.fail('钱不够啦');
-            return false;
-          }
-          case 3:
-            if (webName === this.data.pickGkpInfo.webName) {
-              Toast.fail('选了一样的');
-              return false;
-            }
-            // 检查余额
-            if (fund < 0) {
-              Toast.fail('钱不够啦');
-              return false;
-            }
-            case 4:
-              if (webName === this.data.pickGkpInfo.webName) {
-                Toast.fail('选了一样的');
-                return false;
-              }
-              // 检查余额
-              if (fund < 0) {
-                Toast.fail('钱不够啦');
-                return false;
-              }
-              default:
-                return true;
+      case 2:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      case 3:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      case 4:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      default:
+        return true;
     }
   },
 
@@ -376,9 +341,9 @@ Page({
   // 拉取推荐结果
   initEntryScoutResult() {
     get('group/qryEventEntryScoutResult', {
-        event: this.data.nextGw,
-        entry: app.globalData.entryInfoData.entry
-      })
+      event: this.data.nextGw,
+      entry: app.globalData.entry
+    })
       .then(res => {
         this.setInitData(res.data);
       })
@@ -442,8 +407,8 @@ Page({
   // 拉取比赛周所有推荐结果 
   initEventScoutResult() {
     get('group/qryEventScoutResult', {
-        event: this.data.gw,
-      })
+      event: this.data.resultGw,
+    })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
@@ -463,10 +428,13 @@ Page({
         let list = res.data;
         if (list.length === 0) {
           Toast('无数据');
+          return false;
         }
         this.setData({
-          scoutResultList: res.data
+          scoutResultList: list
         });
+        // 画图
+        this.initChart();
       })
       .catch(res => {
         console.log('fail:', res);
@@ -509,15 +477,14 @@ Page({
    */
 
   // 更新当前周得分数据
-  updateEventScoutResult() {
-    let gw = this.data.gw;
+  updateEventScoutResult(gw) {
     get('common/insertEventLiveCache', {
-        event: gw
-      }, false)
+      event: gw
+    }, false)
       .then(() => {
         get('group/updateEventScoutResult', {
-            event: gw
-          }, false)
+          event: gw
+        })
           .then(() => {
             this.initEventScoutResult();
           })
@@ -527,5 +494,16 @@ Page({
       })
   },
 
+  /**
+   * 画图
+   */
+
+  initChart() {
+    if (this.data.chartShow) {
+      this.selectComponent('#resultBarChart').setData({
+        resultList: this.data.scoutResultList
+      });
+    }
+  },
 
 })

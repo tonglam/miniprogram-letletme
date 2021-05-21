@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 const chipName = {
   "n/a": "无",
   "bboost": "BB",
@@ -6,7 +8,11 @@ const chipName = {
   "3xc": "3C"
 };
 
-import moment from 'moment'
+function delay(milSec) {
+  return new Promise(resolve => {
+    setTimeout(resolve, milSec)
+  });
+};
 
 function getDeadline(time) {
   return moment(time).utcOffset(-1 * new Date().getTimezoneOffset()).format('YYYY/MM/DD HH:mm:ss');
@@ -120,6 +126,7 @@ function redirectToEntryInput() {
 };
 
 export {
+  delay,
   getDeadline,
   diffDeadlineTime,
   showOverallRank,

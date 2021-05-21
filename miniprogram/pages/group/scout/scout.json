@@ -4,7 +4,7 @@
   "usingComponents": {
     "playerPicker": "../../../components/picker/playerPicker/playerPicker",
     "gwPicker": "../../../components/picker/gwPicker/gwPicker",
-    "scoutResult": "../../../components/scoutResult/scoutResult",
-    "ec-canvas": "../../../ec-canvas/ec-canvas" 
+    "scoutResult": "../../../components/dataTemplate/scoutResult/scoutResult",
+    "resultBarChart": "../../../components/echart/scout/resultBar/resultBar"
   }
 }

@@ -84,18 +84,17 @@
         </view>
 
         <swiper indicator-dots="true" interval="3000" style="height:500px">
-          <view class="scoutResult" wx:if="{{showResult}}">
             <block wx:for="{{scoutResultList}}" wx:key="index">
               <swiper-item>
                 <scoutResult scoutData="{{item}}"></scoutResult>
               </swiper-item>
             </block>
-          </view>
         </swiper>
 
       </van-tab>
 
       <van-tab title="排行" name="排行">
+
       </van-tab>
 
     </van-tabs>
@@ -107,8 +106,8 @@
 
   <van-toast id="van-toast" />
 
-  <view class="container" wx:if="{{chartShow}}">
-    <ec-canvas id="myChart" canvas-id="myChart" ec="{{ec}}"></ec-canvas>
+  <view class="chart" wx:if="{{chartShow}}">
+    <resultBarChart id="resultBarChart" resultList="{{scoutResultList}}"></resultBarChart>
   </view>
 
 </view>

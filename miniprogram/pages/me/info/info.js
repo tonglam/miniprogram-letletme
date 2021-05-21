@@ -6,27 +6,8 @@ import {
   showChip,
   redirectToEntryInput
 } from '../../../utils/utils';
-import * as echarts from '../../../ec-canvas/echarts';
 
 const app = getApp();
-let chart = null;
-const option = {
-  title: {
-    text: 'GW36'
-  },
-  tooltip: {}
-};
-
-function initChart(canvas, width, height, dpr) {
-  chart = echarts.init(canvas, null, {
-    width: width,
-    height: height,
-    devicePixelRatio: dpr // new 
-  });
-  canvas.setChart(chart);
-  chart.setOption(option);
-  return chart;
-}
 
 Page({
 
@@ -53,16 +34,7 @@ Page({
     // refrsh
     pullDownRefresh: false,
     // echart 
-    chartShow: false,
-    xAxis: [],
-    yAxis: [],
-    datas: [],
-    recordId: '',
-    firstData: {},
-    ec: {
-      lazyLoad: true,
-      onInit: initChart
-    },
+
   },
 
   /**
@@ -90,21 +62,6 @@ Page({
     this.initEntryHistoryInfo();
   },
 
-  onReady: function () {
-    // chart.setOption({
-    //   xAxis: {
-    //     data: month  //全局变量
-    //   },
-    //   series: [{
-    //     name: '蒸发量',
-    //     data: evaporation //全局变量
-    //   }, {
-    //     name: '降水量',
-    //     data: precipitation //全局变量
-    //   }]
-    // });
-  },
-
   onPullDownRefresh: function () {
     this.setData({
       pullDownRefresh: true
@@ -129,33 +86,6 @@ Page({
       this.getEntryEventTransfers();
     } else if (tab === '排行') {
       // this.getEntryEventSummary();
-      this.setData({
-        chartShow: true,
-        xAxis: ['GW1', 'GW2', 'GW3', 'GW4', 'GW5', 'GW6', 'GW7'],
-        datas: [18, 23, 17, 24, 28, 16, 31]
-      });
-      chart.setOption({
-        title: {
-          text: 'GW36'
-        },
-        tooltip: {},
-        legend: {
-          data: ['销量']
-        },
-        xAxis: {
-          data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
-        },
-        yAxis: {},
-        series: [{
-          name: '销量',
-          type: 'bar',
-          data: [5, 20, 36, 10, 10, 20]
-        }],
-        showBackground: true,
-        label: {
-          show: true
-        }
-      });
     }
   },
 
@@ -208,8 +138,8 @@ Page({
   // 拉取联赛数据
   initEntryLeagueInfo() {
     get('entry/qryEntryLeagueInfo', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
@@ -266,8 +196,8 @@ Page({
   // 拉取历史数据
   initEntryHistoryInfo() {
     get('entry/qryEntryHistoryInfo', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         let historyData = res.data;
         if (historyData.entry <= 0) {
@@ -301,9 +231,9 @@ Page({
   // 拉取周得分数据
   getEntryEventResult() {
     get('entry/qryEntryEventResult', {
-        event: this.data.gw,
-        entry: this.data.entry
-      })
+      event: this.data.gw,
+      entry: this.data.entry
+    })
       .then(res => {
         let data = res.data;
         data.overallRank = showOverallRank(data.overallRank);
@@ -330,9 +260,9 @@ Page({
   // 拉取周转会数据
   getEntryEventTransfers() {
     get('entry/qryEntryEventTransfers', {
-        event: this.data.gw,
-        entry: this.data.entry
-      })
+      event: this.data.gw,
+      entry: this.data.entry
+    })
       .then(res => {
         this.setData({
           entryTransfersList: res.data
@@ -346,8 +276,8 @@ Page({
   // 拉取周得分数据总和
   getEntryEventSummary() {
     get('entry/qryEntryEventSummary', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         this.setData({
           entryEventSummaryList: res.data

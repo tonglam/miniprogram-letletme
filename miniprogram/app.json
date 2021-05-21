@@ -12,9 +12,12 @@
     "pages/stat/team/team",
     "pages/group/scout/scout",
     "pages/me/info/info",
-    "pages/common/chart/chart"
+
+
+
+    "pages/common/chartTest/chartTest"
   ],
-  "entryPagePath": "pages/common/chart/chart",
+  "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",
