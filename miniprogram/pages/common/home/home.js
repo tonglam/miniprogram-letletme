@@ -1,5 +1,4 @@
 import {
-  delay,
   diffDeadlineTime
 } from '../../../utils/utils';
 
@@ -20,8 +19,6 @@ Page({
    */
 
   onShow: function () {
-    // 等待app.js获取gw
-    delay(500);
     // 设置
     let nextGw = app.globalData.nextGw,
       deadline = app.globalData.deadline,

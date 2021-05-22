@@ -40,6 +40,7 @@ Page({
     pickCapPrice: "",
     reason: "",
     // 得分页数据
+    seasonResultList: [],
     scoutResultList: [],
     resultGw: 0,
     // picker
@@ -77,13 +78,18 @@ Page({
     this.updateEventScoutResult(this.data.resultGw);
   },
 
+  onShareAppMessage: function () {
+
+  },
+
   /**
    * 操作（公共）
    */
 
   // tab切换
   tabOnChange(event) {
-    let tab = event.detail.name;
+    let tab = event.detail.name,
+      resultGw = this.data.resultGw;
     if (tab === '推荐') {
       this.setData({
         chartShow: false
@@ -93,16 +99,23 @@ Page({
         chartShow: false
       });
       if (this.data.scoutResultList.length === 0) {
-        this.initEventScoutResult();
+        this.initEventScoutResult(resultGw);
       }
     } else if (tab === '排行') {
       this.setData({
         chartShow: true
       });
-      if (this.data.scoutResultList.length === 0) {
-        this.initEventScoutResult();
+      // season
+      if (this.data.seasonResultList.length === 0) {
+        this.initSeasonScoutResult();
       } else {
-        this.initChart();
+        this.initSeasonChart();
+      }
+      // scout event result
+      if (this.data.scoutResultList.length === 0) {
+        this.initEventScoutResult(resultGw);
+      } else {
+        this.initEventChart();
       }
     }
   },
@@ -253,38 +266,38 @@ Page({
           Toast.fail('钱不够啦');
           return false;
         }
-      case 2:
-        if (webName === this.data.pickGkpInfo.webName) {
-          Toast.fail('选了一样的');
-          return false;
-        }
-        // 检查余额
-        if (fund < 0) {
-          Toast.fail('钱不够啦');
-          return false;
-        }
-      case 3:
-        if (webName === this.data.pickGkpInfo.webName) {
-          Toast.fail('选了一样的');
-          return false;
-        }
-        // 检查余额
-        if (fund < 0) {
-          Toast.fail('钱不够啦');
-          return false;
-        }
-      case 4:
-        if (webName === this.data.pickGkpInfo.webName) {
-          Toast.fail('选了一样的');
-          return false;
-        }
-        // 检查余额
-        if (fund < 0) {
-          Toast.fail('钱不够啦');
-          return false;
-        }
-      default:
-        return true;
+        case 2:
+          if (webName === this.data.pickGkpInfo.webName) {
+            Toast.fail('选了一样的');
+            return false;
+          }
+          // 检查余额
+          if (fund < 0) {
+            Toast.fail('钱不够啦');
+            return false;
+          }
+          case 3:
+            if (webName === this.data.pickGkpInfo.webName) {
+              Toast.fail('选了一样的');
+              return false;
+            }
+            // 检查余额
+            if (fund < 0) {
+              Toast.fail('钱不够啦');
+              return false;
+            }
+            case 4:
+              if (webName === this.data.pickGkpInfo.webName) {
+                Toast.fail('选了一样的');
+                return false;
+              }
+              // 检查余额
+              if (fund < 0) {
+                Toast.fail('钱不够啦');
+                return false;
+              }
+              default:
+                return true;
     }
   },
 
@@ -341,9 +354,9 @@ Page({
   // 拉取推荐结果
   initEntryScoutResult() {
     get('group/qryEventEntryScoutResult', {
-      event: this.data.nextGw,
-      entry: app.globalData.entry
-    })
+        event: this.data.nextGw,
+        entry: app.globalData.entry
+      })
       .then(res => {
         this.setInitData(res.data);
       })
@@ -404,43 +417,6 @@ Page({
     });
   },
 
-  // 拉取比赛周所有推荐结果 
-  initEventScoutResult() {
-    get('group/qryEventScoutResult', {
-      event: this.data.resultGw,
-    })
-      .then(res => {
-        // 下拉刷新
-        if (this.data.pullDownRefresh) {
-          wx.stopPullDownRefresh({
-            success: () => {
-              Toast({
-                type: 'success',
-                duration: 400,
-                message: "刷新成功"
-              });
-              this.setData({
-                pullDownRefresh: false
-              });
-            },
-          });
-        }
-        let list = res.data;
-        if (list.length === 0) {
-          Toast('无数据');
-          return false;
-        }
-        this.setData({
-          scoutResultList: list
-        });
-        // 画图
-        this.initChart();
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
-  },
-
   /**
    * 操作（得分页）
    */
@@ -469,38 +445,108 @@ Page({
       resultGw: gw
     });
     // 更新得分数据
-    this.updateEventScoutResult(gw);
+    this.changeEventScoutResult(gw);
   },
 
   /**
    * 数据（得分页）
    */
 
-  // 更新当前周得分数据
-  updateEventScoutResult(gw) {
-    get('common/insertEventLiveCache', {
-      event: gw
-    }, false)
-      .then(() => {
-        get('group/updateEventScoutResult', {
-          event: gw
-        })
-          .then(() => {
-            this.initEventScoutResult();
-          })
-          .catch(res => {
-            console.log('fail:', res);
-          });
+  // 拉取比赛周所有推荐结果 
+  initEventScoutResult(gw) {
+    get('group/qryEventScoutResult', {
+        event: gw,
       })
+      .then(res => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 400,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        let list = res.data;
+        if (list.length === 0) {
+          Toast('无数据');
+          return false;
+        }
+        // 画图
+        if (gw === 0) {
+          this.setData({
+            seasonResultList: list
+          });
+          this.initSeasonChart();
+        } else {
+          this.setData({
+            scoutResultList: list
+          });
+          this.initEventChart();
+        }
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  // 下拉刷新比赛周推荐结果
+  updateEventScoutResult(gw) {
+    if (gw === this.data.gw) { // 当前周才刷新event_live
+      get('common/insertEventLiveCache', {
+          event: gw
+        }, false)
+        .then(() => {
+          this.changeEventScoutResult(gw);
+        })
+        .catch(res => {
+          console.log('fail:', res);
+        });
+    } else {
+      this.changeEventScoutResult(gw);
+    }
+
+  },
+
+  // 更新当前周得分数据
+  changeEventScoutResult(gw) {
+    get('group/updateEventScoutResult', {
+        event: gw
+      })
+      .then(() => {
+        this.initEventScoutResult(gw);
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  // 更新赛季得分数据
+  initSeasonScoutResult() {
+    this.initEventScoutResult(0);
   },
 
   /**
    * 画图
    */
 
-  initChart() {
+  initSeasonChart() {
     if (this.data.chartShow) {
-      this.selectComponent('#resultBarChart').setData({
+      this.selectComponent('#seasonResultChart').setData({
+        resultList: this.data.seasonResultList
+      });
+    }
+  },
+
+  initEventChart() {
+    if (this.data.chartShow) {
+      this.selectComponent('#eventResultChart').setData({
         resultList: this.data.scoutResultList
       });
     }

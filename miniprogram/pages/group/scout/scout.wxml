@@ -84,11 +84,11 @@
         </view>
 
         <swiper indicator-dots="true" interval="3000" style="height:500px">
-            <block wx:for="{{scoutResultList}}" wx:key="index">
-              <swiper-item>
-                <scoutResult scoutData="{{item}}"></scoutResult>
-              </swiper-item>
-            </block>
+          <block wx:for="{{scoutResultList}}" wx:key="index">
+            <swiper-item>
+              <scoutResult scoutData="{{item}}"></scoutResult>
+            </swiper-item>
+          </block>
         </swiper>
 
       </van-tab>
@@ -107,7 +107,14 @@
   <van-toast id="van-toast" />
 
   <view class="chart" wx:if="{{chartShow}}">
-    <resultBarChart id="resultBarChart" resultList="{{scoutResultList}}"></resultBarChart>
+    <swiper indicator-dots="true" interval="3000" style="height:560px">
+      <swiper-item>
+        <seasonResult id="seasonResultChart" resultList="{{seasonResultList}}"></seasonResult>
+      </swiper-item>
+      <swiper-item>
+        <eventResult id="eventResultChart" resultList="{{scoutResultList}}"></eventResult>
+      </swiper-item>
+    </swiper>
   </view>
 
 </view>

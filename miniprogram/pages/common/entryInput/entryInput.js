@@ -1,4 +1,7 @@
 import {
+  delay
+} from '../../../utils/utils';
+import {
   post
 } from '../../../utils/request';
 
@@ -24,10 +27,12 @@ Page({
    */
 
   onShow: function () {
-    console.log('entryInput:' + app.globalData.entry);
-    if (app.globalData.entry > 0) {
-      this.redirectHome();
-    }
+    delay(1000).then(()=>{
+      console.log('entryInput:' + app.globalData.entry);
+      if (app.globalData.entry > 0) {
+        this.redirectHome();
+      }
+    });
   },
 
   /**

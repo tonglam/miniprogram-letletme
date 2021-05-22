@@ -43,7 +43,14 @@ Component({
     getOption() {
       let list = this.data.resultList;
       return {
+        title: {
+          text: "赛季得分",
+          left: "center",
+          top: "0%",
+        },
         legend: {
+          top: "8%",
+          left: "15%",
           data: ['门将', '后卫', '中场', '前锋', '队长'],
           textStyle: {
             fontSize: 10
@@ -61,6 +68,7 @@ Component({
           bottom: "3%",
           containLabel: true
         },
+        calculable: true,
         xAxis: [{
           type: 'category',
           data: Object.values(list).map(o => o.scoutName),
@@ -78,52 +86,72 @@ Component({
         }],
         series: [
           {
-            name: '得分',
+            name: '总得分',
             type: 'bar',
-            data: Object.values(list).map(o => o.eventPoints),
+            data: Object.values(list).map(o => o.totalPoints),
             label: {
               show: true
-            }
+            },
           },
           {
             name: '门将',
             type: 'bar',
             data: Object.values(list).map(o => o.gkpInfo.points),
             label: {
-              show: false
-            }
+              show: true
+            },
+            emphasis: {
+              focus: 'series'
+            },
+            stack: 'total',
           },
           {
             name: '后卫',
             type: 'bar',
             data: Object.values(list).map(o => o.defInfo.points),
             label: {
-              show: false
-            }
+              show: true
+            },
+            emphasis: {
+              focus: 'series'
+            },
+            stack: 'total'
           },
           {
             name: '中场',
             type: 'bar',
             data: Object.values(list).map(o => o.midInfo.points),
             label: {
-              show: false
-            }
+              show: true
+            },
+            emphasis: {
+              focus: 'series'
+            },
+            stack: 'total'
           },
           {
             name: '前锋',
             type: 'bar',
             data: Object.values(list).map(o => o.fwdInfo.points),
             label: {
-              show: false
-            }
+              show: true
+            },
+            emphasis: {
+              focus: 'series'
+            },
+            stack: 'total'
           },
           {
             name: '队长',
             type: 'bar',
             data: Object.values(list).map(o => o.captainInfo.points),
             label: {
-              show: false
-            }
+              show: true
+            },
+            emphasis: {
+              focus: 'series'
+            },
+            stack: 'total'
           }
         ]
       };

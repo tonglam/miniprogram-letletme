@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "ec-canvas": "../../../ec-canvas/ec-canvas"
+    "rankTend": "../../../components/echart/scout/rankTrend/rankTrend"
   }
 }

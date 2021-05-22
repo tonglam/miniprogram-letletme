@@ -5,6 +5,7 @@
     "playerPicker": "../../../components/picker/playerPicker/playerPicker",
     "gwPicker": "../../../components/picker/gwPicker/gwPicker",
     "scoutResult": "../../../components/dataTemplate/scoutResult/scoutResult",
-    "resultBarChart": "../../../components/echart/scout/resultBar/resultBar"
+    "seasonResult": "../../../components/echart/scout/seasonResult/seasonResult",
+    "eventResult": "../../../components/echart/scout/eventResult/eventResult"
   }
 }
