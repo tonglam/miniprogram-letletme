@@ -96,7 +96,7 @@ Component({
             type: 'bar',
             data: Object.values(list).map(o => o.gkpInfo.points),
             label: {
-              show: false
+              show: true
             },
             emphasis: {
               focus: 'series'
@@ -108,7 +108,7 @@ Component({
             type: 'bar',
             data: Object.values(list).map(o => o.defInfo.points),
             label: {
-              show: false
+              show: true
             },
             emphasis: {
               focus: 'series'
@@ -120,7 +120,7 @@ Component({
             type: 'bar',
             data: Object.values(list).map(o => o.midInfo.points),
             label: {
-              show: false
+              show: true
             },
             emphasis: {
               focus: 'series'
@@ -132,7 +132,7 @@ Component({
             type: 'bar',
             data: Object.values(list).map(o => o.fwdInfo.points),
             label: {
-              show: false
+              show: true
             },
             emphasis: {
               focus: 'series'
@@ -144,7 +144,7 @@ Component({
             type: 'bar',
             data: Object.values(list).map(o => o.captainInfo.points),
             label: {
-              show: false
+              show: true
             },
             emphasis: {
               focus: 'series'
