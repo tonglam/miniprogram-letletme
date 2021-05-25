@@ -56,7 +56,7 @@ Page({
    * 操作
    */
 
-  //比赛状态标签页切换
+  // 比赛状态标签页切换
   onNavBarChange(event) {
     let status = event.detail.name;
     if (status === 'not_start' || status === 'next_event') {

@@ -6,7 +6,7 @@
   </view>
 
   <view class="pop" style="text-align:center;">
-    <van-popup show="{{ popShow }}" position="top" bind:close="onPopClose">
+    <van-popup show="{{popShow}}" position="top" bind:close="onPopClose">
       <text>\n</text>
       <text>输入要查看得分的team_id</text>
       <text>\n\n</text>

@@ -1,0 +1,11 @@
+.entry .navBar {
+  margin: 10px 0;
+}
+
+.entry .content {
+  margin: 10px 0;
+}
+
+.entry .info {
+  margin: 10px 0;
+}

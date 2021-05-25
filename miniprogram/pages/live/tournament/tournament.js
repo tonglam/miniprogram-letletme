@@ -90,7 +90,13 @@ Page({
     // 取缓存
     let tournamentId = wx.getStorageSync('tournamentId');
     if (tournamentId > 0) {
-      this.setTournamentInfo(tournamentId);
+      let tournamentName = wx.getStorageSync('tournamentName');
+      this.setData({
+        tournamentId: tournamentId,
+        tournamentName: tournamentName
+      });
+      // 刷新live
+      this.initLiveTournament();
     } else {
       showTournamentPicker = true; // 缓存没有时从picker中选择
     }
@@ -134,6 +140,7 @@ Page({
       tournamentName = data.name;
     // 存缓存
     wx.setStorageSync('tournamentId', tournamentId);
+    wx.setStorageSync('tournamentName', tournamentName);
     // 设置
     this.setData({
       tournamentId: tournamentId,

@@ -59,7 +59,7 @@
   </view>
 
   <view class="bottemNavBar">
-    <bottomNavBar active="report"></bottomNavBar>
+    <bottomNavBar active="stat"></bottomNavBar>
   </view>
 
   <van-toast id="van-toast" />

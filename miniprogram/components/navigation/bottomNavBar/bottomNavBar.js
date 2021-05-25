@@ -17,23 +17,37 @@ const map = {
     },
     "show": true
   },
-  "tournament": {
-    "pages": [{
-      name: "阵容选择",
-      subname: '查看联赛每轮阵容选择结果'
-    }],
+  "summary": {
+    "pages": [
+      {
+      name: "球队",
+      subname: '查看球队统计数据'
+    },
+    {
+      name: "联赛",
+      subname: '查看联赛统计数据',
+    }
+  ],
     "url": {
-      "阵容选择": "/pages/tournament/select/select",
+      "球队": "/pages/summary/entry/entry",
+      "联赛": "/pages/summary/tournament/tournament",
     },
     "show": true
   },
   "stat": {
-    "pages": [{
+    "pages": [
+      {
       name: "身价变化",
       subname: '查看每日价格涨跌',
-    }],
+    },
+    {
+      name: "阵容选择",
+      subname: '查看联赛每轮阵容选择结果'
+    }
+  ],
     "url": {
-      "身价变化": "/pages/stat/price/price"
+      "身价变化": "/pages/stat/price/price",
+      "阵容选择": "/pages/tournament/select/select"
     },
     "show": true
   },

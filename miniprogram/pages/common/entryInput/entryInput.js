@@ -27,7 +27,7 @@ Page({
    */
 
   onShow: function () {
-    delay(1000).then(()=>{
+    delay(800).then(()=>{
       console.log('entryInput:' + app.globalData.entry);
       if (app.globalData.entry > 0) {
         this.redirectHome();

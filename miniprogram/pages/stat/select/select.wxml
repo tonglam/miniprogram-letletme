@@ -1,7 +1,7 @@
 <view class="tournament">
 
   <view class="bottemNavBar">
-    <bottomNavBar active="tournament"></bottomNavBar>
+    <bottomNavBar active="stat"></bottomNavBar>
   </view>
 
 </view>

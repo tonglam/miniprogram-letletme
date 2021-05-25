@@ -14,9 +14,9 @@ Page({
   data: {
     // 数据
     gw: 0,
+    entry: 0,
     entryInfoData: {},
     // 垃圾双向绑定
-    entry: 0,
     entryName: "",
     playerName: "",
     liveData: {},
