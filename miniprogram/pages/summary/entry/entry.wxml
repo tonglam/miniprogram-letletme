@@ -40,7 +40,7 @@
             <van-cell title="最高：{{summaryData.highestBenchPoints}}"
               value="GW{{summaryData.highestBenchPointsEvent}}" />
             <block wx:for="{{summaryData.highestBench}}" wx:for-item="bench" wx:key="index">
-              <van-cell title="球员:{{bench.elementInWebName}}" value="分数:{{bench.elementOutPoints}}" />
+              <van-cell title="球员:{{bench.webName}}" value="分数:{{bench.points}}" />
             </block>
           </van-cell-group>
 
