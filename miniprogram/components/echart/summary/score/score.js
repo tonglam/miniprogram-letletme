@@ -6,10 +6,6 @@ Component({
     addGlobalClass: true,
   },
 
-  properties: {
-
-  },
-
   data: {
     scoreList: [],
     ec: {
@@ -52,7 +48,7 @@ Component({
         series: [{
           name: '得分',
           type: 'pie',
-          radius: ['20%', '60%'],
+          radius: ['40%', '80%'],
           avoidLabelOverlap: false,
           itemStyle: {
             borderRadius: 10,
