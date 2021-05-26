@@ -9,3 +9,13 @@
 .entry .info {
   margin: 10px 0;
 }
+
+.entry .greenArrow {
+  margin-right: 10px;
+  color: green;
+}
+
+.entry .redArrow {
+  margin-left: 10px;
+  color: red;
+}

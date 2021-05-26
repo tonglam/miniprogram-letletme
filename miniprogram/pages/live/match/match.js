@@ -19,17 +19,17 @@ Page({
     contentShow: true,
     fixtureShow: false,
     liveMatchList: [],
-    activeMatchNames: [],
     liveBonusList: [],
-    activeBonusNames: [],
     liveBpsList: [],
-    activeBpsNames: [],
     liveFixtureList: [],
-    // match details
     liveDetailsList: [],
-    activeDetailsNames: [],
     // tarBar
     tabBarActive: 'playing',
+    // collapse-cards
+    activeMatchNames: [],
+    activeBonusNames: [],
+    activeBpsNames: [],
+    activeDetailsNames: [],
     // refrsh
     pullDownRefresh: false,
   },

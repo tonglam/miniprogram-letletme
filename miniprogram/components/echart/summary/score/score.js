@@ -1,0 +1,81 @@
+import * as echarts from '../../../../ec-canvas/echarts';
+
+Component({
+
+  options: {
+    addGlobalClass: true,
+  },
+
+  properties: {
+
+  },
+
+  data: {
+    scoreList: [],
+    ec: {
+      lazyLoad: true
+    },
+  },
+
+  observers: {
+    'scoreList': function () {
+      if (this.data.scoreList.length !== 0) {
+        this.initChart();
+      }
+    },
+  },
+
+  lifetimes: {
+    attached: function () {
+      this.ecComponent = this.selectComponent('#mychart');
+    },
+  },
+
+  methods: {
+
+    initChart() {
+      this.ecComponent.init((canvas, width, height) => {
+        const chart = echarts.init(canvas, null, {
+          width: width,
+          height: height
+        });
+        chart.setOption(this.getOption());
+        return chart;
+      });
+    },
+
+    getOption() {
+      return {
+        title: {
+          text: "得分分布",
+          left: "center",
+          top: "0%",
+        },
+        top: 'bottom',
+        tooltip: {},
+        series: [
+          {
+            name: '得分',
+            type: 'pie',
+            radius: [50, 100],
+            center: ['50%', '50%'],
+            roseType: 'area',
+            itemStyle: {
+              borderRadius: 5
+            },
+            data: this.properties.scoreList,
+            label: {
+              show: true
+            },
+            emphasis: {
+              label: {
+                show: true
+              }
+            },
+          }
+        ]
+      };
+    },
+
+  }
+})

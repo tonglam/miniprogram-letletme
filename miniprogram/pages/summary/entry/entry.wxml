@@ -1,8 +1,8 @@
 <view class="entry">
 
   <view class="navBar">
-    <van-nav-bar title="{{entryName}}" left-text="" right-text="切换球队" safe-area-inset-top="{{false}}" bind:click-left=""
-      bind:click-right="onClickChange" />
+    <van-nav-bar title="{{entryName}}" left-text="GW{{gw}}" right-text="切换球队" safe-area-inset-top="{{false}}"
+      bind:click-left="" bind:click-right="onClickChange" />
   </view>
 
   <view class="pop" style="text-align:center;">
@@ -27,7 +27,6 @@
       </view>
 
       <van-tab title="简介" name="summary">
-        <view class="summary">
 
           <van-cell-group>
             <van-cell title="最高分：{{summaryData.highestScore}} (GW{{summaryData.highestEvent}})"
@@ -36,11 +35,17 @@
               value="最低排名：{{summaryData.lowestOverallRank}} (GW{{summaryData.lowestOverallRankEvent}})" />
           </van-cell-group>
 
+          <van-cell-group title="低于平均分{{summaryData.belowAverages.length}}次 - 分数(平均分)">
+            <block wx:for="{{summaryData.belowAverages}}" wx:for-item="belowAverage" wx:key="index">
+              <van-cell title="GW{{belowAverage.event}}"
+                value="{{belowAverage.points}}({{belowAverage.averagePoints}})" />
+            </block>
+          </van-cell-group>
+
           <van-cell-group title="板凳得分">
-            <van-cell title="最高：{{summaryData.highestBenchPoints}}"
-              value="GW{{summaryData.highestBenchPointsEvent}}" />
+            <van-cell title="最高：{{summaryData.highestBenchPoints}}" value="GW{{summaryData.highestBenchPointsEvent}}" />
             <block wx:for="{{summaryData.highestBench}}" wx:for-item="bench" wx:key="index">
-              <van-cell title="球员:{{bench.elementInWebName}}" value="分数:{{bench.elementOutPoints}}" />
+              <van-cell title="{{bench.webName}}" value="{{bench.points}}" />
             </block>
           </van-cell-group>
 
@@ -48,28 +53,186 @@
             <van-cell title="最高：{{summaryData.highestAutoSubsPoints}}"
               value="GW{{summaryData.highestAutoSubsPointsEvent}}" />
             <block wx:for="{{summaryData.highestAutoSubs}}" wx:for-item="autoSubs" wx:key="index">
-              <van-cell title="换上:{{autoSubs.elementInWebName}} ({{autoSubs.elementInPoints}})"
-                value="换下:{{autoSubs.elementOutWebName}} ({{autoSubs.elementOutPoints}})" />
+              <van-cell title="{{autoSubs.elementInWebName}} ({{autoSubs.elementInPoints}})"
+                value="{{autoSubs.elementOutWebName}} ({{autoSubs.elementOutPoints}})">
+                <van-icon slot="icon" name="arrow-up" class="greenArrow" />
+                <van-icon slot="right-icon" name="arrow-down" class="redArrow" />
+              </van-cell>
             </block>
           </van-cell-group>
 
-          <van-cell-group title="开卡">
-            <block wx:for="{{summaryData.chips}}" wx:for-item="chipData" wx:key="index">
-              <van-cell title="{{chipData.name}} (GW{{chipData.event}})"
-                value="得分(收益)：{{chipData.eventPoints}} ({{chipData.profit}})" />
+          <van-cell-group title="开卡 - 得分(收益)">
+            <block wx:for="{{summaryData.chips}}" wx:for-item="chip" wx:key="index">
+              <van-cell title="{{chip.name}}(GW{{chip.event}})" value="{{chip.eventPoints}}({{chip.profit}})" />
             </block>
           </van-cell-group>
 
-        </view>
       </van-tab>
 
       <van-tab title="队长" name="captain">
+
+        <van-cell-group title="队长得分">
+          <van-cell title="总分：{{captainData.totalPoints}}" value="自动替补总分：{{captainData.viceTotalPoints}}" />
+        </van-cell-group>
+
+        <van-cell-group title="最高">
+          <van-cell title="{{captainData.maxPointsWebName}}"
+            value="{{captainData.maxPoints}} (GW{{captainData.maxPointsEvent}})" />
+        </van-cell-group>
+
+        <van-cell-group title="最低">
+          <van-cell title="{{captainData.minPointsWebName}}"
+            value="{{captainData.minPoints}} (GW{{captainData.minPointsEvent}})" />
+        </van-cell-group>
+
+        <van-cell-group title="TC">
+          <van-cell title="{{captainData.tcPointsWebName}} (GW{{captainData.tcEvent}})"
+            value="{{captainData.tcPoints}}" />
+        </van-cell-group>
+
+        <van-cell-group title="最多选择 - 次数(得分)">
+          <block wx:for="{{captainData.mostSelected}}" wx:for-item="selected" wx:key="index">
+            <van-cell title="{{selected.webName}}" value="{{selected.times}}({{selected.totalPoints}})" />
+          </block>
+        </van-cell-group>
+
       </van-tab>
 
       <van-tab title="转会" name="transfers">
+
+        <van-notice-bar mode="closeable" text="转会统计不包括WC周、FH周" />
+
+        <van-cell-group title="最佳转会">
+          <van-collapse value="{{activeBestTransfersNames}}" bind:change="onBestTransfersChange">
+            <block wx:for="{{transfersData.bestTransfers}}" wx:for-item="bestTransfers" wx:key="index">
+              <van-collapse-item title="收益：{{bestTransfers.elementInPoints-bestTransfers.elementOutPoints}}"
+                value="GW{{bestTransfers.event}}">
+                <van-cell title=" {{bestTransfers.elementInWebName}} ({{bestTransfers.elementInPoints}})"
+                  value="{{bestTransfers.elementOutWebName}} ({{bestTransfers.elementOutPoints}})"
+                  label="£{{bestTransfers.elementInCost}}m -> £{{bestTransfers.elementOutCost}}m">
+                  <van-icon slot="icon" name="arrow-up" class="greenArrow" />
+                  <van-icon slot="right-icon" name="arrow-down" class="redArrow" />
+                </van-cell>
+              </van-collapse-item>
+            </block>
+          </van-collapse>
+        </van-cell-group>
+
+        <van-cell-group title="最差转会">
+          <van-collapse value="{{activeWorstTransfersNames}}" bind:change="onWorstTransfersChange">
+            <block wx:for="{{transfersData.worstTransfers}}" wx:for-item="worstTransfers" wx:key="index">
+              <van-collapse-item title="收益：{{worstTransfers.elementInPoints-worstTransfers.elementOutPoints}}"
+                value="GW{{worstTransfers.event}}">
+                <van-cell title=" {{worstTransfers.elementInWebName}} ({{worstTransfers.elementInPoints}})"
+                  value="{{worstTransfers.elementOutWebName}} ({{worstTransfers.elementOutPoints}})"
+                  label="£{{worstTransfers.elementInCost}}m -> £{{worstTransfers.elementOutCost}}m">
+                  <van-icon slot="icon" name="arrow-up" class="greenArrow" />
+                  <van-icon slot="right-icon" name="arrow-down" class="redArrow" />
+                </van-cell>
+              </van-collapse-item>
+            </block>
+          </van-collapse>
+        </van-cell-group>
+
+        <van-cell-group title="转入最多球员">
+          <van-collapse value="{{activeMostTransfersInNames}}" bind:change="onMostTransfersInChange">
+            <van-collapse-item title="{{transfersData.mostTransfersInWebName}}"
+              value="{{transfersData.mostTransfersIn.length}}次" name="1">
+              <block wx:for="{{transfersData.mostTransfersIn}}" wx:for-item="mostTransfersIn" wx:key="index">
+                <van-cell title="{{mostTransfersIn.elementInWebName}} ({{mostTransfersIn.elementInPoints}})"
+                  value="{{mostTransfersIn.elementOutWebName}} ({{mostTransfersIn.elementOutPoints}})"
+                  label="£{{mostTransfersIn.elementInCost}}m -> £{{mostTransfersIn.elementOutCost}}m">
+                  <van-icon slot="icon" name="arrow-up" class="greenArrow" />
+                  <van-icon slot="right-icon" name="arrow-down" class="redArrow" />
+                </van-cell>
+              </block>
+            </van-collapse-item>
+          </van-collapse>
+        </van-cell-group>
+
+        <van-cell-group title="转出最多球员">
+          <van-collapse value="{{activeMostTransfersOutNames}}" bind:change="onMostTransfersOutChange">
+            <van-collapse-item title="{{transfersData.mostTransfersOutWebName}}"
+              value="{{transfersData.mostTransfersOut.length}}次" name="1">
+              <block wx:for="{{transfersData.mostTransfersOut}}" wx:for-item="mostTransfersOut" wx:key="index">
+                <van-cell title="{{mostTransfersOut.elementInWebName}} ({{mostTransfersOut.elementInPoints}})"
+                  value="{{mostTransfersOut.elementOutWebName}} ({{mostTransfersOut.elementOutPoints}})"
+                  label="£{{mostTransfersOut.elementInCost}}m -> £{{mostTransfersOut.elementOutCost}}m">
+                  <van-icon slot="icon" name="arrow-up" class="greenArrow" />
+                  <van-icon slot="right-icon" name="arrow-down" class="redArrow" />
+                </van-cell>
+              </block>
+            </van-collapse-item>
+          </van-collapse>
+        </van-cell-group>
+
+        <van-cell-group title="转会最多 - GW{{transfersData.mostTransfersEvent}}">
+          <van-collapse value="{{activeMostTransfersNames}}" bind:change="onMostTransfersChange">
+            <van-collapse-item
+              title="收益(剁手)：{{transfersData.mostTransfersProfit-transfersData.mostTransfersCost}}(-{{transfersData.mostTransfersCost}})"
+              value="{{transfersData.mostTransfers.length}}次" name="1">
+              <block wx:for="{{transfersData.mostTransfers}}" wx:for-item="mostTransfers" wx:key="index">
+                <van-cell title="{{mostTransfers.elementInWebName}} ({{mostTransfers.elementInPoints}})"
+                  value="{{mostTransfers.elementOutWebName}} ({{mostTransfers.elementOutPoints}})">
+                  <van-icon slot="icon" name="arrow-up" class="greenArrow" />
+                  <van-icon slot="right-icon" name="arrow-down" class="redArrow" />
+                </van-cell>
+              </block>
+            </van-collapse-item>
+          </van-collapse>
+        </van-cell-group>
+
+        <van-cell-group title="剁手周 - {{transfersData.transfersCost.length}}次">
+          <van-collapse accordion value="{{activeTransfersCostNames}}" bind:change="onTransfersCostChange">
+            <block wx:for="{{transfersData.transfersCost}}" wx:for-item="transfersCost" wx:key="index">
+              <van-collapse-item title="收益(剁手)：{{transfersCost.profit-transfersCost.cost}}(-{{transfersCost.cost}})"
+                value="GW{{transfersCost.event}}" name="{{index}}">
+                <block wx:for="{{transfersCost.transfersList}}" wx:for-item="transfers" wx:key="index">
+                  <van-cell title="{{transfers.elementInWebName}} ({{transfers.elementInPoints}})"
+                    value="{{transfers.elementOutWebName}} ({{transfers.elementOutPoints}})">
+                    <van-icon slot="icon" name="arrow-up" class="greenArrow" />
+                    <van-icon slot="right-icon" name="arrow-down" class="redArrow" />
+                  </van-cell>
+                </block>
+              </van-collapse-item>
+            </block>
+          </van-collapse>
+        </van-cell-group>
+
       </van-tab>
 
       <van-tab title="得分" name="score">
+
+        <van-cell-group title="最常使用阵型">
+          <block wx:for="{{scoreData.mostSelectedFormation}}" wx:for-item="item" wx:key="index">
+            <van-cell title="{{index}}" value="{{item}}次" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="上场最多门将 - 共使用{{scoreData.gkpTotalNum}}人">
+          <block wx:for="{{scoreData.mostSelectedGkp}}" wx:for-item="item" wx:key="index">
+            <van-cell title="{{index}}" value="{{item}}次" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="上场最多后卫 - 共使用{{scoreData.defTotalNum}}人">
+          <block wx:for="{{scoreData.mostSelectedDef}}" wx:for-item="item" wx:key="index">
+            <van-cell title="{{index}}" value="{{item}}次" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="上场最多中场 - 共使用{{scoreData.midTotalNum}}人">
+          <block wx:for="{{scoreData.mostSelectedMid}}" wx:for-item="item" wx:key="index">
+            <van-cell title="{{index}}" value="{{item}}次" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="上场最多前锋 - 共使用{{scoreData.fwdTotalNum}}人">
+          <block wx:for="{{scoreData.mostSelectedFwd}}" wx:for-item="item" wx:key="index">
+            <van-cell title="{{index}}" value="{{item}}次" />
+          </block>
+        </van-cell-group>
+
       </van-tab>
 
     </van-tabs>

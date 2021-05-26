@@ -1,5 +1,5 @@
 {
   "usingComponents": {
-    "rankTend": "../../../components/echart/scout/rankTrend/rankTrend"
+    "score": "../../../components/echart/summary/score/score"
   }
 }

@@ -11,6 +11,7 @@ Page({
 
   data: {
     // 数据
+    gw: 0,
     entry: 0,
     entryName: "",
     playerName: "",
@@ -21,6 +22,13 @@ Page({
     scoreData: {},
     // pop
     popShow: false,
+    // collapse-cards
+    activeBestTransfersNames: [],
+    activeWorstTransfersNames: [],
+    activeMostTransfersInNames: [],
+    activeMostTransfersOutNames: [],
+    activeMostTransfersNames: [],
+    activeTransfersCostNames: [],
   },
 
   /**
@@ -29,6 +37,7 @@ Page({
 
   onShow: function () {
     this.setData({
+      gw: app.globalData.gw,
       entry: app.globalData.entry
     });
     // 拉取info
@@ -70,7 +79,7 @@ Page({
   },
 
   // 标签页切换
-  onNavBarChange(event) {
+  tabOnChange(event) {
     let name = event.detail.name;
     if (name === 'summary') {
       // 拉取summary
@@ -87,14 +96,51 @@ Page({
     }
   },
 
+  // 折叠面板切换
+  onBestTransfersChange(event) {
+    this.setData({
+      activeBestTransfersNames: event.detail,
+    });
+  },
+
+  onWorstTransfersChange(event) {
+    this.setData({
+      activeWorstTransfersNames: event.detail,
+    });
+  },
+
+  onMostTransfersInChange(event) {
+    this.setData({
+      activeMostTransfersInNames: event.detail,
+    });
+  },
+
+  onMostTransfersOutChange(event) {
+    this.setData({
+      activeMostTransfersOutNames: event.detail,
+    });
+  },
+
+  onMostTransfersChange(event) {
+    this.setData({
+      activeMostTransfersNames: event.detail,
+    });
+  },
+
+  onTransfersCostChange(event) {
+    this.setData({
+      activeTransfersCostNames: event.detail,
+    });
+  },
+
   /**
    * 数据
    */
 
   initEntrySeasonInfo() {
     get('summary/qryEntrySeasonInfo', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         let data = res.data;
         data['overallRank'] = showOverallRank(data.overallRank);
@@ -111,8 +157,8 @@ Page({
 
   initEntrySeasonSummary() {
     get('summary/qryEntrySeasonSummary', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         let data = res.data;
         data['highestOverallRank'] = showOverallRank(data.highestOverallRank);
@@ -128,8 +174,8 @@ Page({
 
   initEntrySeasonCaptain() {
     get('summary/qryEntrySeasonCaptain', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         let data = res.data;
         this.setData({
@@ -143,8 +189,8 @@ Page({
 
   initEntrySeasonTransfers() {
     get('summary/qryEntrySeasonTransfers', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         let data = res.data;
         this.setData({
@@ -158,8 +204,8 @@ Page({
 
   initEntrySeasonScore() {
     get('summary/qryEntrySeasonScore', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         let data = res.data;
         this.setData({
