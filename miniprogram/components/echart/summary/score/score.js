@@ -6,6 +6,13 @@ Component({
     addGlobalClass: true,
   },
 
+<<<<<<< HEAD
+=======
+  properties: {
+
+  },
+
+>>>>>>> main
   data: {
     scoreList: [],
     ec: {
@@ -42,6 +49,7 @@ Component({
 
     getOption() {
       return {
+<<<<<<< HEAD
         tooltip: {
           trigger: 'item'
         },
@@ -57,8 +65,42 @@ Component({
           },
           data: this.properties.scoreList,
         }]
+=======
+        title: {
+          text: "得分分布",
+          left: "center",
+          top: "0%",
+        },
+        top: 'bottom',
+        tooltip: {},
+        series: [
+          {
+            name: '得分',
+            type: 'pie',
+            radius: [50, 100],
+            center: ['50%', '50%'],
+            roseType: 'area',
+            itemStyle: {
+              borderRadius: 5
+            },
+            data: this.properties.scoreList,
+            label: {
+              show: true
+            },
+            emphasis: {
+              label: {
+                show: true
+              }
+            },
+          }
+        ]
+>>>>>>> main
       };
     },
 
   }
+<<<<<<< HEAD
 })
+=======
+})
+>>>>>>> main
