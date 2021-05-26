@@ -16,7 +16,7 @@
     "pages/me/info/info",
     "pages/common/chartTest/chartTest"
   ],
-  "entryPagePath": "pages/common/entryInput/entryInput",
+  "entryPagePath": "pages/common/chartTest/chartTest",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",
