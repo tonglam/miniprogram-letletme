@@ -6,13 +6,10 @@ Component({
     addGlobalClass: true,
   },
 
-<<<<<<< HEAD
-=======
   properties: {
 
   },
 
->>>>>>> main
   data: {
     scoreList: [],
     ec: {
