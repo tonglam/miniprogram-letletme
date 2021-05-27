@@ -15,6 +15,7 @@ Page({
     entry: 0,
     entryName: "",
     playerName: "",
+    infoShow: true,
     infoData: {},
     summaryData: {},
     captainData: {},
@@ -29,6 +30,9 @@ Page({
     activeMostTransfersOutNames: [],
     activeMostTransfersNames: [],
     activeTransfersCostNames: [],
+    // chart
+    chartShow: false,
+    scoreList: [],
   },
 
   /**
@@ -82,17 +86,42 @@ Page({
   tabOnChange(event) {
     let name = event.detail.name;
     if (name === 'summary') {
+      this.setData({
+        infoShow: true,
+        chartShow: false
+      });
       // 拉取summary
       this.initEntrySeasonSummary();
     } else if (name === 'captain') {
+      this.setData({
+        infoShow: true,
+        chartShow: false
+      });
       // 拉取captain
       this.initEntrySeasonCaptain();
     } else if (name === 'transfers') {
+      this.setData({
+        infoShow: true,
+        chartShow: false
+      });
       // 拉取transfers
       this.initEntrySeasonTransfers();
     } else if (name === 'score') {
+      this.setData({
+        infoShow: true,
+        chartShow: false
+      });
       // 拉取score
       this.initEntrySeasonScore();
+    } else if (name === 'chart') {
+      this.setData({
+        infoShow: false,
+        chartShow: true
+      });
+      if (this.data.scoreList.length === 0) {
+        // 拉取score
+        this.initEntrySeasonScore();
+      }
     }
   },
 
@@ -211,10 +240,48 @@ Page({
         this.setData({
           scoreData: data
         });
+        this.setScoreList(data);
+        // 画图
+        this.initScoreChart();
       })
       .catch(res => {
         console.log('fail:', res);
       });
+  },
+
+  setScoreList(data) {
+    let list = [{
+        value: data.gkpTotalPoints,
+        name: '门将'
+      },
+      {
+        value: data.defTotalPoints,
+        name: '后卫'
+      },
+      {
+        value: data.midTotalPoints,
+        name: '中场'
+      },
+      {
+        value: data.fwdTotalPoints,
+        name: '前锋'
+      }
+    ];
+    this.setData({
+      scoreList: list
+    });
+  },
+
+  /**
+   * 画图
+   */
+
+  initScoreChart() {
+    if (this.data.chartShow) {
+      this.selectComponent('#scoreChart').setData({
+        scoreList: this.data.scoreList
+      });
+    }
   },
 
 })

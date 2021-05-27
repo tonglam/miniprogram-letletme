@@ -17,7 +17,7 @@
   <view class="content">
     <van-tabs type="card" bind:change="tabOnChange">
 
-      <view class="info">
+      <view class="info" wx:if="{{infoShow}}">
         <van-cell-group>
           <van-cell title="总分：{{infoData.overallPoints}}" value="总排名：{{infoData.overallRank}}" />
           <van-cell title="转会数：{{infoData.totalTransfers}}" value="剁手：{{infoData.totalTransfersCost}}" />
@@ -26,46 +26,46 @@
         </van-cell-group>
       </view>
 
-      <van-tab title="简介" name="summary">
+      <van-tab title="总结" name="summary">
 
-          <van-cell-group>
-            <van-cell title="最高分：{{summaryData.highestScore}} (GW{{summaryData.highestEvent}})"
-              value="最低分：{{summaryData.lowestScore}} (GW{{summaryData.lowestEvent}})" />
-            <van-cell title="最高排名：{{summaryData.highestOverallRank}} (GW{{summaryData.highestOverallRankEvent}})"
-              value="最低排名：{{summaryData.lowestOverallRank}} (GW{{summaryData.lowestOverallRankEvent}})" />
-          </van-cell-group>
+        <van-cell-group>
+          <van-cell title="最高分：{{summaryData.highestScore}} (GW{{summaryData.highestEvent}})"
+            value="最低分：{{summaryData.lowestScore}} (GW{{summaryData.lowestEvent}})" />
+          <van-cell title="最高排名：{{summaryData.highestOverallRank}} (GW{{summaryData.highestOverallRankEvent}})"
+            value="最低排名：{{summaryData.lowestOverallRank}} (GW{{summaryData.lowestOverallRankEvent}})" />
+        </van-cell-group>
 
-          <van-cell-group title="低于平均分{{summaryData.belowAverages.length}}次 - 分数(平均分)">
-            <block wx:for="{{summaryData.belowAverages}}" wx:for-item="belowAverage" wx:key="index">
-              <van-cell title="GW{{belowAverage.event}}"
-                value="{{belowAverage.points}}({{belowAverage.averagePoints}})" />
-            </block>
-          </van-cell-group>
+        <van-cell-group title="低于平均分{{summaryData.belowAverages.length}}次 - 分数(平均分)">
+          <block wx:for="{{summaryData.belowAverages}}" wx:for-item="belowAverage" wx:key="index">
+            <van-cell title="GW{{belowAverage.event}}"
+              value="{{belowAverage.points}}({{belowAverage.averagePoints}})" />
+          </block>
+        </van-cell-group>
 
-          <van-cell-group title="板凳得分">
-            <van-cell title="最高：{{summaryData.highestBenchPoints}}" value="GW{{summaryData.highestBenchPointsEvent}}" />
-            <block wx:for="{{summaryData.highestBench}}" wx:for-item="bench" wx:key="index">
-              <van-cell title="{{bench.webName}}" value="{{bench.points}}" />
-            </block>
-          </van-cell-group>
+        <van-cell-group title="板凳得分">
+          <van-cell title="最高：{{summaryData.highestBenchPoints}}" value="GW{{summaryData.highestBenchPointsEvent}}" />
+          <block wx:for="{{summaryData.highestBench}}" wx:for-item="bench" wx:key="index">
+            <van-cell title="{{bench.webName}}" value="{{bench.points}}" />
+          </block>
+        </van-cell-group>
 
-          <van-cell-group title="自动替补得分">
-            <van-cell title="最高：{{summaryData.highestAutoSubsPoints}}"
-              value="GW{{summaryData.highestAutoSubsPointsEvent}}" />
-            <block wx:for="{{summaryData.highestAutoSubs}}" wx:for-item="autoSubs" wx:key="index">
-              <van-cell title="{{autoSubs.elementInWebName}} ({{autoSubs.elementInPoints}})"
-                value="{{autoSubs.elementOutWebName}} ({{autoSubs.elementOutPoints}})">
-                <van-icon slot="icon" name="arrow-up" class="greenArrow" />
-                <van-icon slot="right-icon" name="arrow-down" class="redArrow" />
-              </van-cell>
-            </block>
-          </van-cell-group>
+        <van-cell-group title="自动替补得分">
+          <van-cell title="最高：{{summaryData.highestAutoSubsPoints}}"
+            value="GW{{summaryData.highestAutoSubsPointsEvent}}" />
+          <block wx:for="{{summaryData.highestAutoSubs}}" wx:for-item="autoSubs" wx:key="index">
+            <van-cell title="{{autoSubs.elementInWebName}} ({{autoSubs.elementInPoints}})"
+              value="{{autoSubs.elementOutWebName}} ({{autoSubs.elementOutPoints}})">
+              <van-icon slot="icon" name="arrow-up" class="greenArrow" />
+              <van-icon slot="right-icon" name="arrow-down" class="redArrow" />
+            </van-cell>
+          </block>
+        </van-cell-group>
 
-          <van-cell-group title="开卡 - 得分(收益)">
-            <block wx:for="{{summaryData.chips}}" wx:for-item="chip" wx:key="index">
-              <van-cell title="{{chip.name}}(GW{{chip.event}})" value="{{chip.eventPoints}}({{chip.profit}})" />
-            </block>
-          </van-cell-group>
+        <van-cell-group title="开卡 - 得分(收益)">
+          <block wx:for="{{summaryData.chips}}" wx:for-item="chip" wx:key="index">
+            <van-cell title="{{chip.name}}(GW{{chip.event}})" value="{{chip.eventPoints}}({{chip.profit}})" />
+          </block>
+        </van-cell-group>
 
       </van-tab>
 
@@ -203,36 +203,49 @@
 
       <van-tab title="得分" name="score">
 
+        <van-cell-group title="分布">
+          <van-cell title="门将" value="{{scoreData.gkpTotalPoints}}({{scoreData.gkpTotalPointsByPercent}})" />
+          <van-cell title="后卫" value="{{scoreData.defTotalPoints}}({{scoreData.defTotalPointsByPercent}})" />
+          <van-cell title="中场" value="{{scoreData.midTotalPoints}}({{scoreData.midTotalPointsByPercent}})" />
+          <van-cell title="前锋" value="{{scoreData.fwdTotalPoints}}({{scoreData.fwdTotalPointsByPercent}})" />
+        </van-cell-group>
+
         <van-cell-group title="最常使用阵型">
           <block wx:for="{{scoreData.mostSelectedFormation}}" wx:for-item="item" wx:key="index">
             <van-cell title="{{index}}" value="{{item}}次" />
           </block>
         </van-cell-group>
 
-        <van-cell-group title="上场最多门将 - 共使用{{scoreData.gkpTotalNum}}人">
+        <van-cell-group title="上场最多门将(共使用{{scoreData.gkpTotalNum}}人)">
           <block wx:for="{{scoreData.mostSelectedGkp}}" wx:for-item="item" wx:key="index">
             <van-cell title="{{index}}" value="{{item}}次" />
           </block>
         </van-cell-group>
 
-        <van-cell-group title="上场最多后卫 - 共使用{{scoreData.defTotalNum}}人">
+        <van-cell-group title="上场最多后卫(共使用{{scoreData.defTotalNum}}人)">
           <block wx:for="{{scoreData.mostSelectedDef}}" wx:for-item="item" wx:key="index">
             <van-cell title="{{index}}" value="{{item}}次" />
           </block>
         </van-cell-group>
 
-        <van-cell-group title="上场最多中场 - 共使用{{scoreData.midTotalNum}}人">
+        <van-cell-group title="上场最多中场(共使用{{scoreData.midTotalNum}}人)">
           <block wx:for="{{scoreData.mostSelectedMid}}" wx:for-item="item" wx:key="index">
             <van-cell title="{{index}}" value="{{item}}次" />
           </block>
         </van-cell-group>
 
-        <van-cell-group title="上场最多前锋 - 共使用{{scoreData.fwdTotalNum}}人">
+        <van-cell-group title="上场最多前锋(共使用{{scoreData.fwdTotalNum}}人)">
           <block wx:for="{{scoreData.mostSelectedFwd}}" wx:for-item="item" wx:key="index">
             <van-cell title="{{index}}" value="{{item}}次" />
           </block>
         </van-cell-group>
 
+      </van-tab>
+
+      <van-tab title="图表" name="chart">
+        <view wx:if="{{chartShow}}">
+          <score id="scoreChart" scoreList="{{scoreList}}"></score>
+        </view>
       </van-tab>
 
     </van-tabs>

@@ -6,10 +6,6 @@ Component({
     addGlobalClass: true,
   },
 
-  properties: {
-
-  },
-
   data: {
     scoreList: [],
     ec: {
@@ -46,34 +42,21 @@ Component({
 
     getOption() {
       return {
-        title: {
-          text: "得分分布",
-          left: "center",
-          top: "0%",
+        tooltip: {
+          trigger: 'item'
         },
-        top: 'bottom',
-        tooltip: {},
-        series: [
-          {
-            name: '得分',
-            type: 'pie',
-            radius: [50, 100],
-            center: ['50%', '50%'],
-            roseType: 'area',
-            itemStyle: {
-              borderRadius: 5
-            },
-            data: this.properties.scoreList,
-            label: {
-              show: true
-            },
-            emphasis: {
-              label: {
-                show: true
-              }
-            },
-          }
-        ]
+        series: [{
+          name: '得分',
+          type: 'pie',
+          radius: ['40%', '80%'],
+          avoidLabelOverlap: false,
+          itemStyle: {
+            borderRadius: 10,
+            borderColor: '#fff',
+            borderWidth: 2
+          },
+          data: this.properties.scoreList,
+        }]
       };
     },
 
