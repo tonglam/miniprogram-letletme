@@ -44,6 +44,10 @@ Page({
       gw: app.globalData.gw,
       entry: app.globalData.entry
     });
+     // 设置标题
+     wx.setNavigationBarTitle({
+      title: app.globalData.entryInfoData.playerName,
+    })
     // 拉取info
     this.initEntrySeasonInfo();
     // 拉取summary
@@ -168,8 +172,8 @@ Page({
 
   initEntrySeasonInfo() {
     get('summary/qryEntrySeasonInfo', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         let data = res.data;
         data['overallRank'] = showOverallRank(data.overallRank);
@@ -186,8 +190,8 @@ Page({
 
   initEntrySeasonSummary() {
     get('summary/qryEntrySeasonSummary', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         let data = res.data;
         data['highestOverallRank'] = showOverallRank(data.highestOverallRank);
@@ -203,8 +207,8 @@ Page({
 
   initEntrySeasonCaptain() {
     get('summary/qryEntrySeasonCaptain', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         let data = res.data;
         this.setData({
@@ -218,8 +222,8 @@ Page({
 
   initEntrySeasonTransfers() {
     get('summary/qryEntrySeasonTransfers', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         let data = res.data;
         this.setData({
@@ -233,8 +237,8 @@ Page({
 
   initEntrySeasonScore() {
     get('summary/qryEntrySeasonScore', {
-        entry: this.data.entry
-      })
+      entry: this.data.entry
+    })
       .then(res => {
         let data = res.data;
         this.setData({
