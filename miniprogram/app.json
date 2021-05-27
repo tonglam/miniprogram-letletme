@@ -7,7 +7,7 @@
     "pages/live/player/player",
     "pages/live/tournament/tournament",
     "pages/summary/entry/entry",
-    "pages/summary/tournament/tournament",
+    "pages/summary/league/league",
     "pages/stat/price/price",
     "pages/stat/player/player",
     "pages/stat/select/select",

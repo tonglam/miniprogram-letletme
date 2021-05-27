@@ -242,12 +242,6 @@
 
       </van-tab>
 
-      <van-tab title="图表" name="chart">
-        <view wx:if="{{chartShow}}">
-          <score id="scoreChart" scoreList="{{scoreList}}"></score>
-        </view>
-      </van-tab>
-
     </van-tabs>
   </view>
 
