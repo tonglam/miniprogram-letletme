@@ -44,6 +44,10 @@ Page({
       gw: app.globalData.gw,
       entry: app.globalData.entry
     });
+     // 设置标题
+     wx.setNavigationBarTitle({
+      title: app.globalData.entryInfoData.playerName,
+    })
     // 拉取info
     this.initEntrySeasonInfo();
     // 拉取summary

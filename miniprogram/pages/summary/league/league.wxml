@@ -1,0 +1,34 @@
+<view class="league">
+
+  <view class="navBar">
+    <van-nav-bar title="{{leagueName}}" left-text="GW{{gw}}" right-text="切换联赛" safe-area-inset-top="{{false}}"
+      bind:click-left="" bind:click-right="onClickChange" />
+  </view>
+
+  <view class="content">
+    <van-tabs type="card" bind:change="tabOnChange">
+
+      <van-tab title="总结" name="summary">
+      </van-tab>
+
+      <van-tab title="队长" name="captain">
+      </van-tab>
+
+      <van-tab title="转会" name="transfers">
+      </van-tab>
+
+      <van-tab title="得分" name="score">
+      </van-tab>
+
+      <van-tab title="我" name="me">
+      </van-tab>
+
+    </van-tabs>
+  </view>
+
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="summary"></bottomNavBar>
+  </view>
+
+</view>

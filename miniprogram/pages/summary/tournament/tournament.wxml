@@ -1,7 +1,0 @@
-<view class="tournament">
-
-<view class="bottemNavBar">
-  <bottomNavBar active="summary"></bottomNavBar>
-</view>
-
-</view>
