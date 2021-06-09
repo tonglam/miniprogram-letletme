@@ -13,7 +13,8 @@
     "pages/stat/select/select",
     "pages/stat/team/team",
     "pages/group/scout/scout",
-    "pages/me/info/info",
+    "pages/me/entry/entry",
+    "pages/me/tournament/tournament",
     "pages/common/chartTest/chartTest"
   ],
   "entryPagePath": "pages/common/entryInput/entryInput",

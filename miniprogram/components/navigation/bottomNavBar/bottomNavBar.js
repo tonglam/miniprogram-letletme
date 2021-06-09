@@ -21,7 +21,7 @@ const map = {
     "pages": [
       {
       name: "球队",
-      subname: '查看球队统计数据'
+      subname: '查看球队统计数据',
     },
     {
       name: "联赛",
@@ -42,7 +42,7 @@ const map = {
     },
     {
       name: "阵容选择",
-      subname: '查看联赛每轮阵容选择结果'
+      subname: '查看联赛每轮阵容选择结果',
     }
   ],
     "url": {
@@ -57,9 +57,21 @@ const map = {
     "show": false
   },
   "me": {
-    "pages": [],
-    "url": "/pages/me/info/info",
-    "show": false
+    "pages": [
+      {
+        name: "我的球队",
+        subname: '查看我的球队数据',
+      },
+      {
+        name: "我的联赛",
+        subname: '查看我的联赛数据',
+      }
+    ],
+    "url": {
+      "我的球队": "/pages/me/entry/entry",
+      "我的联赛": "/pages/me/tournament/tournament"
+    },
+    "show": true
   }
 };
 
