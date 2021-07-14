@@ -30,30 +30,22 @@ App({
   },
 
   setCurrentEventAndNextUtcDeadline() {
-    let gw = 38;
-    this.globalData.gw = gw;
-    this.globalData.lastGw = gw - 1;
-    this.globalData.nextGw = 1;
-    this.globalData.utcDeadline = "2021-08-14T10:00:00Z";
-    this.globalData.deadline = getDeadline(this.globalData.utcDeadline);
-    // entry
-    this.initEntry();
-    // get('common/qryCurrentEventAndNextUtcDeadline')
-    //   .then(res => {
-    //     let gw = parseInt(res.data["event"]);
-    //     this.globalData.gw = gw;
-    //     this.globalData.lastGw = gw - 1;
-    //     this.globalData.nextGw = gw + 1;
-    //     this.globalData.utcDeadline = res.data["utcDeadline"];
-    //     this.globalData.deadline = getDeadline(this.globalData.utcDeadline);
-    //     // entry
-    //     this.initEntry();
-    //   })
-    //   .catch(res => {
-    //     console.log('fail:', res);
-    //   })
+    get('common/qryCurrentEventAndNextUtcDeadline')
+      .then(res => {
+        let gw = parseInt(res.data["event"]);
+        this.globalData.gw = gw;
+        this.globalData.lastGw = gw - 1;
+        this.globalData.nextGw = gw + 1;
+        this.globalData.utcDeadline = res.data["utcDeadline"];
+        this.globalData.deadline = getDeadline(this.globalData.utcDeadline);
+        // entry
+        this.initEntry();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      })
   },
-
+  
   initEntry() {
     let entry = wx.getStorageSync('entry');
     console.log("app entry:" + entry);
