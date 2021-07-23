@@ -1,18 +1,20 @@
 <view class="price">
 
   <view class="navBar">
-    <van-nav-bar title="{{date}}" left-text="{{mode}}" right-text="更换" safe-area-inset-top="{{false}}"
-      bind:click-right="onClickDate" />
+    <van-nav-bar title="{{date}}" left-text="{{mode}}" right-text="更换" safe-area-inset-top="{{false}}" bind:click-left="onClickMode"
+      bind:click-right="onClickModeDetail" />
   </view>
 
-  <!-- <view class="picker">
-    <van-picker columns="{{modes}}" bind:change="onChangeMode" />
-  </view> -->
+  <van-popup show="{{modePickerShow}}" overlay="{{false}}" position="top" custom-style="height: 100%">
+    <view class="picker">
+      <van-picker columns="{{modes}}" bind:change="onChangeMode" />
+    </view>
+  </van-popup>
 
   <view class="content">
     <van-tabs swipeable type="card">
 
-      <van-popup show="{{pickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      <van-popup show="{{datePickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
         bind:close="onPopClose">
         <van-datetime-picker type="date" value="{{currentDate}}" max-date="{{maxDate}}" formatter="{{formatter}}"
           bind:confirm="onPickerConfirm" bind:cancel="onPickerCancel" />
@@ -34,8 +36,8 @@
         <view class="info">
           <text wx:if="{{fallerInfoShow}}">今日暂无数据</text>
         </view>
-        <i-cell-group wx:for="{{fallerList}}" wx:key="index">
-          <block>
+        <i-cell-group>
+          <block wx:for="{{fallerList}}" wx:key="index">
             <i-cell class="faller" title="降价"
               value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m"></i-cell>
           </block>
@@ -46,8 +48,8 @@
         <view class="info">
           <text wx:if="{{startInfoShow}}">今日暂无数据</text>
         </view>
-        <i-cell-group wx:for="{{startList}}" wx:key="index">
-          <block>
+        <i-cell-group>
+          <block wx:for="{{startList}}" wx:key="index">
             <i-cell title="新增"
               value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m">
             </i-cell>

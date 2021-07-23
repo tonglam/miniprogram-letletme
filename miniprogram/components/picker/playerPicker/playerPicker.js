@@ -60,7 +60,8 @@ Component({
         this.setPlayerInfoData(picker.getIndexes());
       } else if (index == 1) {
         this.setTeamFixture(value[1]);
-        this.setPlayerInfoData(picker.getIndexes());
+        let initIndex = [picker.getIndexes()[0], picker.getIndexes()[1], 0];
+        this.setPlayerInfoData(initIndex);
         picker.setColumnValues(2, playerInfo[value[1]].map(o => o.webName));
       } else if (index == 2) {
         this.setPlayerInfoData(picker.getIndexes());

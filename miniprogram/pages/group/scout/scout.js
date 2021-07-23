@@ -266,38 +266,38 @@ Page({
           Toast.fail('钱不够啦');
           return false;
         }
-        case 2:
-          if (webName === this.data.pickGkpInfo.webName) {
-            Toast.fail('选了一样的');
-            return false;
-          }
-          // 检查余额
-          if (fund < 0) {
-            Toast.fail('钱不够啦');
-            return false;
-          }
-          case 3:
-            if (webName === this.data.pickGkpInfo.webName) {
-              Toast.fail('选了一样的');
-              return false;
-            }
-            // 检查余额
-            if (fund < 0) {
-              Toast.fail('钱不够啦');
-              return false;
-            }
-            case 4:
-              if (webName === this.data.pickGkpInfo.webName) {
-                Toast.fail('选了一样的');
-                return false;
-              }
-              // 检查余额
-              if (fund < 0) {
-                Toast.fail('钱不够啦');
-                return false;
-              }
-              default:
-                return true;
+      case 2:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      case 3:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      case 4:
+        if (webName === this.data.pickGkpInfo.webName) {
+          Toast.fail('选了一样的');
+          return false;
+        }
+        // 检查余额
+        if (fund < 0) {
+          Toast.fail('钱不够啦');
+          return false;
+        }
+      default:
+        return true;
     }
   },
 
@@ -354,9 +354,9 @@ Page({
   // 拉取推荐结果
   initEntryScoutResult() {
     get('group/qryEventEntryScoutResult', {
-        event: this.data.nextGw,
-        entry: app.globalData.entry
-      })
+      event: this.data.nextGw,
+      entry: app.globalData.entry
+    })
       .then(res => {
         this.setInitData(res.data);
       })
@@ -379,6 +379,13 @@ Page({
         pickGkpPrice: gkpInfo.price,
         pickGkpInfo: gkpInfo
       });
+    } else {
+      fund = this.calcLeftFund(fund, 1, 0);
+      this.setData({
+        pickGkp: "",
+        pickGkpPrice: "",
+        pickGkpInfo: {}
+      });
     }
     if (defInfo !== null && defInfo.element > 0) {
       fund = this.calcLeftFund(fund, defInfo.elementType, defInfo.price);
@@ -386,6 +393,13 @@ Page({
         pickDef: this.setShowWebName(defInfo.teamShortName, defInfo.webName, defInfo.price),
         pickDefPrice: defInfo.price,
         pickDefInfo: defInfo,
+      });
+    } else {
+      fund = this.calcLeftFund(fund, 2, 0);
+      this.setData({
+        pickDef: "",
+        pickDefPrice: "",
+        pickDefInfo: {}
       });
     }
     if (midInfo !== null && midInfo.element > 0) {
@@ -395,6 +409,13 @@ Page({
         pickMidPrice: midInfo.price,
         pickMidInfo: midInfo
       });
+    } else {
+      fund = this.calcLeftFund(fund, 3, 0);
+      this.setData({
+        pickMid: "",
+        pickMidPrice: "",
+        pickMidInfo: {}
+      });
     }
     if (fwdInfo !== null && fwdInfo.element > 0) {
       fund = this.calcLeftFund(fund, fwdInfo.elementType, fwdInfo.price);
@@ -403,12 +424,25 @@ Page({
         pickFwdPrice: fwdInfo.price,
         pickFwdInfo: fwdInfo
       });
+    } else {
+      fund = this.calcLeftFund(fund, 4, 0);
+      this.setData({
+        pickFwd: "",
+        pickFwdPrice: "",
+        pickFwdInfo: {}
+      });
     }
     if (captainInfo !== null && captainInfo.element > 0) {
       this.setData({
         pickCap: this.setShowWebName(captainInfo.teamShortName, captainInfo.webName, data.captainInfo.price),
         pickCapPrice: captainInfo.price,
         pickCapInfo: captainInfo
+      });
+    } else {
+      this.setData({
+        pickCap: "",
+        pickCapPrice: "",
+        pickCapInfo: {}
       });
     }
     this.setData({
@@ -455,8 +489,8 @@ Page({
   // 拉取比赛周所有推荐结果 
   initEventScoutResult(gw) {
     get('group/qryEventScoutResult', {
-        event: gw,
-      })
+      event: gw,
+    })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
@@ -500,8 +534,8 @@ Page({
   updateEventScoutResult(gw) {
     if (gw === this.data.gw) { // 当前周才刷新event_live
       get('common/insertEventLiveCache', {
-          event: gw
-        }, false)
+        event: gw
+      }, false)
         .then(() => {
           this.changeEventScoutResult(gw);
         })
@@ -517,8 +551,8 @@ Page({
   // 更新当前周得分数据
   changeEventScoutResult(gw) {
     get('group/updateEventScoutResult', {
-        event: gw
-      })
+      event: gw
+    })
       .then(() => {
         this.initEventScoutResult(gw);
       })

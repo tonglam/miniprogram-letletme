@@ -11,6 +11,7 @@ Page({
   data: {
     // 公共
     mode: '日期',
+    modeTitle: '',
     // 数据
     riseInfoShow: false,
     fallerInfoShow: false,
@@ -19,7 +20,8 @@ Page({
     fallerList: [],
     startList: [],
     // picker
-    pickerShow: false,
+    modePickerShow: false,
+    datePickerShow: false,
     date: moment().format("YYYY-MM-DD"),
     currentDate: new Date().getTime(),
     maxDate: new Date().getTime(),
@@ -32,7 +34,7 @@ Page({
       }
       return `${value}日`;
     },
-    modes: ['日期', '球员', '球队'],
+    modes: ['日期', '球员'],
     // refresh
     pullDownRefresh: false,
   },
@@ -44,6 +46,10 @@ Page({
   onShow: function () {
     // 拉取当日身价
     this.getPirceList();
+    // 默认日期模式
+    this.setData({
+      modeTitle: this.data.date
+    });
   },
 
   onPullDownRefresh: function () {
@@ -67,25 +73,33 @@ Page({
    * 操作
    */
 
-  // 更换日期
-  onClickDate() {
+  // 模式内容
+  onClickMode() {
     this.setData({
-      pickerShow: true
+      modePickerShow: true
     });
+  },
+
+  onClickModeDetail() {
+    if(this.data.mode === '日期'){
+      this.setData({
+        datePickerShow: true
+      });
+    }
   },
 
   // 关闭弹出层
   onPopClose() {
     this.setData({
-      pickerShow: false
+      datePickerShow: false
     });
   },
 
-  // picker确认
+  // datePicker确认
   onPickerConfirm(event) {
     let date = moment(event.detail).format("YYYY-MM-DD");
     this.setData({
-      pickerShow: false
+      datePickerShow: false
     });
     if (date === this.data.date) {
       return false;
@@ -99,7 +113,7 @@ Page({
   // picker取消
   onPickerCancel() {
     this.setData({
-      pickerShow: false
+      datePickerShow: false
     });
   },
 
@@ -110,8 +124,8 @@ Page({
   // 拉取球员身价
   getPirceList() {
     get('stat/qryPlayerValueByDate', {
-        date: this.data.date
-      })
+      date: this.data.date
+    })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
@@ -137,7 +151,10 @@ Page({
           this.setData({
             riseInfoShow: true,
             fallerInfoShow: true,
-            startInfoShow: true
+            startInfoShow: true,
+            riseList: [],
+            fallerList: [],
+            startList: []
           });
           return false;
         }
