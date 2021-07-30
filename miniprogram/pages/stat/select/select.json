@@ -1,3 +1,8 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "阵容选择",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "leaguePicker": "../../../components/picker/leaguePicker/leaguePicker",
+    "gwPicker": "../../../components/picker/gwPicker/gwPicker"
+  }
 }

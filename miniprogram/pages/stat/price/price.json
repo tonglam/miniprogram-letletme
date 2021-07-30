@@ -2,6 +2,7 @@
   "navigationBarTitleText": "身价变化",
   "enablePullDownRefresh": true,
   "usingComponents": {
-    "playerPicker": "../../../components/picker/playerPicker/playerPicker"
+    "playerPicker": "../../../components/picker/playerPicker/playerPicker",
+    "teamPicker": "../../../components/picker/teamPicker/teamPicker"
   }
 }

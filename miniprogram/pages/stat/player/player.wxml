@@ -1,1 +1,140 @@
-<text>miniprogram/pages/stat/player/player.wxml</text>
+<view class="player">
+
+  <view class="navBar">
+    <van-nav-bar title="【{{playerInfo.teamShortName}}】{{playerInfo.webName}}" title-class="title"
+      left-text="{{season}}赛季" right-text="更换" safe-area-inset-top="{{false}}" bind:click-left=""
+      bind:click-right="onClickChange" />
+  </view>
+
+  <view class="playerPicker">
+    <van-popup show="{{playerPickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onPlayerPopClose">
+      <playerPicker type="5" show="true" bind:pickResult="onPlayerPickResult"></playerPicker>
+    </van-popup>
+  </view>
+
+  <van-tabs swipeable type="card">
+
+    <van-tab title="数据" name="数据">
+
+      <view class="summary">
+        <van-cell-group>
+          <van-cell title="位置：{{playerInfo.elementTypeName}}" value="身价：£{{playerInfo.price}}m" />
+          <van-cell title="总分：{{playerInfo.points}}" value="持有率：{{playerSummary.detailData.selectedByPercent}}%" />
+          <van-cell wx:if="{{playerSummary.detailData.news !== ''}}"
+            title="本轮出场可能：{{playerSummary.detailData.chanceOfPlayingThisRound}}%"
+            value="{{playerSummary.detailData.news}}" />
+          <van-cell title="本周转入：{{playerSummary.detailData.transfersInEvent}}"
+            value="本周转出：{{playerSummary.detailData.transfersOutEvent}}" />
+          <van-cell title="总转入：{{playerSummary.detailData.transfersIn}}"
+            value="总转出：{{playerSummary.detailData.transfersOut}}" />
+          <van-cell title="状态{{playerSummary.detailData.form}}" value="均分：{{playerSummary.detailData.pointsPerGame}}" />
+        </van-cell-group>
+      </view>
+
+      <view class="stat">
+
+        <van-cell-group wx:if="{{playerInfo.elementType === 1}}">
+          <van-cell title="上场时间：{{playerSummary.detailData.minutes}}"
+            value="周得分：{{playerSummary.eventPoints}} (GW{{playerSummary.event}})" />
+          <van-cell title="零封：{{playerSummary.detailData.cleanSheets}}"
+            value="丢球：{{playerSummary.detailData.goalsConceded}}" />
+          <van-cell title="扑救：{{playerSummary.detailData.saves}}"
+            value="扑点：{{playerSummary.detailData.penaltiesSaved}}" />
+          <van-cell title="bonus：{{playerSummary.detailData.bonus}}" value="bps：{{playerSummary.detailData.bps}}" />
+          <van-cell title="黄牌：{{playerSummary.detailData.yellowCards}}"
+            value="红牌：{{playerSummary.detailData.redCards}}" />
+          <van-cell title="influence：{{playerSummary.detailData.influence}}"
+            value="creativity：{{playerSummary.detailData.creativity}}" />
+          <van-cell title="threat：{{playerSummary.detailData.threat}}"
+            value="ictIndex：{{playerSummary.detailData.ictIndex}}" />
+        </van-cell-group>
+
+        <van-cell-group wx:if="{{playerInfo.elementType === 2}}">
+          <van-cell title="上场时间：{{playerSummary.detailData.minutes}}"
+            value="周得分：{{playerSummary.eventPoints}} (GW{{playerSummary.event}})" />
+          <van-cell title="零封：{{playerSummary.detailData.cleanSheets}}"
+            value="丢球：{{playerSummary.detailData.goalsConceded}}" />
+          <van-cell title="进球：{{playerSummary.detailData.goalsScored}}"
+            value="助攻：{{playerSummary.detailData.assists}}" />
+          <van-cell title="乌龙：{{playerSummary.detailData.ownGoals}}"
+            value="丢点：{{playerSummary.detailData.penaltiesMissed}}" />
+          <van-cell title="bonus：{{playerSummary.detailData.bonus}}" value="bps：{{playerSummary.detailData.bps}}" />
+          <van-cell title="黄牌：{{playerSummary.detailData.yellowCards}}"
+            value="红牌：{{playerSummary.detailData.redCards}}" />
+          <van-cell title="influence：{{playerSummary.detailData.influence}}"
+            value="creativity：{{playerSummary.detailData.creativity}}" />
+          <van-cell title="threat：{{playerSummary.detailData.threat}}"
+            value="ictIndex：{{playerSummary.detailData.ictIndex}}" />
+        </van-cell-group>
+
+        <van-cell-group wx:if="{{playerInfo.elementType === 3}}">
+          <van-cell title="上场时间：{{playerSummary.detailData.minutes}}"
+            value="周得分：{{playerSummary.eventPoints}} (GW{{playerSummary.event}})" />
+          <van-cell title="进球：{{playerSummary.detailData.goalsScored}}" value="助攻：{{playerSummary.assists}}" />
+          <van-cell title="零封：{{playerSummary.detailData.cleanSheets}}"
+            value="丢球：{{playerSummary.detailData.goalsConceded}}" />
+          <van-cell title="乌龙：{{playerSummary.detailData.ownGoals}}"
+            value="丢点：{{playerSummary.detailData.penaltiesMissed}}" />
+          <van-cell title="bonus：{{playerSummary.detailData.bonus}}" value="bps：{{playerSummary.detailData.bps}}" />
+          <van-cell title="黄牌：{{playerSummary.detailData.yellowCards}}"
+            value="红牌：{{playerSummary.detailData.redCards}}" />
+          <van-cell title="influence：{{playerSummary.detailData.influence}}"
+            value="creativity：{{playerSummary.detailData.creativity}}" />
+          <van-cell title="threat：{{playerSummary.detailData.threat}}"
+            value="ictIndex：{{playerSummary.detailData.ictIndex}}" />
+        </van-cell-group>
+
+        <van-cell-group wx:if="{{playerInfo.elementType === 4}}">
+          <van-cell title="上场时间：{{playerSummary.detailData.minutes}}"
+            value="周得分：{{playerSummary.eventPoints}} (GW{{playerSummary.event}})" />
+          <van-cell title="进球：{{playerSummary.detailData.goalsScored}}"
+            value="助攻：{{playerSummary.detailData.assists}}" />
+          <van-cell title="bonus：{{playerSummary.detailData.bonus}}" value="bps：{{playerSummary.detailData.bps}}" />
+          <van-cell title="零封：{{playerSummary.detailData.cleanSheets}}"
+            value="丢球：{{playerSummary.detailData.goalsConceded}}" />
+          <van-cell title="乌龙：{{playerSummary.detailData.ownGoals}}"
+            value="丢点：{{playerSummary.detailData.penaltiesMissed}}" />
+          <van-cell title="黄牌：{{playerSummary.detailData.yellowCards}}"
+            value="红牌：{{playerSummary.detailData.redCards}}" />
+          <van-cell title="influence：{{playerSummary.detailData.influence}}"
+            value="creativity：{{playerSummary.detailData.creativity}}" />
+          <van-cell title="threat：{{playerSummary.detailData.threat}}"
+            value="ictIndex：{{playerSummary.detailData.ictIndex}}" />
+        </van-cell-group>
+
+      </view>
+
+    </van-tab>
+
+    <van-tab title="赛程" name="赛程">
+      <view class="fixture">
+        <block wx:for="{{playerSummary.fixtureList}}" wx:for-item="data" wx:key="index">
+          <i-cell-group>
+            <i-cell wx:if="{{data.wasHome && !data.finished}}" i-class="difficulty{{data.difficulty}}"
+              title="GW{{data.event}}" value="{{playerInfo.teamName}} vs {{data.againstTeamName}} (未开始)" />
+            <i-cell wx:elif="{{data.wasHome && data.finished}}" i-class="difficulty{{data.difficulty}}"
+              title="GW{{data.event}}" value="{{playerInfo.teamName}} vs {{data.againstTeamName}} ({{data.score}})" />
+            <i-cell wx:elif="{{!data.wasHome && !data.finished}}" i-class=" difficulty{{data.difficulty}}"
+              title="GW{{data.event}}" value="{{data.againstTeamName}} vs {{playerInfo.teamName}} (未开始)" />
+            <i-cell wx:else i-class="difficulty{{data.difficulty}}" title="GW{{data.event}}"
+              value="{{data.againstTeamName}} vs {{playerInfo.teamName}} ({{data.score}})" />
+            <text>\n</text>
+          </i-cell-group>
+        </block>
+      </view>
+    </van-tab>
+
+    <van-tab title="历史" name="历史">
+    </van-tab>
+
+    <van-tab title="比较" name="比较">
+    </van-tab>
+
+  </van-tabs>
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="stat"></bottomNavBar>
+  </view>
+
+</view>

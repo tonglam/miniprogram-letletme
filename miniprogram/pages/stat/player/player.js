@@ -1,65 +1,110 @@
+import {
+  get
+} from '../../../utils/request';
+
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    // 数据
+    season:'2021',
+    playerInfo: {},
+    playerSummary: {},
+    // picker
+    playerPickerShow: false,
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * 原生
    */
-  onLoad: function (options) {
 
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
-
+    // 取缓存
+    let element = wx.getStorageSync('stat-element');
+    if (element > 0) {
+      this.setData({
+        "playerInfo.element": element,
+      });
+      // 拉取球员数据
+      this.getPlayerInfo();
+      this.getPlayerSummary();
+    } else {
+      this.setData({
+        playerPickerShow: true,
+      });
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  /**
+   * 操作
+   */
+
+  onClickChange() {
+    this.setData({
+      playerPickerShow: true
+    });
+  },
+
+  // 关闭弹出层
+  onModePopClose() {
+    this.setData({
+      playerPickerShow: false
+    });
+  },
+
+  // picker回调
+  onPlayerPickResult(event) {
+    this.setData({
+      playerPickerShow: false
+    });
+    let playerInfo = event.detail;
+    console.log(playerInfo);
+    if (playerInfo === '' || playerInfo === null) {
+      return false;
+    }
+    // 存缓存
+    wx.setStorageSync('stat-element', playerInfo.element);
+    // 设置
+    this.setData({
+      playerInfo: playerInfo,
+    });
+    // 拉取球员数据
+    this.getPlayerSummary();
+  },
+
+  /**
+   * 数据
+   */
+
+  getPlayerInfo() {
+    get('player/qryPlayerInfoByElement', {
+        element: this.data.playerInfo.element
+      })
+      .then(res => {
+        this.setData({
+          playerInfo: res.data
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  getPlayerSummary() {
+    get('player/qryPlayerSummaryByElement', {
+        element: this.data.playerInfo.element
+      })
+      .then(res => {
+        this.setData({
+          playerSummary: res.data
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
 })

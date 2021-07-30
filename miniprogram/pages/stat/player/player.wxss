@@ -1,0 +1,51 @@
+.player .title {
+  font-size: 14px;
+}
+
+.player .summary{
+  margin: 10px 0;
+}
+
+.player .stat{
+  margin: 10px 0;
+}
+
+.player .fixture{
+  margin: 10px 0;
+}
+
+.player .difficulty-1{
+  color:white;
+  background-color:#FF5722;
+  font-weight: bold;
+}
+
+.player .difficulty1{
+  color:white;
+  background-color:#00FF86;
+  font-weight: bold;
+}
+
+.player .difficulty2{
+  color:white;
+  background-color:#00FF86;
+  font-weight: bold;
+}
+
+.player .difficulty3{
+  color:white;
+  background-color:gray;
+  font-weight: bold;
+}
+
+.player .difficulty4{
+  color:white;
+  background-color:#FF005A;
+  font-weight: bold;
+}
+
+.player .difficulty5{
+  color:white;
+  background-color:#861D46;
+  font-weight: bold;
+}

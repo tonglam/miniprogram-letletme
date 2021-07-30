@@ -1,1 +1,4 @@
-/* miniprogram/pages/stat/select/select.wxss */
+.select .title {
+  font-size: 14px;
+  font-weight: bold;
+}

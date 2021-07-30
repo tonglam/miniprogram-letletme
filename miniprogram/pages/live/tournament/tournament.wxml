@@ -24,7 +24,6 @@
         label="总分:{{data.lastOverallPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
         is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
     </i-cell-group>
-    <text>\n\n\n</text>
   </view>
 
   <view class="bottemNavBar">

@@ -1,63 +1,139 @@
 <view class="price">
 
   <view class="navBar">
-    <van-nav-bar title="{{date}}" left-text="{{mode}}" right-text="更换" safe-area-inset-top="{{false}}" bind:click-left="onClickMode"
-      bind:click-right="onClickModeDetail" />
+    <van-nav-bar title="{{modeTitle}}" left-text="{{mode}}" right-text="更换" safe-area-inset-top="{{false}}"
+      bind:click-left="onClickMode" bind:click-right="onClickModeDetail" />
   </view>
 
-  <van-popup show="{{modePickerShow}}" overlay="{{false}}" position="top" custom-style="height: 100%">
-    <view class="picker">
-      <van-picker columns="{{modes}}" bind:change="onChangeMode" />
-    </view>
-  </van-popup>
+  <view class="modePicker">
+    <van-popup show="{{modePickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onModePopClose">
+      <van-picker show-toolbar toolbar-position="top" item-height="30" title="" columns="{{ modes }}"
+        bind:confirm="onModePickerConfirm" bind:cancel="onModePickerCancel" />
+    </van-popup>
+  </view>
+
+  <view class="playerPicker">
+    <van-popup show="{{playerPickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onPlayerPopClose">
+      <playerPicker type="5" show="true" bind:pickResult="onPlayerPickResult"></playerPicker>
+    </van-popup>
+  </view>
+
+  <view class="teamPicker">
+    <van-popup show="{{teamPickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onTeamPopClose">
+      <teamPicker show="true" bind:pickTeam="onTeamPickResult"></teamPicker>
+    </van-popup>
+  </view>
+
+  <view class="datePicker">
+    <van-popup show="{{datePickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onDatePopClose">
+      <van-datetime-picker type="date" value="{{currentDate}}" max-date="{{maxDate}}" formatter="{{formatter}}"
+        bind:confirm="onDatePickerConfirm" bind:cancel="onDatePickerCancel" />
+    </van-popup>
+  </view>
 
   <view class="content">
-    <van-tabs swipeable type="card">
 
-      <van-popup show="{{datePickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
-        bind:close="onPopClose">
-        <van-datetime-picker type="date" value="{{currentDate}}" max-date="{{maxDate}}" formatter="{{formatter}}"
-          bind:confirm="onPickerConfirm" bind:cancel="onPickerCancel" />
-      </van-popup>
+    <view class="dateValue" wx:if="{{mode === '日期'}}">
+      <van-tabs swipeable type="card">
 
-      <van-tab title="涨价" name="涨价">
-        <view class="info">
-          <text wx:if="{{riseInfoShow}}">今日暂无数据</text>
-        </view>
-        <i-cell-group>
-          <block wx:for="{{riseList}}" wx:key="index">
-            <i-cell class="rise" title="涨价"
-              value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m"></i-cell>
-          </block>
-        </i-cell-group>
-      </van-tab>
+        <van-tab title="涨价" name="涨价">
+          <view class="info">
+            <text wx:if="{{riseInfoShow}}">今日暂无数据</text>
+          </view>
+          <i-cell-group>
+            <block wx:for="{{riseList}}" wx:key="index">
+              <i-cell class="rise" title="涨价"
+                value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m" />
+            </block>
+          </i-cell-group>
+        </van-tab>
 
-      <van-tab title="降价" name="降价">
-        <view class="info">
-          <text wx:if="{{fallerInfoShow}}">今日暂无数据</text>
-        </view>
-        <i-cell-group>
-          <block wx:for="{{fallerList}}" wx:key="index">
-            <i-cell class="faller" title="降价"
-              value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m"></i-cell>
-          </block>
-        </i-cell-group>
-      </van-tab>
+        <van-tab title="降价" name="降价">
+          <view class="info">
+            <text wx:if="{{fallerInfoShow}}">今日暂无数据</text>
+          </view>
+          <i-cell-group>
+            <block wx:for="{{fallerList}}" wx:key="index">
+              <i-cell class="faller" title="降价"
+                value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m" />
+            </block>
+          </i-cell-group>
+        </van-tab>
 
-      <van-tab title="新增" name="新增">
-        <view class="info">
-          <text wx:if="{{startInfoShow}}">今日暂无数据</text>
-        </view>
-        <i-cell-group>
-          <block wx:for="{{startList}}" wx:key="index">
-            <i-cell title="新增"
-              value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m">
-            </i-cell>
-          </block>
-        </i-cell-group>
-      </van-tab>
+        <van-tab title="新增" name="新增">
+          <view class="info">
+            <text wx:if="{{startInfoShow}}">今日暂无数据</text>
+          </view>
+          <i-cell-group>
+            <block wx:for="{{startList}}" wx:key="index">
+              <i-cell title="新增"
+                value="【{{item.teamShortName}}】【{{item.elementTypeName}}】{{item.webName}} - £{{item.value}}m" />
+            </block>
+          </i-cell-group>
+        </van-tab>
 
-    </van-tabs>
+      </van-tabs>
+    </view>
+
+    <view class="playerValue" wx:elif="{{mode === '球员'}}">
+      <i-cell-group>
+        <block wx:for="{{playerValueList}}" wx:for-item="data" wx:key="index">
+          <view wx:if="{{data.changeType === 'Rise'}}">
+            <i-cell class="rise" title="【涨价】£{{data.value}}m" value="{{data.changeDate}}"/>
+          </view>
+          <view wx:elif="{{data.changeType === 'Faller'}}">
+            <i-cell class="faller" title="【降价】£{{data.value}}m" value="{{data.changeDate}}"/>
+          </view>
+          <view wx:else>
+            <i-cell class="start" title="【初始】£{{data.value}}m" value="{{data.changeDate}}"/>
+          </view>
+        </block>
+      </i-cell-group>
+    </view>
+
+    <view class="teamValue" wx:elif="{{mode === '球队'}}">
+      <van-tabs swipeable type="card">
+
+        <van-tab title="门将" name="门将">
+          <i-cell-group class="content">
+            <block wx:for="{{teamGkpValueList}}" wx:for-item="data" wx:key="index">
+              <i-cell id="{{data.element}}" detail="a" title="{{data.webName}}" value="£{{data.value}}m"
+                bind:click="onClickTeamElement" is-link />
+            </block>
+          </i-cell-group>
+        </van-tab>
+
+        <van-tab title="后卫" name="后卫">
+          <i-cell-group class="content">
+            <block wx:for="{{teamDefValueList}}" wx:for-item="data" wx:key="index">
+              <i-cell title="{{data.webName}}" value="£{{data.value}}m" bind:click="onClickTeamElement" is-link />
+            </block>
+          </i-cell-group>
+        </van-tab>
+
+        <van-tab title="中场" name="中场">
+          <i-cell-group class="content">
+            <block wx:for="{{teamMidValueList}}" wx:for-item="data" wx:key="index">
+              <i-cell title="{{data.webName}}" value="£{{data.value}}m" bind:click="onClickTeamElement" is-link />
+            </block>
+          </i-cell-group>
+        </van-tab>
+
+        <van-tab title="前锋" name="前锋">
+          <i-cell-group class="content">
+            <block wx:for="{{teamFwdValueList}}" wx:for-item="data" wx:key="index">
+              <i-cell title="{{data.webName}}" value="£{{data.value}}m" bind:click="onClickTeamElement" is-link />
+            </block>
+          </i-cell-group>
+        </van-tab>
+
+      </van-tabs>
+    </view>
+
   </view>
 
   <view class="bottemNavBar">

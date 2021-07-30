@@ -18,3 +18,11 @@
 .price .faller {
   color: red;
 }
+
+.price .start {
+  color: gray;
+}
+
+.price .content {
+  margin: 0 5px;
+}
