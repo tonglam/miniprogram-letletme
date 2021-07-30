@@ -67,7 +67,8 @@
         </view>
 
         <view class="playerPicker" wx:if="{{showPlayerPicker}}">
-          <playerPicker type="{{elementType}}" show="true" bind:pickResult="onPickResult"></playerPicker>
+          <playerPicker type="{{elementType}}" show="true" detailShow="true" bind:pickResult="onPickResult">
+          </playerPicker>
         </view>
 
       </van-tab>

@@ -25,7 +25,6 @@ Component({
   },
 
   methods: {
-
     onClose() {
       this.triggerEvent(this.data.event, '');
     },

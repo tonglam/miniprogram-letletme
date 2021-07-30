@@ -7,7 +7,7 @@
         loading="{{loading}}" />
     </view>
 
-    <view class="card">
+    <view class="card" wx:if="{{detailShow}}">
       <van-collapse value="{{activeNames}}" bind:open="cardOnOpen" bind:change="cardOnChange">
       
         <van-collapse-item name="{{playerInfoData.element}}">

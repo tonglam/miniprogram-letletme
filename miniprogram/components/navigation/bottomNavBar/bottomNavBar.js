@@ -47,7 +47,7 @@ const map = {
   ],
     "url": {
       "身价变化": "/pages/stat/price/price",
-      "阵容选择": "/pages/tournament/select/select"
+      "阵容选择": "/pages/stat/select/select"
     },
     "show": true
   },
