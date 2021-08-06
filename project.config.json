@@ -18,7 +18,7 @@
     "checkInvalidKey": true,
     "checkSiteMap": true,
     "uploadWithSourceMap": true,
-    "compileHotReLoad": false,
+    "compileHotReLoad": true,
     "useMultiFrameRuntime": true,
     "useApiHook": true,
     "useApiHostProcess": true,
@@ -28,7 +28,7 @@
       "outputPath": ""
     },
     "enableEngineNative": false,
-    "useIsolateContext": true,
+    "useIsolateContext": false,
     "userConfirmedBundleSwitch": false,
     "packNpmManually": false,
     "packNpmRelationList": [],
@@ -37,7 +37,7 @@
   },
   "appid": "wx4b37f3f2c2c7f169",
   "projectname": "miniprogram-letletme",
-  "libVersion": "2.16.1",
+  "libVersion": "2.2.4",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
     "search": {

@@ -1,0 +1,5 @@
+<view class="seasonDropDown">
+  <van-dropdown-menu>
+    <van-dropdown-item value="{{value}}" options="{{option}}" bind:change="onChange" />
+  </van-dropdown-menu>
+</view>

@@ -18,16 +18,15 @@ const map = {
     "show": true
   },
   "summary": {
-    "pages": [
+    "pages": [{
+        name: "球队",
+        subname: '查看球队统计数据',
+      },
       {
-      name: "球队",
-      subname: '查看球队统计数据',
-    },
-    {
-      name: "联赛",
-      subname: '查看联赛统计数据',
-    }
-  ],
+        name: "联赛",
+        subname: '查看联赛统计数据',
+      }
+    ],
     "url": {
       "球队": "/pages/summary/entry/entry",
       "联赛": "/pages/summary/tournament/tournament",
@@ -35,19 +34,28 @@ const map = {
     "show": true
   },
   "stat": {
-    "pages": [
+    "pages": [{
+        name: "身价变化",
+        subname: '查看每日价格涨跌',
+      },
       {
-      name: "身价变化",
-      subname: '查看每日价格涨跌',
-    },
-    {
-      name: "阵容选择",
-      subname: '查看联赛每轮阵容选择结果',
-    }
-  ],
+        name: "阵容选择",
+        subname: '查看联赛每轮阵容选择结果',
+      },
+      {
+        name: "球员数据",
+        subname: '查看球员数据',
+      },
+      {
+        name: "球队数据",
+        subname: '查看队数据',
+      }
+    ],
     "url": {
       "身价变化": "/pages/stat/price/price",
-      "阵容选择": "/pages/stat/select/select"
+      "阵容选择": "/pages/stat/select/select",
+      "球员数据": "/pages/stat/player/player",
+      "球队数据": "/pages/stat/team/team"
     },
     "show": true
   },
@@ -57,8 +65,7 @@ const map = {
     "show": false
   },
   "me": {
-    "pages": [
-      {
+    "pages": [{
         name: "我的球队",
         subname: '查看我的球队数据',
       },

@@ -5,6 +5,7 @@ import {
 Component({
 
   properties: {
+    season: String,
     show: Boolean,
   },
 
@@ -46,7 +47,9 @@ Component({
     },
 
     initTeamList() {
-      get('common/qryTeamList')
+      get('common/qryTeamList', {
+          season: this.properties.season
+        })
         .then(res => {
           let list = res.data,
             map = {};

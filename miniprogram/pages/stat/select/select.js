@@ -8,7 +8,8 @@ Page({
 
   data: {
     // 数据
-    gw: 0,
+    season: '2122',
+    gw: 1,
     name: "",
     selectData: {},
     // picker
@@ -24,11 +25,10 @@ Page({
   onShow: function () {
     // 设置
     this.setData({
-      gw: 1
-      // gw: app.globalData.gw,
+      gw: app.globalData.gw,
     });
     // 取缓存
-    let name = wx.getStorageSync('leagueName');
+    let name = wx.getStorageSync('stat-select');
     if (name !== '') {
       this.setData({
         name: name
@@ -100,10 +100,19 @@ Page({
       return false;
     }
     // 存缓存
-    wx.setStorageSync('leagueName', name);
+    wx.setStorageSync('stat-select', name);
     // 设置
     this.setData({
       name: name,
+    });
+    // 拉取select
+    this.getLeagueSelect();
+  },
+
+  // dropDown回调
+  onSeasonResult(event) {
+    this.setData({
+      season: event.detail
     });
     // 拉取select
     this.getLeagueSelect();
@@ -114,6 +123,7 @@ Page({
    */
   getLeagueSelect() {
     get('stat/qryTeamSelectByLeagueName', {
+        season: this.data.season,
         event: this.data.gw,
         leagueName: this.data.name
       })

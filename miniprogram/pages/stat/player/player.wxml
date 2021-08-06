@@ -1,9 +1,8 @@
 <view class="player">
 
   <view class="navBar">
-    <van-nav-bar title="【{{playerInfo.teamShortName}}】{{playerInfo.webName}}" title-class="title"
-      left-text="{{season}}赛季" right-text="更换" safe-area-inset-top="{{false}}" bind:click-left=""
-      bind:click-right="onClickChange" />
+    <van-nav-bar title="{{playerInfo.webName}}" title-class="title" left-text="{{playerInfo.teamShortName}}"
+      right-text="更换" safe-area-inset-top="{{false}}" bind:click-left="" bind:click-right="onClickChangePlayer" />
   </view>
 
   <view class="playerPicker">
@@ -17,6 +16,10 @@
 
     <van-tab title="数据" name="数据">
 
+      <view class="dropDown">
+        <seasonDropDown bind:pickResult="onSeasonResult"></seasonDropDown>
+      </view>
+
       <view class="summary">
         <van-cell-group>
           <van-cell title="位置：{{playerInfo.elementTypeName}}" value="身价：£{{playerInfo.price}}m" />
@@ -28,7 +31,7 @@
             value="本周转出：{{playerSummary.detailData.transfersOutEvent}}" />
           <van-cell title="总转入：{{playerSummary.detailData.transfersIn}}"
             value="总转出：{{playerSummary.detailData.transfersOut}}" />
-          <van-cell title="状态{{playerSummary.detailData.form}}" value="均分：{{playerSummary.detailData.pointsPerGame}}" />
+          <van-cell title="状态：{{playerSummary.detailData.form}}" value="均分：{{playerSummary.detailData.pointsPerGame}}" />
         </van-cell-group>
       </view>
 
@@ -111,13 +114,18 @@
       <view class="fixture">
         <block wx:for="{{playerSummary.fixtureList}}" wx:for-item="data" wx:key="index">
           <i-cell-group>
-            <i-cell wx:if="{{data.wasHome && !data.finished}}" i-class="difficulty{{data.difficulty}}"
-              title="GW{{data.event}}" value="{{playerInfo.teamName}} vs {{data.againstTeamName}} (未开始)" />
+            <i-cell wx:if="{{data.bgw}}" i-class="difficulty{{data.difficulty}}" title="GW{{data.event}}"
+              value="{{data.againstTeamName}}" />
+            <i-cell wx:elif="{{data.wasHome && !data.finished}}" i-class="difficulty{{data.difficulty}}"
+              title="GW{{data.event}} {{data.kickoffTime}}"
+              value="{{playerInfo.teamName}} vs {{data.againstTeamName}} (未开始)" />
             <i-cell wx:elif="{{data.wasHome && data.finished}}" i-class="difficulty{{data.difficulty}}"
-              title="GW{{data.event}}" value="{{playerInfo.teamName}} vs {{data.againstTeamName}} ({{data.score}})" />
+              title="GW{{data.event}} {{data.kickoffTime}}"
+              value="{{playerInfo.teamName}} vs {{data.againstTeamName}} ({{data.score}})" />
             <i-cell wx:elif="{{!data.wasHome && !data.finished}}" i-class=" difficulty{{data.difficulty}}"
-              title="GW{{data.event}}" value="{{data.againstTeamName}} vs {{playerInfo.teamName}} (未开始)" />
-            <i-cell wx:else i-class="difficulty{{data.difficulty}}" title="GW{{data.event}}"
+              title="GW{{data.event}} {{data.kickoffTime}}"
+              value="{{data.againstTeamName}} vs {{playerInfo.teamName}} (未开始)" />
+            <i-cell wx:else i-class="difficulty{{data.difficulty}}" title="GW{{data.event}} {{data.kickoffTime}}"
               value="{{data.againstTeamName}} vs {{playerInfo.teamName}} ({{data.score}})" />
             <text>\n</text>
           </i-cell-group>
@@ -125,10 +133,10 @@
       </view>
     </van-tab>
 
-    <van-tab title="历史" name="历史">
-    </van-tab>
-
     <van-tab title="比较" name="比较">
+
+      <text>\n先占个坑 </text>
+
     </van-tab>
 
   </van-tabs>

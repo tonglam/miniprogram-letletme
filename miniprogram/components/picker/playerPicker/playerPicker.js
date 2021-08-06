@@ -160,9 +160,8 @@ Component({
     },
 
     getPlayerInfo() {
-      let elementType = this.data.elementType;
       get('player/qryPlayerInfoByElementType', {
-          elementType: elementType
+          elementType:  this.data.elementType
         })
         .then(res => {
           this.setData({

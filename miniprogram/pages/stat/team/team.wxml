@@ -1,1 +1,30 @@
-<text>miniprogram/pages/stat/team/team.wxml</text>
+<view class="team">
+
+  <view class="navBar">
+    <van-nav-bar title="{{name}}" title-class="title" left-text="{{season}}赛季" right-text="更换"
+      safe-area-inset-top="{{false}}" bind:click-left="onClickChangeSeason" bind:click-right="onClickChangeTeam" />
+  </view>
+
+  <view class="seasonPicker">
+    <van-popup show="{{seasonPickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onSeasonPopClose">
+      <seasonPicker show="true" bind:pickSeason="onSeasonPickResult"></seasonPicker>
+    </van-popup>
+  </view>
+
+  <view class="teamPicker">
+    <van-popup show="{{teamPickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onTeamPopClose">
+      <teamPicker season="{{season}}" show="true" bind:pickTeam="onTeamPickResult"></teamPicker>
+    </van-popup>
+  </view>
+
+  <view class="content">
+
+  </view>
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="stat"></bottomNavBar>
+  </view>
+
+</view>

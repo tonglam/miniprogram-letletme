@@ -5,17 +5,24 @@ import {
 Component({
 
   properties: {
+    season: String,
     show: Boolean
   },
 
   data: {
     event: 'pickLeague',
+    selectSeason: '2021',
     name: '',
     columns: [],
   },
 
   lifetimes: {
     attached: function () {
+      if (this.properties.season !== '') {
+        this.setData({
+          selectSeason: this.properties.season
+        });
+      }
       this.initNameList();
     }
   },
@@ -43,7 +50,9 @@ Component({
     },
 
     initNameList() {
-      get('common/qryAllLeagueName')
+      get('common/qryAllLeagueName', {
+          season: this.data.selectSeason
+        })
         .then(res => {
           let list = res.data,
             columns = [{
@@ -51,9 +60,13 @@ Component({
               className: 'name'
             }];
           this.setData({
-            columns: columns,
-            name: list[0]
+            columns: columns
           });
+          if (list.size > 0) {
+            this.setData({
+              name: list[0]
+            });
+          }
         })
         .catch(res => {
           console.log('fail:', res);

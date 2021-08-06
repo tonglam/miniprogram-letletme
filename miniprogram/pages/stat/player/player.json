@@ -1,5 +1,6 @@
 {
   "usingComponents": {
+    "seasonDropDown":"../../../components/dropDown/seasonDropDown/seasonDropDown",
     "playerPicker": "../../../components/picker/playerPicker/playerPicker"
   }
 }

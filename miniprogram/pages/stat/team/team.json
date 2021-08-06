@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "seasonPicker":"../../../components/picker/seasonPicker/seasonPicker",
+    "teamPicker": "../../../components/picker/teamPicker/teamPicker"
+  }
 }

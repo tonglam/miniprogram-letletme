@@ -12,6 +12,7 @@ Page({
     // 公共
     mode: '日期',
     modeTitle: '',
+    seson: '2122',
     // 日期数据
     riseInfoShow: false,
     fallerInfoShow: false,

@@ -1,0 +1,10 @@
+<view class="seasonPicker">
+
+<van-popup show="{{show}}" overlay="{{true}}" position="top" custom-style="height: 30%" bind:close="onClose">
+  <view class="picker">
+    <van-picker show-toolbar toolbar-position="bottom" item-height="30" title="" columns="{{columns}}"
+      bind:change="onChange" bind:confirm="onConfirm" bind:cancel="onCancel" />
+  </view>
+</van-popup>
+
+</view>

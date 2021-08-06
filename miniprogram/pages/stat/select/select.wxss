@@ -2,3 +2,11 @@
   font-size: 14px;
   font-weight: bold;
 }
+
+.select .dropDown {
+  margin: 8px 0;
+}
+
+.select .content {
+  margin: 10px 0;
+}

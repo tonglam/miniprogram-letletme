@@ -6,7 +6,7 @@ Page({
 
   data: {
     // 数据
-    season:'2021',
+    season: '2122',
     playerInfo: {},
     playerSummary: {},
     // picker
@@ -19,10 +19,10 @@ Page({
 
   onShow: function () {
     // 取缓存
-    let element = wx.getStorageSync('stat-element');
-    if (element > 0) {
+    let code = wx.getStorageSync('stat-player');
+    if (code > 0) {
       this.setData({
-        "playerInfo.element": element,
+        "playerInfo.code": code,
       });
       // 拉取球员数据
       this.getPlayerInfo();
@@ -42,14 +42,14 @@ Page({
    * 操作
    */
 
-  onClickChange() {
+  onClickChangePlayer() {
     this.setData({
       playerPickerShow: true
     });
   },
 
   // 关闭弹出层
-  onModePopClose() {
+  onPlayerPopClose() {
     this.setData({
       playerPickerShow: false
     });
@@ -61,17 +61,27 @@ Page({
       playerPickerShow: false
     });
     let playerInfo = event.detail;
-    console.log(playerInfo);
     if (playerInfo === '' || playerInfo === null) {
       return false;
     }
     // 存缓存
-    wx.setStorageSync('stat-element', playerInfo.element);
+    wx.setStorageSync('stat-player', playerInfo.code);
     // 设置
     this.setData({
       playerInfo: playerInfo,
     });
     // 拉取球员数据
+    this.getPlayerInfo();
+    this.getPlayerSummary();
+  },
+
+  // dropDown回调
+  onSeasonResult(event) {
+    this.setData({
+      season: event.detail
+    });
+    // 拉取球员数据
+    this.getPlayerInfo();
     this.getPlayerSummary();
   },
 
@@ -80,12 +90,28 @@ Page({
    */
 
   getPlayerInfo() {
-    get('player/qryPlayerInfoByElement', {
-        element: this.data.playerInfo.element
+    get('stat/qryPlayerInfo', {
+        season: this.data.season,
+        code: this.data.playerInfo.code
       })
       .then(res => {
+        let playerInfo = res.data;
+        if (playerInfo.element === 0) {
+          playerInfo = {
+            "element": 0,
+            "code": this.data.playerInfo.code,
+            "webName": this.data.playerInfo.webName,
+            "elementType": 0,
+            "elementTypeName": '',
+            "teamId": this.data.playerInfo.teamId,
+            "teamName": this.data.playerInfo.teamName,
+            "teamShortName": this.data.playerInfo.teamShortName,
+            "price": 0.0,
+            "points": 0
+          }
+        }
         this.setData({
-          playerInfo: res.data
+          playerInfo: playerInfo
         });
       })
       .catch(res => {
@@ -94,12 +120,31 @@ Page({
   },
 
   getPlayerSummary() {
-    get('player/qryPlayerSummaryByElement', {
-        element: this.data.playerInfo.element
+    get('stat/qryPlayerSummary', {
+        season: this.data.season,
+        code: this.data.playerInfo.code
       })
       .then(res => {
+        let playerSummary = res.data;
+        if (playerSummary.element === 0) {
+          playerSummary = {
+            "event": 0,
+            "element": 0,
+            "code": this.data.playerInfo.code,
+            "price": 0.0,
+            "elementType": 0,
+            "elementTypeName": '',
+            "webName": '',
+            "teamId": 0,
+            "teamName": '',
+            "teamShortName": '',
+            "eventPoints": 0,
+            "detailData": {},
+            "fixtureList": []
+          }
+        }
         this.setData({
-          playerSummary: res.data
+          playerSummary: playerSummary
         });
       })
       .catch(res => {

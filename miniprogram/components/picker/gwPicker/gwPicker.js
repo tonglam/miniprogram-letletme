@@ -4,7 +4,8 @@ Component({
 
   properties: {
     gw: Number,
-    show: Boolean
+    show: Boolean,
+    full: Boolean
   },
 
   data: {
@@ -47,9 +48,15 @@ Component({
 
     initGwList() {
       let list = [];
-      for (let i = 1; i <= this.data.current; i++) {
-        if (i < 39) {
+      if (this.properties.full) {
+        for (let i = 1; i <= 38; i++) {
           list.push(i);
+        }
+      } else {
+        for (let i = 1; i <= this.data.current; i++) {
+          if (i < 39) {
+            list.push(i);
+          }
         }
       }
       let columns = [{

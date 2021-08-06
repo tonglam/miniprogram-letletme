@@ -23,7 +23,7 @@
   <view class="teamPicker">
     <van-popup show="{{teamPickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
       bind:close="onTeamPopClose">
-      <teamPicker show="true" bind:pickTeam="onTeamPickResult"></teamPicker>
+      <teamPicker season="{{season}}" show="true" bind:pickTeam="onTeamPickResult"></teamPicker>
     </van-popup>
   </view>
 
