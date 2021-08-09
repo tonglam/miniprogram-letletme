@@ -53,9 +53,13 @@ Page({
       entryInfoData: app.globalData.entryInfoData
     });
     // 设置标题
+    let playerName = this.data.entryInfoData.playerName;
+    if (playerName === '' || typeof playerName === 'undefined') {
+      return false;
+    }
     wx.setNavigationBarTitle({
-      title: this.data.entryInfoData.playerName,
-    })
+      title: playerName,
+    });
     // 拉取联赛数据
     this.initEntryLeagueInfo();
     // 拉取历史数据
@@ -138,8 +142,8 @@ Page({
   // 拉取联赛数据
   initEntryLeagueInfo() {
     get('entry/qryEntryLeagueInfo', {
-      entry: this.data.entry
-    })
+        entry: this.data.entry
+      })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
@@ -196,8 +200,8 @@ Page({
   // 拉取历史数据
   initEntryHistoryInfo() {
     get('entry/qryEntryHistoryInfo', {
-      entry: this.data.entry
-    })
+        entry: this.data.entry
+      })
       .then(res => {
         let historyData = res.data;
         if (historyData.entry <= 0) {
@@ -231,9 +235,9 @@ Page({
   // 拉取周得分数据
   getEntryEventResult() {
     get('entry/qryEntryEventResult', {
-      event: this.data.gw,
-      entry: this.data.entry
-    })
+        event: this.data.gw,
+        entry: this.data.entry
+      })
       .then(res => {
         let data = res.data;
         data.overallRank = showOverallRank(data.overallRank);
@@ -260,9 +264,9 @@ Page({
   // 拉取周转会数据
   getEntryEventTransfers() {
     get('entry/qryEntryEventTransfers', {
-      event: this.data.gw,
-      entry: this.data.entry
-    })
+        event: this.data.gw,
+        entry: this.data.entry
+      })
       .then(res => {
         this.setData({
           entryTransfersList: res.data
@@ -276,8 +280,8 @@ Page({
   // 拉取周得分数据总和
   getEntryEventSummary() {
     get('entry/qryEntryEventSummary', {
-      entry: this.data.entry
-    })
+        entry: this.data.entry
+      })
       .then(res => {
         this.setData({
           entryEventSummaryList: res.data

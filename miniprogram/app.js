@@ -26,7 +26,7 @@ App({
   },
 
   onShow() {
-    this.setCurrentEventAndNextUtcDeadline();
+      this.setCurrentEventAndNextUtcDeadline();
   },
 
   setCurrentEventAndNextUtcDeadline() {

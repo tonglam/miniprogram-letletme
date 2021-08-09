@@ -21,6 +21,116 @@
 
   <view class="content">
 
+    <van-tabs swipeable type="card">
+
+      <van-tab title="数据" name="数据">
+        <view class="stat">
+          <van-cell-group>
+            <van-cell title="胜：{{teamSummary.detailData.win}}场" value="负：{{teamSummary.detailData.lose}}场" />
+            <van-cell title="平：{{teamSummary.detailData.draw}}场" value="状态：{{teamSummary.detailData.form}}" />
+            <van-cell title="进球：{{teamSummary.detailData.goalsScored}}" value="助攻：{{teamSummary.detailData.assists}}" />
+            <van-cell title="零封：{{teamSummary.detailData.cleanSheets}}"
+              value="丢球：{{teamSummary.detailData.goalsConceded}}" />
+            <van-cell title="黄牌：{{teamSummary.detailData.yellowCards}}"
+              value="红牌：{{teamSummary.detailData.redCards}}" />
+            <van-cell title="扑点：{{teamSummary.detailData.penaltiesSaved}}"
+              value="丢点：{{teamSummary.detailData.penaltiesMissed}}" />
+            <van-cell title="扑救：{{teamSummary.detailData.saves}}" value="bonus：{{teamSummary.detailData.bonus}}" />
+          </van-cell-group>
+        </view>
+      </van-tab>
+
+      <van-tab title="球员" name="球员">
+        <view class="player">
+
+          <van-cell-group title="门将">
+            <block wx:for="{{gkpList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="【{{data.elementTypeName}}】{{data.webName}}"
+                value="£{{data.price}}m ({{data.detailData.selectedByPercent}}%)" is-link link-type="navigateTo"
+                url="/pages/stat/player/player?season={{season}}&&code={{data.code}}" />
+            </block>
+          </van-cell-group>
+
+          <van-cell-group title="后卫">
+            <block wx:for="{{defList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="【{{data.elementTypeName}}】{{data.webName}}"
+                value="£{{data.price}}m ({{data.detailData.selectedByPercent}}%)" is-link link-type="navigateTo"
+                url="/pages/stat/player/player?season={{season}}&&code={{data.code}}" />
+            </block>
+          </van-cell-group>
+
+          <van-cell-group title="中场">
+            <block wx:for="{{midList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="【{{data.elementTypeName}}】{{data.webName}}"
+                value="£{{data.price}}m ({{data.detailData.selectedByPercent}}%)" is-link link-type="navigateTo"
+                url="/pages/stat/player/player?season={{season}}&&code={{data.code}}" />
+            </block>
+          </van-cell-group>
+
+          <van-cell-group title="前锋">
+            <block wx:for="{{fwdList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="【{{data.elementTypeName}}】{{data.webName}}"
+                value="£{{data.price}}m ({{data.detailData.selectedByPercent}}%)" is-link link-type="navigateTo"
+                url="/pages/stat/player/player?season={{season}}&&code={{data.code}}" />
+            </block>
+          </van-cell-group>
+
+        </view>
+      </van-tab>
+
+      <van-tab title="赛程" name="赛程">
+        <view class="fixture">
+          <block wx:for="{{teamSummary.fixtureList}}" wx:for-item="data" wx:key="index">
+            <i-cell-group>
+              <i-cell wx:if="{{data.bgw}}" i-class="difficulty{{data.difficulty}}" title="GW{{data.event}}"
+                value="{{data.againstTeamShortName}}" />
+              <i-cell wx:elif="{{data.wasHome && !data.finished}}" i-class="difficulty{{data.difficulty}}"
+                title="GW{{data.event}} {{data.kickoffTime}}"
+                value="{{teamSummary.teamShortName}} vs {{data.againstTeamShortName}} (未开始)" />
+              <i-cell wx:elif="{{data.wasHome && data.finished}}" i-class="difficulty{{data.difficulty}}"
+                title="GW{{data.event}} {{data.kickoffTime}}"
+                value="{{teamSummary.teamShortName}} vs {{data.againstTeamShortName}} ({{data.score}})" />
+              <i-cell wx:elif="{{!data.wasHome && !data.finished}}" i-class=" difficulty{{data.difficulty}}"
+                title="GW{{data.event}} {{data.kickoffTime}}"
+                value="{{data.againstTeamShortName}} vs {{teamSummary.teamShortName}} (未开始)" />
+              <i-cell wx:else i-class="difficulty{{data.difficulty}}" title="GW{{data.event}} {{data.kickoffTime}}"
+                value="{{data.againstTeamShortName}} vs {{teamSummary.teamShortName}} ({{data.score}})" />
+              <text>\n</text>
+            </i-cell-group>
+          </block>
+        </view>
+      </van-tab>
+
+      <van-tab title="定位球" name="定位球">
+
+        <view class="order">
+          <van-cell-group title="点球手">
+            <block wx:for="{{teamSummary.penaltiesOrders}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{index+1}}" value="{{data}}" />
+            </block>
+          </van-cell-group>
+        </view>
+
+        <view class="order">
+          <van-cell-group title="任意球手">
+            <block wx:for="{{teamSummary.directFreekicksOrders}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{index+1}}" value="{{data}}" />
+            </block>
+          </van-cell-group>
+        </view>
+
+        <view class="order">
+          <van-cell-group title="角球手">
+            <block wx:for="{{teamSummary.cornersAndIndirectFreekicksOrders}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{index+1}}" value="{{data}}" />
+            </block>
+          </van-cell-group>
+        </view>
+
+      </van-tab>
+
+    </van-tabs>
+
   </view>
 
   <view class="bottemNavBar">

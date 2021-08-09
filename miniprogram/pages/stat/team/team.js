@@ -9,6 +9,10 @@ Page({
     season: '2122',
     name: '',
     teamSummary: {},
+    gkpList: [],
+    defList: [],
+    midList: [],
+    fwdList: [],
     // picker
     seasonPicker: false,
     teamPickerShow: false,
@@ -25,6 +29,12 @@ Page({
       this.setData({
         name: name,
       });
+      let season = wx.getStorageSync('stat-team-season');
+      if (season !== '') {
+        this.setData({
+          season: season,
+        });
+      }
       // 拉取球队数据
       this.getTeamSummary();
     } else {
@@ -57,7 +67,7 @@ Page({
   // 关闭弹出层
   onSeasonPopClose() {
     this.setData({
-     seasonPickerShow: false
+      seasonPickerShow: false
     });
   },
 
@@ -70,10 +80,19 @@ Page({
   // picker回调
   onSeasonPickResult(event) {
     let season = event.detail[0];
+    if (season === '' || typeof season === 'undefined') {
+      this.setData({
+        seasonPickerShow: false,
+      });
+      return false;
+    }
+    console.log(season);
     this.setData({
       seasonPickerShow: false,
       season: season,
     });
+    // 存缓存
+    wx.setStorageSync('stat-team-season', season);
     // 拉取球队数据
     this.getTeamSummary();
   },
@@ -100,8 +119,13 @@ Page({
         name: this.data.name
       })
       .then(res => {
+        let teamSummary = res.data;
         this.setData({
-          teamSummary: res.data
+          teamSummary: teamSummary,
+          gkpList: teamSummary.playerMap[1],
+          defList: teamSummary.playerMap[2],
+          midList: teamSummary.playerMap[3],
+          fwdList: teamSummary.playerMap[4]
         });
       })
       .catch(res => {

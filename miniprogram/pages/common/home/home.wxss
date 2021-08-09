@@ -32,3 +32,8 @@
   background-color: #009688;
   border-radius: 2px;
 }
+
+.home .fixture {
+  margin: 80px 40px;
+  font-weight: bold;
+}

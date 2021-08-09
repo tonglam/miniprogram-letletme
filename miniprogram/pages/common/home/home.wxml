@@ -24,9 +24,17 @@
     <view class="bottom">
       <van-row>
         <van-transition show="{{true}}" custom-class="block">
-          让让我吧
+          这破游戏
         </van-transition>
       </van-row>
+    </view>
+
+    <view class="fixture">
+      <van-cell-group title="GW{{nextGw}}赛程">
+        <block wx:for="{{fixtureList}}" wx:for-item="data" wx:key="index">
+          <van-cell title="{{data.teamShortName}} vs {{data.againstTeamShortName}}" value="{{data.kickoffTime}}" />
+        </block>
+      </van-cell-group>
     </view>
 
   </block>

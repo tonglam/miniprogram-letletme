@@ -22,8 +22,8 @@
   </view>
 
   <view class="picker">
-    <van-popup show="{{ pickerShow }}" position="top">
-      <van-picker show-toolbar toolbar-position="bottom" columns="{{ columns }}" cancel-button-text="重新输入"
+    <van-popup show="{{pickerShow}}" position="top">
+      <van-picker show-toolbar toolbar-position="bottom" columns="{{columns}}" cancel-button-text="重新输入"
         bind:cancel="onPickerCancel" bind:confirm="onPickerConfirm" />
     </van-popup>
   </view>
@@ -31,7 +31,7 @@
   <view class="input">
     <van-cell-group>
       <van-field size="large" type="number" left-icon="manager" model:value="{{entry}}" placeholder="请输入team_id"
-        error-message="{{errorMsg}}" border="{{ false }}" clearable use-button-slot bind:blur="checkEntry">
+        error-message="{{errorMsg}}" border="{{false}}" clearable use-button-slot bind:blur="checkEntry">
         <van-button slot="button" size="small" type="primary" bind:click="onClickInput">
           确定
         </van-button>

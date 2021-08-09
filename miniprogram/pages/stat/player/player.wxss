@@ -2,10 +2,6 @@
   font-size: 14px;
 }
 
-.player .dropDown {
-  margin: 8px 0;
-}
-
 .player .summary {
   margin: 10px 0;
 }

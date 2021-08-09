@@ -1,0 +1,55 @@
+.team .stat {
+  margin: 10px 0;
+}
+
+.team .player {
+  margin: 10px 0;
+}
+
+.team .fixture {
+  margin: 10px 0;
+}
+
+.team .order {
+  margin: 10px 0;
+}
+
+.team .difficulty-1 {
+  color: white;
+  background-color: #FF5722;
+  font-weight: bold;
+}
+
+.team .difficulty0 {
+  font-weight: bold;
+}
+
+.team .difficulty1 {
+  color: white;
+  background-color: #00FF86;
+  font-weight: bold;
+}
+
+.team .difficulty2 {
+  color: white;
+  background-color: #00FF86;
+  font-weight: bold;
+}
+
+.team .difficulty3 {
+  color: white;
+  background-color: gray;
+  font-weight: bold;
+}
+
+.team .difficulty4 {
+  color: white;
+  background-color: #FF005A;
+  font-weight: bold;
+}
+
+.team .difficulty5 {
+  color: white;
+  background-color: #861D46;
+  font-weight: bold;
+}

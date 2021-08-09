@@ -5,13 +5,17 @@ Component({
   },
 
   data: {
-    season: '2122',
+    season: '',
     event: 'pickSeason',
     columns: [],
   },
 
   lifetimes: {
     attached: function () {
+      this.setData({
+        season: '2122'
+      })
+      console.log(this.data.season);
       this.initSeasonList();
     }
   },
@@ -29,10 +33,12 @@ Component({
       this.setData({
         season: value
       });
+      console.log(this.data.season);
     },
 
     onConfirm() {
       this.triggerEvent(this.data.event, this.data.season);
+      console.log(this.data.season);
     },
 
     onCancel() {

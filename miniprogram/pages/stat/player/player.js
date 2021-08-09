@@ -10,12 +10,27 @@ Page({
     playerInfo: {},
     playerSummary: {},
     // picker
+    seasonPicker: false,
     playerPickerShow: false,
   },
 
   /**
    * 原生
    */
+
+  onLoad: function (options) {
+    if (JSON.stringify(options) !== '{}') { // 传入要查询的球员信息
+      let season = options.season,
+        code = options.code;
+      this.setData({
+        season: season,
+        "playerInfo.code": code,
+      });
+    }
+     // 拉取球员数据
+     this.getPlayerInfo();
+     this.getPlayerSummary();
+  },
 
   onShow: function () {
     // 取缓存
@@ -24,6 +39,12 @@ Page({
       this.setData({
         "playerInfo.code": code,
       });
+      let season = wx.getStorageSync('stat-player-season');
+      if (season !== '') {
+        this.setData({
+          season: season,
+        });
+      }
       // 拉取球员数据
       this.getPlayerInfo();
       this.getPlayerSummary();
@@ -42,6 +63,12 @@ Page({
    * 操作
    */
 
+  onClickChangeSeason() {
+    this.setData({
+      seasonPickerShow: true
+    });
+  },
+
   onClickChangePlayer() {
     this.setData({
       playerPickerShow: true
@@ -49,6 +76,12 @@ Page({
   },
 
   // 关闭弹出层
+  onSeasonPopClose() {
+    this.setData({
+      seasonPickerShow: false
+    });
+  },
+
   onPlayerPopClose() {
     this.setData({
       playerPickerShow: false
@@ -56,6 +89,19 @@ Page({
   },
 
   // picker回调
+  onSeasonPickResult(event) {
+    let season = event.detail[0];
+    this.setData({
+      seasonPickerShow: false,
+      season: season,
+    });
+    // 存缓存
+    wx.setStorageSync('stat-player-season', season);
+    // 拉取球员数据
+    this.getPlayerInfo();
+    this.getPlayerSummary();
+  },
+
   onPlayerPickResult(event) {
     this.setData({
       playerPickerShow: false
@@ -69,16 +115,6 @@ Page({
     // 设置
     this.setData({
       playerInfo: playerInfo,
-    });
-    // 拉取球员数据
-    this.getPlayerInfo();
-    this.getPlayerSummary();
-  },
-
-  // dropDown回调
-  onSeasonResult(event) {
-    this.setData({
-      season: event.detail
     });
     // 拉取球员数据
     this.getPlayerInfo();

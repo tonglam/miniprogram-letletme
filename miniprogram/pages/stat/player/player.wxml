@@ -1,8 +1,15 @@
 <view class="player">
 
   <view class="navBar">
-    <van-nav-bar title="{{playerInfo.webName}}" title-class="title" left-text="{{playerInfo.teamShortName}}"
-      right-text="更换" safe-area-inset-top="{{false}}" bind:click-left="" bind:click-right="onClickChangePlayer" />
+    <van-nav-bar title="{{playerInfo.webName}}" title-class="title" left-text="{{season}}赛季"
+      right-text="更换" safe-area-inset-top="{{false}}" bind:click-left="onClickChangeSeason" bind:click-right="onClickChangePlayer" />
+  </view>
+
+  <view class="seasonPicker">
+    <van-popup show="{{seasonPickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onSeasonPopClose">
+      <seasonPicker show="true" bind:pickSeason="onSeasonPickResult"></seasonPicker>
+    </van-popup>
   </view>
 
   <view class="playerPicker">
@@ -16,13 +23,10 @@
 
     <van-tab title="数据" name="数据">
 
-      <view class="dropDown">
-        <seasonDropDown bind:pickResult="onSeasonResult"></seasonDropDown>
-      </view>
-
       <view class="summary">
         <van-cell-group>
-          <van-cell title="位置：{{playerInfo.elementTypeName}}" value="身价：£{{playerInfo.price}}m" />
+          <van-cell title="位置：{{playerInfo.elementTypeName}}"
+            value="身价：£{{playerInfo.price}}m(£{{playerInfo.startPrice}}m)" />
           <van-cell title="总分：{{playerInfo.points}}" value="持有率：{{playerSummary.detailData.selectedByPercent}}%" />
           <van-cell wx:if="{{playerSummary.detailData.news !== ''}}"
             title="本轮出场可能：{{playerSummary.detailData.chanceOfPlayingThisRound}}%"
@@ -31,7 +35,8 @@
             value="本周转出：{{playerSummary.detailData.transfersOutEvent}}" />
           <van-cell title="总转入：{{playerSummary.detailData.transfersIn}}"
             value="总转出：{{playerSummary.detailData.transfersOut}}" />
-          <van-cell title="状态：{{playerSummary.detailData.form}}" value="均分：{{playerSummary.detailData.pointsPerGame}}" />
+          <van-cell title="状态：{{playerSummary.detailData.form}}"
+            value="均分：{{playerSummary.detailData.pointsPerGame}}" />
         </van-cell-group>
       </view>
 
@@ -74,7 +79,8 @@
         <van-cell-group wx:if="{{playerInfo.elementType === 3}}">
           <van-cell title="上场时间：{{playerSummary.detailData.minutes}}"
             value="周得分：{{playerSummary.eventPoints}} (GW{{playerSummary.event}})" />
-          <van-cell title="进球：{{playerSummary.detailData.goalsScored}}" value="助攻：{{playerSummary.assists}}" />
+          <van-cell title="进球：{{playerSummary.detailData.goalsScored}}"
+            value="助攻：{{playerSummary.detailData.assists}}" />
           <van-cell title="零封：{{playerSummary.detailData.cleanSheets}}"
             value="丢球：{{playerSummary.detailData.goalsConceded}}" />
           <van-cell title="乌龙：{{playerSummary.detailData.ownGoals}}"
@@ -115,18 +121,18 @@
         <block wx:for="{{playerSummary.fixtureList}}" wx:for-item="data" wx:key="index">
           <i-cell-group>
             <i-cell wx:if="{{data.bgw}}" i-class="difficulty{{data.difficulty}}" title="GW{{data.event}}"
-              value="{{data.againstTeamName}}" />
+              value="{{data.againstTeamShortName}}" />
             <i-cell wx:elif="{{data.wasHome && !data.finished}}" i-class="difficulty{{data.difficulty}}"
               title="GW{{data.event}} {{data.kickoffTime}}"
-              value="{{playerInfo.teamName}} vs {{data.againstTeamName}} (未开始)" />
+              value="{{playerInfo.teamShortName}} vs {{data.againstTeamShortName}} (未开始)" />
             <i-cell wx:elif="{{data.wasHome && data.finished}}" i-class="difficulty{{data.difficulty}}"
               title="GW{{data.event}} {{data.kickoffTime}}"
-              value="{{playerInfo.teamName}} vs {{data.againstTeamName}} ({{data.score}})" />
+              value="{{playerInfo.teamShortName}} vs {{data.againstTeamShortName}} ({{data.score}})" />
             <i-cell wx:elif="{{!data.wasHome && !data.finished}}" i-class=" difficulty{{data.difficulty}}"
               title="GW{{data.event}} {{data.kickoffTime}}"
-              value="{{data.againstTeamName}} vs {{playerInfo.teamName}} (未开始)" />
+              value="{{data.againstTeamShortName}} vs {{playerInfo.teamShortName}} (未开始)" />
             <i-cell wx:else i-class="difficulty{{data.difficulty}}" title="GW{{data.event}} {{data.kickoffTime}}"
-              value="{{data.againstTeamName}} vs {{playerInfo.teamName}} ({{data.score}})" />
+              value="{{data.againstTeamShortName}} vs {{playerInfo.teamShortName}} ({{data.score}})" />
             <text>\n</text>
           </i-cell-group>
         </block>
