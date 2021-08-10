@@ -11,7 +11,6 @@ Page({
 
   data: {
     // 数据
-    gw: 0,
     entry: 0,
     entryName: "",
     playerName: "",
@@ -41,7 +40,6 @@ Page({
 
   onShow: function () {
     this.setData({
-      gw: app.globalData.gw,
       entry: app.globalData.entry
     });
      // 设置标题

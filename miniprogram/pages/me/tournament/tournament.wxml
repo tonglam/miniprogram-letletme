@@ -1,2 +1,24 @@
-<!--miniprogram/pages/me/tournament/tournament.wxml-->
-<text>miniprogram/pages/me/tournament/tournament.wxml</text>
+<view class="tournament">
+
+  <view class="navBar">
+    <van-nav-bar title="{{tournamentName}}" left-text="GW{{gw}}" right-text="切换联赛"
+      safe-area-inset-top="{{false}}" bind:click-left="onClickChangeGw" bind:click-right="onClickChangeTournament" />
+  </view>
+
+  <view class="gwPicker" wx:if="{{showGwPicker}}">
+    <gwPicker gw="{{gw}}" show="true" bind:pickGw="onPickGw"></gwPicker>
+  </view>
+
+  <view class="tournamentPicker" wx:if="{{showTournamentPicker}}">
+    <tournamentPicker show="true" bind:pickTournament="onPickTournament"></tournamentPicker>
+  </view>
+
+  <view class="content">
+
+  </view>
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="me"></bottomNavBar>
+  </view>
+
+</view>

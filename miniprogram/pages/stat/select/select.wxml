@@ -22,28 +22,28 @@
 
       <van-tab title="阵容选择" name="阵容选择">
 
-        <van-cell-group title="门将">
+        <van-cell-group title="门将" wx:if="{{selectData.mostSelectTeamGkp.length > 0}}">
           <block wx:for="{{selectData.mostSelectTeamGkp}}" wx:for-item="data" wx:key="index">
             <van-cell title="{{data.webName}}【{{data.teamShortName}}】"
               value="{{data.selectByPercent}} ({{data.eoByPercent}})" />
           </block>
         </van-cell-group>
 
-        <van-cell-group title="后卫">
+        <van-cell-group title="后卫" wx:if="{{selectData.mostSelectTeamDef.length > 0}}">
           <block wx:for="{{selectData.mostSelectTeamDef}}" wx:for-item="data" wx:key="index">
             <van-cell title="{{data.webName}}【{{data.teamShortName}}】"
               value="{{data.selectByPercent}} ({{data.eoByPercent}})" />
           </block>
         </van-cell-group>
 
-        <van-cell-group title="中场">
+        <van-cell-group title="中场" wx:if="{{selectData.mostSelectTeamMid.length > 0}}">
           <block wx:for="{{selectData.mostSelectTeamMid}}" wx:for-item="data" wx:key="index">
             <van-cell title="{{data.webName}}【{{data.teamShortName}}】"
               value="{{data.selectByPercent}} ({{data.eoByPercent}})" />
           </block>
         </van-cell-group>
 
-        <van-cell-group title="前锋">
+        <van-cell-group title="前锋" wx:if="{{selectData.mostSelectTeamFwd.length > 0}}">
           <block wx:for="{{selectData.mostSelectTeamFwd}}" wx:for-item="data" wx:key="index">
             <van-cell title="{{data.webName}}【{{data.teamShortName}}】"
               value="{{data.selectByPercent}} ({{data.eoByPercent}})" />
@@ -54,7 +54,7 @@
 
       <van-tab title="队长选择" name="队长选择">
         <view class="captain">
-          <van-cell-group title="队长">
+          <van-cell-group title="队长" wx:if="{{selectData.captainSelect.length > 0}}">
             <block wx:for="{{selectData.captainSelect}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{data.webName}}【{{data.teamShortName}}】"
                 value="{{data.selectByPercent}} ({{data.eoByPercent}})" />
@@ -63,7 +63,7 @@
         </view>
 
         <view class="viceCaptain">
-          <van-cell-group title="副队长">
+          <van-cell-group title="副队长" wx:if="{{selectData.viceCaptainSelect.length > 0}}">
             <block wx:for="{{selectData.viceCaptainSelect}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{data.webName}}【{{data.teamShortName}}】"
                 value="{{data.selectByPercent}} ({{data.eoByPercent}})" />
@@ -74,7 +74,7 @@
 
       <van-tab title="球员选择" name="球员选择">
         <view class="mostSelected">
-          <van-cell-group title="最多选择">
+          <van-cell-group title="最多选择" wx:if="{{selectData.mostSelectPlayer.length > 0}}">
             <block wx:for="{{selectData.mostSelectPlayer}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{data.webName}}【{{data.teamShortName}}】"
                 value="{{data.selectByPercent}} ({{data.eoByPercent}})" />
@@ -85,7 +85,7 @@
 
       <van-tab title="转会选择" name="转会选择">
         <view class="transferIn">
-          <van-cell-group title="转入">
+          <van-cell-group title="转入" wx:if="{{selectData.mostTransferIn.length > 0}}">
             <block wx:for="{{selectData.mostTransferIn}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{data.webName}}【{{data.teamShortName}}】" value="{{data.selectByPercent}}" />
             </block>
@@ -93,7 +93,7 @@
         </view>
 
         <view class="transferOut">
-          <van-cell-group title="转出">
+          <van-cell-group title="转出" wx:if="{{selectData.mostTransferOut.length > 0}}">
             <block wx:for="{{selectData.mostTransferOut}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{data.webName}}【{{data.teamShortName}}】"
                 value="{{data.selectByPercent}}({{data.eoByPercent}})" />

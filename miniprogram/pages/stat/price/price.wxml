@@ -83,13 +83,13 @@
       <i-cell-group>
         <block wx:for="{{playerValueList}}" wx:for-item="data" wx:key="index">
           <view wx:if="{{data.changeType === 'Rise'}}">
-            <i-cell class="rise" title="【涨价】£{{data.value}}m" value="{{data.changeDate}}"/>
+            <i-cell class="rise" title="【涨价】£{{data.value}}m" value="{{data.changeDate}}" />
           </view>
           <view wx:elif="{{data.changeType === 'Faller'}}">
-            <i-cell class="faller" title="【降价】£{{data.value}}m" value="{{data.changeDate}}"/>
+            <i-cell class="faller" title="【降价】£{{data.value}}m" value="{{data.changeDate}}" />
           </view>
           <view wx:else>
-            <i-cell class="start" title="【初始】£{{data.value}}m" value="{{data.changeDate}}"/>
+            <i-cell class="start" title="【初始】£{{data.value}}m" value="{{data.changeDate}}" />
           </view>
         </block>
       </i-cell-group>
@@ -101,7 +101,7 @@
         <van-tab title="门将" name="门将">
           <i-cell-group class="content">
             <block wx:for="{{teamGkpValueList}}" wx:for-item="data" wx:key="index">
-              <i-cell id="{{data.element}}" detail="a" title="{{data.webName}}" value="£{{data.value}}m"
+              <i-cell id="{{data.element}}" title="{{data.webName}}" value="£{{data.value}}m"
                 bind:click="onClickTeamElement" is-link />
             </block>
           </i-cell-group>
@@ -118,7 +118,7 @@
         <van-tab title="中场" name="中场">
           <i-cell-group class="content">
             <block wx:for="{{teamMidValueList}}" wx:for-item="data" wx:key="index">
-              <i-cell title="{{data.webName}}" value="£{{data.value}}m" bind:click="onClickTeamElement" is-link />
+              <i-cell id="{{data.element}}" title="{{data.webName}}" value="£{{data.value}}m" bind:click="onClickTeamElement" is-link />
             </block>
           </i-cell-group>
         </van-tab>
@@ -126,7 +126,7 @@
         <van-tab title="前锋" name="前锋">
           <i-cell-group class="content">
             <block wx:for="{{teamFwdValueList}}" wx:for-item="data" wx:key="index">
-              <i-cell title="{{data.webName}}" value="£{{data.value}}m" bind:click="onClickTeamElement" is-link />
+              <i-cell id="{{data.element}}" title="{{data.webName}}" value="£{{data.value}}m" bind:click="onClickTeamElement" is-link />
             </block>
           </i-cell-group>
         </van-tab>

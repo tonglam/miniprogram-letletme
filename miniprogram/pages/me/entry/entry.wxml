@@ -1,7 +1,7 @@
-<view class="info">
+<view class="entry">
 
   <view class="navBar">
-    <van-nav-bar title="{{entryInfoData.entryName}}" left-text="GW{{gw}}" right-text="切换球队"
+    <van-nav-bar title="{{entryInfoData.entryName}}" left-text="GW{{gw}}" right-text="切换id"
       safe-area-inset-top="{{false}}" bind:click-left="onClickChangeGw" bind:click-right="onClickChangeEntry" />
   </view>
 
@@ -23,7 +23,7 @@
         </view>
 
         <view class="chip">
-          <van-cell-group title="已开卡">
+          <van-cell-group title="已开卡" wx:if="{{chips.length > 0}}">
             <block wx:for="{{chips}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{data.name}}" value="{{data.event}}" />
             </block>
@@ -31,7 +31,7 @@
         </view>
 
         <view class="league">
-          <van-cell-group title="Classic联赛">
+          <van-cell-group title="Classic联赛" wx:if="{{classicList.length > 0}}">
             <block wx:for="{{classicList}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{data.name}}" value="{{data.entry_rank}}({{data.entry_last_rank}})">
                 <van-icon wx:if="{{data.greenArrow}}" class="greenArrow" slot="icon" name="arrow-up" />
@@ -40,12 +40,12 @@
               </van-cell>
             </block>
           </van-cell-group>
-          <van-cell-group title="H2H联赛">
+          <van-cell-group title="H2H联赛" wx:if="{{h2hList.length > 0}}">
             <block wx:for="{{h2hList}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{data.name}}" value="{{data.entry_rank}}({{data.entry_last_rank}})" />
             </block>
           </van-cell-group>
-          <van-cell-group title="官方杯赛">
+          <van-cell-group title="官方杯赛" wx:if="{{cupList.length > 0}}">
             <block wx:for="{{cupList}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{data.entry_1_name}} vs {{data.entry_2_name}}"
                 value="{{data.entry_1_points}} - {{data.entry_2_points}}" />
@@ -54,7 +54,7 @@
         </view>
 
         <view class="history">
-          <van-cell-group title="历史战绩">
+          <van-cell-group title="历史战绩" wx:if="{{historyInfoList.length > 0}}">
             <block wx:for="{{historyInfoList}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{data.season_name}}" value="{{data.total_points}}({{data.rank}})" />
             </block>

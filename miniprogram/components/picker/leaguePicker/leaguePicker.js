@@ -11,7 +11,7 @@ Component({
 
   data: {
     event: 'pickLeague',
-    selectSeason: '2021',
+    selectSeason: '',
     name: '',
     columns: [],
   },
@@ -21,6 +21,10 @@ Component({
       if (this.properties.season !== '') {
         this.setData({
           selectSeason: this.properties.season
+        });
+      } else {
+        this.setData({
+          selectSeason: '2122'
         });
       }
       this.initNameList();

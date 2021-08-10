@@ -1,1 +1,11 @@
-/* miniprogram/pages/summary/tournament/tournament.wxss */
+.league .navBar {
+  margin: 10px 0;
+}
+
+.league .content {
+  margin: 10px 0;
+}
+
+.league .info {
+  margin: 10px 0;
+}

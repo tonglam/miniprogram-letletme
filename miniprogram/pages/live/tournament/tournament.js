@@ -88,9 +88,9 @@ Page({
     });
     let showTournamentPicker = false;
     // 取缓存
-    let tournamentId = wx.getStorageSync('tournamentId');
+    let tournamentId = wx.getStorageSync('live-tournamentId');
     if (tournamentId > 0) {
-      let tournamentName = wx.getStorageSync('tournamentName');
+      let tournamentName = wx.getStorageSync('live-tournamentName');
       this.setData({
         tournamentId: tournamentId,
         tournamentName: tournamentName
@@ -139,8 +139,8 @@ Page({
     let tournamentId = data.id,
       tournamentName = data.name;
     // 存缓存
-    wx.setStorageSync('tournamentId', tournamentId);
-    wx.setStorageSync('tournamentName', tournamentName);
+    wx.setStorageSync('live-tournamentId', tournamentId);
+    wx.setStorageSync('live-tournamentName', tournamentName);
     // 设置
     this.setData({
       tournamentId: tournamentId,
@@ -153,6 +153,7 @@ Page({
   /**
    * 数据
    */
+  
   initLiveTournament() {
     get('live/calcLivePointsByTournament', {
         event: this.data.gw,

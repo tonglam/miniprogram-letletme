@@ -16,7 +16,7 @@ Page({
     gw: 0,
     entry: 0,
     entryInfoData: {},
-    tab: "简介",
+    tab: '简介',
     // 简介页
     classicList: {},
     h2hList: {},
@@ -243,15 +243,17 @@ Page({
         data.overallRank = showOverallRank(data.overallRank);
         data.chip = showChip(data.chip);
         let pickList = [];
-        data.pickList.forEach(element => {
-          if (element.pickActive) {
-            element.style = "pickFinished";
-          } else {
-            element.style = "unPick";
-          }
-          pickList.push(element);
-        })
-        data.pickList = pickList;
+        if (data.pickList.length > 0) {
+          data.pickList.forEach(element => {
+            if (element.pickActive) {
+              element.style = "pickFinished";
+            } else {
+              element.style = "unPick";
+            }
+            pickList.push(element);
+          })
+          data.pickList = pickList;
+        }
         this.setData({
           entryResultData: data
         });

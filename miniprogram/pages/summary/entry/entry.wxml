@@ -22,7 +22,7 @@
           <van-cell title="总分：{{infoData.overallPoints}}" value="总排名：{{infoData.overallRank}}" />
           <van-cell title="转会数：{{infoData.totalTransfers}}" value="剁手：{{infoData.totalTransfersCost}}" />
           <van-cell title="板凳得分合计：{{infoData.totalBenchPoints}}" value="自动替补得分合计：{{infoData.totalAutoSubsPoints}}" />
-          <van-cell title="阵容身价：{{infoData.teamValue}}m" value="银行余额：{{infoData.bank}}m" />
+          <van-cell title="阵容身价：£{{infoData.teamValue}}m" value="银行余额：£{{infoData.bank}}m" />
         </van-cell-group>
       </view>
 
