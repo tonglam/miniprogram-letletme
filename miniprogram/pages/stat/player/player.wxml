@@ -1,7 +1,7 @@
 <view class="player">
 
   <view class="navBar">
-    <van-nav-bar title="{{playerInfo.webName}}" title-class="title" left-text="{{season}}赛季"
+    <van-nav-bar title="【{{playerInfo.teamShortName}}】{{playerInfo.webName}}" title-class="title" left-text="{{season}}赛季"
       right-text="更换" safe-area-inset-top="{{false}}" bind:click-left="onClickChangeSeason" bind:click-right="onClickChangePlayer" />
   </view>
 
