@@ -21,6 +21,7 @@ Page({
     elementType: 0,
     scoutEntry: {}, // 当前球探
     scoutList: [], // 所有球探
+    leftTransfers: '∞',
     fund: 28,
     pickGkpInfo: {},
     pickDefInfo: {},
@@ -61,6 +62,7 @@ Page({
   onShow() {
     this.setData({
       gw: app.globalData.gw,
+      deadline: app.globalData.deadline,
       nextGw: app.globalData.nextGw,
       resultGw: app.globalData.gw
     });
@@ -251,8 +253,17 @@ Page({
   checkAvailable(webName, elementType, fund) {
     // 队长不能重复
     if (webName === this.data.pickCapInfo.webName) {
-      Toast.fail('选择的队长不能和队员重复');
+      Toast.fail('选择的队员不能和队长重复');
       return false;
+    }
+    if (parseInt(elementType) === 5) {
+      if (webName === this.data.pickGkpInfo.webName ||
+        webName === this.data.pickDefInfo.webName ||
+        webName === this.data.pickMidInfo.webName ||
+        webName === this.data.pickFwdInfo.webName) {
+        Toast.fail('选择的队长不能和队员重复');
+        return false;
+      }
     }
     // 检查重复
     switch (parseInt(elementType)) {
@@ -266,38 +277,38 @@ Page({
           Toast.fail('钱不够啦');
           return false;
         }
-      case 2:
-        if (webName === this.data.pickGkpInfo.webName) {
-          Toast.fail('选了一样的');
-          return false;
-        }
-        // 检查余额
-        if (fund < 0) {
-          Toast.fail('钱不够啦');
-          return false;
-        }
-      case 3:
-        if (webName === this.data.pickGkpInfo.webName) {
-          Toast.fail('选了一样的');
-          return false;
-        }
-        // 检查余额
-        if (fund < 0) {
-          Toast.fail('钱不够啦');
-          return false;
-        }
-      case 4:
-        if (webName === this.data.pickGkpInfo.webName) {
-          Toast.fail('选了一样的');
-          return false;
-        }
-        // 检查余额
-        if (fund < 0) {
-          Toast.fail('钱不够啦');
-          return false;
-        }
-      default:
-        return true;
+        case 2:
+          if (webName === this.data.pickGkpInfo.webName) {
+            Toast.fail('选了一样的');
+            return false;
+          }
+          // 检查余额
+          if (fund < 0) {
+            Toast.fail('钱不够啦');
+            return false;
+          }
+          case 3:
+            if (webName === this.data.pickGkpInfo.webName) {
+              Toast.fail('选了一样的');
+              return false;
+            }
+            // 检查余额
+            if (fund < 0) {
+              Toast.fail('钱不够啦');
+              return false;
+            }
+            case 4:
+              if (webName === this.data.pickGkpInfo.webName) {
+                Toast.fail('选了一样的');
+                return false;
+              }
+              // 检查余额
+              if (fund < 0) {
+                Toast.fail('钱不够啦');
+                return false;
+              }
+              default:
+                return true;
     }
   },
 
@@ -354,9 +365,9 @@ Page({
   // 拉取推荐结果
   initEntryScoutResult() {
     get('group/qryEventEntryScoutResult', {
-      event: this.data.nextGw,
-      entry: app.globalData.entry
-    })
+        event: this.data.nextGw,
+        entry: app.globalData.entry
+      })
       .then(res => {
         this.setInitData(res.data);
       })
@@ -489,8 +500,8 @@ Page({
   // 拉取比赛周所有推荐结果 
   initEventScoutResult(gw) {
     get('group/qryEventScoutResult', {
-      event: gw,
-    })
+        event: gw,
+      })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
@@ -512,6 +523,11 @@ Page({
           Toast('无数据');
           return false;
         }
+        list.forEach(element => {
+          if (element.leftTransfers === -1) {
+            element.leftTransfers = '∞';
+          }
+        });
         // 画图
         if (gw === 0) {
           this.setData({
@@ -534,8 +550,8 @@ Page({
   updateEventScoutResult(gw) {
     if (gw === this.data.gw) { // 当前周才刷新event_live
       get('common/insertEventLiveCache', {
-        event: gw
-      }, false)
+          event: gw
+        }, false)
         .then(() => {
           this.changeEventScoutResult(gw);
         })
@@ -551,8 +567,8 @@ Page({
   // 更新当前周得分数据
   changeEventScoutResult(gw) {
     get('group/updateEventScoutResult', {
-      event: gw
-    })
+        event: gw
+      })
       .then(() => {
         this.initEventScoutResult(gw);
       })

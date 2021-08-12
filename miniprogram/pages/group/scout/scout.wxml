@@ -12,8 +12,10 @@
         </view>
 
         <view class="notice">
-          <van-notice-bar scrollable="{{false}}" left-icon="balance-o" text="GW{{nextGw}} - 剩余资金：£{{fund}}m"
+          <van-notice-bar scrollable="{{false}}" left-icon="clock-o" text="GW{{nextGw}} - 死线：{{deadline}}"
             border="{{false}}" />
+          <van-notice-bar scrollable="{{false}}" left-icon="exchange" text="剩余换人名额：{{leftTransfers}}" border="{{false}}" />
+          <van-notice-bar scrollable="{{false}}" left-icon="balance-o" text="剩余资金：£{{fund}}m" border="{{false}}" />
         </view>
 
         <view class="cellGroup">
@@ -99,6 +101,16 @@
       </van-tab>
 
     </van-tabs>
+  </view>
+
+  <view class="tips">
+    <text>规则：</text>
+    <text>\n</text>
+    <text>1.推荐可在28m预算下选择门将、后卫、中场前锋各一人，队长不计入总预算。</text>
+    <text>\n</text>
+    <text>2.每轮有一个换人名额，若该轮不换人，名额可累计至下一轮，但最多累积不超过4个名额。不可扣分换人。</text>
+    <text>\n</text>
+    <text>3.规则从gw2开始执行。</text>
   </view>
 
   <view class="bottemNavBar">
