@@ -14,7 +14,8 @@
         <view class="notice">
           <van-notice-bar scrollable="{{false}}" left-icon="clock-o" text="GW{{nextGw}} - 死线：{{deadline}}"
             border="{{false}}" />
-          <van-notice-bar scrollable="{{false}}" left-icon="exchange" text="剩余换人名额：{{leftTransfers}}" border="{{false}}" />
+          <van-notice-bar scrollable="{{false}}" left-icon="exchange" text="剩余换人名额：{{showLeftTransfers}}"
+            border="{{false}}" />
           <van-notice-bar scrollable="{{false}}" left-icon="balance-o" text="剩余资金：£{{fund}}m" border="{{false}}" />
         </view>
 

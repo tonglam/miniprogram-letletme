@@ -21,7 +21,9 @@ Page({
     elementType: 0,
     scoutEntry: {}, // 当前球探
     scoutList: [], // 所有球探
-    leftTransfers: '∞',
+    transfers: 0,
+    leftTransfers: -1,
+    showLeftTransfers: '∞',
     fund: 28,
     pickGkpInfo: {},
     pickDefInfo: {},
@@ -141,6 +143,8 @@ Page({
       event: app.globalData.nextGw,
       entry: this.data.scoutEntry.entry,
       scoutName: this.data.scoutEntry.name,
+      transfers: this.data.transfers,
+      leftTransfers: this.data.leftTransfers,
       gkp: this.data.pickGkpInfo.element,
       def: this.data.pickDefInfo.element,
       mid: this.data.pickMidInfo.element,
@@ -179,9 +183,27 @@ Page({
 
   // 选择推荐球员 
   onPickScoutPlayer(event) {
+    // 计算换人名额
+    let transfers = this.data.transfers,
+      leftTransfers = this.data.leftTransfers,
+      showLeftTransfers = this.data.showLeftTransfers;
+    if (leftTransfers === 0) {
+      Toast.fail('没有名额啦');
+      return false;
+    }
+    if (leftTransfers !== -1) {
+      transfers = transfers + 1;
+      leftTransfers = leftTransfers - 1;
+      showLeftTransfers = this.getShowLeftTransfers(leftTransfers);
+      this.setData({
+        transfers: transfers,
+        leftTransfers: leftTransfers,
+        showLeftTransfers: showLeftTransfers
+      });
+    }
     this.setData({
       elementType: event.currentTarget.id,
-      showPlayerPicker: true
+      showPlayerPicker: true,
     });
   },
 
@@ -265,6 +287,7 @@ Page({
         return false;
       }
     }
+
     // 检查重复
     switch (parseInt(elementType)) {
       case 1:
@@ -341,6 +364,14 @@ Page({
    * 数据（推荐页）
    */
 
+  // 展示的换人名额
+  getShowLeftTransfers(leftTransfers) {
+    if (leftTransfers === -1) {
+      return '∞';
+    }
+    return leftTransfers + '';
+  },
+
   // 拉取球探信息
   initScout() {
     get('group/qryScoutEntry')
@@ -369,7 +400,16 @@ Page({
         entry: app.globalData.entry
       })
       .then(res => {
-        this.setInitData(res.data);
+        let data = res.data,
+          transfers = data.transfers,
+          leftTransfers = data.leftTransfers,
+          showLeftTransfers = this.getShowLeftTransfers(data.leftTransfers);
+        this.setData({
+          transfers: transfers,
+          leftTransfers: leftTransfers,
+          showLeftTransfers: showLeftTransfers
+        });
+        this.setInitData(data);
       })
       .catch(res => {
         console.log('fail:', res);
@@ -523,11 +563,6 @@ Page({
           Toast('无数据');
           return false;
         }
-        list.forEach(element => {
-          if (element.leftTransfers === -1) {
-            element.leftTransfers = '∞';
-          }
-        });
         // 画图
         if (gw === 0) {
           this.setData({
