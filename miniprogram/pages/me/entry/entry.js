@@ -143,7 +143,7 @@ Page({
   initEntryLeagueInfo() {
     get('entry/qryEntryLeagueInfo', {
         entry: this.data.entry
-      })
+      }, false)
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
@@ -201,7 +201,7 @@ Page({
   initEntryHistoryInfo() {
     get('entry/qryEntryHistoryInfo', {
         entry: this.data.entry
-      })
+      }, false)
       .then(res => {
         let historyData = res.data;
         if (historyData.entry <= 0) {

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "赛程查看",
+  "usingComponents": {
+    "seasonFixture": "../../../components/echart/stat/seasonFixture/seasonFixture"
+  }
+}

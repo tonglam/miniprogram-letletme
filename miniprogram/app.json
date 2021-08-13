@@ -10,13 +10,16 @@
     "pages/stat/price/price",
     "pages/stat/player/player",
     "pages/stat/select/select",
+    "pages/stat/fixture/fixture",
     "pages/stat/team/team",
+    "pages/stat/filter/filter",
     "pages/group/scout/scout",
     "pages/me/entry/entry",
     "pages/me/tournament/tournament",
-    "pages/common/chartTest/chartTest"
+    "pages/common/chartTest/chartTest",
+    "components/echart/stat/seasonFixture/seasonFixture"
   ],
-  "entryPagePath": "pages/common/entryInput/entryInput",
+  "entryPagePath": "pages/stat/fixture/fixture",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",

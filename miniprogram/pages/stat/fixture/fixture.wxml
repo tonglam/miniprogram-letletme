@@ -1,0 +1,11 @@
+<view class="fixture">
+
+  <view class="container">
+    <seasonFixture id="seasonFixtureChart" resultList="{{fixtureList}}"></seasonFixture>
+  </view>
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="stat"></bottomNavBar>
+  </view>
+
+</view>

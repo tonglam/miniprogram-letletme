@@ -1,0 +1,7 @@
+<view class="filter">
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="stat"></bottomNavBar>
+  </view>
+
+</view>
