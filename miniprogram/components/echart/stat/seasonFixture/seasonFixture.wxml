@@ -1,3 +1,2 @@
-<view class="container">
-  <ec-canvas class="mychart" id="mychart" canvas-id="mychart" ec="{{ec}}"></ec-canvas>
-</view>
+<!--components/echart/stat/seasonFixture/seasonFixture.wxml-->
+<text>components/echart/stat/seasonFixture/seasonFixture.wxml</text>

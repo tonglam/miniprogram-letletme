@@ -57,7 +57,7 @@ Component({
         this.setData({
           elementType: this.data.position[value[0]]
         });
-        this.getPlayerInfo();
+        this.getPlayerInfo(picker.getIndexes());
         this.setPlayerInfoData(picker.getIndexes());
       } else if (index == 1) {
         this.setTeamFixture(value[1]);
@@ -156,20 +156,23 @@ Component({
       } else {
         this.data.elementType = type;
       }
-      this.getPlayerInfo();
+      let indexes = [0, 0, 0];
+      this.getPlayerInfo(indexes);
     },
 
-    getPlayerInfo() {
+    getPlayerInfo(indexes) {
+      let teamIndex = indexes[1],
+        elementIndex = indexes[2];
       get('player/qryPlayerInfoByElementType', {
-          elementType:  this.data.elementType
+          elementType: this.data.elementType
         })
         .then(res => {
           this.setData({
             playerInfoMap: res.data,
             loading: false,
-            playerInfoData: res.data[Object.keys(res.data)[0]][0]
+            playerInfoData: res.data[Object.keys(res.data)[teamIndex]][elementIndex]
           });
-          this.initColumns();
+          this.initColumns(teamIndex);
         })
         .catch(res => {
           console.log('fail:', res);
@@ -227,7 +230,7 @@ Component({
       });
     },
 
-    initColumns() {
+    initColumns(teamIndex) {
       let playerInfo = this.data.playerInfoMap;
       this.setData({
         columns: [{
@@ -239,7 +242,7 @@ Component({
             className: 'team',
           },
           {
-            values: playerInfo[Object.keys(playerInfo)[0]].map(o => o.webName),
+            values: playerInfo[Object.keys(playerInfo)[teamIndex]].map(o => o.webName),
             className: 'player',
           }
         ],

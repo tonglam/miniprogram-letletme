@@ -3,8 +3,8 @@
     "pages/common/home/home",
     "pages/common/entryInput/entryInput",
     "pages/live/entry/entry",
-    "pages/live/match/match",
     "pages/live/tournament/tournament",
+    "pages/live/match/match",
     "pages/summary/entry/entry",
     "pages/summary/league/league",
     "pages/stat/price/price",
@@ -19,7 +19,7 @@
     "pages/common/chartTest/chartTest",
     "components/echart/stat/seasonFixture/seasonFixture"
   ],
-  "entryPagePath": "pages/stat/fixture/fixture",
+  "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",
@@ -61,6 +61,7 @@
     "van-tabs": "@vant/weapp/tabs/index",
     "van-tabbar": "@vant/weapp/tabbar/index",
     "van-tabbar-item": "@vant/weapp/tabbar-item/index",
+    "van-tag": "@vant/weapp/tag/index",
     "van-toast": "@vant/weapp/toast/index",
     "van-transition": "@vant/weapp/transition/index",
     "i-cell-group": "./dist/cell-group/index",

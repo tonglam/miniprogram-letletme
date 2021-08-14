@@ -1,8 +1,25 @@
 <view class="fixture">
 
-  <view class="container">
-    <seasonFixture id="seasonFixtureChart" resultList="{{fixtureList}}"></seasonFixture>
-  </view>
+  <scroll-view scroll-x="true">
+    <view class="content">
+
+      <!-- <block wx:for="{{gwList}}" wx:for-item="data" wx:key="index">
+        <view class="item">
+          <van-tag type="primary" size="large">{{data}}</van-tag>
+        </view>
+      </block> -->
+
+      <block wx:for="{{fixtureList}}" wx:for-item="team" wx:key="teamIndex">
+        <block wx:for="{{team}}" wx:for-item="data" wx:key="index">
+          <view class="item">
+            <van-tag type="primary" size="large">{{data}}</van-tag>
+          </view>
+        </block>
+      </block>
+
+    </view>
+  </scroll-view>
+
 
   <view class="bottemNavBar">
     <bottomNavBar active="stat"></bottomNavBar>

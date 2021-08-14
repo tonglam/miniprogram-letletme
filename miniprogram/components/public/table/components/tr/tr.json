@@ -1,8 +1,0 @@
-{
-  "component": true,
-  "usingComponents": {},
-  "componentGenerics": {
-    "action-td": true,
-    "expand-component": true
-  }
-}

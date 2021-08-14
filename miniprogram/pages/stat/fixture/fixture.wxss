@@ -1,0 +1,9 @@
+.fixture .content {
+  display: flex;
+  flex-direction: row;
+  width: 1000rpx;
+}
+
+.fixture .item{
+  margin: 10px 3px;
+}

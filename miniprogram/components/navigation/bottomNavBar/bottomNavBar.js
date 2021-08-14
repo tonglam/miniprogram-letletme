@@ -42,10 +42,10 @@ const map = {
         name: "阵容选择",
         subname: '查看联赛每轮阵容选择结果',
       },
-      {
-        name: "赛程查看",
-        subname: '查看所有赛程',
-      },
+      // {
+      //   name: "赛程查看",
+      //   subname: '查看所有赛程',
+      // },
       {
         name: "球员数据",
         subname: '查看球员数据',
@@ -54,18 +54,18 @@ const map = {
         name: "球队数据",
         subname: '查看球队数据',
       },
-      {
-        name: "筛选器",
-        subname: '乱七八糟的数据查询',
-      }
+      // {
+      //   name: "筛选器",
+      //   subname: '乱七八糟的数据查询',
+      // }
     ],
     "url": {
       "身价变化": "/pages/stat/price/price",
       "阵容选择": "/pages/stat/select/select",
-      "赛程查看": "/pages/stat/fixture/fixture",
+      // "赛程查看": "/pages/stat/fixture/fixture",
       "球员数据": "/pages/stat/player/player",
       "球队数据": "/pages/stat/team/team",
-      "筛选器": "/pages/stat/filter/filter"
+      // "筛选器": "/pages/stat/filter/filter"
     },
     "show": true
   },

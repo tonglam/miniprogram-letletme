@@ -1,3 +1,7 @@
+.match .navBar {
+  margin: 10px 0;
+}
+
 .match .info {
   text-align: center;
   margin: 20px 0;

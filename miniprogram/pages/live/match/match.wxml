@@ -1,7 +1,5 @@
 <view class="match">
 
-  <text>\n</text>
-
   <view class="navBar">
     <van-tabs type="card" color="green" bind:change="onNavBarChange">
       <van-tab title="比赛中" name="playing">
@@ -14,8 +12,6 @@
       </van-tab>
     </van-tabs>
   </view>
-
-  <text>\n</text>
 
   <view class="content" wx:if="{{contentShow}}">
     <view class="tab">
@@ -75,7 +71,7 @@
 
                 <block wx:for="{{bonusData.list}}" wx:for-item="element" wx:key="bonusElement">
                   <van-cell title-class="title" label-class="label"
-                    title="【{{element.teamShortName}}】{{element.webName}}" value="{{element.bonus}}({{element.bps}})"
+                    title="【{{element.teamShortName}}】{{element.webName}}" value="{{element.totalPoints}}({{element.bonus}})"
                     is-link link-type="navigateTo"
                     url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
                 </block>
@@ -102,7 +98,7 @@
 
                 <block wx:for="{{bpsData.list}}" wx:for-item="element" wx:key="bpsElement">
                   <van-cell title-class="title" label-class="label"
-                    title="【{{element.teamShortName}}】{{element.webName}}" value="{{element.bps}}(bps)" is-link
+                    title="【{{element.teamShortName}}】{{element.webName}}" value="{{element.bps}}({{element.bonus}})" is-link
                     link-type="navigateTo"
                     url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
                 </block>

@@ -183,6 +183,21 @@ Page({
 
   // 选择推荐球员 
   onPickScoutPlayer(event) {
+    this.setData({
+      elementType: event.currentTarget.id,
+      showPlayerPicker: true,
+    });
+  },
+
+  // 球员选择回填
+  onPickResult(event) {
+    this.setData({
+      showPlayerPicker: false
+    });
+    if (event.detail === '' || event.detail === null) {
+      return false;
+    }
+    // 校验换人名额
     // 计算换人名额
     let transfers = this.data.transfers,
       leftTransfers = this.data.leftTransfers,
@@ -201,20 +216,7 @@ Page({
         showLeftTransfers: showLeftTransfers
       });
     }
-    this.setData({
-      elementType: event.currentTarget.id,
-      showPlayerPicker: true,
-    });
-  },
-
-  // 球员选择回填
-  onPickResult(event) {
-    this.setData({
-      showPlayerPicker: false
-    });
-    if (event.detail === '' || event.detail === null) {
-      return false;
-    }
+    // 球员选择
     let playerInfo = event.detail,
       teamShortName = playerInfo.teamShortName,
       webName = playerInfo.webName,
