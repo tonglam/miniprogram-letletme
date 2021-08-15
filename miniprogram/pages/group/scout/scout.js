@@ -103,6 +103,7 @@ Page({
         chartShow: false
       });
       if (this.data.scoutResultList.length === 0) {
+        this.initSeasonScoutResult();
         this.initEventScoutResult(resultGw);
       }
     } else if (tab === '排行') {
@@ -197,7 +198,6 @@ Page({
     if (event.detail === '' || event.detail === null) {
       return false;
     }
-    // 校验换人名额
     // 计算换人名额
     let transfers = this.data.transfers,
       leftTransfers = this.data.leftTransfers,

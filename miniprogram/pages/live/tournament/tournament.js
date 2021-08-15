@@ -19,73 +19,80 @@ Page({
     tournamentInfoData: {},
     liveDataFullList: [],
     liveDataList: [],
+    searchLiveDataList: [],
     // picker
     showTournamentPicker: false,
+    showModePicker: false,
+    showPlayerPicker: false,
+    modes: ['选择球员', '清空选择'],
     // refrsh
     pullDownRefresh: false,
     // dropdown
     sortOptions: [{
-        text: "实时得分",
-        value: "livePoints"
+        text: '实时得分',
+        value: 'livePoints'
       },
       {
-        text: "实时净得分",
-        value: "liveNetPoints"
+        text: '实时净得分',
+        value: 'liveNetPoints'
       },
       {
-        text: "实时总分",
-        value: "liveTotalPoints"
+        text: '实时总分',
+        value: 'liveTotalPoints'
       },
       {
-        text: "剁手",
-        value: "transferCost"
+        text: '剁手',
+        value: 'transferCost'
       },
       {
-        text: "已出场",
-        value: "played"
+        text: '已出场',
+        value: 'played'
       },
       {
-        text: "待出场",
-        value: "toPlay"
+        text: '待出场',
+        value: 'toPlay'
       }
     ],
-    sortValue: "livePoints",
+    sortValue: 'livePoints',
     sortTypeOptions: [{
-      text: "降序",
-      value: "desc"
+      text: '降序',
+      value: 'desc'
     }, {
-      text: "升序",
-      value: "asc"
+      text: '升序',
+      value: 'asc'
     }],
-    sortTypeValue: "desc",
+    sortTypeValue: 'desc',
     captainOptions: [],
-    captainValue: "",
-    captainNameValue: "全部",
+    captainValue: '',
+    captainNameValue: '全部',
     chipOptions: [{
-        text: "全部",
-        value: "全部"
+        text: '全部',
+        value: '全部'
       }, {
-        text: "无开卡",
-        value: "无"
+        text: '无开卡',
+        value: '无'
       }, {
 
-        text: "3C",
-        value: "3C"
+        text: '3C',
+        value: '3C'
       },
       {
-        text: "BB",
-        value: "BB"
+        text: 'BB',
+        value: 'BB'
       },
       {
-        text: "FH",
-        value: "FH"
+        text: 'FH',
+        value: 'FH'
       },
       {
-        text: "WC",
-        value: "WC"
+        text: 'WC',
+        value: 'WC'
       }
     ],
-    chipValue: "全部",
+    chipValue: '全部',
+    // 搜索
+    searchElement: 0,
+    searchWebName: ''
   },
 
   /**
@@ -139,6 +146,13 @@ Page({
     });
   },
 
+  // pop
+  onModePopClose() {
+    this.setData({
+      showModePicker: false
+    });
+  },
+
   // 赛事选择回填
   onPickTournament(event) {
     this.setData({
@@ -162,6 +176,49 @@ Page({
     this.initLiveTournament();
   },
 
+  // 搜索模式picker确认
+  onModePickerConfirm(event) {
+    let mode = event.detail.value;
+    if (mode === '选择球员') {
+      this.setData({
+        showModePicker: false,
+        showPlayerPicker: true
+      });
+    } else if (mode === '清空选择') {
+      this.setData({
+        showModePicker: false,
+        searchElement: 0,
+        searchWebName: ''
+      });
+      this.datafilter(this.data.fullList);
+    }
+  },
+
+  // 搜索模式picker取消
+  onModePickerCancel() {
+    this.setData({
+      showModePicker: false
+    });
+  },
+
+  // 球员选择回填
+  onPickPlayer(event) {
+    this.setData({
+      showPlayerPicker: false
+    });
+    let element = event.detail.element,
+      webName = event.detail.webName;
+    if (element === 0 || webName === '') {
+      return false;
+    }
+    this.setData({
+      searchElement: element,
+      searchWebName: webName
+    });
+    this.initLiveSearchDataList();
+    this.datafilter(this.data.searchLiveDataList);
+  },
+
   // dropDown选择
   onDropDownSortValue(event) {
     let oldSortValue = this.data.sortValue,
@@ -172,7 +229,7 @@ Page({
     this.setData({
       sortValue: sortValue
     });
-    this.datafilter();
+    this.datafilter(this.data.fullList);
   },
 
   onDropDownSortTypeValue(event) {
@@ -184,7 +241,7 @@ Page({
     this.setData({
       sortTypeValue: sortTypeValue
     });
-    this.datafilter();
+    this.datafilter(this.data.fullList);
   },
 
   onDropDownCaptain(event) {
@@ -196,7 +253,7 @@ Page({
     this.setData({
       captainNameValue: captainName
     });
-    this.datafilter();
+    this.datafilter(this.data.fullList);
   },
 
   onDropDownChip(event) {
@@ -208,7 +265,14 @@ Page({
     this.setData({
       chipValue: chipValue
     });
-    this.datafilter();
+    this.datafilter(this.data.fullList);
+  },
+
+  // 搜索
+  onSearchClick() {
+    this.setData({
+      showModePicker: true,
+    });
   },
 
   /**
@@ -312,16 +376,37 @@ Page({
       });
   },
 
+  initLiveSearchDataList() {
+    get('live/calcSearchLivePointsByTournament', {
+        event: this.data.gw,
+        tournamentId: this.data.tournamentId,
+        element: this.data.searchElement
+      })
+      .then(res => {
+        let list = [];
+        res.data.forEach(element => {
+          element.chip = getChipName(element.chip);
+          list.push(element);
+        });
+        this.setData({
+          searchLiveDataList: list
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
   /**
    * 排序过滤
    */
 
-  datafilter() {
-    let list = this.sortValue(this.data.liveDataFullList);
+  datafilter(fullList) {
+    let list = this.sortValue(fullList);
     list = this.captainFilter(list);
     list = this.chipFilter(list);
     list = this.rankList(list);
-    list = this.setData({
+    this.setData({
       liveDataList: list
     });
   },

@@ -5,25 +5,45 @@
       right-text="更换联赛" bind:click-right="onClickChange" />
   </view>
 
+  <view class="picker" wx:if="{{showTournamentPicker}}">
+    <tournamentPicker show="true" bind:pickTournament="onPickTournament"></tournamentPicker>
+  </view>
+
+  <view class="search">
+    <van-search value="{{searchWebName}}" label="球员" placeholder="搜索阵容包含该球员的球队" shape="round" disabled use-action-slot
+      bind:change="onSearchChange">
+      <view id="{{searchValue}}" slot="action" style="color: teal;" bind:tap="onSearchClick">搜索</view>
+    </van-search>
+  </view>
+
+  <view class="picker">
+    <van-popup show="{{showModePicker}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onModePopClose">
+      <van-picker show-toolbar toolbar-position="top" item-height="30" title="" columns="{{modes}}"
+        bind:confirm="onModePickerConfirm" bind:cancel="onModePickerCancel" />
+    </van-popup>
+  </view>
+
+  <view class="picker" wx:if="{{showPlayerPicker}}">
+    <playerPicker type="5" show="true" detailShow="{{false}}" bind:pickResult="onPickPlayer"></playerPicker>
+  </view>
+
   <view class="dropdown">
     <van-dropdown-menu>
       <van-dropdown-item value="{{sortValue}}" options="{{sortOptions}}" bind:change="onDropDownSortValue" />
-      <van-dropdown-item value="{{sortTypeValue}}" options="{{sortTypeOptions}}" bind:change="onDropDownSortTypeValue" />
+      <van-dropdown-item value="{{sortTypeValue}}" options="{{sortTypeOptions}}"
+        bind:change="onDropDownSortTypeValue" />
       <van-dropdown-item title="队长" value="{{captainValue}}" options="{{captainOptions}}"
         bind:change="onDropDownCaptain" />
       <van-dropdown-item value="{{chipValue}}" options="{{chipOptions}}" bind:change="onDropDownChip" />
     </van-dropdown-menu>
   </view>
 
-  <view class="picker" wx:if="{{showTournamentPicker}}">
-    <tournamentPicker show="true" bind:pickTournament="onPickTournament"></tournamentPicker>
-  </view>
-
   <view class="content">
     <i-cell-group wx:for="{{liveDataList}}" wx:for-item="data" wx:key="index">
       <i-cell title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
         value="{{data.livePoints}} ({{data.liveNetPoints}})"
-        label="总分:{{data.lastOverallPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
+        label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
         is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
     </i-cell-group>
   </view>

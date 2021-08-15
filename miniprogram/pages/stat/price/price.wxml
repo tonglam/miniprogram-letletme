@@ -8,7 +8,7 @@
   <view class="modePicker">
     <van-popup show="{{modePickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
       bind:close="onModePopClose">
-      <van-picker show-toolbar toolbar-position="top" item-height="30" title="" columns="{{ modes }}"
+      <van-picker show-toolbar toolbar-position="top" item-height="30" title="" columns="{{modes}}"
         bind:confirm="onModePickerConfirm" bind:cancel="onModePickerCancel" />
     </van-popup>
   </view>

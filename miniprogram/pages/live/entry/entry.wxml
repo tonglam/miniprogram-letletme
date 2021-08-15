@@ -1,8 +1,8 @@
 <view class="entry">
 
   <view class="navBar">
-    <van-nav-bar title="{{entryName}}({{playerName}})" title-class="title" safe-area-inset-top="{{false}}"
-      left-text="" right-text="更换id" bind:click-right="onClickChange" />
+    <van-nav-bar title="{{entryName}}({{playerName}})" title-class="title" safe-area-inset-top="{{false}}" left-text=""
+      right-text="更换id" bind:click-right="onClickChange" />
   </view>
 
   <view class="pop" style="text-align:center;">
@@ -22,10 +22,10 @@
 
     <view class="info">
       <van-cell title="得分(净得分)：{{liveData.livePoints}}({{liveData.liveNetPoints}})"
-        value="剁手:{{liveData.transferCost}}" />
-      <van-cell title="上场队长:{{liveData.captainName}}" value="开卡:{{liveData.chip}}" />
-      <van-cell title="总分:{{liveData.liveTotalPoints}}" value="上周排名:{{liveData.lastOverallRank}}" />
-      <van-cell title="已上场:{{liveData.played}}" value="待出场:{{liveData.toPlay}}" />
+        value="剁手：{{liveData.transferCost}}" />
+      <van-cell title="上场队长：{{liveData.captainName}}" value="开卡：{{liveData.chip}}" />
+      <van-cell title="总分：{{liveData.liveTotalPoints}}" value="上周排名：{{liveData.lastOverallRank}}" />
+      <van-cell title="已上场：{{liveData.played}}" value="待出场：{{liveData.toPlay}}" />
     </view>
 
     <i-cell-group wx:for="{{liveData.pickList}}" wx:for-item="data" wx:key="index">

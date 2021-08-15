@@ -105,6 +105,14 @@
           </block>
         </swiper>
 
+        <view class="rankTable">
+          <van-cell-group title="排行榜">
+            <block wx:for="{{seasonResultList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{index}} - {{data.scoutName}}" value="{{data.totalPoints}}({{data.eventPoints}})" />
+            </block>
+          </van-cell-group>
+        </view>
+
       </van-tab>
 
       <van-tab title="排行" name="排行">

@@ -6,6 +6,10 @@
   margin: 0 0 10px 0;
 }
 
+.scout .rankTable{
+  margin: 10px 0;
+}
+
 .scout .tips{
   margin: 20px 10px 10px 10px;
   font-size: 12px;

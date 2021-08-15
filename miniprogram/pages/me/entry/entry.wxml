@@ -113,10 +113,7 @@
         </view>
 
       </van-tab>
-
-      <van-tab title="排行" name="排行">
-      </van-tab>
-
+      
     </van-tabs>
   </view>
 
