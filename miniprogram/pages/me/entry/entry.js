@@ -167,9 +167,9 @@ Page({
         let classicList = [],
           h2hList = [];
         list.classic.forEach(element => {
-          if (element.entry_rank > element.entry_last_rank) {
+          if (element.entry_rank > element.entry_last_rank && element.event > 1) {
             element.redArrow = true;
-          } else if (element.entry_rank < element.entry_last_rank) {
+          } else if (element.entry_rank < element.entry_last_rank && element.event > 1) {
             element.greenArrow = true;
           } else {
             element.noArrow = true;
@@ -177,9 +177,9 @@ Page({
           classicList.push(element);
         });
         list.h2h.forEach(element => {
-          if (element.entry_rank > element.entry_last_rank) {
+          if (element.entry_rank > element.entry_last_rank && element.event > 1) {
             element.greenArrow = true;
-          } else if (element.entry_rank < element.entry_last_rank) {
+          } else if (element.entry_rank < element.entry_last_rank && element.event > 1) {
             element.redArrow = true;
           } else {
             element.noArrow = true;
@@ -265,6 +265,9 @@ Page({
 
   // 拉取周转会数据
   getEntryEventTransfers() {
+    if (this.data.gw <= 1) {
+      return false;
+    }
     get('entry/qryEntryEventTransfers', {
         event: this.data.gw,
         entry: this.data.entry

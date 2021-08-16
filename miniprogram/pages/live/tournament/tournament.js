@@ -114,7 +114,9 @@ Page({
         tournamentName: tournamentName
       });
       // 刷新live
-      this.initLiveTournament();
+      if (this.data.liveDataList.length === 0) {
+        this.initLiveTournament();
+      }
     } else {
       showTournamentPicker = true; // 缓存没有时从picker中选择
     }
@@ -344,12 +346,13 @@ Page({
       })
       .then(res => {
         let list = [];
-        res.data.forEach(element => {
+        res.data.liveCalcDataList.forEach(element => {
           element.chip = getChipName(element.chip);
           list.push(element);
         });
         this.setData({
-          liveDataFullList: list
+          liveDataFullList: list,
+          searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent
         });
         this.datafilter();
       })

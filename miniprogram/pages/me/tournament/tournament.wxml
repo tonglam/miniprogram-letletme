@@ -1,8 +1,8 @@
 <view class="tournament">
 
   <view class="navBar">
-    <van-nav-bar title="{{tournamentName}}" title-class="title" safe-area-inset-top="{{false}}" left-text="重置"
-      bind:click-left="onClickReset" right-text="更换" bind:click-right="onClickChange" />
+    <van-nav-bar title="{{tournamentName}}" title-class="title" safe-area-inset-top="{{false}}" left-text="GW{{gw}}"
+      bind:click-left="onClickChangeGw" right-text="更换" bind:click-right="onClickChangeTournament" />
   </view>
 
   <view class="picker" wx:if="{{showGwPicker}}">
@@ -44,11 +44,11 @@
   </view>
 
   <view class="content">
-    <i-cell-group wx:for="{{liveDataList}}" wx:for-item="data" wx:key="index">
-      <i-cell title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
-        value="{{data.livePoints}} ({{data.liveNetPoints}})"
-        label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 周联赛排名:{{data.eventTournamentRank}} 总联赛排名:{{data.tournamentRank}}"
-        is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+    <i-cell-group wx:for="{{tournamentResultList}}" wx:for-item="data" wx:key="index">
+      <i-cell title="[{{data.index}}] {{data.entryName}}【{{data.captainName}}】"
+        value="{{data.points}} ({{data.netPoints}})"
+        label="总分:{{data.overallPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 周联赛排名:{{data.eventTournamentRank}} 总联赛排名:{{data.tournamentRank}}"
+        is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
     </i-cell-group>
   </view>
 

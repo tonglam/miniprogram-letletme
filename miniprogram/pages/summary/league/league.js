@@ -11,6 +11,7 @@ Page({
 
   data: {
     // 数据
+    gw: 0,
     entry: 0,
     entryName: '',
     leagueName: "",
@@ -32,6 +33,7 @@ Page({
 
   onShow: function () {
     this.setData({
+      gw: app.globalData.gw,
       entry: app.globalData.entry,
       entryName: app.globalData.entryInfoData.entryName
     });
@@ -115,13 +117,13 @@ Page({
     }
   },
 
-  onMostSelectCollapseChange(event){
+  onMostSelectCollapseChange(event) {
     this.setData({
       mostSelectPosition: event.detail,
     });
   },
 
-  onMostScoreCollapseChange(event){
+  onMostScoreCollapseChange(event) {
     this.setData({
       mostScorePosition: event.detail,
     });

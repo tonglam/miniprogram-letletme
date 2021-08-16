@@ -4,7 +4,6 @@ import {
 import {
   getChipName
 } from '../../../utils/utils';
-import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 const app = getApp();
 
@@ -16,7 +15,6 @@ Page({
     entry: 0,
     tournamentId: 0,
     tournamentName: "",
-    tournamentInfoData: {},
     tournamentResultFullList: [],
     tournamentResultList: [],
     // picker
@@ -24,18 +22,18 @@ Page({
     showTournamentPicker: false,
     showModePicker: false,
     showPlayerPicker: false,
+    modes: ['选择球员', '清空选择'],
     // dropdown
     sortOptions: [{
+        text: '总分',
+        value: 'overallPoints'
+      }, {
         text: '周得分',
         value: 'points'
       },
       {
         text: '周净得分',
         value: 'netPoints'
-      },
-      {
-        text: '总分',
-        value: 'overallPoints'
       },
       {
         text: '剁手',
@@ -50,7 +48,7 @@ Page({
         value: 'bank'
       }
     ],
-    sortValue: 'points',
+    sortValue: 'overallPoints',
     sortTypeOptions: [{
       text: '降序',
       value: 'desc'
@@ -111,8 +109,10 @@ Page({
         tournamentId: tournamentId,
         tournamentName: tournamentName
       });
-      // 拉取tournament数据
-      this.initTournamentResult();
+      if (this.data.tournamentResultList.length === 0) {
+        // 拉取tournament数据
+        this.initTournamentResult();
+      }
     } else {
       showTournamentPicker = true; // 缓存没有时从picker中选择
     }
@@ -129,16 +129,15 @@ Page({
    * 操作
    */
 
-  // 重置
-  onClickReset() {
-    // 默认下拉菜单
-    this.defaultDropDown();
-    // 拉取tournament数据
-    this.initTournamentResult();
+  // 更换GW
+  onClickChangeGw() {
+    this.setData({
+      showGwPicker: true
+    });
   },
 
   // 更换联赛
-  onClickChange() {
+  onClickChangeTournament() {
     this.setData({
       showTournamentPicker: true
     });
@@ -149,6 +148,25 @@ Page({
     this.setData({
       showModePicker: false
     });
+  },
+
+  // GW选择回填
+  onPickGw(event) {
+    this.setData({
+      showGwPicker: false
+    });
+    let gw = event.detail;
+    if (gw === '' || gw === null) {
+      return false;
+    }
+    if (gw === this.data.gw) {
+      return false;
+    }
+    this.setData({
+      gw: gw
+    });
+    // 拉取tournament数据
+    this.initTournamentResult();
   },
 
   // 赛事选择回填
@@ -283,21 +301,6 @@ Page({
         tournamentId: this.data.tournamentId
       })
       .then(res => {
-        // 下拉刷新
-        if (this.data.pullDownRefresh) {
-          wx.stopPullDownRefresh({
-            success: () => {
-              Toast({
-                type: 'success',
-                duration: 400,
-                message: "刷新成功"
-              });
-              this.setData({
-                pullDownRefresh: false
-              });
-            },
-          });
-        }
         // 更新
         let list = [];
         res.data.forEach(element => {
@@ -325,12 +328,13 @@ Page({
       })
       .then(res => {
         let list = [];
-        res.data.forEach(element => {
+        res.data.eventResultList.forEach(element => {
           element.chip = getChipName(element.chip);
           list.push(element);
         });
         this.setData({
-          liveDataFullList: list
+          tournamentResultFullList: list,
+          searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent
         });
         this.datafilter();
       })
@@ -489,12 +493,12 @@ Page({
     list.forEach((element) => {
       if (element[rankField] == rankValue) {
         repeat++;
-        element.rank = rank;
+        element.index = rank;
       } else {
         rank = rank + repeat + 1;
         repeat = 0;
         rankValue = element[rankField];
-        element.rank = rank;
+        element.index = rank;
       }
     });
     return list;
