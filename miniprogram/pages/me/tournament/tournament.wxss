@@ -1,1 +1,16 @@
-/* miniprogram/pages/me/tournament/tournament.wxss */
+.tournament .title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.tournament .dropdown {
+  margin: 10px 0;
+}
+
+.tournament .search {
+  margin: 5px 0;
+}
+
+.tournament .content {
+  font-weight: bold;
+}

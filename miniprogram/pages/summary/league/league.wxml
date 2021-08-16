@@ -1,8 +1,8 @@
 <view class="league">
 
   <view class="navBar">
-    <van-nav-bar title="{{leagueName}}" left-text="GW{{gw}}" right-text="切换联赛" safe-area-inset-top="{{false}}"
-      bind:click-left="" bind:click-right="onClickChange" />
+    <van-nav-bar title="{{leagueName}}" title-class="title" left-text="GW{{gw}}" right-text="切换联赛"
+      safe-area-inset-top="{{false}}" bind:click-left="" bind:click-right="onClickChange" />
   </view>
 
   <view class="leaguePicker" wx:if="{{showLeaguePicker}}">
@@ -54,7 +54,7 @@
         </view>
 
         <view class="info">
-          <van-cell-group title="转会数量排行榜">
+          <van-cell-group title="转会数量排行榜" wx:if="{{summaryData.topTransfers.length>0}}">
             <block wx:for="{{summaryData.topTransfers}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{index+1}} - {{data.entryName}}" value="{{data.totalTransfers}}" />
             </block>
@@ -62,7 +62,7 @@
         </view>
 
         <view class="info">
-          <van-cell-group title="剁手排行榜">
+          <van-cell-group title="剁手排行榜" wx:if="{{summaryData.topCost.length>0}}">
             <block wx:for="{{summaryData.topCost}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{index+1}} - {{data.entryName}}" value="{{data.totalTransfersCost}}" />
             </block>
@@ -70,7 +70,7 @@
         </view>
 
         <view class="info">
-          <van-cell-group title="替补得分排行榜">
+          <van-cell-group title="替补得分排行榜" wx:if="{{summaryData.topBench.length>0}}">
             <block wx:for="{{summaryData.topBench}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{index+1}} - {{data.entryName}}" value="{{data.totalBenchPoints}}" />
             </block>
@@ -78,7 +78,7 @@
         </view>
 
         <view class="info">
-          <van-cell-group title="自动得分排行榜">
+          <van-cell-group title="自动替补排行榜" wx:if="{{summaryData.topAutoSubs.length>0}}">
             <block wx:for="{{summaryData.topAutoSubs}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{index+1}} - {{data.entryName}}" value="{{data.totalAutoSubsPoints}}" />
             </block>
@@ -115,7 +115,7 @@
         <view class="info">
           <van-cell-group title="得分最多队长">
             <block wx:for="{{captainData.mostPointsCaptain}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{index+1}} - {{data.webName}}" value="{{data.totalPoints}}" />
+              <van-cell title="{{index+1}}  {{data.webName}}" value="{{data.totalPoints}}分" />
             </block>
           </van-cell-group>
         </view>
@@ -123,7 +123,7 @@
         <view class="info">
           <van-cell-group title="队长选择最多">
             <block wx:for="{{captainData.mostSelectedCaptain}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{index+1}} - {{data.webName}}" value="{{data.times}}次" />
+              <van-cell title="{{index+1}}  {{data.webName}}" value="{{data.times}}人次" />
             </block>
           </van-cell-group>
         </view>
@@ -131,7 +131,7 @@
         <view class="info">
           <van-cell-group title="选择最多三倍队长">
             <block wx:for="{{captainData.mostTcSelectedCaptain}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{index+1}} - {{data.webName}}" value="{{data.times}}次" />
+              <van-cell title="{{index+1}}  {{data.webName}}" value="{{data.times}}人次" />
             </block>
           </van-cell-group>
         </view>
@@ -139,7 +139,7 @@
         <view class="info">
           <van-cell-group title="队长得分最多球队">
             <block wx:for="{{captainData.bestCaptainEntry}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{index+1}} - {{data.entryName}}" value="{{data.totalPoints}}次" />
+              <van-cell title="{{index+1}}  {{data.entryName}}" value="{{data.totalPoints}}分" />
             </block>
           </van-cell-group>
         </view>
@@ -147,7 +147,7 @@
         <view class="info">
           <van-cell-group title="队长得分最少球队">
             <block wx:for="{{captainData.worstCaptainEntry}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{index+1}} - {{data.entryName}}" value="{{data.totalPoints}}次" />
+              <van-cell title="{{index+1}}  {{data.entryName}}" value="{{data.totalPoints}}分" />
             </block>
           </van-cell-group>
         </view>
@@ -155,7 +155,7 @@
         <view class="info">
           <van-cell-group title="队长得分占比最多球队">
             <block wx:for="{{captainData.mostPointsByPercentEntry}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{index+1}} - {{data.entryName}}" value="{{data.totalPointsByPercent}}%" />
+              <van-cell title="{{index+1}}  {{data.entryName}}" value="{{data.totalPointsByPercent}}" />
             </block>
           </van-cell-group>
         </view>
@@ -163,7 +163,7 @@
         <view class="info">
           <van-cell-group title="队长得分占比最少球队">
             <block wx:for="{{captainData.leastPointsByPercentEntry}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{index+1}} - {{data.entryName}}" value="{{data.totalPointsByPercent}}%" />
+              <van-cell title="{{index+1}}  {{data.entryName}}" value="{{data.totalPointsByPercent}}" />
             </block>
           </van-cell-group>
         </view>
@@ -191,25 +191,25 @@
 
         <view class="info">
           <van-cell-group title="联赛">
-            <van-cell title="门将得分：{{scoreData.gkpTotalPoints}}" value="门将得分占比：{{scoreData.gkpTotalPointsByPercent}}%" />
+            <van-cell title="门将得分：{{scoreData.gkpTotalPoints}}" value="门将得分占比：{{scoreData.gkpTotalPointsByPercent}}" />
             <van-cell title="平均使用门将：{{scoreData.averageEntryGkpTotalNum}}"
               value="平均门将得分：{{scoreData.averageEntryGkpTotalPoints}}" />
-            <van-cell title="后卫得分：{{scoreData.defTotalPoints}}" value="后卫得分占比：{{scoreData.defTotalPointsByPercent}}%" />
+            <van-cell title="后卫得分：{{scoreData.defTotalPoints}}" value="后卫得分占比：{{scoreData.defTotalPointsByPercent}}" />
             <van-cell title="平均使用后卫：{{scoreData.averageEntryDefTotalNum}}"
               value="平均后卫得分：{{scoreData.averageEntryDefTotalPoints}}" />
-            <van-cell title="中场得分：{{scoreData.midTotalPoints}}" value="中场得分占比：{{scoreData.midTotalPointsByPercent}}%" />
+            <van-cell title="中场得分：{{scoreData.midTotalPoints}}" value="中场得分占比：{{scoreData.midTotalPointsByPercent}}" />
             <van-cell title="平均使用中场：{{scoreData.averageEntryMidTotalNum}}"
               value="平均中场得分：{{scoreData.averageEntryMidTotalPoints}}" />
-            <van-cell title="前锋得分：{{scoreData.fwdTotalPoints}}" value="前锋得分占比：{{scoreData.fwdTotalPointsByPercent}}%" />
-            <van-cell title="前锋使用门将：{{scoreData.averageEntryFwdTotalNum}}"
-              value="平均前锋得分：{{scoreData.averageEntryGkpTotalaverageEntryFwdTotalPointsPoints}}" />
+            <van-cell title="前锋得分：{{scoreData.fwdTotalPoints}}" value="前锋得分占比：{{scoreData.fwdTotalPointsByPercent}}" />
+            <van-cell title="平均使用前锋：{{scoreData.averageEntryFwdTotalNum}}"
+              value="平均前锋得分：{{scoreData.averageEntryFwdTotalPoints}}" />
           </van-cell-group>
         </view>
 
         <view class="info">
           <van-cell-group title="最多使用阵型">
-            <block wx:for="{{captainData.mostSelectedFormation}}" wx:key="index" wx:for-index="key">
-              <van-cell title="{{index+1}} - {{key}}" value="{{value}}%" />
+            <block wx:for="{{scoreData.mostSelectedFormation}}" wx:for-index="key">
+              <van-cell title="{{key}}" value="{{value}}" />
             </block>
           </van-cell-group>
         </view>
@@ -218,23 +218,23 @@
           <van-cell-group title="最多选择球员">
             <van-collapse value="{{mostSelectPosition}}" bind:change="onMostSelectCollapseChange">
               <van-collapse-item title="最多选择门将">
-                <block wx:for="{{scoreData.mostSelectedGkpByPercent}}" wx:key="index" wx:for-index="key">
-                  <van-cell title="{{index+1}} - {{key}}" value="{{value}}%" />
+                <block wx:for="{{scoreData.mostSelectedGkpByPercent}}" wx:for-index="key">
+                  <van-cell title="{{key}}" value="{{value}}" />
                 </block>
               </van-collapse-item>
               <van-collapse-item title="最多选择后卫">
-                <block wx:for="{{scoreData.mostSelectedDefByPercent}}" wx:key="index" wx:for-index="key">
-                  <van-cell title="{{index+1}} - {{key}}" value="{{value}}%" />
+                <block wx:for="{{scoreData.mostSelectedDefByPercent}}"  wx:for-index="key">
+                  <van-cell title="{{key}}" value="{{value}}" />
                 </block>
               </van-collapse-item>
               <van-collapse-item title="最多选择中场">
-                <block wx:for="{{scoreData.mostSelectedMidByPercent}}" wx:key="index" wx:for-index="key">
-                  <van-cell title="{{index+1}} - {{key}}" value="{{value}}%" />
+                <block wx:for="{{scoreData.mostSelectedMidByPercent}}"  wx:for-index="key">
+                  <van-cell title="{{key}}" value="{{value}}" />
                 </block>
               </van-collapse-item>
               <van-collapse-item title="最多选择前锋">
-                <block wx:for="{{scoreData.mostSelectedFwdByPercent}}" wx:key="index" wx:for-index="key">
-                  <van-cell title="{{index+1}} - {{key}}" value="{{value}}%" />
+                <block wx:for="{{scoreData.mostSelectedFwdByPercent}}" wx:for-index="key">
+                  <van-cell title="{{key}}" value="{{value}}" />
                 </block>
               </van-collapse-item>
             </van-collapse>

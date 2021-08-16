@@ -19,7 +19,6 @@ Page({
     tournamentInfoData: {},
     liveDataFullList: [],
     liveDataList: [],
-    searchLiveDataList: [],
     // picker
     showTournamentPicker: false,
     showModePicker: false,
@@ -139,6 +138,14 @@ Page({
    * 操作
    */
 
+  // 重置
+  onClickReset() {
+    // 默认下拉菜单
+    this.defaultDropDown();
+    // 刷新live
+    this.initLiveTournament();
+  },
+
   // 更换联赛
   onClickChange() {
     this.setData({
@@ -190,7 +197,8 @@ Page({
         searchElement: 0,
         searchWebName: ''
       });
-      this.datafilter(this.data.fullList);
+      // 刷新live
+      this.initLiveTournament();
     }
   },
 
@@ -216,7 +224,6 @@ Page({
       searchWebName: webName
     });
     this.initLiveSearchDataList();
-    this.datafilter(this.data.searchLiveDataList);
   },
 
   // dropDown选择
@@ -229,7 +236,7 @@ Page({
     this.setData({
       sortValue: sortValue
     });
-    this.datafilter(this.data.fullList);
+    this.datafilter();
   },
 
   onDropDownSortTypeValue(event) {
@@ -241,7 +248,7 @@ Page({
     this.setData({
       sortTypeValue: sortTypeValue
     });
-    this.datafilter(this.data.fullList);
+    this.datafilter();
   },
 
   onDropDownCaptain(event) {
@@ -253,7 +260,7 @@ Page({
     this.setData({
       captainNameValue: captainName
     });
-    this.datafilter(this.data.fullList);
+    this.datafilter();
   },
 
   onDropDownChip(event) {
@@ -265,7 +272,7 @@ Page({
     this.setData({
       chipValue: chipValue
     });
-    this.datafilter(this.data.fullList);
+    this.datafilter();
   },
 
   // 搜索
@@ -308,40 +315,15 @@ Page({
         });
         this.setData({
           liveDataFullList: list,
-          liveDataList: list
         });
-        // 更新排序
-        this.initDropDown();
+        // 过滤数据
+        this.datafilter();
+        // 组装队长下拉菜单
+        this.initCaptainDropDown();
       })
       .catch(res => {
         console.log('fail:', res);
       });
-  },
-
-  // 组装下拉选项
-  initDropDown() {
-    let captainList = [],
-      nameList = [];
-    // 全部
-    captainList.push({
-      text: '全部',
-      value: '全部'
-    });
-    // 选择队长
-    this.data.liveDataList.forEach(element => {
-      let captain = element.captainName;
-      if (nameList.indexOf(captain) === -1) {
-        let data = {};
-        data["text"] = captain;
-        data["value"] = captain;
-        captainList.push(data);
-        nameList.push(captain);
-      }
-    });
-    this.setData({
-      captainOptions: captainList,
-      captainValue: captainList[0]
-    });
   },
 
   // 刷新再拉取数据
@@ -351,28 +333,6 @@ Page({
       }, false)
       .then(() => {
         this.initLiveTournament();
-      });
-  },
-
-  // 拉取tournament_info
-  setTournamentInfo(id) {
-    if (id <= 0) {
-      return false;
-    }
-    get('tournament/qryTournamentInfoById', {
-        id: id
-      })
-      .then(res => {
-        let data = res.data
-        this.setData({
-          tournamentId: data.id,
-          tournamentName: data.name
-        });
-        // 刷新live
-        this.initLiveTournament();
-      })
-      .catch(res => {
-        console.log('fail:', res);
       });
   },
 
@@ -389,8 +349,9 @@ Page({
           list.push(element);
         });
         this.setData({
-          searchLiveDataList: list
+          liveDataFullList: list
         });
+        this.datafilter();
       })
       .catch(res => {
         console.log('fail:', res);
@@ -401,8 +362,45 @@ Page({
    * 排序过滤
    */
 
-  datafilter(fullList) {
-    let list = this.sortValue(fullList);
+  defaultDropDown() {
+    this.setData({
+      sortValue: 'livePoints',
+      sortTypeValue: 'desc',
+      captainValue: '',
+      chipValue: '全部',
+      searchElement: 0,
+      searchWebName: ''
+    });
+  },
+
+  // 组装队长下拉选项
+  initCaptainDropDown() {
+    let captainList = [],
+      nameList = [];
+    // 全部
+    captainList.push({
+      text: '全部',
+      value: '全部'
+    });
+    // 选择队长
+    this.data.liveDataFullList.forEach(element => {
+      let captain = element.captainName;
+      if (nameList.indexOf(captain) === -1) {
+        let data = {};
+        data["text"] = captain;
+        data["value"] = captain;
+        captainList.push(data);
+        nameList.push(captain);
+      }
+    });
+    this.setData({
+      captainOptions: captainList,
+      captainValue: captainList[0]
+    });
+  },
+
+  datafilter() {
+    let list = this.sortValue(this.data.liveDataFullList);
     list = this.captainFilter(list);
     list = this.chipFilter(list);
     list = this.rankList(list);

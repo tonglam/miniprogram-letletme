@@ -1,24 +1,61 @@
 <view class="tournament">
 
   <view class="navBar">
-    <van-nav-bar title="{{tournamentName}}" left-text="GW{{gw}}" right-text="切换联赛"
-      safe-area-inset-top="{{false}}" bind:click-left="onClickChangeGw" bind:click-right="onClickChangeTournament" />
+    <van-nav-bar title="{{tournamentName}}" title-class="title" safe-area-inset-top="{{false}}" left-text="重置"
+      bind:click-left="onClickReset" right-text="更换" bind:click-right="onClickChange" />
   </view>
 
-  <view class="gwPicker" wx:if="{{showGwPicker}}">
+  <view class="picker" wx:if="{{showGwPicker}}">
     <gwPicker gw="{{gw}}" show="true" bind:pickGw="onPickGw"></gwPicker>
   </view>
 
-  <view class="tournamentPicker" wx:if="{{showTournamentPicker}}">
+  <view class="picker" wx:if="{{showTournamentPicker}}">
     <tournamentPicker show="true" bind:pickTournament="onPickTournament"></tournamentPicker>
   </view>
 
-  <view class="content">
+  <view class="search">
+    <van-search value="{{searchWebName}}" label="球员" placeholder="搜索阵容包含该球员的球队" shape="round" disabled use-action-slot
+      bind:change="onSearchChange">
+      <view id="{{searchValue}}" slot="action" style="color: teal;" bind:tap="onSearchClick">搜索</view>
+    </van-search>
+  </view>
 
+  <view class="picker">
+    <van-popup show="{{showModePicker}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onModePopClose">
+      <van-picker show-toolbar toolbar-position="top" item-height="30" title="" columns="{{modes}}"
+        bind:confirm="onModePickerConfirm" bind:cancel="onModePickerCancel" />
+    </van-popup>
+  </view>
+
+  <view class="picker" wx:if="{{showPlayerPicker}}">
+    <playerPicker type="5" show="true" detailShow="{{false}}" bind:pickResult="onPickPlayer"></playerPicker>
+  </view>
+
+  <view class="dropdown">
+    <van-dropdown-menu>
+      <van-dropdown-item value="{{sortValue}}" options="{{sortOptions}}" bind:change="onDropDownSortValue" />
+      <van-dropdown-item value="{{sortTypeValue}}" options="{{sortTypeOptions}}"
+        bind:change="onDropDownSortTypeValue" />
+      <van-dropdown-item title="队长" value="{{captainValue}}" options="{{captainOptions}}"
+        bind:change="onDropDownCaptain" />
+      <van-dropdown-item value="{{chipValue}}" options="{{chipOptions}}" bind:change="onDropDownChip" />
+    </van-dropdown-menu>
+  </view>
+
+  <view class="content">
+    <i-cell-group wx:for="{{liveDataList}}" wx:for-item="data" wx:key="index">
+      <i-cell title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
+        value="{{data.livePoints}} ({{data.liveNetPoints}})"
+        label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 周联赛排名:{{data.eventTournamentRank}} 总联赛排名:{{data.tournamentRank}}"
+        is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+    </i-cell-group>
   </view>
 
   <view class="bottemNavBar">
     <bottomNavBar active="me"></bottomNavBar>
   </view>
+
+  <van-toast id="van-toast" />
 
 </view>

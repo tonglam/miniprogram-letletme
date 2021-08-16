@@ -2,10 +2,15 @@
   margin: 10px 0;
 }
 
+.league .title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
 .league .content {
   margin: 10px 0;
 }
 
 .league .info {
-  margin: 10px 0;
+  margin-top: 10px;
 }

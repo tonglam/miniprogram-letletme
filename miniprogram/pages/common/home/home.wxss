@@ -3,6 +3,13 @@
   text-align: center;
 }
 
+.home .navBar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
 .home .img {
   margin: 20px 0;
 }
@@ -34,6 +41,6 @@
 }
 
 .home .fixture {
-  margin: 80px 0;
+  margin: 60px 0;
   font-weight: bold;
 }

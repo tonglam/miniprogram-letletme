@@ -1,6 +1,8 @@
 {
+  "navigationBarTitleText": "我的联赛",
   "usingComponents": {
     "gwPicker": "../../../components/picker/gwPicker/gwPicker",
-    "tournamentPicker": "../../../components/picker/tournamentPicker/tournamentPicker"
+    "tournamentPicker": "../../../components/picker/tournamentPicker/tournamentPicker",
+    "playerPicker": "../../../components/picker/playerPicker/playerPicker"
   }
 }

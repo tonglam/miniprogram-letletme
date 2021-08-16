@@ -1,52 +1,52 @@
-.info .greenArrow {
+.entry .greenArrow {
   margin-right: 10px;
   color: green;
 }
 
-.info .redArrow {
+.entry .redArrow {
   margin-right: 10px;
   color: red;
 }
 
-.info .noArrow {
+.entry .noArrow {
   margin-right: 10px;
   color: gray;
 }
 
-.info .content {
+.entry .content {
   margin: 10px 0;
 }
 
-.info .summary {
+.entry .summary {
   margin: 10px 0;
 }
 
-.info .league {
+.entry .league {
   margin: 10px 0;
 }
 
-.info .history {
+.entry .history {
   margin: 10px 0;
 }
 
-.info .result {
+.entry .result {
   margin: 10px 0;
 }
 
-.info .pick {
+.entry .pick {
   margin: 10px 0;
 }
 
-.info .transfers {
+.entry .transfers {
   margin: 10px 0;
 }
 
-.info .pickFinished {
+.entry .pickFinished {
   color: blue;
   font-weight: bold;
 }
 
-.info .unPick {
+.entry .unPick {
   color: blue;
   background-color: #e9eaec;
 }

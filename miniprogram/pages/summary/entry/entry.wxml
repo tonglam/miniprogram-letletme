@@ -1,16 +1,23 @@
 <view class="entry">
 
   <view class="navBar">
-    <van-nav-bar title="{{entryName}}" left-text="GW{{gw}}" right-text="切换球队" safe-area-inset-top="{{false}}"
+    <van-nav-bar title="{{entryName}}" left-text="GW{{gw}}" right-text="切换id" safe-area-inset-top="{{false}}"
       bind:click-left="" bind:click-right="onClickChange" />
   </view>
 
   <view class="pop" style="text-align:center;">
     <van-popup show="{{popShow}}" position="top" bind:close="onPopClose">
+      <text>\n</text>
+      <text>\n</text>
       <text>输入要查看统计的team_id</text>
+      <text>\n</text>
+      <text>\n</text>
       <van-field size="large" left-icon="search" model:value="{{entry}}" placeholder="team_id" border="{{ true }}"
         clearable />
+        <text>\n</text>
       <van-button type="primary" plain size="normal" bind:click="onClickInput">更换</van-button>
+      <text>\n</text>
+      <text>\n</text>
     </van-popup>
   </view>
 
@@ -35,10 +42,18 @@
             value="最低排名：{{summaryData.lowestOverallRank}} (GW{{summaryData.lowestOverallRankEvent}})" />
         </van-cell-group>
 
-        <van-cell-group title="低于平均分{{summaryData.belowAverages.length}}次 - 分数(平均分)">
+        <van-cell-group title="低于平均分{{summaryData.belowAverages.length}}次 - 分数(平均分)"
+          wx:if="{{summaryData.belowAverages.length>0}}">
           <block wx:for="{{summaryData.belowAverages}}" wx:for-item="belowAverage" wx:key="index">
             <van-cell title="GW{{belowAverage.event}}"
               value="{{belowAverage.points}}({{belowAverage.averagePoints}})" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="得分破百{{summaryData.belowAverages.length}}次 - 分数"
+          wx:if="{{summaryData.aboveHundred.length>0}}">
+          <block wx:for="{{summaryData.aboveHundred}}" wx:for-item="aboveHundred" wx:key="index">
+            <van-cell title="GW{{aboveHundred.event}}" value="{{aboveHundred.points}}" />
           </block>
         </van-cell-group>
 
@@ -61,7 +76,7 @@
           </block>
         </van-cell-group>
 
-        <van-cell-group title="开卡 - 得分(收益)">
+        <van-cell-group title="开卡 - 得分(收益)" wx:if="{{summaryData.chips.length>0}}">
           <block wx:for="{{summaryData.chips}}" wx:for-item="chip" wx:key="index">
             <van-cell title="{{chip.name}}(GW{{chip.event}})" value="{{chip.eventPoints}}({{chip.profit}})" />
           </block>
@@ -76,16 +91,16 @@
         </van-cell-group>
 
         <van-cell-group title="最高">
-          <van-cell title="{{captainData.maxPointsWebName}}"
-            value="{{captainData.maxPoints}} (GW{{captainData.maxPointsEvent}})" />
+          <van-cell title="{{captainData.mostPointsWebName}}"
+            value="{{captainData.mostPoints}} (GW{{captainData.mostPointsEvent}})" />
         </van-cell-group>
 
         <van-cell-group title="最低">
-          <van-cell title="{{captainData.minPointsWebName}}"
-            value="{{captainData.minPoints}} (GW{{captainData.minPointsEvent}})" />
+          <van-cell title="{{captainData.leastPointsWebName}}"
+            value="{{captainData.leastPoints}} (GW{{captainData.leastPointsEvent}})" />
         </van-cell-group>
 
-        <van-cell-group title="TC">
+        <van-cell-group title="TC" wx:if="{{captainData.tcPlayed}}">
           <van-cell title="{{captainData.tcPointsWebName}} (GW{{captainData.tcEvent}})"
             value="{{captainData.tcPoints}}" />
         </van-cell-group>

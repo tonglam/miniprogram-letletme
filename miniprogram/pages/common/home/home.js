@@ -2,7 +2,8 @@ import {
   delay
 } from '../../../utils/utils';
 import {
-  diffDeadlineTime
+  diffDeadlineTime,
+  redirectToEntryInput
 } from '../../../utils/utils';
 import {
   get
@@ -14,10 +15,12 @@ Page({
 
   data: {
     // 数据
+    gw: 0,
     time: 0,
     nextGw: 0,
     deadline: "",
     timeData: {},
+    entryInfoData: {},
     fixtureList: [],
   },
 
@@ -28,17 +31,19 @@ Page({
   onShow: function () {
     delay(100).then(() => {
       // 设置
-      let nextGw = app.globalData.nextGw,
-        deadline = app.globalData.deadline,
-        time = diffDeadlineTime(app.globalData.utcDeadline);
       this.setData({
-        nextGw: nextGw,
-        deadline: deadline,
-        time: time
+        gw: app.globalData.gw,
+        nextGw: app.globalData.nextGw,
+        deadline: app.globalData.deadline,
+        entryInfoData: app.globalData.entryInfoData,
+        time: diffDeadlineTime(app.globalData.utcDeadline)
       });
+      // 拉取赛程
+      this.getNextGwFixture();
     });
-    // 拉取赛程
-    this.getNextGwFixture();
+    if (this.data.entryInfoData.entryName === '') {
+      redirectToEntryInput();
+    }
   },
 
   /**
@@ -51,6 +56,21 @@ Page({
       timeData: event.detail,
     });
   },
+
+  // 重新输入team_id
+  onClickChangeEntry() {
+    // 清缓存
+    wx.setStorageSync('entry', 0);
+    // 清全局变量
+    app.globalData.entry = 0;
+    app.globalData.entryInfoData = {};
+    // 跳转输入
+    redirectToEntryInput();
+  },
+
+  /**
+   * 数据
+   */
 
   getNextGwFixture() {
     get('common/qryNextFixture')

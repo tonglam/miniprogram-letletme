@@ -27,7 +27,7 @@ Component({
           selectSeason: '2122'
         });
       }
-      this.initNameList();
+      this.initLeagueNameList();
     }
   },
 
@@ -53,7 +53,7 @@ Component({
       this.triggerEvent(this.data.event, '');
     },
 
-    initNameList() {
+    initLeagueNameList() {
       get('common/qryAllLeagueName', {
           season: this.data.selectSeason
         })
@@ -66,7 +66,7 @@ Component({
           this.setData({
             columns: columns
           });
-          if (list.size > 0) {
+          if (list.length > 0) {
             this.setData({
               name: list[0]
             });

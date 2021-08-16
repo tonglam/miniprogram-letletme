@@ -39,7 +39,7 @@ Page({
     let name = wx.getStorageSync('summary-league');
     if (name !== '') {
       this.setData({
-        name: name
+        leagueName: name
       });
       // 设置标题
       wx.setNavigationBarTitle({
@@ -133,7 +133,7 @@ Page({
 
   initLeagueSeasonInfo() {
     get('summary/qryLeagueSeasonInfo', {
-        leagueName: this.data.name
+        leagueName: this.data.leagueName
       })
       .then(res => {
         let data = res.data;
@@ -148,7 +148,7 @@ Page({
 
   initLeagueSeasonSummary() {
     get('summary/qryLeagueSeasonSummary', {
-        leagueName: this.data.name,
+        leagueName: this.data.leagueName,
         entry: this.data.entry
       })
       .then(res => {
@@ -165,7 +165,7 @@ Page({
 
   initLeagueSeasonCaptain() {
     get('summary/qryLeagueSeasonCaptain', {
-        leagueName: this.data.name,
+        leagueName: this.data.leagueName,
         entry: this.data.entry
       })
       .then(res => {
@@ -181,7 +181,7 @@ Page({
 
   initLeagueSeasonScore() {
     get('summary/qryLeagueSeasonScore', {
-        leagueName: this.data.name,
+        leagueName: this.data.leagueName,
         entry: this.data.entry
       })
       .then(res => {

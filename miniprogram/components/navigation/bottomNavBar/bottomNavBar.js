@@ -29,7 +29,7 @@ const map = {
     ],
     "url": {
       "球队": "/pages/summary/entry/entry",
-      "联赛": "/pages/summary/tournament/tournament",
+      "联赛": "/pages/summary/league/league",
     },
     "show": true
   },
