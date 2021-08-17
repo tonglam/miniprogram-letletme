@@ -27,9 +27,9 @@ Page({
    */
 
   onShow: function () {
-    delay(800).then(()=>{
+    delay(800).then(() => {
       console.log('entryInput:' + app.globalData.entry);
-      if (app.globalData.entry > 0) {
+      if (app.globalData.entry > 0 && app.globalData.entryInfoData.entry > 0) {
         this.redirectHome();
       }
     });

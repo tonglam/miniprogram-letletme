@@ -108,7 +108,7 @@
         <view class="rankTable">
           <van-cell-group title="排行榜">
             <block wx:for="{{seasonResultList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{index}} - {{data.scoutName}}" value="{{data.totalPoints}}({{data.eventPoints}})" />
+              <van-cell title="{{index+1}} - {{data.scoutName}}" value="{{data.totalPoints}}({{data.eventPoints}})" />
             </block>
           </van-cell-group>
         </view>

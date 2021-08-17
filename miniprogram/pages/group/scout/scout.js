@@ -140,6 +140,15 @@ Page({
       Toast.fail('请先加入让让群球探');
       return false;
     }
+    if (this.data.fund < 0) {
+      Toast.fail('不够钱啦');
+      return false;
+    }
+    let leftTransfers = this.data.leftTransfers;
+    if (leftTransfers !== '∞' && leftTransfers < 0) {
+      Toast.fail('请先加入让让群球探');
+      return false;
+    }
     let scoutData = {
       event: app.globalData.nextGw,
       entry: this.data.scoutEntry.entry,
@@ -387,6 +396,10 @@ Page({
           this.setData({
             scoutList: Object.keys(res.data),
             scoutEntry: scoutEntry
+          });
+        } else {
+          this.setData({
+            'scoutEntry.name': '请先加入球探'
           });
         }
       })

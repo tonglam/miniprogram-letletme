@@ -16,11 +16,12 @@ Page({
   data: {
     // 数据
     gw: 0,
+    entry: 0,
+    entryName: '',
     time: 0,
     nextGw: 0,
     deadline: "",
     timeData: {},
-    entryInfoData: {},
     fixtureList: [],
   },
 
@@ -29,20 +30,25 @@ Page({
    */
 
   onShow: function () {
-    delay(100).then(() => {
-      // 设置
-      this.setData({
-        gw: app.globalData.gw,
-        nextGw: app.globalData.nextGw,
-        deadline: app.globalData.deadline,
-        entryInfoData: app.globalData.entryInfoData,
-        time: diffDeadlineTime(app.globalData.utcDeadline)
-      });
-      // 拉取赛程
-      this.getNextGwFixture();
+    console.log(app.globalData.entry);
+    // 设置
+    this.setData({
+      gw: app.globalData.gw,
+      entry: app.globalData.entry,
+      entryName: app.globalData.entryInfoData.entryName,
+      nextGw: app.globalData.nextGw,
+      deadline: app.globalData.deadline,
+      time: diffDeadlineTime(app.globalData.utcDeadline)
     });
-    if (this.data.entryInfoData.entryName === '') {
+    if (this.data.entry <= 0) {
       redirectToEntryInput();
+    }
+    // 拉取赛程
+    this.getNextGwFixture();
+    // 设置标题
+    let entryName = this.data.entryName;
+    if (entryName === '' || typeof entryName === 'undefined') {
+      this.getEntryInfo();
     }
   },
 
@@ -82,6 +88,21 @@ Page({
       .catch(res => {
         console.log('fail:', res);
       })
+  },
+
+  getEntryInfo() {
+    get('entry/qryEntryInfo', {
+        entry: this.data.entry
+      }, false)
+      .then(res => {
+        console.log(res.data);
+        this.setData({
+          entryName: res.data.entryName
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
   },
 
 });

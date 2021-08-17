@@ -1,7 +1,7 @@
 <view class="home">
 
   <view class="navBar">
-    <van-nav-bar title="{{entryInfoData.entryName}}" left-text="GW{{gw}}" right-text="切换id"
+    <van-nav-bar title="{{entryName}}" left-text="GW{{gw}}" right-text="切换id"
       safe-area-inset-top="{{false}}" bind:click-left="" bind:click-right="onClickChangeEntry" />
   </view>
 

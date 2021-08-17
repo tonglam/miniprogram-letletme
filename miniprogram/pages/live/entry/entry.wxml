@@ -1,7 +1,7 @@
 <view class="entry">
 
   <view class="navBar">
-    <van-nav-bar title="{{entryName}}({{playerName}})" title-class="title" safe-area-inset-top="{{false}}" left-text=""
+    <van-nav-bar title="{{entryName}}" title-class="title" safe-area-inset-top="{{false}}" left-text=""
       right-text="更换id" bind:click-right="onClickChange" />
   </view>
 
