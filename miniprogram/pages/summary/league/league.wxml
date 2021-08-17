@@ -14,7 +14,7 @@
 
       <view class="info" wx:if="{{infoShow}}">
         <van-cell-group>
-          <van-cell title="大佬总分：{{infoData.averageOverallPoints}}" value="平均总分：{{infoData.topAverageOverallPoints}}" />
+          <van-cell title="大佬总分：{{infoData.topAverageOverallPoints}}" value="平均总分：{{infoData.averageOverallPoints}}" />
           <van-cell title="大佬股值：£{{infoData.topAverageValue}}m" value="平均股值：£{{infoData.averageValue}}m" />
           <van-cell title="大佬剁手：{{infoData.topAverageCost}}" value="平均剁手：{{infoData.averageCost}}" />
           <van-cell title="大佬板凳：{{infoData.topAverageBenchPoints}}" value="平均板凳：{{infoData.averageBenchPoints}}" />
@@ -26,16 +26,16 @@
       <van-tab title="总结" name="summary">
 
         <view class="info">
-          <van-cell-group title="个人">
-            <van-cell title="总排名：{{summaryData.highestScore}}" value="联赛排名：{{summaryData.entryOverallRank}}" />
-            <van-cell title="阵容身价：{{summaryData.highestScore}}" value="联赛炒股排名：{{summaryData.entryOverallRank}}" />
-            <van-cell title="转会数量：{{summaryData.highestScore}}" value="联赛转会排名：{{summaryData.entryOverallRank}}" />
-            <van-cell title="剁手：{{summaryData.highestScore}}" value="联赛剁手排名：{{summaryData.entryOverallRank}}" />
-            <van-cell title="板凳得分：{{summaryData.highestScore}}" value="联赛板凳排名：{{summaryData.entryOverallRank}}" />
-            <van-cell title="自动替补得分：{{summaryData.highestScore}}" value="联赛替补排名：{{summaryData.entryOverallRank}}" />
+        
+          <van-cell-group title="{{entryName}}">
+            <van-cell title="总排名：{{summaryData.entryOverallRank}}" value="联赛排名：{{summaryData.entryLeagueRank}}" />
+            <van-cell title="阵容身价：{{summaryData.entryValue}}" value="联赛炒股排名：{{summaryData.entryValueRank}}" />
+            <van-cell title="转会数量：{{summaryData.entryTransfers}}" value="联赛转会排名：{{summaryData.entryTransfersRank}}" />
+            <van-cell title="剁手：{{summaryData.entryCost}}" value="联赛剁手排名：{{summaryData.entryCostRank}}" />
+            <van-cell title="板凳得分：{{summaryData.entryBenchPoints}}" value="联赛板凳排名：{{summaryData.entryBenchPointsRank}}" />
+            <van-cell title="自动替补得分：{{summaryData.entryAboveHundredTimes}}" value="联赛替补排名：{{summaryData.entryAboveHundredRank}}" />
           </van-cell-group>
         </view>
-
 
         <view class="info">
           <van-cell-group title="总分排行榜">
