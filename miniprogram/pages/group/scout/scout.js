@@ -144,9 +144,10 @@ Page({
       Toast.fail('不够钱啦');
       return false;
     }
-    let leftTransfers = this.data.leftTransfers;
-    if (leftTransfers !== '∞' && leftTransfers < 0) {
-      Toast.fail('请先加入让让群球探');
+    let leftTransfers = this.data.leftTransfers,
+      showLeftTransfers = this.data.showLeftTransfers;
+    if (showLeftTransfers !== '∞' && leftTransfers < 0) {
+      Toast.fail('没有名额啦');
       return false;
     }
     let scoutData = {

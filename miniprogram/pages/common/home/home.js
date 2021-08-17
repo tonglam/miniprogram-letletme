@@ -30,7 +30,6 @@ Page({
    */
 
   onShow: function () {
-    console.log(app.globalData.entry);
     // 设置
     this.setData({
       gw: app.globalData.gw,
