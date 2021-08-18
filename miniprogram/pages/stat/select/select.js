@@ -35,7 +35,9 @@ Page({
         name: name
       });
       // 拉取select
-      this.getLeagueSelect();
+      if (JSON.stringify(this.data.selectData) === '{}') {
+        this.getLeagueSelect();
+      }
     } else {
       this.setData({
         showLeaguePicker: true
@@ -105,15 +107,6 @@ Page({
     // 设置
     this.setData({
       name: name,
-    });
-    // 拉取select
-    this.getLeagueSelect();
-  },
-
-  // dropDown回调
-  onSeasonResult(event) {
-    this.setData({
-      season: event.detail
     });
     // 拉取select
     this.getLeagueSelect();

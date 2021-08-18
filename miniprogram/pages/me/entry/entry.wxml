@@ -105,7 +105,7 @@
       <van-tab title="转会" name="转会">
 
         <view class="transfers">
-          <block wx:for="{{entryTransfersList}}" wx:for-item="data" wx:key="index">
+          <block wx:for="{{entryTransfersData}}" wx:for-item="data" wx:key="index">
             <van-cell title="转入：{{data.elementInName}}({{data.elementInPoints}})"
               value="转出：{{data.elementOutName}}({{data.elementOutPoints}})"
               label="转入:£{{data.elementInCost}}m -> 转出:£{{data.elementOutCost}}m" />

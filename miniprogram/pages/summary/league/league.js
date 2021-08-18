@@ -48,9 +48,13 @@ Page({
         title: name,
       })
       // 拉取info
-      this.initLeagueSeasonInfo();
+      if (JSON.stringify(this.data.infoData) === '{}') {
+        this.initLeagueSeasonInfo();
+      }
       // 拉取summary
-      this.initLeagueSeasonSummary();
+      if (JSON.stringify(this.data.summaryData) === '{}') {
+        this.initLeagueSeasonSummary();
+      }
     } else {
       this.setData({
         showLeaguePicker: true
@@ -101,19 +105,25 @@ Page({
         infoShow: true,
       });
       // 拉取summary
-      this.initLeagueSeasonSummary();
+      if (JSON.stringify(this.data.summaryData) === '{}') {
+        this.initLeagueSeasonSummary();
+      }
     } else if (name === 'captain') {
       this.setData({
         infoShow: true,
       });
       // 拉取captain
-      this.initLeagueSeasonCaptain();
+      if (JSON.stringify(this.data.captainData) === '{}') {
+        this.initLeagueSeasonCaptain();
+      }
     } else if (name === 'score') {
       this.setData({
         infoShow: true,
       });
       // 拉取score
-      this.initLeagueSeasonScore();
+      if (JSON.stringify(this.data.scoreData) === '{}') {
+        this.initLeagueSeasonScore();
+      }
     }
   },
 

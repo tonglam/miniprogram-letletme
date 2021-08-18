@@ -13,10 +13,6 @@
     <leaguePicker season="{{season}}" show="true" bind:pickLeague="onPickLeague"></leaguePicker>
   </view>
 
-  <view class="dropDown">
-    <seasonDropDown bind:pickResult="onSeasonResult"></seasonDropDown>
-  </view>
-
   <view class="content">
     <van-tabs type="card" active="{{tab}}">
 
@@ -56,7 +52,7 @@
         <view class="captain">
           <van-cell-group title="队长" wx:if="{{selectData.captainSelect.length > 0}}">
             <block wx:for="{{selectData.captainSelect}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.webName}}【{{data.teamShortName}}】"
+              <van-cell title="{{index+1}} - {{data.webName}}【{{data.teamShortName}}】"
                 value="{{data.selectByPercent}} ({{data.eoByPercent}})" />
             </block>
           </van-cell-group>
@@ -65,7 +61,7 @@
         <view class="viceCaptain">
           <van-cell-group title="副队长" wx:if="{{selectData.viceCaptainSelect.length > 0}}">
             <block wx:for="{{selectData.viceCaptainSelect}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.webName}}【{{data.teamShortName}}】"
+              <van-cell title="{{index+1}} - {{data.webName}}【{{data.teamShortName}}】"
                 value="{{data.selectByPercent}} ({{data.eoByPercent}})" />
             </block>
           </van-cell-group>
@@ -76,7 +72,7 @@
         <view class="mostSelected">
           <van-cell-group title="最多选择" wx:if="{{selectData.mostSelectPlayer.length > 0}}">
             <block wx:for="{{selectData.mostSelectPlayer}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.webName}}【{{data.teamShortName}}】"
+              <van-cell title="{{index+1}} - {{data.webName}}【{{data.teamShortName}}】"
                 value="{{data.selectByPercent}} ({{data.eoByPercent}})" />
             </block>
           </van-cell-group>
@@ -87,7 +83,8 @@
         <view class="transferIn">
           <van-cell-group title="转入" wx:if="{{selectData.mostTransferIn.length > 0}}">
             <block wx:for="{{selectData.mostTransferIn}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.webName}}【{{data.teamShortName}}】" value="{{data.selectByPercent}}" />
+              <van-cell title="{{index+1}} - {{data.webName}}【{{data.teamShortName}}】"
+                value="{{data.selectByPercent}}" />
             </block>
           </van-cell-group>
         </view>
@@ -95,7 +92,7 @@
         <view class="transferOut">
           <van-cell-group title="转出" wx:if="{{selectData.mostTransferOut.length > 0}}">
             <block wx:for="{{selectData.mostTransferOut}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.webName}}【{{data.teamShortName}}】"
+              <van-cell title="{{index+1}} - {{data.webName}}【{{data.teamShortName}}】"
                 value="{{data.selectByPercent}}({{data.eoByPercent}})" />
             </block>
           </van-cell-group>

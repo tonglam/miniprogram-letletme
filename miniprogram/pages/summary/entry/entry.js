@@ -49,9 +49,13 @@ Page({
       title: app.globalData.entryInfoData.playerName,
     })
     // 拉取info
-    this.initEntrySeasonInfo();
+    if (JSON.stringify(this.data.infoData) === '{}') {
+      this.initEntrySeasonInfo();
+    }
     // 拉取summary
-    this.initEntrySeasonSummary();
+    if (JSON.stringify(this.data.summaryData) === '{}') {
+      this.initEntrySeasonSummary();
+    }
   },
 
   onShareAppMessage: function () {
@@ -95,28 +99,36 @@ Page({
         chartShow: false
       });
       // 拉取summary
-      this.initEntrySeasonSummary();
+      if (JSON.stringify(this.data.summaryData) === '{}') {
+        this.initEntrySeasonSummary();
+      }
     } else if (name === 'captain') {
       this.setData({
         infoShow: true,
         chartShow: false
       });
       // 拉取captain
-      this.initEntrySeasonCaptain();
+      if (JSON.stringify(this.data.captainData) === '{}') {
+        this.initEntrySeasonCaptain();
+      }
     } else if (name === 'transfers') {
       this.setData({
         infoShow: true,
         chartShow: false
       });
       // 拉取transfers
-      this.initEntrySeasonTransfers();
+      if (JSON.stringify(this.data.transfersData) === '{}') {
+        this.initEntrySeasonTransfers();
+      }
     } else if (name === 'score') {
       this.setData({
         infoShow: true,
         chartShow: false
       });
-      // 拉取score
-      this.initEntrySeasonScore();
+      if (JSON.stringify(this.data.scoreData) === '{}') {
+        // 拉取score
+        this.initEntrySeasonScore();
+      }
     } else if (name === 'chart') {
       this.setData({
         infoShow: false,

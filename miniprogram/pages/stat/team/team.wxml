@@ -106,7 +106,7 @@
         <view class="order">
           <van-cell-group title="点球手">
             <block wx:for="{{teamSummary.penaltiesOrders}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{index+1}}" value="{{data}}" />
+              <van-cell title="{{data}}" value="{{index+1}}顺位" />
             </block>
           </van-cell-group>
         </view>
@@ -114,7 +114,7 @@
         <view class="order">
           <van-cell-group title="任意球手">
             <block wx:for="{{teamSummary.directFreekicksOrders}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{index+1}}" value="{{data}}" />
+              <van-cell title="{{data}}" value="{{index+1}}顺位" />
             </block>
           </van-cell-group>
         </view>
@@ -122,7 +122,7 @@
         <view class="order">
           <van-cell-group title="角球手">
             <block wx:for="{{teamSummary.cornersAndIndirectFreekicksOrders}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{index+1}}" value="{{data}}" />
+              <van-cell title="{{data}}" value="{{index+1}}顺位" />
             </block>
           </van-cell-group>
         </view>
