@@ -20,6 +20,10 @@ Page({
     currentPage: 1,
     totalNum: 0,
     tournamentPageResultList: [],
+    championList: [],
+    runnerUpList: [],
+    secondRunnerUpList: [],
+    championCountList: [],
     // picker
     showGwPicker: false,
     showTournamentPicker: false,
@@ -112,9 +116,9 @@ Page({
         tournamentId: tournamentId,
         tournamentName: tournamentName
       });
+      // 拉取数据
       if (this.data.tournamentPageResultList.length === 0) {
-        // 拉取tournament数据
-        this.initTournamentResult();
+        this.initDataList();
       }
     } else {
       showTournamentPicker = true; // 缓存没有时从picker中选择
@@ -164,6 +168,24 @@ Page({
     });
   },
 
+  // 标签页切换
+  tabOnChange(event) {
+    let name = event.detail.name;
+    if (name === 'table') {
+      // 拉取积分榜数据
+      if (this.data.championList.length === 0) {
+        this.initEventChampionList();
+      }
+    } else if (name === 'result') {
+      // 拉取tournament数据
+      if (this.data.tournamentPageResultList.length === 0) {
+        this.initTournamentResult();
+      }
+    } else if (name === 'me') {
+
+    }
+  },
+
   // GW选择回填
   onPickGw(event) {
     this.setData({
@@ -179,8 +201,8 @@ Page({
     this.setData({
       gw: gw
     });
-    // 拉取tournament数据
-    this.initTournamentResult();
+    // 拉取数据
+    this.initDataList();
   },
 
   // 赛事选择回填
@@ -202,8 +224,8 @@ Page({
       tournamentId: tournamentId,
       tournamentName: tournamentName
     });
-    // 拉取tournament数据
-    this.initTournamentResult();
+    // 拉取数据
+    this.initDataList();
   },
 
   // 搜索模式picker确认
@@ -309,12 +331,42 @@ Page({
    * 数据
    */
 
+  initDataList() {
+    // 拉取积分榜数据
+    this.initEventChampionList();
+    // 拉取tournament数据
+    this.initTournamentResult();
+  },
+
+  initEventChampionList() {
+    get('tournament/qryTournamentEventChampion', {
+        tournamentId: this.data.tournamentId
+      })
+      .then(res => {
+        if (res.data.id <= 0) {
+          return false;
+        }
+        this.setData({
+          championList: res.data.eventChampionResultList,
+          runnerUpList: res.data.eventRunnerUpResultList,
+          secondRunnerUpList: res.data.eventSecondRunnerUpResultList,
+          championCountList: res.data.championCountList
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
   initTournamentResult() {
     get('tournament/qryTournamentEventResult', {
         event: this.data.gw,
         tournamentId: this.data.tournamentId
       })
       .then(res => {
+        if (res.data.length === 0) {
+          return false;
+        }
         // 更新
         let list = [];
         res.data.forEach(element => {
@@ -342,6 +394,9 @@ Page({
         element: this.data.searchElement
       })
       .then(res => {
+        if (res.data.length === 0) {
+          return false;
+        }
         let list = [];
         res.data.eventResultList.forEach(element => {
           element.chip = getChipName(element.chip);

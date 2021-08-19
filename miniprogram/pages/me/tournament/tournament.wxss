@@ -14,3 +14,7 @@
 .tournament .content {
   font-weight: bold;
 }
+
+.tournament .table{
+  margin: 10px 0;
+}

@@ -40,7 +40,7 @@
   </view>
 
   <view class="content">
-    <i-cell-group wx:for="{{livePageDataList}}" wx:for-item="list" wx:key="index">
+    <i-cell-group wx:for="{{livePageDataList}}" wx:for-item="list" wx:key="num">
       <block wx:for="{{list}}" wx:for-item="data" wx:key="index">
         <i-cell title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
           value="{{data.livePoints}} ({{data.liveNetPoints}})"
