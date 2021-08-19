@@ -40,11 +40,13 @@
   </view>
 
   <view class="content">
-    <i-cell-group wx:for="{{liveDataList}}" wx:for-item="data" wx:key="index">
-      <i-cell title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
-        value="{{data.livePoints}} ({{data.liveNetPoints}})"
-        label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
-        is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+    <i-cell-group wx:for="{{livePageDataList}}" wx:for-item="list" wx:key="index">
+      <block wx:for="{{list}}" wx:for-item="data" wx:key="index">
+        <i-cell title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
+          value="{{data.livePoints}} ({{data.liveNetPoints}})"
+          label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
+          is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+      </block>
     </i-cell-group>
   </view>
 

@@ -7,6 +7,8 @@ import {
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 const app = getApp();
+let liveDataFullList = [],
+  liveDataList = [];
 
 Page({
 
@@ -17,8 +19,9 @@ Page({
     tournamentId: 0,
     tournamentName: "",
     tournamentInfoData: {},
-    liveDataFullList: [],
-    liveDataList: [],
+    currentPage: 1,
+    totalNum: 0,
+    livePageDataList: [],
     // picker
     showTournamentPicker: false,
     showModePicker: false,
@@ -114,7 +117,7 @@ Page({
         tournamentName: tournamentName
       });
       // 刷新live
-      if (this.data.liveDataList.length === 0) {
+      if (this.data.livePageDataList.length === 0) {
         this.initLiveTournament();
       }
     } else {
@@ -130,6 +133,17 @@ Page({
       pullDownRefresh: true
     });
     this.initLiveTournament();
+  },
+
+  onReachBottom: function () {
+    let currentPage = this.data.currentPage;
+    if (currentPage * 10 > this.data.totalNum) {
+      return false;
+    }
+    this.setData({
+      currentPage: currentPage + 1
+    });
+    this.setPageData();
   },
 
   onShareAppMessage: function () {
@@ -179,7 +193,8 @@ Page({
     // 设置
     this.setData({
       tournamentId: tournamentId,
-      tournamentName: tournamentName
+      tournamentName: tournamentName,
+      livePageDataList: [],
     });
     // 刷新live
     this.initLiveTournament();
@@ -315,8 +330,9 @@ Page({
           element.chip = getChipName(element.chip);
           list.push(element);
         });
+        liveDataFullList = list;
         this.setData({
-          liveDataFullList: list,
+          totalNum: list.length
         });
         // 过滤数据
         this.datafilter();
@@ -350,8 +366,8 @@ Page({
           element.chip = getChipName(element.chip);
           list.push(element);
         });
+        liveDataFullList = list;
         this.setData({
-          liveDataFullList: list,
           searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent
         });
         this.datafilter();
@@ -386,7 +402,7 @@ Page({
       value: '全部'
     });
     // 选择队长
-    this.data.liveDataFullList.forEach(element => {
+    liveDataFullList.forEach(element => {
       let captain = element.captainName;
       if (nameList.indexOf(captain) === -1) {
         let data = {};
@@ -403,13 +419,12 @@ Page({
   },
 
   datafilter() {
-    let list = this.sortValue(this.data.liveDataFullList);
+    let list = this.sortValue(liveDataFullList);
     list = this.captainFilter(list);
     list = this.chipFilter(list);
     list = this.rankList(list);
-    this.setData({
-      liveDataList: list
-    });
+    liveDataList = list;
+    this.setPageData();
   },
 
   // 字段排序
@@ -520,6 +535,25 @@ Page({
       }
     });
     return list;
+  },
+
+  // 分页数据
+  setPageData() {
+    let currentPage = this.data.currentPage,
+      list = [];
+    for (let index = 1; index < liveDataList.length + 1; index++) {
+      let start = 10 * (currentPage - 1) + 1,
+        end = 10 * currentPage;
+      if (index < start || index > end) {
+        continue;
+      }
+      list.push(liveDataList[index - 1]);
+    }
+    let key = 'livePageDataList[' + (currentPage - 1) + ']';
+    this.setData({
+      [key]: list
+    });
+    console.log('here');
   },
 
 })
