@@ -6,6 +6,8 @@ import {
 } from '../../../utils/utils';
 
 const app = getApp();
+let tournamentResultFullList = [],
+  tournamentResultList = [];
 
 Page({
 
@@ -15,8 +17,9 @@ Page({
     entry: 0,
     tournamentId: 0,
     tournamentName: "",
-    tournamentResultFullList: [],
-    tournamentResultList: [],
+    currentPage: 1,
+    totalNum: 0,
+    tournamentPageResultList: [],
     // picker
     showGwPicker: false,
     showTournamentPicker: false,
@@ -109,7 +112,7 @@ Page({
         tournamentId: tournamentId,
         tournamentName: tournamentName
       });
-      if (this.data.tournamentResultList.length === 0) {
+      if (this.data.tournamentPageResultList.length === 0) {
         // 拉取tournament数据
         this.initTournamentResult();
       }
@@ -119,6 +122,17 @@ Page({
     this.setData({
       showTournamentPicker: showTournamentPicker
     });
+  },
+
+  onReachBottom: function () {
+    let currentPage = this.data.currentPage;
+    if (currentPage * 10 > this.data.totalNum) {
+      return false;
+    }
+    this.setData({
+      currentPage: currentPage + 1
+    });
+    this.setPageData();
   },
 
   onShareAppMessage: function () {
@@ -307,8 +321,9 @@ Page({
           element.chip = getChipName(element.chip);
           list.push(element);
         });
+        tournamentResultFullList = list;
         this.setData({
-          tournamentResultFullList: list,
+          totalNum: list.length
         });
         // 过滤数据
         this.datafilter();
@@ -332,8 +347,8 @@ Page({
           element.chip = getChipName(element.chip);
           list.push(element);
         });
+        tournamentResultFullList = list;
         this.setData({
-          tournamentResultFullList: list,
           searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent
         });
         this.datafilter();
@@ -368,7 +383,7 @@ Page({
       value: '全部'
     });
     // 选择队长
-    this.data.tournamentResultFullList.forEach(element => {
+    tournamentResultFullList.forEach(element => {
       let captain = element.captainName;
       if (nameList.indexOf(captain) === -1) {
         let data = {};
@@ -385,13 +400,12 @@ Page({
   },
 
   datafilter() {
-    let list = this.sortValue(this.data.tournamentResultFullList);
+    let list = this.sortValue(tournamentResultFullList);
     list = this.captainFilter(list);
     list = this.chipFilter(list);
     list = this.rankList(list);
-    this.setData({
-      tournamentResultList: list
-    });
+    tournamentResultList = list;
+    this.setPageData();
   },
 
   // 字段排序
@@ -502,6 +516,24 @@ Page({
       }
     });
     return list;
+  },
+
+  // 分页数据
+  setPageData() {
+    let currentPage = this.data.currentPage,
+      list = [];
+    for (let index = 1; index < tournamentResultList.length + 1; index++) {
+      let start = 10 * (currentPage - 1) + 1,
+        end = 10 * currentPage;
+      if (index < start || index > end) {
+        continue;
+      }
+      list.push(tournamentResultList[index - 1]);
+    }
+    let key = 'tournamentPageResultList[' + (currentPage - 1) + ']';
+    this.setData({
+      [key]: list
+    });
   },
 
 })

@@ -94,7 +94,6 @@ Page({
         entry: this.data.entry
       }, false)
       .then(res => {
-        console.log(res.data);
         this.setData({
           entryName: res.data.entryName
         });

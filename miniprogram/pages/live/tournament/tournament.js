@@ -553,7 +553,6 @@ Page({
     this.setData({
       [key]: list
     });
-    console.log('here');
   },
 
 })

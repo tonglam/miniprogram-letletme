@@ -44,11 +44,13 @@
   </view>
 
   <view class="content">
-    <i-cell-group wx:for="{{tournamentResultList}}" wx:for-item="data" wx:key="index">
-      <i-cell title="[{{data.index}}] {{data.entryName}}【{{data.captainName}}】"
-        value="{{data.points}} ({{data.netPoints}})"
-        label="总分:{{data.overallPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 周联赛排名:{{data.eventTournamentRank}} 总联赛排名:{{data.tournamentRank}}"
-        is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
+    <i-cell-group wx:for="{{tournamentPageResultList}}" wx:for-item="list" wx:key="index">
+      <block wx:for="{{list}}" wx:for-item="data" wx:key="index">
+        <i-cell title="[{{data.index}}] {{data.entryName}}【{{data.captainName}}】"
+          value="{{data.points}} ({{data.netPoints}})"
+          label="总分:{{data.overallPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 周联赛排名:{{data.eventTournamentRank}} 总联赛排名:{{data.tournamentRank}}"
+          is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
+      </block>
     </i-cell-group>
   </view>
 

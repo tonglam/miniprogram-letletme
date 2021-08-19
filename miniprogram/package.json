@@ -11,7 +11,7 @@
   "keywords": [],
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com:tonglam/miniprogram-letletme.git"
+    "url": "git+ssh://git@github.com/tonglam/miniprogram-letletme.git"
   },
   "lint-staged": {
     "*.{js}": [
@@ -43,5 +43,8 @@
     "Chrome >= 53",
     "ChromeAndroid >= 53",
     "iOS >= 8"
-  ]
+  ],
+  "bugs": {
+    "url": "https://github.com/tonglam/miniprogram-letletme/issues"
+  }
 }
