@@ -15,6 +15,8 @@ Page({
   data: {
     // 公共数据
     gw: 0,
+    nextGw:0,
+    entry:0,
     nextGw: 0,
     deadline: "",
     // 推荐页数据
@@ -64,6 +66,8 @@ Page({
   onShow() {
     this.setData({
       gw: app.globalData.gw,
+      nextGw:app.globalData.nextGw,
+      entry :app.globalData.entry,
       deadline: app.globalData.deadline,
       nextGw: app.globalData.nextGw,
       resultGw: app.globalData.gw
@@ -78,8 +82,13 @@ Page({
     this.setData({
       pullDownRefresh: true
     });
-    // 更新球探结果
-    this.updateEventScoutResult(this.data.resultGw);
+    if (this.data.tab === '推荐') {
+      // 刷新当前周球探推荐
+      this.refreshCurrentEventScoutResult();
+    } else {
+      // 更新球探结果
+      this.updateEventScoutResult(this.data.resultGw);
+    }
   },
 
   onShareAppMessage: function () {
@@ -150,43 +159,13 @@ Page({
       Toast.fail('没有名额啦');
       return false;
     }
-    let scoutData = {
-      event: app.globalData.nextGw,
-      entry: this.data.scoutEntry.entry,
-      scoutName: this.data.scoutEntry.name,
-      transfers: this.data.transfers,
-      leftTransfers: this.data.leftTransfers,
-      gkp: this.data.pickGkpInfo.element,
-      def: this.data.pickDefInfo.element,
-      mid: this.data.pickMidInfo.element,
-      fwd: this.data.pickFwdInfo.element,
-      captain: this.data.pickCapInfo.element,
-      reason: this.data.reason,
-    };
-    if (scoutData.gkp === '' || scoutData.gkp === undefined ||
-      scoutData.def === '' || scoutData.def === undefined ||
-      scoutData.mid === '' || scoutData.mid === undefined ||
-      scoutData.fwd === '' || scoutData.fwd === undefined ||
-      scoutData.captain === '' || scoutData.captain === undefined) {
-      Toast.fail('还没选完呢');
-      return false;
-    }
-    post('group/upsertEventScout', scoutData)
-      .then(res => {
-        if (res.data.code === 200) {
-          Toast.success('提交成功');
-        } else {
-          Toast.fail('提交失败');
-        }
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
+    // 推荐提交
+    this.upsertEventScout();
   },
 
   // 检查时候否为球探
   checkScout() {
-    if (this.data.scoutList.indexOf(this.data.scoutEntry.entry + '') != -1) {
+    if (this.data.scoutList.indexOf(this.data.entry + '') != -1) {
       return true;
     }
     return false;
@@ -216,12 +195,17 @@ Page({
       Toast.fail('没有名额啦');
       return false;
     }
-    if (leftTransfers !== -1) {
+    let elementType = parseInt(this.data.elementType);
+    if (elementType != 5) {
       transfers = transfers + 1;
+      this.setData({
+        transfers: transfers,
+      });
+    }
+    if (leftTransfers !== -1) {
       leftTransfers = leftTransfers - 1;
       showLeftTransfers = this.getShowLeftTransfers(leftTransfers);
       this.setData({
-        transfers: transfers,
         leftTransfers: leftTransfers,
         showLeftTransfers: showLeftTransfers
       });
@@ -230,15 +214,14 @@ Page({
     let playerInfo = event.detail,
       teamShortName = playerInfo.teamShortName,
       webName = playerInfo.webName,
-      price = playerInfo.price,
-      elementType = this.data.elementType;
+      price = playerInfo.price;
     // 校验
     let fund = this.calcLeftFund(this.data.fund, elementType, price);
     if (!this.checkAvailable(webName, elementType, fund)) {
       return false;
     }
     // 设置
-    switch (parseInt(elementType)) {
+    switch (elementType) {
       case 1:
         this.setData({
           pickGkpInfo: playerInfo,
@@ -388,7 +371,7 @@ Page({
   initScout() {
     get('group/qryScoutEntry')
       .then(res => {
-        let entry = app.globalData.entryInfoData.entry;
+        let entry = this.data.entry;
         if (Object.keys(res.data).indexOf(entry + '') != -1) {
           let scoutEntry = {
             entry: entry,
@@ -413,7 +396,7 @@ Page({
   initEntryScoutResult() {
     get('group/qryEventEntryScoutResult', {
         event: this.data.nextGw,
-        entry: app.globalData.entry
+        entry: this.data.entry
       })
       .then(res => {
         let data = res.data,
@@ -516,6 +499,71 @@ Page({
       fund: fund,
       reason: data.reason
     });
+  },
+
+  // 刷新当前周球探推荐
+  refreshCurrentEventScoutResult() {
+    get('group/refreshCurrentEventScoutResult', {
+        entry: this.data.entry,
+      })
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 400,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        // 拉取当前球探推荐结果
+      this.initEntryScoutResult();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  // 推荐提交
+  upsertEventScout(){
+    let scoutData = {
+      event: this.data.nextGw,
+      entry: this.data.entry,
+      scoutName: this.data.scoutEntry.name,
+      transfers: this.data.transfers,
+      leftTransfers: this.data.leftTransfers,
+      gkp: this.data.pickGkpInfo.element,
+      def: this.data.pickDefInfo.element,
+      mid: this.data.pickMidInfo.element,
+      fwd: this.data.pickFwdInfo.element,
+      captain: this.data.pickCapInfo.element,
+      reason: this.data.reason,
+    };
+    if (scoutData.gkp === '' || scoutData.gkp === undefined ||
+      scoutData.def === '' || scoutData.def === undefined ||
+      scoutData.mid === '' || scoutData.mid === undefined ||
+      scoutData.fwd === '' || scoutData.fwd === undefined ||
+      scoutData.captain === '' || scoutData.captain === undefined) {
+      Toast.fail('还没选完呢');
+      return false;
+    }
+    post('group/upsertEventScout', scoutData)
+      .then(res => {
+        if (res.data.code === 200) {
+          Toast.success(res.data.message);
+        } else {
+          Toast.fail('提交失败');
+        }
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
   },
 
   /**
