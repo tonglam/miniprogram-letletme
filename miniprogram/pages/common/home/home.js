@@ -31,24 +31,26 @@ Page({
 
   onShow: function () {
     // 设置
-    this.setData({
-      gw: app.globalData.gw,
-      entry: app.globalData.entry,
-      entryName: app.globalData.entryInfoData.entryName,
-      nextGw: app.globalData.nextGw,
-      deadline: app.globalData.deadline,
-      time: diffDeadlineTime(app.globalData.utcDeadline)
+    delay(1500).then(() => {
+      this.setData({
+        gw: app.globalData.gw,
+        entry: app.globalData.entry,
+        entryName: app.globalData.entryInfoData.entryName,
+        nextGw: app.globalData.nextGw,
+        deadline: app.globalData.deadline,
+        time: diffDeadlineTime(app.globalData.utcDeadline)
+      });
+      if (this.data.entry <= 0) {
+        redirectToEntryInput();
+      }
+      // 拉取赛程
+      this.getNextGwFixture();
+      // 设置标题
+      let entryName = this.data.entryName;
+      if (entryName === '' || typeof entryName === 'undefined') {
+        this.getEntryInfo();
+      }
     });
-    if (this.data.entry <= 0) {
-      redirectToEntryInput();
-    }
-    // 拉取赛程
-    this.getNextGwFixture();
-    // 设置标题
-    let entryName = this.data.entryName;
-    if (entryName === '' || typeof entryName === 'undefined') {
-      this.getEntryInfo();
-    }
   },
 
   /**
@@ -94,7 +96,6 @@ Page({
         entry: this.data.entry
       }, false)
       .then(res => {
-        console.log(res.data);
         this.setData({
           entryName: res.data.entryName
         });

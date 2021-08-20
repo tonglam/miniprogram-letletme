@@ -6,6 +6,8 @@ import {
 } from '../../../utils/utils';
 
 const app = getApp();
+let tournamentResultFullList = [],
+  tournamentResultList = [];
 
 Page({
 
@@ -15,8 +17,13 @@ Page({
     entry: 0,
     tournamentId: 0,
     tournamentName: "",
-    tournamentResultFullList: [],
-    tournamentResultList: [],
+    currentPage: 1,
+    totalNum: 0,
+    tournamentPageResultList: [],
+    championList: [],
+    runnerUpList: [],
+    secondRunnerUpList: [],
+    championCountList: [],
     // picker
     showGwPicker: false,
     showTournamentPicker: false,
@@ -109,9 +116,9 @@ Page({
         tournamentId: tournamentId,
         tournamentName: tournamentName
       });
-      if (this.data.tournamentResultList.length === 0) {
-        // 拉取tournament数据
-        this.initTournamentResult();
+      // 拉取数据
+      if (this.data.tournamentPageResultList.length === 0) {
+        this.initDataList();
       }
     } else {
       showTournamentPicker = true; // 缓存没有时从picker中选择
@@ -119,6 +126,17 @@ Page({
     this.setData({
       showTournamentPicker: showTournamentPicker
     });
+  },
+
+  onReachBottom: function () {
+    let currentPage = this.data.currentPage;
+    if (currentPage * 10 > this.data.totalNum) {
+      return false;
+    }
+    this.setData({
+      currentPage: currentPage + 1
+    });
+    this.setPageData();
   },
 
   onShareAppMessage: function () {
@@ -150,6 +168,24 @@ Page({
     });
   },
 
+  // 标签页切换
+  tabOnChange(event) {
+    let name = event.detail.name;
+    if (name === 'table') {
+      // 拉取积分榜数据
+      if (this.data.championList.length === 0) {
+        this.initEventChampionList();
+      }
+    } else if (name === 'result') {
+      // 拉取tournament数据
+      if (this.data.tournamentPageResultList.length === 0) {
+        this.initTournamentResult();
+      }
+    } else if (name === 'me') {
+
+    }
+  },
+
   // GW选择回填
   onPickGw(event) {
     this.setData({
@@ -165,8 +201,8 @@ Page({
     this.setData({
       gw: gw
     });
-    // 拉取tournament数据
-    this.initTournamentResult();
+    // 拉取数据
+    this.initDataList();
   },
 
   // 赛事选择回填
@@ -188,8 +224,8 @@ Page({
       tournamentId: tournamentId,
       tournamentName: tournamentName
     });
-    // 拉取tournament数据
-    this.initTournamentResult();
+    // 拉取数据
+    this.initDataList();
   },
 
   // 搜索模式picker确认
@@ -295,20 +331,51 @@ Page({
    * 数据
    */
 
+  initDataList() {
+    // 拉取积分榜数据
+    this.initEventChampionList();
+    // 拉取tournament数据
+    this.initTournamentResult();
+  },
+
+  initEventChampionList() {
+    get('tournament/qryTournamentEventChampion', {
+        tournamentId: this.data.tournamentId
+      })
+      .then(res => {
+        if (res.data.id <= 0) {
+          return false;
+        }
+        this.setData({
+          championList: res.data.eventChampionResultList,
+          runnerUpList: res.data.eventRunnerUpResultList,
+          secondRunnerUpList: res.data.eventSecondRunnerUpResultList,
+          championCountList: res.data.championCountList
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
   initTournamentResult() {
     get('tournament/qryTournamentEventResult', {
         event: this.data.gw,
         tournamentId: this.data.tournamentId
       })
       .then(res => {
+        if (res.data.length === 0) {
+          return false;
+        }
         // 更新
         let list = [];
         res.data.forEach(element => {
           element.chip = getChipName(element.chip);
           list.push(element);
         });
+        tournamentResultFullList = list;
         this.setData({
-          tournamentResultFullList: list,
+          totalNum: list.length
         });
         // 过滤数据
         this.datafilter();
@@ -327,13 +394,16 @@ Page({
         element: this.data.searchElement
       })
       .then(res => {
+        if (res.data.length === 0) {
+          return false;
+        }
         let list = [];
         res.data.eventResultList.forEach(element => {
           element.chip = getChipName(element.chip);
           list.push(element);
         });
+        tournamentResultFullList = list;
         this.setData({
-          tournamentResultFullList: list,
           searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent
         });
         this.datafilter();
@@ -368,7 +438,7 @@ Page({
       value: '全部'
     });
     // 选择队长
-    this.data.tournamentResultFullList.forEach(element => {
+    tournamentResultFullList.forEach(element => {
       let captain = element.captainName;
       if (nameList.indexOf(captain) === -1) {
         let data = {};
@@ -385,13 +455,12 @@ Page({
   },
 
   datafilter() {
-    let list = this.sortValue(this.data.tournamentResultFullList);
+    let list = this.sortValue(tournamentResultFullList);
     list = this.captainFilter(list);
     list = this.chipFilter(list);
     list = this.rankList(list);
-    this.setData({
-      tournamentResultList: list
-    });
+    tournamentResultList = list;
+    this.setPageData();
   },
 
   // 字段排序
@@ -502,6 +571,24 @@ Page({
       }
     });
     return list;
+  },
+
+  // 分页数据
+  setPageData() {
+    let currentPage = this.data.currentPage,
+      list = [];
+    for (let index = 1; index < tournamentResultList.length + 1; index++) {
+      let start = 10 * (currentPage - 1) + 1,
+        end = 10 * currentPage;
+      if (index < start || index > end) {
+        continue;
+      }
+      list.push(tournamentResultList[index - 1]);
+    }
+    let key = 'tournamentPageResultList[' + (currentPage - 1) + ']';
+    this.setData({
+      [key]: list
+    });
   },
 
 })

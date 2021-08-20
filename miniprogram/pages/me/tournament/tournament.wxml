@@ -13,13 +13,6 @@
     <tournamentPicker show="true" bind:pickTournament="onPickTournament"></tournamentPicker>
   </view>
 
-  <view class="search">
-    <van-search value="{{searchWebName}}" label="球员" placeholder="搜索阵容包含该球员的球队" shape="round" disabled use-action-slot
-      bind:change="onSearchChange">
-      <view id="{{searchValue}}" slot="action" style="color: teal;" bind:tap="onSearchClick">搜索</view>
-    </van-search>
-  </view>
-
   <view class="picker">
     <van-popup show="{{showModePicker}}" overlay="{{true}}" position="top" custom-style="height: 50%"
       bind:close="onModePopClose">
@@ -32,24 +25,80 @@
     <playerPicker type="5" show="true" detailShow="{{false}}" bind:pickResult="onPickPlayer"></playerPicker>
   </view>
 
-  <view class="dropdown">
-    <van-dropdown-menu>
-      <van-dropdown-item value="{{sortValue}}" options="{{sortOptions}}" bind:change="onDropDownSortValue" />
-      <van-dropdown-item value="{{sortTypeValue}}" options="{{sortTypeOptions}}"
-        bind:change="onDropDownSortTypeValue" />
-      <van-dropdown-item title="队长" value="{{captainValue}}" options="{{captainOptions}}"
-        bind:change="onDropDownCaptain" />
-      <van-dropdown-item value="{{chipValue}}" options="{{chipOptions}}" bind:change="onDropDownChip" />
-    </van-dropdown-menu>
-  </view>
-
   <view class="content">
-    <i-cell-group wx:for="{{tournamentResultList}}" wx:for-item="data" wx:key="index">
-      <i-cell title="[{{data.index}}] {{data.entryName}}【{{data.captainName}}】"
-        value="{{data.points}} ({{data.netPoints}})"
-        label="总分:{{data.overallPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 周联赛排名:{{data.eventTournamentRank}} 总联赛排名:{{data.tournamentRank}}"
-        is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
-    </i-cell-group>
+    <van-tabs type="card" bind:change="tabOnChange">
+
+      <van-tab title="积分榜" name="table">
+
+        <view class="table">
+          <van-cell-group title="周冠军" wx:if="{{championList.length > 0}}">
+            <block wx:for="{{championList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{data.entryName}}" value="{{data.points}}({{data.netPoints}})" />
+            </block>
+          </van-cell-group>
+        </view>
+
+        <view class="table">
+          <van-cell-group title="周亚军" wx:if="{{runnerUpList.length > 0}}">
+            <block wx:for="{{runnerUpList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{data.entryName}}" value="{{data.points}}({{data.netPoints}})" />
+            </block>
+          </van-cell-group>
+        </view>
+
+        <view class="table">
+          <van-cell-group title="周季军" wx:if="{{secondRunnerUpList.length > 0}}">
+            <block wx:for="{{secondRunnerUpList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{data.entryName}}" value="{{data.points}}({{data.netPoints}})" />
+            </block>
+          </van-cell-group>
+        </view>
+
+        <view class="table">
+          <van-cell-group title="冠军榜" wx:if="{{championCountList.length > 0}}">
+            <block wx:for="{{championCountList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{data.rank}} - {{data.entryName}}" value="共{{data.totalNum}}次"
+                label="冠军:{{data.championNum}}次; 亚军:{{data.runnerUpNum}}次; 季军:{{data.secondRunnerUpNum}}次" />
+            </block>
+          </van-cell-group>
+        </view>
+
+      </van-tab>
+
+      <van-tab title="得分" name="result">
+
+        <view class="search">
+          <van-search value="{{searchWebName}}" label="球员" placeholder="搜索阵容包含该球员的球队" shape="round" disabled
+            use-action-slot bind:change="onSearchChange">
+            <view id="{{searchValue}}" slot="action" style="color: teal;" bind:tap="onSearchClick">搜索</view>
+          </van-search>
+        </view>
+
+        <view class="dropdown">
+          <van-dropdown-menu>
+            <van-dropdown-item value="{{sortValue}}" options="{{sortOptions}}" bind:change="onDropDownSortValue" />
+            <van-dropdown-item value="{{sortTypeValue}}" options="{{sortTypeOptions}}"
+              bind:change="onDropDownSortTypeValue" />
+            <van-dropdown-item title="队长" value="{{captainValue}}" options="{{captainOptions}}"
+              bind:change="onDropDownCaptain" />
+            <van-dropdown-item value="{{chipValue}}" options="{{chipOptions}}" bind:change="onDropDownChip" />
+          </van-dropdown-menu>
+        </view>
+
+        <i-cell-group wx:for="{{tournamentPageResultList}}" wx:for-item="list" wx:key="num">
+          <block wx:for="{{list}}" wx:for-item="data" wx:key="index">
+            <i-cell title="[{{data.index}}] {{data.entryName}}【{{data.captainName}}】"
+              value="{{data.points}} ({{data.netPoints}})"
+              label="总分:{{data.overallPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 周联赛排名:{{data.eventTournamentRank}} 总联赛排名:{{data.tournamentRank}}"
+              is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
+          </block>
+        </i-cell-group>
+      </van-tab>
+
+      <van-tab title="我" name="me">
+      </van-tab>
+
+    </van-tabs>
   </view>
 
   <view class="bottemNavBar">

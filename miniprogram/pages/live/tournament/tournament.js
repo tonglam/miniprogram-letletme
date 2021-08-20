@@ -324,6 +324,9 @@ Page({
             },
           });
         }
+        if (res.data.length === 0) {
+          return false;
+        }
         // 更新
         let list = [];
         res.data.forEach(element => {
@@ -361,6 +364,9 @@ Page({
         element: this.data.searchElement
       })
       .then(res => {
+        if (res.data.length === 0) {
+          return false;
+        }
         let list = [];
         res.data.liveCalcDataList.forEach(element => {
           element.chip = getChipName(element.chip);
@@ -553,7 +559,6 @@ Page({
     this.setData({
       [key]: list
     });
-    console.log('here');
   },
 
 })
