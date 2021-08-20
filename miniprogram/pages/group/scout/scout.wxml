@@ -7,7 +7,7 @@
       <van-tab title="推荐" name="推荐">
 
         <view class="navBar">
-          <van-nav-bar title="{{scoutEntry.name}}" left-text="重选" right-text="提交" safe-area-inset-top="{{false}}"
+          <van-nav-bar title="{{scoutEntry.name}}" title-class="title" left-text="重选" right-text="提交" safe-area-inset-top="{{false}}"
             bind:click-left="onClickRefresh" bind:click-right="onClickConfirm" />
         </view>
 
@@ -86,10 +86,32 @@
 
       </van-tab>
 
+      <van-tab title="推荐结果" name="推荐结果">
+
+        <view class="navBar">
+          <van-nav-bar title="GW{{nextGw}}球探推荐结果" title-class="title" safe-area-inset-top="{{false}}" />
+        </view>
+
+        <view class="result">
+          <block wx:for="{{scoutResultList}}" wx:for-item="data" wx:key="index">
+            <van-cell-group title="{{data.scoutName}}">
+              <van-cell title="门将" value="【{{data.gkpInfo.teamShortName}}】{{data.gkpInfo.webName}}" />
+              <van-cell title="后卫" value="【{{data.defInfo.teamShortName}}】{{data.defInfo.webName}}" />
+              <van-cell title="中场" value="【{{data.midInfo.teamShortName}}】{{data.midInfo.webName}}" />
+              <van-cell title="前锋" value="【{{data.fwdInfo.teamShortName}}】{{data.fwdInfo.webName}}" />
+              <van-cell title="队长" value="【{{data.captainInfo.teamShortName}}】{{data.captainInfo.webName}}" />
+              <van-cell title="推荐理由" value="{{data.reason}}" />
+              <text>\n</text>
+            </van-cell-group>
+          </block>
+        </view>
+
+      </van-tab>
+
       <van-tab title="得分" name="得分">
 
         <view class="navBar">
-          <van-nav-bar title="GW{{resultGw}}" left-text="" right-text="更换GW" safe-area-inset-top="{{false}}"
+          <van-nav-bar title="GW{{resultGw}}" title-class="title" left-text="" right-text="更换GW" safe-area-inset-top="{{false}}"
             bind:click-right="onClickChangeGw" />
         </view>
 

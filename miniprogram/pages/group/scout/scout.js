@@ -15,8 +15,8 @@ Page({
   data: {
     // 公共数据
     gw: 0,
-    nextGw:0,
-    entry:0,
+    nextGw: 0,
+    entry: 0,
     nextGw: 0,
     deadline: "",
     // 推荐页数据
@@ -44,6 +44,8 @@ Page({
     pickCap: "",
     pickCapPrice: "",
     reason: "",
+    // 推荐结果页数据
+    currentScoutResultList: [],
     // 得分页数据
     seasonResultList: [],
     scoutResultList: [],
@@ -66,8 +68,8 @@ Page({
   onShow() {
     this.setData({
       gw: app.globalData.gw,
-      nextGw:app.globalData.nextGw,
-      entry :app.globalData.entry,
+      nextGw: app.globalData.nextGw,
+      entry: app.globalData.entry,
       deadline: app.globalData.deadline,
       nextGw: app.globalData.nextGw,
       resultGw: app.globalData.gw
@@ -107,6 +109,10 @@ Page({
       this.setData({
         chartShow: false
       });
+    } else if (tab === '推荐结果') {
+      if (this.data.currentScoutResultList.length === 0) {
+        this.initEventScoutResult(this.data.nextGw);
+      }
     } else if (tab === '得分') {
       this.setData({
         chartShow: false
@@ -523,7 +529,7 @@ Page({
           });
         }
         // 拉取当前球探推荐结果
-      this.initEntryScoutResult();
+        this.initEntryScoutResult();
       })
       .catch(res => {
         console.log('fail:', res);
@@ -531,7 +537,7 @@ Page({
   },
 
   // 推荐提交
-  upsertEventScout(){
+  upsertEventScout() {
     let scoutData = {
       event: this.data.nextGw,
       entry: this.data.entry,
