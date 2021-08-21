@@ -374,7 +374,7 @@ Page({
         });
         liveDataFullList = list;
         this.setData({
-          searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent
+          searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent + "(" + res.data.selectNum + "队)"
         });
         this.datafilter();
       })

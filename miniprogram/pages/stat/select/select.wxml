@@ -6,7 +6,7 @@
   </view>
 
   <view class="gwPicker" wx:if="{{showGwPicker}}">
-    <gwPicker gw="{{gw}}" full="true" show="true" bind:pickGw="onPickGw"></gwPicker>
+    <gwPicker gw="{{gw}}" show="true" bind:pickGw="onPickGw"></gwPicker>
   </view>
 
   <view class="leaguePicker" wx:if="{{showLeaguePicker}}">
@@ -93,7 +93,7 @@
           <van-cell-group title="转出" wx:if="{{selectData.mostTransferOut.length > 0}}">
             <block wx:for="{{selectData.mostTransferOut}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{index+1}} - {{data.webName}}【{{data.teamShortName}}】"
-                value="{{data.selectByPercent}}({{data.eoByPercent}})" />
+                value="{{data.selectByPercent}}" />
             </block>
           </van-cell-group>
         </view>

@@ -8,7 +8,7 @@ import {
 
 App({
   globalData: {
-    season:'2122',
+    season: '2122',
     gw: 0,
     lastGw: 0,
     nextGw: 0,
@@ -27,7 +27,7 @@ App({
   },
 
   onShow() {
-      this.setCurrentEventAndNextUtcDeadline();
+    this.setCurrentEventAndNextUtcDeadline();
   },
 
   setCurrentEventAndNextUtcDeadline() {
@@ -46,7 +46,7 @@ App({
         console.log('fail:', res);
       })
   },
-  
+
   initEntry() {
     let entry = wx.getStorageSync('entry');
     console.log("app entry:" + entry);
@@ -80,6 +80,33 @@ App({
     wx.setStorageSync('entry', entry);
     // 保存entry_info
     this.setEntryInfo(entry);
+    // 清理缓存
+    this.removeStorage();
+  },
+
+  removeStorage() {
+    // live-tournament
+    wx.removeStorage({
+      key: 'live-tournamentId',
+    });
+    wx.removeStorage({
+      key: 'live-tournamentName',
+    })
+    // stat-select
+    wx.removeStorage({
+      key: 'stat-select',
+    })
+    // me-tournament
+    wx.removeStorage({
+      key: 'me-tournamentId',
+    });
+    wx.removeStorage({
+      key: 'me-tournamentName',
+    })
+    // me-tournament
+    wx.removeStorage({
+      key: 'summary-league',
+    });
   },
 
 })
