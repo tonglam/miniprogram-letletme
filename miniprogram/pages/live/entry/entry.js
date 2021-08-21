@@ -20,6 +20,8 @@ Page({
     entryName: "",
     playerName: "",
     liveData: {},
+    noTransfers: false,
+    transfersList: [],
     // pop
     popShow: false,
     // refrsh
@@ -54,6 +56,10 @@ Page({
     });
     // 拉取实时分数
     this.initEntryLive();
+    // 拉取转会数据
+    if (!this.data.noTransfers && this.data.transfersList.length === 0) {
+      this.initTransfersData();
+    }
   },
 
   onPullDownRefresh: function () {
@@ -106,9 +112,9 @@ Page({
     }
     // 刷新live
     get('live/calcLivePointsByEntry', {
-      event: gw,
-      entry: entry
-    })
+        event: gw,
+        entry: entry
+      })
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
@@ -180,11 +186,30 @@ Page({
     }
   },
 
+  // 拉取本轮转会数据
+  initTransfersData() {
+    get('entry/qryEntryEventTransfers', {
+        event: this.data.gw,
+        entry: this.data.entry
+      })
+      .then(res => {
+        let list = res.data;
+        if (list.length === 0) {
+          this.setData({
+            noTransfers: true
+          });
+        }
+        this.setData({
+          transfersList: list
+        });
+      });
+  },
+
   // 刷新再拉取数据
   refreshEntryLive() {
     get('common/insertEventLiveCache', {
-      event: this.data.gw
-    }, false)
+        event: this.data.gw
+      }, false)
       .then(() => {
         this.initEntryLive();
       });
@@ -193,8 +218,8 @@ Page({
   // 拉取entry_info
   setEntryInfo(entry) {
     get('entry/qryEntryInfo', {
-      entry: entry
-    })
+        entry: entry
+      })
       .then(res => {
         let entryInfoData = res.data;
         entryInfoData['overallRank'] = showOverallRank(entryInfoData.overallRank);

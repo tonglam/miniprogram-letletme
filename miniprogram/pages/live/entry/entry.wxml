@@ -52,6 +52,18 @@
 
     </i-cell-group>
 
+    <view class="transfers">
+      <view wx:if="{{noTransfers}}">
+        <van-cell title="本周无转会" />
+      </view>
+      <van-cell-group wx:else title="本周转会">
+        <block wx:for="{{transfersList}}" wx:for-item="data" wx:key="index">
+          <van-cell title="转入：【{{data.elementInTeamShortName}}】{{data.elementInWebName}}"
+            value="转出：【{{data.elementInTeamShortName}}】{{data.elementOutWebName}}" />
+        </block>
+      </van-cell-group>
+    </view>
+
   </view>
 
   <view class="bottemNavBar">

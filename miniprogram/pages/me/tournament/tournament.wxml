@@ -33,7 +33,7 @@
         <view class="table">
           <van-cell-group title="周冠军" wx:if="{{championList.length > 0}}">
             <block wx:for="{{championList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.entryName}}" value="{{data.points}}({{data.netPoints}})" />
+              <van-cell title="GW{{data.event}} - {{data.entryName}}" value="{{data.points}}分" />
             </block>
           </van-cell-group>
         </view>
@@ -41,7 +41,7 @@
         <view class="table">
           <van-cell-group title="周亚军" wx:if="{{runnerUpList.length > 0}}">
             <block wx:for="{{runnerUpList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.entryName}}" value="{{data.points}}({{data.netPoints}})" />
+              <van-cell title="GW{{data.event}} - {{data.entryName}}" value="{{data.points}}" />
             </block>
           </van-cell-group>
         </view>
@@ -49,7 +49,7 @@
         <view class="table">
           <van-cell-group title="周季军" wx:if="{{secondRunnerUpList.length > 0}}">
             <block wx:for="{{secondRunnerUpList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.entryName}}" value="{{data.points}}({{data.netPoints}})" />
+              <van-cell title="GW{{data.event}} - {{data.entryName}}" value="{{data.points}}" />
             </block>
           </van-cell-group>
         </view>

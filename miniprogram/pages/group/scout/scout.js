@@ -105,6 +105,9 @@ Page({
   tabOnChange(event) {
     let tab = event.detail.name,
       resultGw = this.data.resultGw;
+    this.setData({
+      tab: tab
+    })
     if (tab === '推荐') {
       this.setData({
         chartShow: false

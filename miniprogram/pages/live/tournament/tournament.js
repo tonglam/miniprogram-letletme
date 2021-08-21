@@ -425,6 +425,10 @@ Page({
   },
 
   datafilter() {
+    this.setData({
+      currentPage: 1,
+      livePageDataList: []
+    });
     let list = this.sortValue(liveDataFullList);
     list = this.captainFilter(list);
     list = this.chipFilter(list);

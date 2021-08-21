@@ -105,15 +105,19 @@
       <van-tab title="转会" name="转会">
 
         <view class="transfers">
-          <block wx:for="{{entryTransfersData}}" wx:for-item="data" wx:key="index">
-            <van-cell title="转入：{{data.elementInName}}({{data.elementInPoints}})"
-              value="转出：{{data.elementOutName}}({{data.elementOutPoints}})"
-              label="转入:£{{data.elementInCost}}m -> 转出:£{{data.elementOutCost}}m" />
-          </block>
+          <van-cell-group wx:if="{{noTransfers}}" title="本周无转会">
+          </van-cell-group>
+          <van-cell-group wx:else title="本周转会">
+            <block wx:for="{{entryTransfersList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="转入：{{data.elementInWebName}}({{data.elementInPoints}}分)"
+                value="转出：{{data.elementOutWebName}}({{data.elementOutPoints}}分)"
+                label="转入:£{{data.elementInCost}}m -> 转出:£{{data.elementOutCost}}m" />
+            </block>
+          </van-cell-group>
         </view>
 
       </van-tab>
-      
+
     </van-tabs>
   </view>
 

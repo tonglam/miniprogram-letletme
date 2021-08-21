@@ -26,7 +26,8 @@ Page({
     // 得分页
     entryResultData: {},
     // 转会页
-    entryTransfersData: {},
+    noTransfers: false,
+    entryTransfersList: [],
     // 排名页
     entryEventSummaryList: [],
     // picker
@@ -89,7 +90,7 @@ Page({
         this.getEntryEventResult();
       }
     } else if (tab === '转会') {
-      if (JSON.stringify(this.data.entryTransfersData) === '{}') {
+      if (!this.data.noTransfers && this.data.entryTransfersList.length === 0) {
         this.getEntryEventTransfers();
       }
     } else if (tab === '排行') {
@@ -277,8 +278,14 @@ Page({
         entry: this.data.entry
       })
       .then(res => {
+        let list = res.data;
+        if (list.length === 0) {
+          this.setData({
+            noTransfers: true
+          });
+        }
         this.setData({
-          entryTransfersData: res.data
+          entryTransfersList: res.data
         });
       })
       .catch(res => {
