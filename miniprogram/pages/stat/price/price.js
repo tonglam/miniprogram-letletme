@@ -60,9 +60,11 @@ Page({
     // 拉取身价
     this.getPirceList();
     // 默认日期模式
-    this.setData({
-      modeTitle: this.data.date
-    });
+    if (this.data.mode === '日期') {
+      this.setData({
+        modeTitle: this.data.date
+      });
+    }
   },
 
   onPullDownRefresh: function () {

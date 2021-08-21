@@ -93,7 +93,7 @@
         </view>
 
         <view class="result">
-          <block wx:for="{{scoutResultList}}" wx:for-item="data" wx:key="index">
+          <block wx:for="{{currentScoutResultList}}" wx:for-item="data" wx:key="index">
             <van-cell-group title="{{data.scoutName}}">
               <van-cell title="门将" value="【{{data.gkpInfo.teamShortName}}】{{data.gkpInfo.webName}}" />
               <van-cell title="后卫" value="【{{data.defInfo.teamShortName}}】{{data.defInfo.webName}}" />

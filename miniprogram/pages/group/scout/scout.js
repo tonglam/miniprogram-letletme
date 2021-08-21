@@ -530,6 +530,7 @@ Page({
         }
         // 拉取当前球探推荐结果
         this.initEntryScoutResult();
+        this.initEventScoutResult(this.data.nextGw);
       })
       .catch(res => {
         console.log('fail:', res);
@@ -639,6 +640,10 @@ Page({
             seasonResultList: list
           });
           this.initSeasonChart();
+        } else if (gw === this.data.nextGw) {
+          this.setData({
+            currentScoutResultList: list
+          });
         } else {
           this.setData({
             scoutResultList: list
