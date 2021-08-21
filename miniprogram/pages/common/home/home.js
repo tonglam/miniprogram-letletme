@@ -31,7 +31,7 @@ Page({
 
   onShow: function () {
     // 设置
-    delay(1500).then(() => {
+    delay(1000).then(() => {
       this.setData({
         gw: app.globalData.gw,
         entry: app.globalData.entry,
