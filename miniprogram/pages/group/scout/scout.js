@@ -634,7 +634,6 @@ Page({
         }
         let list = res.data;
         if (list.length === 0) {
-          Toast('无数据');
           return false;
         }
         // 画图
