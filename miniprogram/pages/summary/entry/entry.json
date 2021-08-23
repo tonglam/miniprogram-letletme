@@ -1,4 +1,5 @@
 {
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "score": "../../../components/echart/summary/score/score"
   }

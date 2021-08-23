@@ -352,7 +352,7 @@ Page({
 
   // 刷新身价
   refreshPlayerValue() {
-    get('common/refreshPlayerValue')
+    get('stat/refreshPlayerValue')
       .then(() => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {

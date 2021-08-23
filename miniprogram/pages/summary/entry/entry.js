@@ -4,6 +4,7 @@ import {
 import {
   showOverallRank
 } from '../../../utils/utils';
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 const app = getApp();
 
@@ -56,6 +57,14 @@ Page({
     if (JSON.stringify(this.data.summaryData) === '{}') {
       this.initEntrySeasonSummary();
     }
+  },
+
+  onPullDownRefresh: function () {
+    this.setData({
+      pullDownRefresh: true
+    });
+    // 刷新周得分数据
+    this.refreshEntryEventResult();
   },
 
   onShareAppMessage: function () {
@@ -287,6 +296,45 @@ Page({
       scoreList: list
     });
   },
+
+  // 刷新周得分
+  refreshEntryEventResult() {
+    get('summary/refreshEntrySummary', {
+        event: this.data.gw,
+        entry: this.data.entry
+      })
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 400,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        // 拉取info
+        this.initEntrySeasonInfo();
+        // 拉取summary
+        this.initEntrySeasonSummary();
+        // 拉取captain
+        this.initEntrySeasonCaptain();
+        // 拉取transfers
+        this.initEntrySeasonTransfers();
+        // 拉取score
+        this.initEntrySeasonScore();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
 
   /**
    * 画图

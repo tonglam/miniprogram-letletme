@@ -6,6 +6,7 @@ import {
   showChip,
   redirectToEntryInput
 } from '../../../utils/utils';
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 const app = getApp();
 
@@ -14,6 +15,7 @@ Page({
   data: {
     // 公共数据
     gw: 0,
+    resultGw: 0,
     entry: 0,
     entryInfoData: {},
     tab: '简介',
@@ -35,7 +37,6 @@ Page({
     // refrsh
     pullDownRefresh: false,
     // echart 
-
   },
 
   /**
@@ -53,6 +54,13 @@ Page({
       entry: entry,
       entryInfoData: app.globalData.entryInfoData
     });
+    // 设置时间
+    let resultGw = this.data.resultGw;
+    if (resultGw == 0) {
+      this.setData({
+        resultGw: this.data.gw
+      });
+    }
     // 设置标题
     let playerName = this.data.entryInfoData.playerName;
     if (playerName === '' || typeof playerName === 'undefined') {
@@ -62,17 +70,36 @@ Page({
       title: playerName,
     });
     // 拉取联赛数据
-    this.initEntryLeagueInfo();
+    if (JSON.stringify(this.data.classicList) === '{}') {
+      this.initEntryLeagueInfo();
+    }
     // 拉取历史数据
-    this.initEntryHistoryInfo();
+    if (JSON.stringify(this.data.historyInfoList) === '{}') {
+      this.initEntryHistoryInfo();
+    }
   },
 
   onPullDownRefresh: function () {
     this.setData({
       pullDownRefresh: true
     });
-    // 拉取联赛数据
-    this.initEntryLeagueInfo();
+    let tab = this.data.tab;
+    if (tab === '简介') {
+      // 刷新entry_info
+      this.refreshEntryInfo();
+    } else if (tab === '得分') {
+      // 刷新周得分数据
+      this.refreshEntryEventResult();
+    } else if (tab === '转会') {
+      // 刷新周转会数据
+      this.refreshEntryEventTransfers();
+    } else {
+      wx.stopPullDownRefresh({});
+    }
+  },
+
+  onShareAppMessage: function () {
+
   },
 
   /**
@@ -87,11 +114,11 @@ Page({
     });
     if (tab === '得分') {
       if (JSON.stringify(this.data.entryResultData) === '{}') {
-        this.getEntryEventResult();
+        this.initEntryEventResult();
       }
     } else if (tab === '转会') {
       if (!this.data.noTransfers && this.data.entryTransfersList.length === 0) {
-        this.getEntryEventTransfers();
+        this.initEntryEventTransfers();
       }
     } else if (tab === '排行') {
 
@@ -129,14 +156,14 @@ Page({
       return false;
     }
     this.setData({
-      gw: gw
+      resultGw: gw
     });
     if (this.data.tab === '得分') {
       // 拉取周得分数据
-      this.getEntryEventResult(gw);
+      this.initEntryEventResult();
     } else if (this.data.tab === '转会') {
       // 拉取周转会数据
-      this.getEntryEventTransfers(gw);
+      this.initEntryEventTransfers();
     }
   },
 
@@ -144,27 +171,28 @@ Page({
    * 数据
    */
 
+  initEntryInfo() {
+    get('entry/qryEntryInfo', {
+        entry: entry
+      })
+      .then(res => {
+        let entryInfoData = res.data;
+        entryInfoData['overallRank'] = showOverallRank(entryInfoData.overallRank);
+        this.data.setData({
+          entryInfoData: entryInfoData
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
   // 拉取联赛数据
   initEntryLeagueInfo() {
     get('entry/qryEntryLeagueInfo', {
         entry: this.data.entry
       }, false)
       .then(res => {
-        // 下拉刷新
-        if (this.data.pullDownRefresh) {
-          wx.stopPullDownRefresh({
-            success: () => {
-              Toast({
-                type: 'success',
-                duration: 400,
-                message: "刷新成功"
-              });
-              this.setData({
-                pullDownRefresh: false
-              });
-            },
-          });
-        }
         let list = res.data;
         if (list.entry <= 0) {
           return false;
@@ -238,9 +266,9 @@ Page({
   },
 
   // 拉取周得分数据
-  getEntryEventResult() {
+  initEntryEventResult() {
     get('entry/qryEntryEventResult', {
-        event: this.data.gw,
+        event: this.data.resultGw,
         entry: this.data.entry
       })
       .then(res => {
@@ -269,12 +297,13 @@ Page({
   },
 
   // 拉取周转会数据
-  getEntryEventTransfers() {
-    if (this.data.gw <= 1) {
+  initEntryEventTransfers() {
+    let gw = this.data.resultGw;
+    if (gw <= 1) {
       return false;
     }
     get('entry/qryEntryEventTransfers', {
-        event: this.data.gw,
+        event: gw,
         entry: this.data.entry
       })
       .then(res => {
@@ -293,15 +322,77 @@ Page({
       });
   },
 
-  // 拉取周得分数据总和
-  getEntryEventSummary() {
-    get('entry/qryEntryEventSummary', {
+  // 刷新entry_info
+  refreshEntryInfo() {
+    get('entry/refreshEntryInfo', {
         entry: this.data.entry
       })
-      .then(res => {
-        this.setData({
-          entryEventSummaryList: res.data
-        });
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 400,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        this.initEntryInfo();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  onPullDownRefresh: function () {
+    this.setData({
+      pullDownRefresh: true
+    });
+    let tab = this.data.tab;
+    if (tab === '简介') {
+      // 刷新entry_info
+      this.refreshEntryInfo();
+    } else if (tab === '得分') {
+      // 刷新周得分数据
+      this.refreshEntryEventResult();
+    } else if (tab === '转会') {
+      // 刷新周转会数据
+      this.refreshEntryEventTransfers();
+    } else {
+      wx.stopPullDownRefresh({});
+    }
+  },
+
+  // 刷新周得分
+  refreshEntryEventTransfers() {
+    get('entry/refreshEntryEventTransfers', {
+        event: this.data.resultGw,
+        entry: this.data.entry
+      })
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 400,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        // 拉取周得分数据
+        this.initEntryEventTransfers();
       })
       .catch(res => {
         console.log('fail:', res);

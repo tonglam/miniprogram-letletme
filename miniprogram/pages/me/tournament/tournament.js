@@ -4,6 +4,7 @@ import {
 import {
   getChipName
 } from '../../../utils/utils';
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 const app = getApp();
 let tournamentResultFullList = [],
@@ -137,6 +138,13 @@ Page({
       currentPage: currentPage + 1
     });
     this.setPageData();
+  },
+
+  onPullDownRefresh: function () {
+    this.setData({
+      pullDownRefresh: true
+    });
+    this.refreshTournamentResult();
   },
 
   onShareAppMessage: function () {
@@ -407,6 +415,33 @@ Page({
           searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent + "(" + res.data.selectNum + "队)"
         });
         this.datafilter();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  refreshTournamentResult() {
+    get('tournament/refreshTournamentEventResult', {
+        event: this.data.gw,
+        tournamentId: this.data.tournamentId,
+      })
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 2500,
+                message: "后台刷新中，请1分钟后再查询"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
       })
       .catch(res => {
         console.log('fail:', res);

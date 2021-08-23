@@ -260,6 +260,8 @@
     </van-tabs>
   </view>
 
+  <van-toast id="van-toast" />
+
   <view class="bottemNavBar">
     <bottomNavBar active="summary"></bottomNavBar>
   </view>

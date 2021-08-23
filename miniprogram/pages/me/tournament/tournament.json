@@ -1,5 +1,6 @@
 {
   "navigationBarTitleText": "我的联赛",
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "gwPicker": "../../../components/picker/gwPicker/gwPicker",
     "tournamentPicker": "../../../components/picker/tournamentPicker/tournamentPicker",
