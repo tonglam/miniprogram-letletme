@@ -1,4 +1,5 @@
 {
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "leaguePicker": "../../../components/picker/leaguePicker/leaguePicker"
   }

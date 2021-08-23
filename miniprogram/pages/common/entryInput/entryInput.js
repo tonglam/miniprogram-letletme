@@ -1,9 +1,9 @@
 import {
-  delay
-} from '../../../utils/utils';
-import {
   post
 } from '../../../utils/request';
+import {
+  delay
+} from '../../../utils/utils';
 
 const app = getApp();
 

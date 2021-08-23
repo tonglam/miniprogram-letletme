@@ -433,15 +433,21 @@ Page({
             success: () => {
               Toast({
                 type: 'success',
-                duration: 2500,
-                message: "后台刷新中，请1分钟后再查询"
+                duration: 1000,
+                message: "后台刷新中"
               });
               this.setData({
                 pullDownRefresh: false
               });
-            },
+            }
           });
         }
+        Toast({
+          type: 'success',
+          duration: 1000,
+          message: "刷新成功"
+        });
+        this.initDataList();
       })
       .catch(res => {
         console.log('fail:', res);

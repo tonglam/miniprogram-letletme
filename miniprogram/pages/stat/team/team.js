@@ -1,6 +1,7 @@
 import {
   get
 } from '../../../utils/request';
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 Page({
 
@@ -42,6 +43,13 @@ Page({
         teamPickerShow: true,
       });
     }
+  },
+
+  onPullDownRefresh: function () {
+    this.setData({
+      pullDownRefresh: true
+    });
+    this.refreshTeamSummary();
   },
 
   onShareAppMessage: function () {
@@ -86,7 +94,6 @@ Page({
       });
       return false;
     }
-    console.log(season);
     this.setData({
       seasonPickerShow: false,
       season: season,
@@ -127,6 +134,35 @@ Page({
           midList: teamSummary.playerMap[3],
           fwdList: teamSummary.playerMap[4]
         });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  refreshTeamSummary() {
+    get('stat/refreshTeamSummary', {
+        season: this.data.season,
+        name: this.data.name
+      })
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 1000,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        // 拉取球队数据
+        this.getTeamSummary();
       })
       .catch(res => {
         console.log('fail:', res);

@@ -1,4 +1,5 @@
 {
+  "enablePullDownRefresh": true,
   "usingComponents": {
     "seasonPicker":"../../../components/picker/seasonPicker/seasonPicker",
     "playerPicker": "../../../components/picker/playerPicker/playerPicker"

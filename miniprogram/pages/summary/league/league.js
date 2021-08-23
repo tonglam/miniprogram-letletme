@@ -2,8 +2,10 @@ import {
   get
 } from "../../../utils/request";
 import {
+  delay,
   showOverallRank
 } from '../../../utils/utils';
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 const app = getApp();
 
@@ -60,6 +62,14 @@ Page({
         showLeaguePicker: true
       });
     }
+  },
+
+  onPullDownRefresh: function () {
+    this.setData({
+      pullDownRefresh: true
+    });
+    // 刷新周得分数据
+    this.refreshLeagueSummary();
   },
 
   onShareAppMessage: function () {
@@ -201,6 +211,49 @@ Page({
         this.setData({
           scoreData: data
         });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  refreshLeagueSummary() {
+    get('summary/refreshLeagueSummary', {
+        event: this.data.gw,
+        leagueName: this.data.leagueName,
+        entry: this.data.entry
+      })
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 1000,
+                message: "后台刷新中"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        Toast({
+          type: 'success',
+          duration: 1000,
+          message: "刷新成功"
+        });
+        // 拉取info
+        this.initEntrySeasonInfo();
+        // 拉取summary
+        this.initEntrySeasonSummary();
+        // 拉取captain
+        this.initEntrySeasonCaptain();
+        // 拉取transfers
+        this.initEntrySeasonTransfers();
+        // 拉取score
+        this.initEntrySeasonScore();
       })
       .catch(res => {
         console.log('fail:', res);

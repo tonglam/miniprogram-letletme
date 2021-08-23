@@ -1,8 +1,8 @@
 <view class="entry">
 
   <view class="navBar">
-    <van-nav-bar title="{{entryName}}" left-text="GW{{gw}}" right-text="切换id" safe-area-inset-top="{{false}}"
-      bind:click-left="" bind:click-right="onClickChange" />
+    <van-nav-bar title="{{entryName}}" left-text="" right-text="" safe-area-inset-top="{{false}}"
+      bind:click-left="" bind:click-right="" />
   </view>
 
   <view class="pop" style="text-align:center;">

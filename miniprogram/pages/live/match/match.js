@@ -2,7 +2,6 @@ import {
   get
 } from "../../../utils/request";
 import {
-  compareAscSort,
   compareDescSort
 } from '../../../utils/utils';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
@@ -282,9 +281,8 @@ Page({
 
   // 组装fixture数据
   initLiveFixture() {
-    let list = this.data.liveMatchList.sort(compareAscSort("matchId"));
     this.setData({
-      liveFixtureList: list
+      liveFixtureList: this.data.liveMatchList
     });
   },
 

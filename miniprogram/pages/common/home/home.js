@@ -1,13 +1,11 @@
 import {
-  delay
-} from '../../../utils/utils';
+  get
+} from '../../../utils/request';
 import {
+  delay,
   diffDeadlineTime,
   redirectToEntryInput
 } from '../../../utils/utils';
-import {
-  get
-} from '../../../utils/request';
 
 const app = getApp();
 

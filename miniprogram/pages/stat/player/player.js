@@ -1,6 +1,7 @@
 import {
   get
 } from '../../../utils/request';
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 Page({
 
@@ -27,9 +28,9 @@ Page({
         "playerInfo.code": code,
       });
     }
-     // 拉取球员数据
-     this.getPlayerInfo();
-     this.getPlayerSummary();
+    // 拉取球员数据
+    this.getPlayerInfo();
+    this.getPlayerSummary();
   },
 
   onShow: function () {
@@ -53,6 +54,13 @@ Page({
         playerPickerShow: true,
       });
     }
+  },
+
+  onPullDownRefresh: function () {
+    this.setData({
+      pullDownRefresh: true
+    });
+    this.refreshPlayerSummary();
   },
 
   onShareAppMessage: function () {
@@ -182,6 +190,36 @@ Page({
         this.setData({
           playerSummary: playerSummary
         });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  refreshPlayerSummary() {
+    get('stat/refreshPlayerSummary', {
+        season: this.data.season,
+        code: this.data.playerInfo.code
+      })
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 1000,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        // 拉取球员数据
+        this.getPlayerInfo();
+        this.getPlayerSummary();
       })
       .catch(res => {
         console.log('fail:', res);

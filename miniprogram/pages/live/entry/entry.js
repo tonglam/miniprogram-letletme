@@ -122,7 +122,7 @@ Page({
             success: () => {
               Toast({
                 type: 'success',
-                duration: 400,
+                duration: 1000,
                 message: "刷新成功"
               });
               this.setData({

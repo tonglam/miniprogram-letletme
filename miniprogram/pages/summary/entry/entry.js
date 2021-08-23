@@ -64,7 +64,7 @@ Page({
       pullDownRefresh: true
     });
     // 刷新周得分数据
-    this.refreshEntryEventResult();
+    this.refreshEntrySummary();
   },
 
   onShareAppMessage: function () {
@@ -87,14 +87,6 @@ Page({
   onPopClose() {
     this.setData({
       entry: 0,
-      popShow: false
-    });
-  },
-
-  // team_id输入确认
-  onClickInput() {
-    this.initEntrySeasonInfo();
-    this.setData({
       popShow: false
     });
   },
@@ -298,7 +290,7 @@ Page({
   },
 
   // 刷新周得分
-  refreshEntryEventResult() {
+  refreshEntrySummary() {
     get('summary/refreshEntrySummary', {
         event: this.data.gw,
         entry: this.data.entry
@@ -310,7 +302,7 @@ Page({
             success: () => {
               Toast({
                 type: 'success',
-                duration: 400,
+                duration: 1000,
                 message: "刷新成功"
               });
               this.setData({
@@ -334,7 +326,6 @@ Page({
         console.log('fail:', res);
       });
   },
-
 
   /**
    * 画图

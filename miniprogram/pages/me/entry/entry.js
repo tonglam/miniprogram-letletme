@@ -173,7 +173,7 @@ Page({
 
   initEntryInfo() {
     get('entry/qryEntryInfo', {
-        entry: entry
+        entry: this.data.entry
       })
       .then(res => {
         let entryInfoData = res.data;
@@ -334,7 +334,7 @@ Page({
             success: () => {
               Toast({
                 type: 'success',
-                duration: 400,
+                duration: 1000,
                 message: "刷新成功"
               });
               this.setData({
@@ -350,23 +350,34 @@ Page({
       });
   },
 
-  onPullDownRefresh: function () {
-    this.setData({
-      pullDownRefresh: true
-    });
-    let tab = this.data.tab;
-    if (tab === '简介') {
-      // 刷新entry_info
-      this.refreshEntryInfo();
-    } else if (tab === '得分') {
-      // 刷新周得分数据
-      this.refreshEntryEventResult();
-    } else if (tab === '转会') {
-      // 刷新周转会数据
-      this.refreshEntryEventTransfers();
-    } else {
-      wx.stopPullDownRefresh({});
-    }
+  // 刷新周得分
+  refreshEntryEventResult() {
+    get('entry/refreshEntryEventResult', {
+        event: this.data.resultGw,
+        entry: this.data.entry
+      })
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 1000,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        // 拉取周得分数据
+        this.initEntryEventResult();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
   },
 
   // 刷新周得分
@@ -382,7 +393,7 @@ Page({
             success: () => {
               Toast({
                 type: 'success',
-                duration: 400,
+                duration: 1000,
                 message: "刷新成功"
               });
               this.setData({

@@ -36,7 +36,7 @@ Page({
       });
       // 拉取select
       if (JSON.stringify(this.data.selectData) === '{}') {
-        this.getLeagueSelect();
+        this.initLeagueSelect();
       }
     } else {
       this.setData({
@@ -49,7 +49,15 @@ Page({
     this.setData({
       pullDownRefresh: true
     });
-    this.getLeagueSelect();
+    // 刷新
+    this.refreshLeagueSelect();
+  },
+
+  onPullDownRefresh: function () {
+    this.setData({
+      pullDownRefresh: true
+    });
+    this.refreshLeagueSelect();
   },
 
   onShareAppMessage: function () {
@@ -90,7 +98,7 @@ Page({
       gw: gw
     });
     // 拉取select
-    this.getLeagueSelect();
+    this.initLeagueSelect();
   },
 
   // 联赛选择回填
@@ -109,15 +117,14 @@ Page({
       name: name,
     });
     // 拉取select
-    this.getLeagueSelect();
+    this.initLeagueSelect();
   },
 
   /**
    * 数据
    */
-  getLeagueSelect() {
-    get('stat/qryTeamSelectByLeagueName', {
-        season: this.data.season,
+  initLeagueSelect() {
+    get('stat/qryLeagueSelectByName', {
         event: this.data.gw,
         leagueName: this.data.name
       })
@@ -128,7 +135,7 @@ Page({
             success: () => {
               Toast({
                 type: 'success',
-                duration: 400,
+                duration: 1000,
                 message: "刷新成功"
               });
               this.setData({
@@ -144,6 +151,40 @@ Page({
       .catch(res => {
         console.log('fail:', res);
       });
+  },
+
+  refreshLeagueSelect(){
+    get('stat/refreshLeagueSelect', {
+      event: this.data.gw,
+      leagueName: this.data.name
+    })
+    .then(() => {
+      // 下拉刷新
+      if (this.data.pullDownRefresh) {
+        wx.stopPullDownRefresh({
+          success: () => {
+            Toast({
+              type: 'success',
+              duration: 1000,
+              message: "后台刷新中"
+            });
+            this.setData({
+              pullDownRefresh: false
+            });
+          },
+        });
+      }
+      Toast({
+        type: 'success',
+        duration: 1000,
+        message: "刷新成功"
+      });
+      // 拉取select
+      this.initLeagueSelect();
+    })
+    .catch(res => {
+      console.log('fail:', res);
+    });
   },
 
 })

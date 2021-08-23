@@ -146,6 +146,8 @@
     </van-tab>
 
   </van-tabs>
+  
+  <van-toast id="van-toast" />
 
   <view class="bottemNavBar">
     <bottomNavBar active="stat"></bottomNavBar>
