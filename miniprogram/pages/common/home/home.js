@@ -46,7 +46,7 @@ Page({
       // 设置标题
       let entryName = this.data.entryName;
       if (entryName === '' || typeof entryName === 'undefined') {
-        this.getEntryInfo();
+        this.initEntryInfo();
       }
     });
   },
@@ -89,7 +89,7 @@ Page({
       })
   },
 
-  getEntryInfo() {
+  initEntryInfo() {
     get('entry/qryEntryInfo', {
         entry: this.data.entry
       }, false)

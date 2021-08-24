@@ -107,7 +107,7 @@ Page({
     // 设置
     this.setData({
       gw: app.globalData.gw,
-      entry: app.globalData.entryInfoData.entry,
+      entry: app.globalData.entry,
     });
     let showTournamentPicker = false;
     // 取缓存
@@ -119,9 +119,7 @@ Page({
         tournamentName: tournamentName
       });
       // 拉取数据
-      if (this.data.tournamentPageResultList.length === 0) {
-        this.initDataList();
-      }
+      this.initDataList();
     } else {
       showTournamentPicker = true; // 缓存没有时从picker中选择
     }
@@ -440,7 +438,12 @@ Page({
                 duration: 1000,
                 message: "后台刷新中"
               });
-              delay(10000).then(() => {
+              delay(60000).then(() => {
+                Toast({
+                  type: 'success',
+                  duration: 1000,
+                  message: "刷新成功"
+                });
                 // 拉取积分榜数据
                 this.initEventChampionList();
                 // 拉取tournament数据
@@ -503,6 +506,10 @@ Page({
   },
 
   datafilter() {
+    this.setData({
+      currentPage: 1,
+      tournamentPageResultList: []
+    });
     let list = this.sortValue(tournamentResultFullList);
     list = this.captainFilter(list);
     list = this.chipFilter(list);
@@ -610,12 +617,12 @@ Page({
     list.forEach((element) => {
       if (element[rankField] == rankValue) {
         repeat++;
-        element.index = rank;
+        element.tournamentRank = rank;
       } else {
         rank = rank + repeat + 1;
         repeat = 0;
         rankValue = element[rankField];
-        element.index = rank;
+        element.tournamentRank = rank;
       }
     });
     return list;

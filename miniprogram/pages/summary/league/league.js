@@ -50,13 +50,9 @@ Page({
         title: name,
       })
       // 拉取info
-      if (JSON.stringify(this.data.infoData) === '{}') {
-        this.initLeagueSeasonInfo();
-      }
+      this.initLeagueSeasonInfo();
       // 拉取summary
-      if (JSON.stringify(this.data.summaryData) === '{}') {
-        this.initLeagueSeasonSummary();
-      }
+      this.initLeagueSeasonSummary();
     } else {
       this.setData({
         showLeaguePicker: true
@@ -100,7 +96,7 @@ Page({
     wx.setStorageSync('summary-league', name);
     // 设置
     this.setData({
-      name: name,
+      leagueName: name,
     });
     // 拉取info
     this.initLeagueSeasonInfo();
@@ -239,21 +235,21 @@ Page({
             },
           });
         }
-        Toast({
-          type: 'success',
-          duration: 1000,
-          message: "刷新成功"
+        delay(60000).then(() => {
+          Toast({
+            type: 'success',
+            duration: 1000,
+            message: "刷新成功"
+          });
+          // 拉取info
+          this.initLeagueSeasonInfo();
+          // 拉取summary
+          this.initLeagueSeasonSummary();
+          // 拉取captain
+          this.initLeagueSeasonCaptain();
+          // 拉取score
+          this.initLeagueSeasonScore();
         });
-        // 拉取info
-        this.initEntrySeasonInfo();
-        // 拉取summary
-        this.initEntrySeasonSummary();
-        // 拉取captain
-        this.initEntrySeasonCaptain();
-        // 拉取transfers
-        this.initEntrySeasonTransfers();
-        // 拉取score
-        this.initEntrySeasonScore();
       })
       .catch(res => {
         console.log('fail:', res);

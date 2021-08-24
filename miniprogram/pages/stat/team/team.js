@@ -161,8 +161,15 @@ Page({
             },
           });
         }
-        // 拉取球队数据
-        this.getTeamSummary();
+        delay(60000).then(() => {
+          Toast({
+            type: 'success',
+            duration: 1000,
+            message: "刷新成功"
+          });
+          // 拉取球队数据
+          this.getTeamSummary();
+        });
       })
       .catch(res => {
         console.log('fail:', res);

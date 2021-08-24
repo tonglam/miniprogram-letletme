@@ -41,7 +41,7 @@
         <view class="table">
           <van-cell-group title="周亚军" wx:if="{{runnerUpList.length > 0}}">
             <block wx:for="{{runnerUpList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="GW{{data.event}} - {{data.entryName}}" value="{{data.points}}" />
+              <van-cell title="GW{{data.event}} - {{data.entryName}}" value="{{data.points}}分" />
             </block>
           </van-cell-group>
         </view>
@@ -49,7 +49,7 @@
         <view class="table">
           <van-cell-group title="周季军" wx:if="{{secondRunnerUpList.length > 0}}">
             <block wx:for="{{secondRunnerUpList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="GW{{data.event}} - {{data.entryName}}" value="{{data.points}}" />
+              <van-cell title="GW{{data.event}} - {{data.entryName}}" value="{{data.points}}分" />
             </block>
           </van-cell-group>
         </view>
@@ -90,32 +90,32 @@
 
             <i-cell wx:if="{{sortValue==='overallPoints'}}"
               title="[{{data.tournamentRank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.overallPoints}}"
-              label="周得分:{{data.points}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 总联赛排名:{{data.tournamentRank}}"
+              label="周得分:{{data.points}} 剁手:{{data.transfersCost}} 开卡:{{data.chip}} 联赛排名:{{data.tournamentRank}}"
               is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
 
             <i-cell wx:if="{{sortValue==='points'}}"
               title="[{{data.tournamentRank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.points}}"
-              label="总得分:{{data.overallPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 总联赛排名:{{data.tournamentRank}}"
+              label="总得分:{{data.overallPoints}} 剁手:{{data.transfersCost}} 开卡:{{data.chip}} 联赛排名:{{data.tournamentRank}}"
               is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
 
             <i-cell wx:if="{{sortValue==='netPoints'}}"
               title="[{{data.tournamentRank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.netPoints}}"
-              label="总得分:{{data.overallPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 总联赛排名:{{data.tournamentRank}}"
+              label="总得分:{{data.overallPoints}} 剁手:{{data.transfersCost}} 开卡:{{data.chip}} 联赛排名:{{data.tournamentRank}}"
               is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
 
             <i-cell wx:if="{{sortValue==='transfersCost'}}"
               title="[{{data.tournamentRank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.transfersCost}}"
-              label="总得分:{{data.overallPoints}} 周得分:{{data.points}} 开卡:{{data.chip}} 总联赛排名:{{data.tournamentRank}}"
+              label="总得分:{{data.overallPoints}} 周得分:{{data.points}} 开卡:{{data.chip}} 联赛排名:{{data.tournamentRank}}"
               is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
 
             <i-cell wx:if="{{sortValue==='value'}}"
               title="[{{data.tournamentRank}}] {{data.entryName}}【{{data.captainName}}】" value="£{{data.value}}m"
-              label="总得分:{{data.overallPoints}} 周得分:{{data.points}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 总联赛排名:{{data.tournamentRank}}"
+              label="总得分:{{data.overallPoints}} 剁手:{{data.transfersCost}} 开卡:{{data.chip}} 联赛排名:{{data.tournamentRank}}"
               is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
 
             <i-cell wx:if="{{sortValue==='bank'}}"
               title="[{{data.tournamentRank}}] {{data.entryName}}【{{data.captainName}}】" value="£{{data.bank}}m"
-              label="总得分:{{data.overallPoints}} 周得分:{{data.points}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 总联赛排名:{{data.tournamentRank}}"
+              label="总得分:{{data.overallPoints}} 剁手:{{data.transfersCost}} 开卡:{{data.chip}} 联赛排名:{{data.tournamentRank}}"
               is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
 
           </block>

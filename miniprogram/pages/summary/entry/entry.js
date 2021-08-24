@@ -50,13 +50,9 @@ Page({
       title: app.globalData.entryInfoData.playerName,
     })
     // 拉取info
-    if (JSON.stringify(this.data.infoData) === '{}') {
-      this.initEntrySeasonInfo();
-    }
+    this.initEntrySeasonInfo();
     // 拉取summary
-    if (JSON.stringify(this.data.summaryData) === '{}') {
-      this.initEntrySeasonSummary();
-    }
+    this.initEntrySeasonSummary();
   },
 
   onPullDownRefresh: function () {

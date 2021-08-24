@@ -35,9 +35,7 @@ Page({
         name: name
       });
       // 拉取select
-      if (JSON.stringify(this.data.selectData) === '{}') {
-        this.initLeagueSelect();
-      }
+      this.initLeagueSelect();
     } else {
       this.setData({
         showLeaguePicker: true
@@ -123,6 +121,7 @@ Page({
   /**
    * 数据
    */
+
   initLeagueSelect() {
     get('stat/qryLeagueSelectByName', {
         event: this.data.gw,
@@ -153,38 +152,40 @@ Page({
       });
   },
 
-  refreshLeagueSelect(){
+  refreshLeagueSelect() {
     get('stat/refreshLeagueSelect', {
-      event: this.data.gw,
-      leagueName: this.data.name
-    })
-    .then(() => {
-      // 下拉刷新
-      if (this.data.pullDownRefresh) {
-        wx.stopPullDownRefresh({
-          success: () => {
-            Toast({
-              type: 'success',
-              duration: 1000,
-              message: "后台刷新中"
-            });
-            this.setData({
-              pullDownRefresh: false
-            });
-          },
+        event: this.data.gw,
+        leagueName: this.data.name
+      })
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 1000,
+                message: "后台刷新中"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        delay(60000).then(() => {
+          Toast({
+            type: 'success',
+            duration: 1000,
+            message: "刷新成功"
+          });
+          // 拉取select
+          this.initLeagueSelect();
         });
-      }
-      Toast({
-        type: 'success',
-        duration: 1000,
-        message: "刷新成功"
+      })
+      .catch(res => {
+        console.log('fail:', res);
       });
-      // 拉取select
-      this.initLeagueSelect();
-    })
-    .catch(res => {
-      console.log('fail:', res);
-    });
   },
 
 })

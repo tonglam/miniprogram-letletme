@@ -117,9 +117,7 @@ Page({
         tournamentName: tournamentName
       });
       // 刷新live
-      if (this.data.livePageDataList.length === 0) {
-        this.initLiveTournament();
-      }
+      this.initLiveTournament();
     } else {
       showTournamentPicker = true; // 缓存没有时从picker中选择
     }

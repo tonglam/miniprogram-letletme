@@ -43,16 +43,30 @@ Page({
    * 原生
    */
 
-  onShow: function () {
-    let entry = app.globalData.entry;
+  onLoad: function (options) {
+    let entry = 0;
+    if (JSON.stringify(options) !== '{}') { // 传入要查询的entry
+      entry = parseInt(options.entry);
+      this.setData({
+        entry: entry
+      });
+      this.initEntryInfo();
+    } else {
+      entry = app.globalData.entry;
+      let entryInfoData = app.globalData.entryInfoData;
+      this.setData({
+        entry: entry,
+        entryInfoData: entryInfoData
+      });
+      wx.setNavigationBarTitle({
+        title: entryInfoData.playerName,
+      });
+    }
     if (entry == 0) {
       redirectToEntryInput();
     }
-    // 全局缓存
     this.setData({
-      gw: app.globalData.gw,
-      entry: entry,
-      entryInfoData: app.globalData.entryInfoData
+      gw: app.globalData.gw
     });
     // 设置时间
     let resultGw = this.data.resultGw;
@@ -64,19 +78,15 @@ Page({
     // 设置标题
     let playerName = this.data.entryInfoData.playerName;
     if (playerName === '' || typeof playerName === 'undefined') {
-      return false;
+      this.initEntryInfo();
     }
-    wx.setNavigationBarTitle({
-      title: playerName,
-    });
+  },
+
+  onShow: function () {
     // 拉取联赛数据
-    if (JSON.stringify(this.data.classicList) === '{}') {
-      this.initEntryLeagueInfo();
-    }
+    this.initEntryLeagueInfo();
     // 拉取历史数据
-    if (JSON.stringify(this.data.historyInfoList) === '{}') {
-      this.initEntryHistoryInfo();
-    }
+    this.initEntryHistoryInfo();
   },
 
   onPullDownRefresh: function () {
@@ -177,9 +187,11 @@ Page({
       })
       .then(res => {
         let entryInfoData = res.data;
-        entryInfoData['overallRank'] = showOverallRank(entryInfoData.overallRank);
-        this.data.setData({
+        this.setData({
           entryInfoData: entryInfoData
+        });
+        wx.setNavigationBarTitle({
+          title: entryInfoData.playerName,
         });
       })
       .catch(res => {

@@ -1,7 +1,7 @@
 <view class="league">
 
   <view class="navBar">
-    <van-nav-bar title="{{leagueName}}" title-class="title" left-text="GW{{gw}}" right-text="切换联赛"
+    <van-nav-bar title="{{leagueName}}" title-class="title" left-text="" right-text="切换联赛"
       safe-area-inset-top="{{false}}" bind:click-left="" bind:click-right="onClickChange" />
   </view>
 

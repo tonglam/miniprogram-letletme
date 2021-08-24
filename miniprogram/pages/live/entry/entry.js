@@ -18,7 +18,6 @@ Page({
     entryInfoData: {},
     // 垃圾双向绑定
     entryName: "",
-    playerName: "",
     liveData: {},
     noTransfers: false,
     transfersList: [],
@@ -33,33 +32,32 @@ Page({
    */
 
   onLoad: function (options) {
+    let entry = 0;
     if (JSON.stringify(options) !== '{}') { // 传入要查询的entry
-      let entry = parseInt(options.entry);
+      entry = parseInt(options.entry);
       this.setData({
         entry: entry
       });
-      this.setEntryInfo(entry);
-    } else { // 全局变量取
+      this.initEntryInfo();
+    } else {
+      entry = app.globalData.entry;
       let entryInfoData = app.globalData.entryInfoData;
       this.setData({
+        entry: entry,
         entryInfoData: entryInfoData,
-        entry: app.globalData.entry,
-        entryName: entryInfoData.entryName,
-        playerName: entryInfoData.playerName
+        entryName: entryInfoData.entryName
       });
     }
-  },
-
-  onShow: function () {
     this.setData({
       gw: app.globalData.gw
     });
+  },
+
+  onShow: function () {
     // 拉取实时分数
     this.initEntryLive();
     // 拉取转会数据
-    if (!this.data.noTransfers && this.data.transfersList.length === 0) {
-      this.initTransfersData();
-    }
+    this.initTransfers();
   },
 
   onPullDownRefresh: function () {
@@ -92,16 +90,36 @@ Page({
 
   // team_id输入确认
   onClickInput() {
-    this.setEntryInfo(this.data.entry);
-    this.initEntryLive();
+    console.log("input:" + this.data.entry);
     this.setData({
       popShow: false
     });
+    this.initEntryInfo();
+    // 拉取实时分数
+    this.initEntryLive();
+    // 拉取转会数据
+    this.initTransfers();
   },
 
   /**
    * 数据
    */
+
+  initEntryInfo() {
+    get('entry/qryEntryInfo', {
+        entry: this.data.entry
+      })
+      .then(res => {
+        let entryInfoData = res.data;
+        this.setData({
+          entryInfoData: entryInfoData,
+          entryName: entryInfoData.entryName
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
 
   // 拉取entry实时得分数据
   initEntryLive() {
@@ -187,7 +205,7 @@ Page({
   },
 
   // 拉取本轮转会数据
-  initTransfersData() {
+  initTransfers() {
     get('entry/qryEntryEventTransfers', {
         event: this.data.gw,
         entry: this.data.entry
@@ -212,26 +230,6 @@ Page({
       }, false)
       .then(() => {
         this.initEntryLive();
-      });
-  },
-
-  // 拉取entry_info
-  setEntryInfo(entry) {
-    get('entry/qryEntryInfo', {
-        entry: entry
-      })
-      .then(res => {
-        let entryInfoData = res.data;
-        entryInfoData['overallRank'] = showOverallRank(entryInfoData.overallRank);
-        this.setData({
-          entryInfoData: entryInfoData,
-          entry: entryInfoData.entry,
-          entryName: entryInfoData.entryName,
-          playerName: entryInfoData.playerName
-        });
-      })
-      .catch(res => {
-        console.log('fail:', res);
       });
   },
 

@@ -10,7 +10,7 @@
       <text>\n</text>
       <text>输入要查看得分的team_id</text>
       <text>\n\n</text>
-      <van-field size="large" left-icon="search" model:value="{{entry}}" placeholder="team_id" border="{{ true }}"
+      <van-field size="large" left-icon="search" model:value="{{entry}}" placeholder="team_id" border="{{ true}}"
         clearable />
       <text>\n</text>
       <van-button type="primary" plain size="normal" bind:click="onClickInput">更换</van-button>
@@ -59,7 +59,7 @@
       <van-cell-group wx:else title="本周转会">
         <block wx:for="{{transfersList}}" wx:for-item="data" wx:key="index">
           <van-cell title="转入：【{{data.elementInTeamShortName}}】{{data.elementInWebName}}"
-            value="转出：【{{data.elementInTeamShortName}}】{{data.elementOutWebName}}" />
+            value="转出：【{{data.elementOutTeamShortName}}】{{data.elementOutWebName}}" />
         </block>
       </van-cell-group>
     </view>
