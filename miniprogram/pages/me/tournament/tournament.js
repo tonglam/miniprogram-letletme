@@ -2,6 +2,7 @@ import {
   get
 } from "../../../utils/request";
 import {
+  delay,
   getChipName
 } from '../../../utils/utils';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
@@ -429,6 +430,9 @@ Page({
       .then(() => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
+          this.setData({
+            pullDownRefresh: false
+          });
           wx.stopPullDownRefresh({
             success: () => {
               Toast({
@@ -436,8 +440,11 @@ Page({
                 duration: 1000,
                 message: "后台刷新中"
               });
-              this.setData({
-                pullDownRefresh: false
+              delay(10000).then(() => {
+                // 拉取积分榜数据
+                this.initEventChampionList();
+                // 拉取tournament数据
+                this.initTournamentResult();
               });
             }
           });
@@ -510,6 +517,14 @@ Page({
       sortTypeValue = this.data.sortTypeValue,
       list = [];
     switch (sortValue) {
+      case 'overallPoints': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.overallPoints - b.overallPoints);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.overallPoints - a.overallPoints);
+        }
+        break;
+      }
       case 'points': {
         if (sortTypeValue === 'asc') {
           list = fullList.sort((a, b) => a.points - b.points);
@@ -523,14 +538,6 @@ Page({
           list = fullList.sort((a, b) => a.netPoints - b.netPoints);
         } else if (sortTypeValue === 'desc') {
           list = fullList.sort((a, b) => b.netPoints - a.netPoints);
-        }
-        break;
-      }
-      case 'overallPoints': {
-        if (sortTypeValue === 'asc') {
-          list = fullList.sort((a, b) => a.overallPoints - b.overallPoints);
-        } else if (sortTypeValue === 'desc') {
-          list = fullList.sort((a, b) => b.overallPoints - a.overallPoints);
         }
         break;
       }

@@ -200,24 +200,25 @@ Page({
     let transfers = this.data.transfers,
       leftTransfers = this.data.leftTransfers,
       showLeftTransfers = this.data.showLeftTransfers;
-    if (leftTransfers === 0) {
-      Toast.fail('没有名额啦');
-      return false;
-    }
     let elementType = parseInt(this.data.elementType);
-    if (elementType != 5) {
+    if (elementType !== 5) {
+      // 非队长才计算名额
+      if (leftTransfers === 0) {
+        Toast.fail('没有名额啦');
+        return false;
+      }
       transfers = transfers + 1;
       this.setData({
         transfers: transfers,
       });
-    }
-    if (leftTransfers !== -1) {
-      leftTransfers = leftTransfers - 1;
-      showLeftTransfers = this.getShowLeftTransfers(leftTransfers);
-      this.setData({
-        leftTransfers: leftTransfers,
-        showLeftTransfers: showLeftTransfers
-      });
+      if (leftTransfers !== -1) {
+        leftTransfers = leftTransfers - 1;
+        showLeftTransfers = this.getShowLeftTransfers(leftTransfers);
+        this.setData({
+          leftTransfers: leftTransfers,
+          showLeftTransfers: showLeftTransfers
+        });
+      }
     }
     // 球员选择
     let playerInfo = event.detail,

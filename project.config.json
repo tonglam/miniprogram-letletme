@@ -2,12 +2,12 @@
   "miniprogramRoot": "miniprogram/",
   "cloudfunctionRoot": "cloudfunctions/",
   "setting": {
-    "urlCheck": false,
+    "urlCheck": true,
     "es6": true,
     "enhance": true,
     "postcss": true,
     "preloadBackgroundData": false,
-    "minified": true,
+    "minified": false,
     "newFeature": true,
     "coverView": true,
     "nodeModules": true,
@@ -37,7 +37,7 @@
   },
   "appid": "wx4b37f3f2c2c7f169",
   "projectname": "miniprogram-letletme",
-  "libVersion": "2.19.0",
+  "libVersion": "2.19.1",
   "cloudfunctionTemplateRoot": "cloudfunctionTemplate",
   "condition": {
     "search": {

@@ -131,15 +131,15 @@ Page({
       .then(res => {
         // 下拉刷新
         if (this.data.pullDownRefresh) {
+          this.setData({
+            pullDownRefresh: false
+          });
           wx.stopPullDownRefresh({
             success: () => {
               Toast({
                 type: 'success',
                 duration: 1000,
                 message: "刷新成功"
-              });
-              this.setData({
-                pullDownRefresh: false
               });
             },
           });

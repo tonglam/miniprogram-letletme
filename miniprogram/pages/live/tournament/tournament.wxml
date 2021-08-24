@@ -42,10 +42,37 @@
   <view class="content">
     <i-cell-group wx:for="{{livePageDataList}}" wx:for-item="list" wx:key="num">
       <block wx:for="{{list}}" wx:for-item="data" wx:key="index">
-        <i-cell title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
-          value="{{data.livePoints}} ({{data.liveNetPoints}})"
+
+        <i-cell wx:if="{{sortValue==='livePoints'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
+          value="{{data.livePoints}}"
           label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
           is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
+        <i-cell wx:if="{{sortValue==='liveNetPoints'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
+          value="{{data.liveNetPoints}}"
+          label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
+          is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
+        <i-cell wx:if="{{sortValue==='liveTotalPoints'}}"
+          title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveTotalPoints}}"
+          label="周得分:{{data.livePoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
+          is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
+        <i-cell wx:if="{{sortValue==='transferCost'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
+          value="{{data.transferCost}}"
+          label="总分:{{data.liveTotalPoints}} 周得分:{{data.livePoints}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
+          is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
+        <i-cell wx:if="{{sortValue==='played'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
+          value="{{data.played}}"
+          label="总分:{{data.liveTotalPoints}} 周得分:{{data.livePoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 待出场:{{data.toPlay}}"
+          is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
+        <i-cell wx:if="{{sortValue==='toPlay'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
+          value="{{data.toPlay}}"
+          label="总分:{{data.liveTotalPoints}} 周得分:{{data.livePoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.toPlay}}"
+          is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
       </block>
     </i-cell-group>
   </view>

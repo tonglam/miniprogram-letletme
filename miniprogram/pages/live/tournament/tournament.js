@@ -447,7 +447,7 @@ Page({
         if (sortTypeValue === 'asc') {
           list = fullList.sort((a, b) => a.livePoints - b.livePoints);
         } else if (sortTypeValue === 'desc') {
-          list = fullList.sort((a, b) => b.liveNetPoints - a.liveNetPoints);
+          list = fullList.sort((a, b) => b.livePoints - a.livePoints);
         }
         break;
       }
