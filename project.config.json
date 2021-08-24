@@ -30,8 +30,11 @@
     "enableEngineNative": false,
     "useIsolateContext": true,
     "userConfirmedBundleSwitch": false,
-    "packNpmManually": false,
-    "packNpmRelationList": [],
+    "packNpmManually": true,
+    "packNpmRelationList": [{
+      "packageJsonPath": "./package.json",
+      "miniprogramNpmDistDir": "./miniprogram/"
+    }],
     "minifyWXSS": true,
     "showES6CompileOption": false
   },
@@ -53,13 +56,11 @@
       "list": []
     },
     "miniprogram": {
-      "list": [
-        {
-          "id": -1,
-          "name": "db guide",
-          "pathName": "pages/databaseGuide/databaseGuide"
-        }
-      ]
+      "list": [{
+        "id": -1,
+        "name": "db guide",
+        "pathName": "pages/databaseGuide/databaseGuide"
+      }]
     }
   }
 }
