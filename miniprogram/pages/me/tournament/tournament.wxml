@@ -103,8 +103,8 @@
               label="总得分:{{data.overallPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 总联赛排名:{{data.tournamentRank}}"
               is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
 
-            <i-cell wx:if="{{sortValue==='transferCost'}}"
-              title="[{{data.tournamentRank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.transferCost}}"
+            <i-cell wx:if="{{sortValue==='transfersCost'}}"
+              title="[{{data.tournamentRank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.transfersCost}}"
               label="总得分:{{data.overallPoints}} 周得分:{{data.points}} 开卡:{{data.chip}} 总联赛排名:{{data.tournamentRank}}"
               is-link url="/pages/me/entry/entry?entry={{data.entry}}" />
 

@@ -46,7 +46,7 @@ Page({
       },
       {
         text: '剁手',
-        value: 'transferCost'
+        value: 'transfersCost'
       },
       {
         text: '股价',
@@ -467,7 +467,7 @@ Page({
 
   defaultDropDown() {
     this.setData({
-      sortValue: 'points',
+      sortValue: 'overallPoints',
       sortTypeValue: 'desc',
       captainValue: '',
       chipValue: '全部',
@@ -541,11 +541,11 @@ Page({
         }
         break;
       }
-      case 'transferCost': {
+      case 'transfersCost': {
         if (sortTypeValue === 'asc') {
-          list = fullList.sort((a, b) => a.transferCost - b.transferCost);
+          list = fullList.sort((a, b) => a.transfersCost - b.transfersCost);
         } else if (sortTypeValue === 'desc') {
-          list = fullList.sort((a, b) => b.transferCost - a.transferCost);
+          list = fullList.sort((a, b) => b.transfersCost - a.transfersCost);
         }
         break;
       }
