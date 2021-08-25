@@ -316,30 +316,30 @@ Page({
 
   defaultSortDropDown() {
     let sortOptions = [{
+          text: '总分',
+          value: 'points'
+        }, {
           text: '身价',
           value: 'price'
-        }, {
-          text: '总得分',
-          value: 'points'
         }, {
           text: '持有率',
           value: 'selectedByPercent'
         }, {
           text: '进球',
-          value: 'goals'
+          value: 'goalsScored'
         },
         {
           text: '助攻',
-          value: 'points'
+          value: 'assists'
         }, {
           text: '零封',
-          value: 'points'
+          value: 'cleanSheets'
         }, {
           text: 'BONUS',
-          value: 'points'
+          value: 'bonus'
         }, {
           text: 'BPS',
-          value: 'points'
+          value: 'bps'
         }, {
           text: '周转入',
           value: 'transfersIn'
@@ -348,7 +348,7 @@ Page({
           value: 'transfersOut'
         }
       ],
-      sortValue = 'price';
+      sortValue = 'points';
     this.setData({
       sortOptions: sortOptions,
       sortValue: sortValue
@@ -393,7 +393,7 @@ Page({
       {
         prop: 'points',
         width: 150,
-        label: '总得分'
+        label: '总分'
       },
       {
         prop: 'selectedByPercent',
@@ -521,19 +521,19 @@ Page({
       sortTypeValue = this.data.sortTypeValue,
       list = [];
     switch (sortValue) {
-      case 'price': {
-        if (sortTypeValue === 'asc') {
-          list = fullList.sort((a, b) => a.price - b.price);
-        } else if (sortTypeValue === 'desc') {
-          list = fullList.sort((a, b) => b.price - a.price);
-        }
-        break;
-      }
       case 'points': {
         if (sortTypeValue === 'asc') {
           list = fullList.sort((a, b) => a.points - b.points);
         } else if (sortTypeValue === 'desc') {
           list = fullList.sort((a, b) => b.points - a.points);
+        }
+        break;
+      }
+      case 'price': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.price - b.price);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.price - a.price);
         }
         break;
       }
@@ -637,7 +637,8 @@ Page({
       }
       let element = playerList[index - 1],
         price = element.price + '',
-        selectedByPercent = element.selectedByPercent + '';
+        selectedByPercent = element.selectedByPercent + '',
+        minutes = element.minutes + '';
       if (price.indexOf('m') === -1) {
         element.price = price + 'm';
       }
