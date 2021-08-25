@@ -1,3 +1,17 @@
-.tournament .dropdown {
-  margin: 10px 0;
+.filter .dropDown {
+  margin: 5px 0;
+}
+
+.filter .table {
+  margin: 2px 0;
+}
+
+.header-class {
+  border: 1rpx solid #5FB878;
+  background-color: #5FB878;
+  color: #fff!important;
+}
+
+.header-class .td:first-child {
+  color: #55C355;
 }

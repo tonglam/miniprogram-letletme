@@ -22,40 +22,40 @@ Page({
    */
 
   onLoad: function (options) {
+    let code = '',
+      season = '';
     if (JSON.stringify(options) !== '{}') { // 传入要查询的球员信息
-      let season = options.season,
+      season = options.season,
         code = options.code;
       this.setData({
         season: season,
         "playerInfo.code": code,
       });
-    }
-    // 拉取球员数据
-    this.getPlayerInfo();
-    this.getPlayerSummary();
-  },
-
-  onShow: function () {
-    // 取缓存
-    let code = wx.getStorageSync('stat-player');
-    if (code > 0) {
-      this.setData({
-        "playerInfo.code": code,
-      });
-      let season = wx.getStorageSync('stat-player-season');
-      if (season !== '') {
-        season = app.globalData.season;
-      }
-      this.setData({
-        season: season,
-      });
       // 拉取球员数据
       this.getPlayerInfo();
       this.getPlayerSummary();
     } else {
-      this.setData({
-        playerPickerShow: true,
-      });
+      // 取缓存
+      code = wx.getStorageSync('stat-player');
+      if (code > 0) {
+        this.setData({
+          "playerInfo.code": code,
+        });
+        season = wx.getStorageSync('stat-player-season');
+        if (season !== '') {
+          season = app.globalData.season;
+          this.setData({
+            season: season,
+          });
+        }
+        // 拉取球员数据
+        this.getPlayerInfo();
+        this.getPlayerSummary();
+      } else {
+        this.setData({
+          playerPickerShow: true,
+        });
+      }
     }
   },
 

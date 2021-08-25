@@ -6,12 +6,18 @@
       <van-dropdown-item value="{{teamValue}}" options="{{teamOptions}}" bind:change="onDropDownTeam" />
       <van-dropdown-item value="{{priceValue}}" options="{{priceOptions}}" bind:change="onDropDownPrice" />
     </van-dropdown-menu>
+  </view>
 
+  <view class="dropdown">
     <van-dropdown-menu>
       <van-dropdown-item value="{{sortValue}}" options="{{sortOptions}}" bind:change="onDropDownSortValue" />
       <van-dropdown-item value="{{sortTypeValue}}" options="{{sortTypeOptions}}"
         bind:change="onDropDownSortTypeValue" />
     </van-dropdown-menu>
+
+    <view class="table">
+      <table headers="{{header}}" data="{{playerPageList}}" header-row-class-name="header-class" stripe="{{true}}" border="{{true}}" bind:rowClick="onRowClick" />
+    </view>
 
   </view>
 

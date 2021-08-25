@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "球员筛选器",
-  "usingComponents": {}
+  "usingComponents": {
+    "table": "../../../miniprogram_npm/miniprogram-table-component"
+  }
 }

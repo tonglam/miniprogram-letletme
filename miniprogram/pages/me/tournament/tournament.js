@@ -380,7 +380,8 @@ Page({
       currentPage: 1,
       tournamentPageResultList: []
     });
-    let list = this.sortValue(tournamentResultFullList);
+    let list = [];
+    list = this.sortValue(tournamentResultFullList);
     list = this.captainFilter(list);
     list = this.chipFilter(list);
     list = this.rankList(list);

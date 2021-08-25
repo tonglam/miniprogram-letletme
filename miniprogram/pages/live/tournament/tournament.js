@@ -343,7 +343,8 @@ Page({
       currentPage: 1,
       livePageDataList: []
     });
-    let list = this.sortValue(liveDataFullList);
+    let list = [];
+    list = this.sortValue(liveDataFullList);
     list = this.captainFilter(list);
     list = this.chipFilter(list);
     list = this.rankList(list);

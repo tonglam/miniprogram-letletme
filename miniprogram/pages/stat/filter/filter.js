@@ -13,6 +13,8 @@ Page({
     gw: 0,
     season: '',
     teamList: [],
+    currentPage: 1,
+    totalNum: 0,
     playerPageList: [],
     // dropdown
     positonOptions: [],
@@ -25,6 +27,8 @@ Page({
     sortValue: '',
     sortTypeOptions: [],
     sortTypeValue: '',
+    // table
+    header: [],
   },
 
   /**
@@ -38,12 +42,21 @@ Page({
     });
     // 默认下拉菜单
     this.defaultDropDown();
+    // 表头
+    this.defaultHeader();
     // 拉取球员列表
-    this.initAllPlayers();
+    this.initFilterPlayers();
   },
 
   onReachBottom: function () {
-
+    let currentPage = this.data.currentPage;
+    if (currentPage * 10 > this.data.totalNum) {
+      return false;
+    }
+    this.setData({
+      currentPage: currentPage + 1
+    });
+    this.setPageData();
   },
 
   onShareAppMessage: function () {
@@ -65,16 +78,66 @@ Page({
       positionValue: newValue
     });
     this.defaultPriceDropDown();
-    // this.datafilter();
+    this.datafilter();
   },
 
-  onDropDownTeam(event) {},
+  onDropDownTeam(event) {
+    let oldValue = this.data.teamValue,
+      newValue = event.detail;
+    if (oldValue === newValue) {
+      return false;
+    }
+    this.setData({
+      teamValue: newValue
+    });
+    this.datafilter();
+  },
 
-  onDropDownPrice(event) {},
+  onDropDownPrice(event) {
+    let oldValue = this.data.priceValue,
+      newValue = event.detail;
+    if (oldValue === newValue) {
+      return false;
+    }
+    this.setData({
+      priceValue: newValue
+    });
+    this.datafilter();
+  },
 
-  onDropDownSortValue(event) {},
+  onDropDownSortValue(event) {
+    let oldValue = this.data.sortValue,
+      newValue = event.detail;
+    if (oldValue === newValue) {
+      return false;
+    }
+    this.setData({
+      sortValue: newValue
+    });
+    this.datafilter();
+  },
 
-  onDropDownSortTypeValue(event) {},
+  onDropDownSortTypeValue(event) {
+    let oldValue = this.data.sortTypeValue,
+      newValue = event.detail;
+    if (oldValue === newValue) {
+      return false;
+    }
+    this.setData({
+      sortTypeValue: newValue
+    });
+    this.datafilter();
+  },
+
+  // 行点击
+  onRowClick(event) {
+    let code = event.detail.target.dataset.it.code,
+      season = this.data.season,
+      url = '/pages/stat/player/player?code=' + code + '&season=' + season;
+    wx.navigateTo({
+      url: url,
+    });
+  },
 
   /**
    * 默认筛选项
@@ -96,7 +159,7 @@ Page({
   defaultPositionDropDown() {
     let positonOptions = [{
           text: '全部',
-          value: 'all'
+          value: '全部'
         },
         {
           text: 'GKP',
@@ -115,7 +178,7 @@ Page({
           value: 'FWD'
         }
       ],
-      positionValue = 'all';
+      positionValue = '全部';
     this.setData({
       positonOptions: positonOptions,
       positionValue: positionValue
@@ -144,14 +207,9 @@ Page({
   defaultPriceDropDown() {
     let priceOptions = [],
       baseOptions = [{
-          text: '无限',
-          value: 'umlimited'
-        },
-        {
-          text: '预算内',
-          value: 'affordable'
-        }
-      ],
+        text: '不限价格',
+        value: 'umlimited'
+      }],
       lowestOptions = [{
         text: '4.0m',
         value: '4.0'
@@ -227,7 +285,7 @@ Page({
           value: '12.5'
         }
       ],
-      priceValue = 'affordable',
+      priceValue = 'umlimited',
       position = this.data.positionValue;
     switch (position) {
       case 'GKP': {
@@ -261,7 +319,7 @@ Page({
           text: '身价',
           value: 'price'
         }, {
-          text: '总分',
+          text: '总得分',
           value: 'points'
         }, {
           text: '持有率',
@@ -283,10 +341,10 @@ Page({
           text: 'BPS',
           value: 'points'
         }, {
-          text: '转入',
+          text: '周转入',
           value: 'transfersIn'
         }, {
-          text: '转出',
+          text: '周转出',
           value: 'transfersOut'
         }
       ],
@@ -312,20 +370,303 @@ Page({
     });
   },
 
+  defaultHeader() {
+    let header = [{
+        prop: 'webName',
+        width: 300,
+        label: '球员'
+      }, {
+        prop: 'teamShortName',
+        width: 150,
+        label: '球队'
+      },
+      {
+        prop: 'elementTypeName',
+        width: 150,
+        label: '位置'
+      },
+      {
+        prop: 'price',
+        width: 150,
+        label: '身价'
+      },
+      {
+        prop: 'points',
+        width: 150,
+        label: '总得分'
+      },
+      {
+        prop: 'selectedByPercent',
+        width: 150,
+        label: '持有率'
+      },
+      {
+        prop: 'minutes',
+        width: 150,
+        label: '上场时间'
+      },
+      {
+        prop: 'goalsScored',
+        width: 150,
+        label: '进球'
+      },
+      {
+        prop: 'assists',
+        width: 150,
+        label: '助攻'
+      },
+      {
+        prop: 'cleanSheets',
+        width: 150,
+        label: '零封'
+      },
+      {
+        prop: 'bonus',
+        width: 150,
+        label: 'BOUNS'
+      },
+      {
+        prop: 'bps',
+        width: 150,
+        label: 'BPS'
+      },
+      {
+        prop: 'transfersInEvent',
+        width: 150,
+        label: '周转入'
+      },
+      {
+        prop: 'transfersOutEvent',
+        width: 150,
+        label: '周转出'
+      }
+    ];
+    this.setData({
+      header: header
+    });
+  },
+
   /**
    * 排序和过滤
    */
+
+  datafilter() {
+    this.setData({
+      currentPage: 1,
+      playerPageList: []
+    });
+    let list = [];
+    list = this.positionFilter(playerFullList);
+    list = this.teamFilter(list);
+    list = this.priceFilter(list);
+    list = this.sortValue(list);
+    list = this.rankList(list);
+    playerList = list;
+    this.setPageData();
+  },
+
+  // 位置过滤
+  positionFilter(fullList) {
+    let position = this.data.positionValue,
+      list = [];
+    if (position === '全部') {
+      list = fullList;
+    } else {
+      fullList.forEach(element => {
+        if (element.elementTypeName === position) {
+          list.push(element);
+        }
+      });
+    }
+    return list;
+  },
+
+  // 球队过滤
+  teamFilter(fullList) {
+    let team = this.data.teamValue,
+      list = [];
+    if (team === '全部') {
+      list = fullList;
+    } else {
+      fullList.forEach(element => {
+        if (element.teamShortName === team) {
+          list.push(element);
+        }
+      });
+    }
+    return list;
+  },
+
+  // 身价过滤
+  priceFilter(fullList) {
+    let price = this.data.priceValue,
+      list = [];
+    if (price === 'umlimited') {
+      list = fullList;
+    } else {
+      fullList.forEach(element => {
+        price = parseFloat(price);
+        let elementPrice = parseFloat(element.price);
+        if (elementPrice >= price) {
+          list.push(element);
+        }
+      });
+    }
+    return list;
+  },
+
+  // 字段排序
+  sortValue(fullList) {
+    let sortValue = this.data.sortValue,
+      sortTypeValue = this.data.sortTypeValue,
+      list = [];
+    switch (sortValue) {
+      case 'price': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.price - b.price);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.price - a.price);
+        }
+        break;
+      }
+      case 'points': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.points - b.points);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.points - a.points);
+        }
+        break;
+      }
+      case 'selectedByPercent': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.selectedByPercent - b.selectedByPercent);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.selectedByPercent - a.selectedByPercent);
+        }
+        break;
+      }
+      case 'goalsScored': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.goalsScored - b.goalsScored);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.goalsScored - a.goalsScored);
+        }
+        break;
+      }
+      case 'assists': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.assists - b.assists);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.assists - a.assists);
+        }
+        break;
+      }
+      case 'cleanSheets': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.cleanSheets - b.cleanSheets);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.cleanSheets - a.cleanSheets);
+        }
+        break;
+      }
+      case 'bonus': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.bonus - b.bonus);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.bonus - a.bonus);
+        }
+        break;
+      }
+      case 'bps': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.bps - b.bps);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.bps - a.bps);
+        }
+        break;
+      }
+      case 'transfersInEvent': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.transfersInEvent - b.transfersInEvent);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.transfersInEvent - a.transfersInEvent);
+        }
+        break;
+      }
+      case 'transfersOutEvent': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.transfersOutEvent - b.transfersOutEvent);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.transfersOutEvent - a.transfersOutEvent);
+        }
+        break;
+      }
+    }
+    return list;
+  },
+
+  // 排序
+  rankList(list) {
+    let rankField = this.data.sortValue,
+      rankValue = 0,
+      rank = 0,
+      repeat = 0;
+    list.forEach((element) => {
+      if (element[rankField] == rankValue) {
+        repeat++;
+        element.id = rank;
+      } else {
+        rank = rank + repeat + 1;
+        repeat = 0;
+        rankValue = element[rankField];
+        element.id = rank;
+      }
+    });
+    return list;
+  },
+
+  // 分页数据
+  setPageData() {
+    let currentPage = this.data.currentPage,
+      list = [];
+    for (let index = 1; index < playerList.length + 1; index++) {
+      let start = 15 * (currentPage - 1) + 1,
+        end = 15 * currentPage;
+      if (index < start || index > end) {
+        continue;
+      }
+      let element = playerList[index - 1],
+        price = element.price + '',
+        selectedByPercent = element.selectedByPercent + '';
+      if (price.indexOf('m') === -1) {
+        element.price = price + 'm';
+      }
+      if (selectedByPercent.indexOf('%') === -1) {
+        element.selectedByPercent = selectedByPercent + '%';
+      }
+      list.push(element);
+    }
+    this.setData({
+      playerPageList: this.data.playerPageList.concat(list)
+    });
+  },
 
   /**
    * 数据
    */
 
-  initAllPlayers() {
-    get('player/qryAllPlayers', {
+  initFilterPlayers() {
+    get('player/qryFilterPlayers', {
         season: this.data.season
       })
       .then(res => {
-        playerFullList = res.data;
+        let list = res.data;
+        playerFullList = list;
+        this.setData({
+          totalNum: list.length
+        });
+        // 过滤数据
+        this.datafilter();
       })
       .catch(res => {
         console.log('fail:', res);

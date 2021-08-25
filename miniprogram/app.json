@@ -18,7 +18,7 @@
     "pages/me/entry/entry",
     "pages/me/tournament/tournament"
   ],
-  "entryPagePath": "pages/stat/filter/filter",
+  "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",
