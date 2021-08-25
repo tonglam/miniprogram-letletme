@@ -4,7 +4,8 @@ import {
 } from '../../../utils/request';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
-const type = ['Rise', 'Faller', 'Start'];
+const app = getApp(),
+  type = ['Rise', 'Faller', 'Start'];
 
 Page({
 
@@ -12,7 +13,7 @@ Page({
     // 公共
     mode: '日期',
     modeTitle: '',
-    seson: '2122',
+    season: '',
     // 日期数据
     riseInfoShow: false,
     fallerInfoShow: false,
@@ -57,6 +58,9 @@ Page({
    */
 
   onShow: function () {
+    this.setData({
+      season: app.globalData.season
+    });
     // 拉取身价
     this.getPirceList();
     // 默认日期模式

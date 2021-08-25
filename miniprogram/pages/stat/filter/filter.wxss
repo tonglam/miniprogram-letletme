@@ -1,1 +1,3 @@
-/* pages/stat/filter/filter.wxss */
+.tournament .dropdown {
+  margin: 10px 0;
+}

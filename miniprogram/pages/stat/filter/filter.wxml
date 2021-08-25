@@ -1,5 +1,20 @@
 <view class="filter">
 
+  <view class="dropdown">
+    <van-dropdown-menu>
+      <van-dropdown-item value="{{positionValue}}" options="{{positonOptions}}" bind:change="onDropDownPosition" />
+      <van-dropdown-item value="{{teamValue}}" options="{{teamOptions}}" bind:change="onDropDownTeam" />
+      <van-dropdown-item value="{{priceValue}}" options="{{priceOptions}}" bind:change="onDropDownPrice" />
+    </van-dropdown-menu>
+
+    <van-dropdown-menu>
+      <van-dropdown-item value="{{sortValue}}" options="{{sortOptions}}" bind:change="onDropDownSortValue" />
+      <van-dropdown-item value="{{sortTypeValue}}" options="{{sortTypeOptions}}"
+        bind:change="onDropDownSortTypeValue" />
+    </van-dropdown-menu>
+
+  </view>
+
   <view class="bottemNavBar">
     <bottomNavBar active="stat"></bottomNavBar>
   </view>

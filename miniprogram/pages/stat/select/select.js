@@ -9,8 +9,8 @@ Page({
 
   data: {
     // 数据
-    season: '2122',
-    gw: 1,
+    season: '',
+    gw: 0,
     name: "",
     selectData: {},
     // picker
@@ -27,6 +27,7 @@ Page({
     // 设置
     this.setData({
       gw: app.globalData.gw,
+      season: app.globalData.season
     });
     // 取缓存
     let name = wx.getStorageSync('stat-select');

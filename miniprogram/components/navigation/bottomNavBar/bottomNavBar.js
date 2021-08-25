@@ -54,10 +54,10 @@ const map = {
         name: "球队数据",
         subname: '查看球队数据',
       },
-      // {
-      //   name: "筛选器",
-      //   subname: '乱七八糟的数据查询',
-      // }
+      {
+        name: "筛选器",
+        subname: '乱七八糟的数据查询',
+      }
     ],
     "url": {
       "身价变化": "/pages/stat/price/price",
@@ -65,7 +65,7 @@ const map = {
       // "赛程查看": "/pages/stat/fixture/fixture",
       "球员数据": "/pages/stat/player/player",
       "球队数据": "/pages/stat/team/team",
-      // "筛选器": "/pages/stat/filter/filter"
+      "筛选器": "/pages/stat/filter/filter"
     },
     "show": true
   },

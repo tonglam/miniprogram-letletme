@@ -3,11 +3,13 @@ import {
 } from '../../../utils/request';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
+const app = getApp();
+
 Page({
 
   data: {
     // 数据
-    season: '2122',
+    season: '',
     name: '',
     teamSummary: {},
     gkpList: [],
@@ -31,11 +33,12 @@ Page({
         name: name,
       });
       let season = wx.getStorageSync('stat-team-season');
-      if (season !== '') {
-        this.setData({
-          season: season,
-        });
+      if (season === '') {
+        season = app.globalData.season;
       }
+      this.setData({
+        season: season,
+      });
       // 拉取球队数据
       this.getTeamSummary();
     } else {

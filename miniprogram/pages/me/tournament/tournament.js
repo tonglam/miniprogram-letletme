@@ -335,136 +335,6 @@ Page({
   },
 
   /**
-   * 数据
-   */
-
-  initDataList() {
-    // 拉取积分榜数据
-    this.initEventChampionList();
-    // 拉取tournament数据
-    this.initTournamentResult();
-  },
-
-  initEventChampionList() {
-    get('tournament/qryTournamentEventChampion', {
-        tournamentId: this.data.tournamentId
-      })
-      .then(res => {
-        if (res.data.id <= 0) {
-          return false;
-        }
-        this.setData({
-          championList: res.data.eventChampionResultList,
-          runnerUpList: res.data.eventRunnerUpResultList,
-          secondRunnerUpList: res.data.eventSecondRunnerUpResultList,
-          championCountList: res.data.championCountList
-        });
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
-  },
-
-  initTournamentResult() {
-    get('tournament/qryTournamentEventResult', {
-        event: this.data.gw,
-        tournamentId: this.data.tournamentId
-      })
-      .then(res => {
-        if (res.data.length === 0) {
-          return false;
-        }
-        // 更新
-        let list = [];
-        res.data.forEach(element => {
-          element.chip = getChipName(element.chip);
-          list.push(element);
-        });
-        tournamentResultFullList = list;
-        this.setData({
-          totalNum: list.length
-        });
-        // 过滤数据
-        this.datafilter();
-        // 组装队长下拉菜单
-        this.initCaptainDropDown();
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
-  },
-
-  initTournamentSearchResult() {
-    get('tournament/qryTournamentEventSearchResult', {
-        event: this.data.gw,
-        tournamentId: this.data.tournamentId,
-        element: this.data.searchElement
-      })
-      .then(res => {
-        if (res.data.length === 0) {
-          return false;
-        }
-        let list = [];
-        res.data.eventResultList.forEach(element => {
-          element.chip = getChipName(element.chip);
-          list.push(element);
-        });
-        tournamentResultFullList = list;
-        this.setData({
-          searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent + "(" + res.data.selectNum + "队)"
-        });
-        this.datafilter();
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
-  },
-
-  refreshTournamentResult() {
-    get('tournament/refreshTournamentEventResult', {
-        event: this.data.gw,
-        tournamentId: this.data.tournamentId,
-      })
-      .then(() => {
-        // 下拉刷新
-        if (this.data.pullDownRefresh) {
-          this.setData({
-            pullDownRefresh: false
-          });
-          wx.stopPullDownRefresh({
-            success: () => {
-              Toast({
-                type: 'success',
-                duration: 1000,
-                message: "后台刷新中"
-              });
-              delay(60000).then(() => {
-                Toast({
-                  type: 'success',
-                  duration: 1000,
-                  message: "刷新成功"
-                });
-                // 拉取积分榜数据
-                this.initEventChampionList();
-                // 拉取tournament数据
-                this.initTournamentResult();
-              });
-            }
-          });
-        }
-        Toast({
-          type: 'success',
-          duration: 1000,
-          message: "刷新成功"
-        });
-        this.initDataList();
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
-  },
-
-  /**
    * 排序过滤
    */
 
@@ -644,6 +514,136 @@ Page({
     this.setData({
       [key]: list
     });
+  },
+
+  /**
+   * 数据
+   */
+
+  initDataList() {
+    // 拉取积分榜数据
+    this.initEventChampionList();
+    // 拉取tournament数据
+    this.initTournamentResult();
+  },
+
+  initEventChampionList() {
+    get('tournament/qryTournamentEventChampion', {
+        tournamentId: this.data.tournamentId
+      })
+      .then(res => {
+        if (res.data.id <= 0) {
+          return false;
+        }
+        this.setData({
+          championList: res.data.eventChampionResultList,
+          runnerUpList: res.data.eventRunnerUpResultList,
+          secondRunnerUpList: res.data.eventSecondRunnerUpResultList,
+          championCountList: res.data.championCountList
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  initTournamentResult() {
+    get('tournament/qryTournamentEventResult', {
+        event: this.data.gw,
+        tournamentId: this.data.tournamentId
+      })
+      .then(res => {
+        if (res.data.length === 0) {
+          return false;
+        }
+        // 更新
+        let list = [];
+        res.data.forEach(element => {
+          element.chip = getChipName(element.chip);
+          list.push(element);
+        });
+        tournamentResultFullList = list;
+        this.setData({
+          totalNum: list.length
+        });
+        // 过滤数据
+        this.datafilter();
+        // 组装队长下拉菜单
+        this.initCaptainDropDown();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  initTournamentSearchResult() {
+    get('tournament/qryTournamentEventSearchResult', {
+        event: this.data.gw,
+        tournamentId: this.data.tournamentId,
+        element: this.data.searchElement
+      })
+      .then(res => {
+        if (res.data.length === 0) {
+          return false;
+        }
+        let list = [];
+        res.data.eventResultList.forEach(element => {
+          element.chip = getChipName(element.chip);
+          list.push(element);
+        });
+        tournamentResultFullList = list;
+        this.setData({
+          searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent + "(" + res.data.selectNum + "队)"
+        });
+        this.datafilter();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  refreshTournamentResult() {
+    get('tournament/refreshTournamentEventResult', {
+        event: this.data.gw,
+        tournamentId: this.data.tournamentId,
+      })
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          this.setData({
+            pullDownRefresh: false
+          });
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 1000,
+                message: "后台刷新中"
+              });
+              delay(60000).then(() => {
+                Toast({
+                  type: 'success',
+                  duration: 1000,
+                  message: "刷新成功"
+                });
+                // 拉取积分榜数据
+                this.initEventChampionList();
+                // 拉取tournament数据
+                this.initTournamentResult();
+              });
+            }
+          });
+        }
+        Toast({
+          type: 'success',
+          duration: 1000,
+          message: "刷新成功"
+        });
+        this.initDataList();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
   },
 
 })

@@ -298,90 +298,6 @@ Page({
   },
 
   /**
-   * 数据
-   */
-
-  initLiveTournament() {
-    get('live/calcLivePointsByTournament', {
-        event: this.data.gw,
-        tournamentId: this.data.tournamentId
-      })
-      .then(res => {
-        // 下拉刷新
-        if (this.data.pullDownRefresh) {
-          wx.stopPullDownRefresh({
-            success: () => {
-              Toast({
-                type: 'success',
-                duration: 1000,
-                message: "刷新成功"
-              });
-              this.setData({
-                pullDownRefresh: false
-              });
-            },
-          });
-        }
-        if (res.data.length === 0) {
-          return false;
-        }
-        // 更新
-        let list = [];
-        res.data.forEach(element => {
-          element.chip = getChipName(element.chip);
-          list.push(element);
-        });
-        liveDataFullList = list;
-        this.setData({
-          totalNum: list.length
-        });
-        // 过滤数据
-        this.datafilter();
-        // 组装队长下拉菜单
-        this.initCaptainDropDown();
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
-  },
-
-  // 刷新再拉取数据
-  refreshLiveTournament() {
-    get('common/insertEventLiveCache', {
-        event: gw
-      }, false)
-      .then(() => {
-        this.initLiveTournament();
-      });
-  },
-
-  initLiveSearchDataList() {
-    get('live/calcSearchLivePointsByTournament', {
-        event: this.data.gw,
-        tournamentId: this.data.tournamentId,
-        element: this.data.searchElement
-      })
-      .then(res => {
-        if (res.data.length === 0) {
-          return false;
-        }
-        let list = [];
-        res.data.liveCalcDataList.forEach(element => {
-          element.chip = getChipName(element.chip);
-          list.push(element);
-        });
-        liveDataFullList = list;
-        this.setData({
-          searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent + "(" + res.data.selectNum + "队)"
-        });
-        this.datafilter();
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
-  },
-
-  /**
    * 排序过滤
    */
 
@@ -561,6 +477,90 @@ Page({
     this.setData({
       [key]: list
     });
+  },
+
+  /**
+   * 数据
+   */
+
+  initLiveTournament() {
+    get('live/calcLivePointsByTournament', {
+        event: this.data.gw,
+        tournamentId: this.data.tournamentId
+      })
+      .then(res => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 1000,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        if (res.data.length === 0) {
+          return false;
+        }
+        // 更新
+        let list = [];
+        res.data.forEach(element => {
+          element.chip = getChipName(element.chip);
+          list.push(element);
+        });
+        liveDataFullList = list;
+        this.setData({
+          totalNum: list.length
+        });
+        // 过滤数据
+        this.datafilter();
+        // 组装队长下拉菜单
+        this.initCaptainDropDown();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  // 刷新再拉取数据
+  refreshLiveTournament() {
+    get('common/insertEventLiveCache', {
+        event: gw
+      }, false)
+      .then(() => {
+        this.initLiveTournament();
+      });
+  },
+
+  initLiveSearchDataList() {
+    get('live/calcSearchLivePointsByTournament', {
+        event: this.data.gw,
+        tournamentId: this.data.tournamentId,
+        element: this.data.searchElement
+      })
+      .then(res => {
+        if (res.data.length === 0) {
+          return false;
+        }
+        let list = [];
+        res.data.liveCalcDataList.forEach(element => {
+          element.chip = getChipName(element.chip);
+          list.push(element);
+        });
+        liveDataFullList = list;
+        this.setData({
+          searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent + "(" + res.data.selectNum + "队)"
+        });
+        this.datafilter();
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
   },
 
 })
