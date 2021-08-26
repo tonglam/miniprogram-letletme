@@ -42,10 +42,14 @@ Page({
           "playerInfo.code": code,
         });
         season = wx.getStorageSync('stat-player-season');
-        if (season !== '') {
+        if (season === '') {
           season = app.globalData.season;
           this.setData({
             season: season,
+          });
+        } else {
+          this.setData({
+            seasonPicker: true
           });
         }
         // 拉取球员数据

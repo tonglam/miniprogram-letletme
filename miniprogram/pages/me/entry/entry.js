@@ -205,26 +205,27 @@ Page({
         entry: this.data.entry
       }, false)
       .then(res => {
-        let list = res.data;
-        if (list.entry <= 0) {
+        let leagueInfoData = res.data;
+        if (JSON.stringify(leagueInfoData) === '{}') {
           return false;
         }
         let classicList = [],
           h2hList = [];
-        list.classic.forEach(element => {
-          if (element.entry_rank > element.entry_last_rank && element.event > 1) {
+        leagueInfoData.classic.forEach(element => {
+          if (element.entry_rank > element.entry_last_rank && leagueInfoData.event > 1) {
             element.redArrow = true;
-          } else if (element.entry_rank < element.entry_last_rank && element.event > 1) {
+          } else if (element.entry_rank < element.entry_last_rank && leagueInfoData.event > 1) {
             element.greenArrow = true;
           } else {
             element.noArrow = true;
           }
           classicList.push(element);
         });
-        list.h2h.forEach(element => {
-          if (element.entry_rank > element.entry_last_rank && element.event > 1) {
+        console.log(classicList);
+        leagueInfoData.h2h.forEach(element => {
+          if (element.entry_rank > element.entry_last_rank && leagueInfoData.event > 1) {
             element.greenArrow = true;
-          } else if (element.entry_rank < element.entry_last_rank && element.event > 1) {
+          } else if (element.entry_rank < element.entry_last_rank && leagueInfoData.event > 1) {
             element.redArrow = true;
           } else {
             element.noArrow = true;
@@ -234,7 +235,7 @@ Page({
         this.setData({
           classicList: classicList,
           h2hList: h2hList,
-          cupList: list.cup.matches,
+          cupList: leagueInfoData.cup.matches,
         });
       })
       .catch(res => {
@@ -249,7 +250,7 @@ Page({
       }, false)
       .then(res => {
         let historyData = res.data;
-        if (historyData.entry <= 0) {
+        if (JSON.stringify(historyData) === '{}') {
           return false;
         }
         // chips
