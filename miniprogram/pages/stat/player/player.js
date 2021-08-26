@@ -31,10 +31,6 @@ Page({
         season: season,
         "playerInfo.code": code,
       });
-      // 拉取球员数据
-      this.getPlayerInfo();
-       // 拉取球员总结
-      this.getPlayerSummary();
     } else {
       // 取缓存
       code = wx.getStorageSync('stat-player');
@@ -42,20 +38,6 @@ Page({
         this.setData({
           "playerInfo.code": code,
         });
-        season = wx.getStorageSync('stat-player-season');
-        if (season === '') {
-          season = app.globalData.season;
-          this.setData({
-            season: season,
-          });
-        } else {
-          this.setData({
-            seasonPicker: true
-          });
-        }
-        // 拉取球员数据
-        this.getPlayerInfo();
-        this.getPlayerSummary();
       } else {
         this.setData({
           playerPickerShow: true,
@@ -64,14 +46,14 @@ Page({
       season = wx.getStorageSync('stat-player-season');
       if (season === '') {
         season = app.globalData.season;
-        this.setData({
-          season: season,
-        });
       }
-      // 拉取球员数据
-      this.getPlayerInfo();
-      this.getPlayerSummary();
+      this.setData({
+        season: season,
+      });
     }
+    // 拉取球员数据
+    this.getPlayerInfo();
+    this.getPlayerSummary();
   },
 
   onPullDownRefresh: function () {

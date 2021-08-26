@@ -90,7 +90,7 @@ Page({
 
   // picker回调
   onSeasonPickResult(event) {
-    let season = event.detail[0];
+    let season = event.detail;
     if (season === '' || typeof season === 'undefined') {
       this.setData({
         seasonPickerShow: false,

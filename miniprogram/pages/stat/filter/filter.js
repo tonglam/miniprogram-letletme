@@ -39,7 +39,8 @@ Page({
 
   onShow: function () {
     this.setData({
-      gw: app.globalData.gw
+      gw: app.globalData.gw,
+      season: app.globalData.season
     });
     // 默认下拉菜单
     this.defaultDropDown();
@@ -224,21 +225,26 @@ Page({
   },
 
   defaultTeamDropDown() {
-    let teamList = this.data.teamList,
-      list = [];
-    let data = {};
-    data["text"] = '所有球队';
-    data["value"] = '全部';
-    list.push(data);
+    let teamValue = this.data.teamValue,
+      teamList = this.data.teamList,
+      list = [],
+      initData = {};
+    initData["text"] = '所有球队';
+    initData["value"] = '全部';
+    list.push(initData);
     teamList.forEach(element => {
       let data = {};
       data["text"] = element;
       data["value"] = element;
       list.push(data);
     });
+    let nameList = list.map(o => o.value);
+    if (teamValue === '' || teamValue === '全部' || !nameList.includes(teamValue)) {
+      teamValue = '全部'
+    }
     this.setData({
       teamOptions: list,
-      teamValue: '全部'
+      teamValue: teamValue
     });
   },
 
