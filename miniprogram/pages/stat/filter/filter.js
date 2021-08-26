@@ -17,6 +17,8 @@ Page({
     totalNum: 0,
     playerPageList: [],
     // dropdown
+    seasonOptions: [],
+    seasonValue: '',
     positonOptions: [],
     positionValue: '',
     teamOptions: [],
@@ -37,8 +39,7 @@ Page({
 
   onShow: function () {
     this.setData({
-      gw: app.globalData.gw,
-      season: app.globalData.season
+      gw: app.globalData.gw
     });
     // 默认下拉菜单
     this.defaultDropDown();
@@ -68,6 +69,21 @@ Page({
    */
 
   // dropDown选择
+  onDropDownSeason(event) {
+    let oldValue = this.data.positionValue,
+      newValue = event.detail;
+    if (oldValue === newValue) {
+      return false;
+    }
+    this.setData({
+      season: newValue
+    });
+    // team
+    this.iniTeamList();
+    // 拉取球员列表
+    this.initFilterPlayers();
+  },
+
   onDropDownPosition(event) {
     let oldValue = this.data.positionValue,
       newValue = event.detail;
@@ -144,6 +160,8 @@ Page({
    */
 
   defaultDropDown() {
+    // season
+    this.defaultSeasonDropDown();
     // position
     this.defaultPositionDropDown();
     // team
@@ -156,9 +174,29 @@ Page({
     this.defaultSortTypeDropDown();
   },
 
+  defaultSeasonDropDown() {
+    let seasonOptions = [{
+        text: '2122赛季',
+        value: '2122'
+      },
+      {
+        text: '2021赛季',
+        value: '2021'
+      },
+      {
+        text: '1920赛季',
+        value: '1920'
+      }
+    ];
+    this.setData({
+      seasonOptions: seasonOptions,
+      season: app.globalData.season
+    });
+  },
+
   defaultPositionDropDown() {
     let positonOptions = [{
-          text: '全部',
+          text: '所有位置',
           value: '全部'
         },
         {
@@ -189,7 +227,7 @@ Page({
     let teamList = this.data.teamList,
       list = [];
     let data = {};
-    data["text"] = '全部';
+    data["text"] = '所有球队';
     data["value"] = '全部';
     list.push(data);
     teamList.forEach(element => {
@@ -342,10 +380,10 @@ Page({
           value: 'bps'
         }, {
           text: '周转入',
-          value: 'transfersIn'
+          value: 'transfersInEvent'
         }, {
           text: '周转出',
-          value: 'transfersOut'
+          value: 'transfersOutEvent'
         }
       ],
       sortValue = 'points';
@@ -637,8 +675,7 @@ Page({
       }
       let element = playerList[index - 1],
         price = element.price + '',
-        selectedByPercent = element.selectedByPercent + '',
-        minutes = element.minutes + '';
+        selectedByPercent = element.selectedByPercent + '';
       if (price.indexOf('m') === -1) {
         element.price = price + 'm';
       }

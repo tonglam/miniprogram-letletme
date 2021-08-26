@@ -2,6 +2,8 @@ import {
   get
 } from '../../../utils/request';
 
+const app = getApp();
+
 Component({
 
   properties: {
@@ -19,6 +21,9 @@ Component({
 
   lifetimes: {
     attached: function () {
+      if (this.properties.season === '') {
+        this.properties.season = app.globalData.season;
+      }
       this.initTeamList();
     }
   },

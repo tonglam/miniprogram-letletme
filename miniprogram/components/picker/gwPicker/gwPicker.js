@@ -11,6 +11,7 @@ Component({
   data: {
     current: 0,
     event: 'pickGw',
+    gwMap: {},
     columns: [],
   },
 
@@ -34,7 +35,7 @@ Component({
         value
       } = event.detail;
       this.setData({
-        gw: value
+        gw: this.data.gwMap[value]
       });
     },
 
@@ -47,24 +48,37 @@ Component({
     },
 
     initGwList() {
-      let list = [];
+      let list = [],
+        map = {};
       if (this.properties.full) {
         for (let i = 1; i <= 38; i++) {
-          list.push(i);
+          let data = {
+            text: 'GW' + i,
+            value: i
+          };
+          list.push(data);
         }
       } else {
         for (let i = 1; i <= this.data.current; i++) {
           if (i < 39) {
-            list.push(i);
+            let data = {
+              text: 'GW' + i,
+              value: i
+            };
+            list.push(data);
           }
         }
       }
+      list.forEach(i => {
+        map[i.text] = i.value;
+      });
       let columns = [{
-        values: list,
+        values: list.map(o => o.text),
         className: 'gw',
         defaultIndex: list.length - 1,
       }];
       this.setData({
+        gwMap: map,
         columns: columns
       });
     },

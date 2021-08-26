@@ -1,3 +1,5 @@
+const app = getApp();
+
 Component({
 
   properties: {
@@ -13,9 +15,8 @@ Component({
   lifetimes: {
     attached: function () {
       this.setData({
-        season: '2122'
+        season: app.globalData.season
       })
-      console.log(this.data.season);
       this.initSeasonList();
     }
   },
@@ -31,7 +32,7 @@ Component({
         value
       } = event.detail;
       this.setData({
-        season: value
+        season: value[0]
       });
       console.log(this.data.season);
     },

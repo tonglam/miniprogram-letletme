@@ -27,25 +27,25 @@ Page({
 
   onShow: function () {
     // 取缓存
+    let season = wx.getStorageSync('stat-team-season');
+    if (season === '') {
+      season = app.globalData.season;
+    }
+    this.setData({
+      season: season,
+    });
     let name = wx.getStorageSync('stat-team');
     if (name !== '') {
       this.setData({
         name: name,
       });
-      let season = wx.getStorageSync('stat-team-season');
-      if (season === '') {
-        season = app.globalData.season;
-      }
-      this.setData({
-        season: season,
-      });
-      // 拉取球队数据
-      this.getTeamSummary();
     } else {
       this.setData({
         teamPickerShow: true,
       });
     }
+    // 拉取球队数据
+    this.getTeamSummary();
   },
 
   onPullDownRefresh: function () {

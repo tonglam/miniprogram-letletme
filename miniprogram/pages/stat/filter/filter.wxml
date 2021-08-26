@@ -2,6 +2,7 @@
 
   <view class="dropdown">
     <van-dropdown-menu>
+      <van-dropdown-item value="{{season}}" options="{{seasonOptions}}" bind:change="onDropDownSeason" />
       <van-dropdown-item value="{{positionValue}}" options="{{positonOptions}}" bind:change="onDropDownPosition" />
       <van-dropdown-item value="{{teamValue}}" options="{{teamOptions}}" bind:change="onDropDownTeam" />
       <van-dropdown-item value="{{priceValue}}" options="{{priceOptions}}" bind:change="onDropDownPrice" />
@@ -16,7 +17,8 @@
     </van-dropdown-menu>
 
     <view class="table">
-      <table headers="{{header}}" data="{{playerPageList}}" header-row-class-name="header-class" stripe="{{true}}" border="{{true}}" bind:rowClick="onRowClick" />
+      <table headers="{{header}}" data="{{playerPageList}}" header-row-class-name="header-class" stripe="{{true}}"
+        border="{{true}}" bind:rowClick="onRowClick" />
     </view>
 
   </view>
