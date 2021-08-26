@@ -42,7 +42,6 @@ Page({
         this.setData({
           "playerInfo.code": code,
         });
-<<<<<<< HEAD
         season = wx.getStorageSync('stat-player-season');
         if (season === '') {
           season = app.globalData.season;
@@ -57,8 +56,6 @@ Page({
         // 拉取球员数据
         this.getPlayerInfo();
         this.getPlayerSummary();
-=======
->>>>>>> main
       } else {
         this.setData({
           playerPickerShow: true,
