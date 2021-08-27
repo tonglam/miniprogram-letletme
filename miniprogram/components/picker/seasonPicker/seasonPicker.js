@@ -1,9 +1,14 @@
+/**
+ * 默认从1920赛季开始；若mode='player'，从1617赛季开始
+ */
+
 const app = getApp();
 
 Component({
 
   properties: {
     show: Boolean,
+    mode:String
   },
 
   data: {
@@ -14,10 +19,11 @@ Component({
 
   lifetimes: {
     attached: function () {
+      let currentSeason = app.globalData.season
       this.setData({
-        season: app.globalData.season
+        season: currentSeason
       })
-      this.initSeasonList();
+      this.initSeasonList(currentSeason);
     }
   },
 
