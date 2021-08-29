@@ -55,6 +55,7 @@
     "van-popup": "@vant/weapp/popup/index",
     "van-row": "@vant/weapp/row/index",
     "van-search": "@vant/weapp/search/index",
+    "van-switch": "@vant/weapp/switch/index",
     "van-submit-bar": "@vant/weapp/submit-bar/index",
     "van-tab": "@vant/weapp/tab/index",
     "van-tabs": "@vant/weapp/tabs/index",

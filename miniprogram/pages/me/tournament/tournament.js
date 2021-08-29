@@ -343,6 +343,7 @@ Page({
       sortValue: 'overallPoints',
       sortTypeValue: 'desc',
       captainValue: '',
+      captainNameValue:'全部',
       chipValue: '全部',
       searchElement: 0,
       searchWebName: ''

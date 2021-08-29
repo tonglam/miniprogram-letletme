@@ -117,7 +117,9 @@ Page({
         tournamentName: tournamentName
       });
       // 刷新live
-      this.initLiveTournament();
+      if (this.data.livePageDataList.length === 0) {
+        this.initLiveTournament();
+      }
     } else {
       showTournamentPicker = true; // 缓存没有时从picker中选择
     }
@@ -306,6 +308,7 @@ Page({
       sortValue: 'livePoints',
       sortTypeValue: 'desc',
       captainValue: '',
+      captainNameValue: '全部',
       chipValue: '全部',
       searchElement: 0,
       searchWebName: ''

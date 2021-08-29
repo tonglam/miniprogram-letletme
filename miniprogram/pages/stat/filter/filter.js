@@ -1,6 +1,9 @@
 import {
   get
 } from '../../../utils/request';
+import {
+  showOverallRank
+} from '../../../utils/utils';
 
 const app = getApp();
 let playerFullList = [],
@@ -13,12 +16,10 @@ Page({
     gw: 0,
     season: '',
     teamList: [],
-    currentPage: 1,
-    totalNum: 0,
-    playerPageList: [],
+    playerTableList: [],
+    // piker
+    seasonPickerShow: false,
     // dropdown
-    seasonOptions: [],
-    seasonValue: '',
     positonOptions: [],
     positionValue: '',
     teamOptions: [],
@@ -29,6 +30,20 @@ Page({
     sortValue: '',
     sortTypeOptions: [],
     sortTypeValue: '',
+    // search
+    searchWebName: '',
+    // switch
+    switchPoints: true,
+    switchMinutes: true,
+    switchGoalsScored: true,
+    switchAssists: true,
+    switchCleanSheets: true,
+    switchBonus: true,
+    switchBps: true,
+    switchTransfersInEvent: false,
+    switchTransfersOutEvent: false,
+    switchTransfersIn: false,
+    switchTransfersOut: false,
     // table
     header: [],
   },
@@ -38,9 +53,18 @@ Page({
    */
 
   onShow: function () {
+    if (this.data.playerTableList.length > 0) {
+      return false;
+    }
     this.setData({
-      gw: app.globalData.gw,
-      season: app.globalData.season
+      gw: app.globalData.gw
+    });
+    let season = wx.getStorageSync('stat-filter-season');
+    if (season === '') {
+      season = app.globalData.season;
+    }
+    this.setData({
+      season: season,
     });
     // 默认下拉菜单
     this.defaultDropDown();
@@ -48,17 +72,6 @@ Page({
     this.defaultHeader();
     // 拉取球员列表
     this.initFilterPlayers();
-  },
-
-  onReachBottom: function () {
-    let currentPage = this.data.currentPage;
-    if (currentPage * 10 > this.data.totalNum) {
-      return false;
-    }
-    this.setData({
-      currentPage: currentPage + 1
-    });
-    this.setPageData();
   },
 
   onShareAppMessage: function () {
@@ -69,7 +82,6 @@ Page({
    * 操作
    */
 
-  // dropDown选择
   onDropDownSeason(event) {
     let oldValue = this.data.positionValue,
       newValue = event.detail;
@@ -79,9 +91,9 @@ Page({
     this.setData({
       season: newValue
     });
-    // team
+    // team 
     this.iniTeamList();
-    // 拉取球员列表
+    // 拉取球员列表 
     this.initFilterPlayers();
   },
 
@@ -141,9 +153,131 @@ Page({
       return false;
     }
     this.setData({
-      sortTypeValue: newValue
+      sortTypeValue: newValue,
+      playerList: [],
     });
     this.datafilter();
+  },
+
+  // search
+  onSearchChange(event) {
+    this.setData({
+      searchWebName: event.detail,
+      playerTableList: [],
+    });
+    this.setTableData();
+  },
+
+  onResetClick() {
+    this.setData({
+      playerTableList: [],
+    });
+    // 默认下拉菜单
+    this.defaultDropDown();
+    // 表头
+    this.defaultHeader();
+    // 拉取球员列表
+    this.initFilterPlayers();
+  },
+
+  // 数据项开关
+  onSwitchPointsChange({
+    detail
+  }) {
+    this.setData({
+      switchPoints: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchMinitesChange({
+    detail
+  }) {
+    this.setData({
+      switchMinutes: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchGoalsScoredChange({
+    detail
+  }) {
+    this.setData({
+      switchGoalsScored: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchAssistsChange({
+    detail
+  }) {
+    this.setData({
+      switchAssists: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchCleanSheetsChange({
+    detail
+  }) {
+    this.setData({
+      switchCleanSheets: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchBonusChange({
+    detail
+  }) {
+    this.setData({
+      switchBonus: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchBpsChange({
+    detail
+  }) {
+    this.setData({
+      switchBps: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchTransfersInEventChange({
+    detail
+  }) {
+    this.setData({
+      switchTransfersInEvent: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchTransfersOutEventChange({
+    detail
+  }) {
+    this.setData({
+      switchTransfersOutEvent: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchTransfersInChange({
+    detail
+  }) {
+    this.setData({
+      switchTransfersIn: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchTransfersOutChange({
+    detail
+  }) {
+    this.setData({
+      switchTransfersOut: detail
+    });
+    this.setHeader();
   },
 
   // 行点击
@@ -161,7 +295,7 @@ Page({
    */
 
   defaultDropDown() {
-    // season
+    // season 
     this.defaultSeasonDropDown();
     // position
     this.defaultPositionDropDown();
@@ -187,11 +321,23 @@ Page({
       {
         text: '1920赛季',
         value: '1920'
+      },
+      {
+        text: '1819赛季',
+        value: '1819'
+      },
+      {
+        text: '1718赛季',
+        value: '1718'
+      },
+      {
+        text: '1617赛季',
+        value: '1617'
       }
     ];
     this.setData({
       seasonOptions: seasonOptions,
-      season: app.globalData.season
+      season: this.data.season
     });
   },
 
@@ -251,7 +397,7 @@ Page({
   defaultPriceDropDown() {
     let priceOptions = [],
       baseOptions = [{
-        text: '不限价格',
+        text: '不限价',
         value: 'umlimited'
       }],
       lowestOptions = [{
@@ -421,70 +567,163 @@ Page({
         label: '球员'
       }, {
         prop: 'teamShortName',
-        width: 150,
+        width: 120,
         label: '球队'
       },
       {
         prop: 'elementTypeName',
-        width: 150,
+        width: 120,
         label: '位置'
       },
       {
         prop: 'price',
         width: 150,
-        label: '身价'
-      },
-      {
-        prop: 'points',
-        width: 150,
-        label: '总分'
+        label: '身价(m)'
       },
       {
         prop: 'selectedByPercent',
         width: 150,
-        label: '持有率'
+        label: '持有(%)'
+      },
+      {
+        prop: 'points',
+        width: 120,
+        label: '总分'
+      },
+      {
+        prop: 'points',
+        width: 120,
+        label: '总分'
       },
       {
         prop: 'minutes',
-        width: 150,
-        label: '上场时间'
+        width: 120,
+        label: '时间'
       },
       {
         prop: 'goalsScored',
-        width: 150,
+        width: 120,
         label: '进球'
       },
       {
         prop: 'assists',
-        width: 150,
+        width: 120,
         label: '助攻'
       },
       {
         prop: 'cleanSheets',
-        width: 150,
+        width: 120,
         label: '零封'
-      },
-      {
-        prop: 'bonus',
-        width: 150,
-        label: 'BOUNS'
-      },
-      {
-        prop: 'bps',
-        width: 150,
-        label: 'BPS'
-      },
-      {
-        prop: 'transfersInEvent',
-        width: 150,
-        label: '周转入'
-      },
-      {
-        prop: 'transfersOutEvent',
-        width: 150,
-        label: '周转出'
       }
     ];
+    this.setData({
+      header: header
+    });
+  },
+
+  setHeader() {
+    let header = [{
+        prop: 'webName',
+        width: 300,
+        label: '球员'
+      }, {
+        prop: 'teamShortName',
+        width: 120,
+        label: '球队'
+      },
+      {
+        prop: 'elementTypeName',
+        width: 120,
+        label: '位置'
+      },
+      {
+        prop: 'price',
+        width: 150,
+        label: '身价(m)'
+      },
+      {
+        prop: 'selectedByPercent',
+        width: 150,
+        label: '持有(%)'
+      }
+    ];
+    if (this.data.switchPoints) {
+      header.push({
+        prop: 'points',
+        width: 120,
+        label: '总分'
+      });
+    }
+    if (this.data.switchMinutes) {
+      header.push({
+        prop: 'minutes',
+        width: 120,
+        label: '时间'
+      });
+    }
+    if (this.data.switchGoalsScored) {
+      header.push({
+        prop: 'goalsScored',
+        width: 120,
+        label: '进球'
+      });
+    }
+    if (this.data.switchAssists) {
+      header.push({
+        prop: 'assists',
+        width: 120,
+        label: '助攻'
+      });
+    }
+    if (this.data.switchCleanSheets) {
+      header.push({
+        prop: 'cleanSheets',
+        width: 120,
+        label: '零封'
+      });
+    }
+    if (this.data.switchBonus) {
+      header.push({
+        prop: 'bonus',
+        width: 120,
+        label: 'BOUNS'
+      });
+    }
+    if (this.data.switchBps) {
+      header.push({
+        prop: 'bps',
+        width: 120,
+        label: 'BPS'
+      });
+    }
+    if (this.data.switchTransfersInEvent) {
+      header.push({
+        prop: 'transfersInEvent',
+        width: 120,
+        label: '周转入'
+      });
+    }
+    if (this.data.switchTransfersOutEvent) {
+      header.push({
+        prop: 'transfersOutEvent',
+        width: 120,
+        label: '周转出'
+      });
+    }
+    if (this.data.switchTransfersIn) {
+      header.push({
+        prop: 'transfersIn',
+        width: 120,
+        label: '总转入'
+      });
+    }
+    if (this.data.switchTransfersOut) {
+      header.push({
+        prop: 'transfersOut',
+        width: 120,
+        label: '总转出'
+      });
+    }
     this.setData({
       header: header
     });
@@ -496,66 +735,64 @@ Page({
 
   datafilter() {
     this.setData({
-      currentPage: 1,
-      playerPageList: []
+      playerTableList: []
     });
     let list = [];
+    // 筛选
     list = this.positionFilter(playerFullList);
     list = this.teamFilter(list);
     list = this.priceFilter(list);
+    // 过滤
     list = this.sortValue(list);
-    list = this.rankList(list);
     playerList = list;
-    this.setPageData();
+    // 表格
+    this.setTableData();
   },
 
   // 位置过滤
   positionFilter(fullList) {
-    let position = this.data.positionValue,
-      list = [];
+    let position = this.data.positionValue;
     if (position === '全部') {
-      list = fullList;
-    } else {
-      fullList.forEach(element => {
-        if (element.elementTypeName === position) {
-          list.push(element);
-        }
-      });
+      return fullList;
     }
+    let list = [];
+    fullList.forEach(element => {
+      if (element.elementTypeName === position) {
+        list.push(element);
+      }
+    });
     return list;
   },
 
   // 球队过滤
   teamFilter(fullList) {
-    let team = this.data.teamValue,
-      list = [];
+    let team = this.data.teamValue;
     if (team === '全部') {
-      list = fullList;
-    } else {
-      fullList.forEach(element => {
-        if (element.teamShortName === team) {
-          list.push(element);
-        }
-      });
+      return fullList;
     }
+    let list = []
+    fullList.forEach(element => {
+      if (element.teamShortName === team) {
+        list.push(element);
+      }
+    });
     return list;
   },
 
   // 身价过滤
   priceFilter(fullList) {
-    let price = this.data.priceValue,
-      list = [];
+    let price = this.data.priceValue;
     if (price === 'umlimited') {
-      list = fullList;
-    } else {
-      fullList.forEach(element => {
-        price = parseFloat(price);
-        let elementPrice = parseFloat(element.price);
-        if (elementPrice >= price) {
-          list.push(element);
-        }
-      });
+      return fullList;
     }
+    let list = []
+    fullList.forEach(element => {
+      price = parseFloat(price);
+      let elementPrice = parseFloat(element.price);
+      if (elementPrice >= price) {
+        list.push(element);
+      }
+    });
     return list;
   },
 
@@ -645,53 +882,43 @@ Page({
         }
         break;
       }
+      case 'transfersIn': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.transfersIn - b.transfersIn);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.transfersIn - a.transfersIn);
+        }
+        break;
+      }
+      case 'transfersOut': {
+        if (sortTypeValue === 'asc') {
+          list = fullList.sort((a, b) => a.transfersOut - b.transfersOut);
+        } else if (sortTypeValue === 'desc') {
+          list = fullList.sort((a, b) => b.transfersOut - a.transfersOut);
+        }
+        break;
+      }
     }
     return list;
   },
 
-  // 排序
-  rankList(list) {
-    let rankField = this.data.sortValue,
-      rankValue = 0,
-      rank = 0,
-      repeat = 0;
-    list.forEach((element) => {
-      if (element[rankField] == rankValue) {
-        repeat++;
-        element.id = rank;
-      } else {
-        rank = rank + repeat + 1;
-        repeat = 0;
-        rankValue = element[rankField];
-        element.id = rank;
-      }
-    });
-    return list;
-  },
-
-  // 分页数据
-  setPageData() {
-    let currentPage = this.data.currentPage,
+  // 表格数据
+  setTableData() {
+    // 搜索
+    let searchWebName = this.data.searchWebName.toLowerCase(),
       list = [];
-    for (let index = 1; index < playerList.length + 1; index++) {
-      let start = 15 * (currentPage - 1) + 1,
-        end = 15 * currentPage;
-      if (index < start || index > end) {
-        continue;
-      }
-      let element = playerList[index - 1],
-        price = element.price + '',
-        selectedByPercent = element.selectedByPercent + '';
-      if (price.indexOf('m') === -1) {
-        element.price = price + 'm';
-      }
-      if (selectedByPercent.indexOf('%') === -1) {
-        element.selectedByPercent = selectedByPercent + '%';
-      }
-      list.push(element);
+    if (searchWebName === '') {
+      list = playerList;
+    } else {
+      playerList.forEach(element => {
+        let webName = (element.webName + '').toLowerCase();
+        if (webName.includes(searchWebName) > 0) {
+          list.push(element);
+        }
+      });
     }
     this.setData({
-      playerPageList: this.data.playerPageList.concat(list)
+      playerTableList: list
     });
   },
 
@@ -705,10 +932,13 @@ Page({
       })
       .then(res => {
         let list = res.data;
-        playerFullList = list;
-        this.setData({
-          totalNum: list.length
+        list.forEach(element => {
+          element.transfersInEvent = showOverallRank(element.transfersInEvent);
+          element.transfersOutEvent = showOverallRank(element.transfersOutEvent);
+          element.transfersIn = showOverallRank(element.transfersIn);
+          element.transfersOut = showOverallRank(element.transfersOut);
         });
+        playerFullList = list;
         // 过滤数据
         this.datafilter();
       })

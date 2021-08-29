@@ -29,7 +29,7 @@ Page({
 
   onShow: function () {
     // 设置
-    delay(1000).then(() => {
+    delay(400).then(() => {
       this.setData({
         gw: app.globalData.gw,
         entry: app.globalData.entry,

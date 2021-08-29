@@ -55,9 +55,13 @@ Page({
 
   onShow: function () {
     // 拉取实时分数
-    this.initEntryLive();
+    if (JSON.stringify(this.data.liveData) === '{}') {
+      this.initEntryLive();
+    }
     // 拉取转会数据
-    this.initTransfers();
+    if (this.data.transfersList.length === 0) {
+      this.initTransfers();
+    }
   },
 
   onPullDownRefresh: function () {

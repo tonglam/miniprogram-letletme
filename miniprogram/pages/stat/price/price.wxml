@@ -136,9 +136,6 @@
 
   </view>
 
-  <van-cell>
-  </van-cell>
-
   <view class="bottemNavBar">
     <bottomNavBar active="stat"></bottomNavBar>
   </view>

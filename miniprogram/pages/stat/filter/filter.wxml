@@ -1,6 +1,13 @@
 <view class="filter">
 
-  <view class="dropdown">
+  <view class="seasonPicker">
+    <van-popup show="{{seasonPickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onSeasonPopClose">
+      <seasonPicker show="true" bind:pickSeason="onSeasonPickResult"></seasonPicker>
+    </van-popup>
+  </view>
+
+  <view class="dropDown">
     <van-dropdown-menu>
       <van-dropdown-item value="{{season}}" options="{{seasonOptions}}" bind:change="onDropDownSeason" />
       <van-dropdown-item value="{{positionValue}}" options="{{positonOptions}}" bind:change="onDropDownPosition" />
@@ -9,18 +16,70 @@
     </van-dropdown-menu>
   </view>
 
-  <view class="dropdown">
+  <view class="dropDown">
     <van-dropdown-menu>
+      <van-dropdown-item id="item" title="数据项">
+        <van-cell title="总分">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchPoints}}"
+            active-color="#ee0a24" bind:change="onSwitchPointsChange" />
+        </van-cell>
+        <van-cell title="时间">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchMinutes}}"
+            active-color="#ee0a24" bind:change="onSwitchMinitesChange" />
+        </van-cell>
+        <van-cell title="进球">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchGoalsScored}}"
+            active-color="#ee0a24" bind:change="onSwitchGoalsScoredChange" />
+        </van-cell>
+        <van-cell title="助攻">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchAssists}}"
+            active-color="#ee0a24" bind:change="onSwitchAssistsChange" />
+        </van-cell>
+        <van-cell title="零封">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchCleanSheets}}"
+            active-color="#ee0a24" bind:change="onSwitchCleanSheetsChange" />
+        </van-cell>
+        <van-cell title="BONUS">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchBonus}}"
+            active-color="#ee0a24" bind:change="onSwitchBonusChange" />
+        </van-cell>
+        <van-cell title="BPS">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchBps}}" active-color="#ee0a24"
+            bind:change="onSwitchBpsChange" />
+        </van-cell>
+        <van-cell title="周转入">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchTransfersInEvent}}"
+            active-color="#ee0a24" bind:change="onSwitchTransfersInEventChange" />
+        </van-cell>
+        <van-cell title="周转出">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchTransfersOutEvent}}"
+            active-color="#ee0a24" bind:change="onSwitchTransfersOutEventChange" />
+        </van-cell>
+        <van-cell title="总转入">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchTransfersIn}}"
+            active-color="#ee0a24" bind:change="onSwitchTransfersInChange" />
+        </van-cell>
+        <van-cell title="总转出">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchTransfersOut}}"
+            active-color="#ee0a24" bind:change="onSwitchTransfersOutChange" />
+        </van-cell>
+      </van-dropdown-item>
       <van-dropdown-item value="{{sortValue}}" options="{{sortOptions}}" bind:change="onDropDownSortValue" />
       <van-dropdown-item value="{{sortTypeValue}}" options="{{sortTypeOptions}}"
         bind:change="onDropDownSortTypeValue" />
     </van-dropdown-menu>
+  </view>
 
-    <view class="table">
-      <table headers="{{header}}" data="{{playerPageList}}" header-row-class-name="header-class" stripe="{{true}}"
-        border="{{true}}" bind:rowClick="onRowClick" />
-    </view>
+  <view class="search">
+    <van-search value="{{searchWebName}}" label="球员" placeholder="" shape="round" use-action-slot
+      bind:change="onSearchChange">
+      <view slot="action" style="color: teal;" bind:tap="onResetClick">重置</view>
+    </van-search>
+  </view>
 
+  <view class="table">
+    <table headers="{{header}}" data="{{playerTableList}}" header-row-class-name="header-class" stripe="{{true}}"
+      border="{{true}}" bind:rowClick="onRowClick" />
   </view>
 
   <view class="bottemNavBar">
