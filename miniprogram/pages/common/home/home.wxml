@@ -15,7 +15,8 @@
 
   <block wx:else>
     <view class="info">
-      <text>GW{{nextGw}}\n\ndeadline: {{deadline}}</text>
+      <text>夏窗deadline: {{deadline}}</text>
+      <!-- <text>GW{{nextGw}}\n\ndeadline: {{deadline}}</text> -->
     </view>
 
     <view class="countDown">

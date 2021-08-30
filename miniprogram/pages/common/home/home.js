@@ -2,6 +2,7 @@ import {
   get
 } from '../../../utils/request';
 import {
+  getDeadline,
   delay,
   diffDeadlineTime,
   redirectToEntryInput
@@ -30,13 +31,16 @@ Page({
   onShow: function () {
     // 设置
     delay(400).then(() => {
+      let deadline =getDeadline('2021-08-31T23:00:00Z');
       this.setData({
         gw: app.globalData.gw,
         entry: app.globalData.entry,
         entryName: app.globalData.entryInfoData.entryName,
         nextGw: app.globalData.nextGw,
-        deadline: app.globalData.deadline,
-        time: diffDeadlineTime(app.globalData.utcDeadline)
+        deadline: deadline,
+        time: diffDeadlineTime(deadline)
+        // deadline: app.globalData.deadline,
+        // time: diffDeadlineTime(app.globalData.utcDeadline)
       });
       if (this.data.entry <= 0) {
         redirectToEntryInput();
