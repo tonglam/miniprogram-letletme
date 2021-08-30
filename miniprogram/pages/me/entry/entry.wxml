@@ -23,28 +23,48 @@
         </view>
 
         <view class="chip">
-          <van-cell-group title="已开卡" wx:if="{{chips.length > 0}}">
+          <van-cell-group title="已开卡" wx:if="{{historyInfoList.length > 0}}">
             <block wx:for="{{chips}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.name}}" value="{{data.event}}" />
+              <van-cell title="{{data.value}}" value="{{data.key}}" />
             </block>
           </van-cell-group>
         </view>
 
         <view class="league">
+
           <van-cell-group title="Classic联赛" wx:if="{{classicList.length > 0}}">
             <block wx:for="{{classicList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.name}}" value="{{data.entry_rank}}({{data.entry_last_rank}})">
+              <van-cell title="{{data.leagueName}}" value="{{data.entryRank}}({{data.entryLastRank}})">
                 <van-icon wx:if="{{data.greenArrow}}" class="greenArrow" slot="icon" name="arrow-up" />
                 <van-icon wx:if="{{data.redArrow}}" class="redArrow" slot="icon" name="arrow-down" />
                 <van-icon wx:if="{{data.noArrow}}" class="noArrow" slot="icon" name="minus" />
               </van-cell>
             </block>
+            <text class="tips">*括号内为上周排名</text>
           </van-cell-group>
+
           <van-cell-group title="H2H联赛" wx:if="{{h2hList.length > 0}}">
             <block wx:for="{{h2hList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.name}}" value="{{data.entry_rank}}({{data.entry_last_rank}})" />
+              <van-cell title="{{data.leagueName}}" value="{{data.entryRank}}({{data.entryLastRank}})">
+                <van-icon wx:if="{{data.greenArrow}}" class="greenArrow" slot="icon" name="arrow-up" />
+                <van-icon wx:if="{{data.redArrow}}" class="redArrow" slot="icon" name="arrow-down" />
+                <van-icon wx:if="{{data.noArrow}}" class="noArrow" slot="icon" name="minus" />
+              </van-cell>
             </block>
+            <text class="tips">*括号内为上周排名</text>
           </van-cell-group>
+
+          <van-cell-group title="公共联赛" wx:if="{{publicList.length > 0}}">
+            <block wx:for="{{publicList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{data.leagueName}}" value="{{data.entryRank}}({{data.entryLastRank}})">
+                <van-icon wx:if="{{data.greenArrow}}" class="greenArrow" slot="icon" name="arrow-up" />
+                <van-icon wx:if="{{data.redArrow}}" class="redArrow" slot="icon" name="arrow-down" />
+                <van-icon wx:if="{{data.noArrow}}" class="noArrow" slot="icon" name="minus" />
+              </van-cell>
+            </block>
+            <text class="tips">*括号内为上周排名</text>
+          </van-cell-group>
+
           <van-cell-group title="官方杯赛" wx:if="{{cupList.length > 0}}">
             <block wx:for="{{cupList}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{data.entry_1_name}} vs {{data.entry_2_name}}"
@@ -56,8 +76,9 @@
         <view class="history">
           <van-cell-group title="历史战绩" wx:if="{{historyInfoList.length > 0}}">
             <block wx:for="{{historyInfoList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="{{data.season_name}}" value="{{data.total_points}}({{data.rank}})" />
+              <van-cell title="{{data.season}}赛季" value="{{data.totalPoints}}分({{data.overallRank}})" />
             </block>
+            <text class="tips">*括号内为赛季总排名</text>
           </van-cell-group>
         </view>
 

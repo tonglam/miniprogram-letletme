@@ -19,6 +19,22 @@
   <view class="dropDown">
     <van-dropdown-menu>
       <van-dropdown-item id="item" title="数据项">
+        <van-cell title="球队">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchTeam}}"
+            active-color="#ee0a24" bind:change="onSwitchTeamChange" />
+        </van-cell>
+        <van-cell title="位置">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchPosition}}"
+            active-color="#ee0a24" bind:change="onSwitchPositionChange" />
+        </van-cell>
+        <van-cell title="身价">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchPrice}}"
+            active-color="#ee0a24" bind:change="onSwitchPriceChange" />
+        </van-cell>
+        <van-cell title="持有">
+          <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchSelected}}"
+            active-color="#ee0a24" bind:change="onSwitchSelectedChange" />
+        </van-cell>
         <van-cell title="总分">
           <van-switch slot="right-icon" size="24px" style="height: 26px" checked="{{switchPoints}}"
             active-color="#ee0a24" bind:change="onSwitchPointsChange" />

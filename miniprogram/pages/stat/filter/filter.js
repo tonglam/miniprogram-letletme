@@ -33,6 +33,10 @@ Page({
     // search
     searchWebName: '',
     // switch
+    switchTeam: true,
+    switchPosition: true,
+    switchPrice: true,
+    switchSelected: true,
     switchPoints: true,
     switchMinutes: true,
     switchGoalsScored: true,
@@ -181,6 +185,42 @@ Page({
   },
 
   // 数据项开关
+  onSwitchTeamChange({
+    detail
+  }) {
+    this.setData({
+      switchTeam: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchPositionChange({
+    detail
+  }) {
+    this.setData({
+      switchPosition: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchPriceChange({
+    detail
+  }) {
+    this.setData({
+      switchPrice: detail
+    });
+    this.setHeader();
+  },
+
+  onSwitchSelectedChange({
+    detail
+  }) {
+    this.setData({
+      switchSelected: detail
+    });
+    this.setHeader();
+  },
+
   onSwitchPointsChange({
     detail
   }) {
@@ -584,11 +624,6 @@ Page({
         prop: 'selectedByPercent',
         width: 150,
         label: '持有(%)'
-      },
-      {
-        prop: 'points',
-        width: 120,
-        label: '总分'
       },
       {
         prop: 'points',

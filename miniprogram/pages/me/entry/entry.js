@@ -22,9 +22,10 @@ Page({
     // 简介页
     classicList: {},
     h2hList: {},
+    publicList: [],
     cupList: {},
     historyInfoList: {},
-    chips: [],
+    chips: {},
     // 得分页
     entryResultData: {},
     // 转会页
@@ -210,32 +211,43 @@ Page({
           return false;
         }
         let classicList = [],
-          h2hList = [];
+          h2hList = [],
+          publicList = [];
         leagueInfoData.classic.forEach(element => {
-          if (element.entry_rank > element.entry_last_rank && leagueInfoData.event > 1) {
+          if (element.entryRank > element.entryLastRank && leagueInfoData.event > 1) {
             element.redArrow = true;
-          } else if (element.entry_rank < element.entry_last_rank && leagueInfoData.event > 1) {
+          } else if (element.entryRank < element.entryLastRank && leagueInfoData.event > 1) {
             element.greenArrow = true;
           } else {
             element.noArrow = true;
           }
           classicList.push(element);
         });
-        console.log(classicList);
         leagueInfoData.h2h.forEach(element => {
-          if (element.entry_rank > element.entry_last_rank && leagueInfoData.event > 1) {
-            element.greenArrow = true;
-          } else if (element.entry_rank < element.entry_last_rank && leagueInfoData.event > 1) {
+          if (element.entryRank > element.entryLastRank && leagueInfoData.event > 1) {
             element.redArrow = true;
+          } else if (element.entryRank < element.entryLastRank && leagueInfoData.event > 1) {
+            element.greenArrow = true;
           } else {
             element.noArrow = true;
           }
           h2hList.push(element);
         });
+        leagueInfoData.publicLeague.forEach(element => {
+          if (element.entryRank > element.entryLastRank && leagueInfoData.event > 1) {
+            element.redArrow = true;
+          } else if (element.entryRank < element.entryLastRank && leagueInfoData.event > 1) {
+            element.greenArrow = true;
+          } else {
+            element.noArrow = true;
+          }
+          publicList.push(element);
+        });
         this.setData({
           classicList: classicList,
           h2hList: h2hList,
-          cupList: leagueInfoData.cup.matches,
+          publicList: publicList,
+          cupList: leagueInfoData.cup,
         });
       })
       .catch(res => {
@@ -253,24 +265,24 @@ Page({
         if (JSON.stringify(historyData) === '{}') {
           return false;
         }
-        // chips
-        let chips = [];
-        historyData.chips.forEach(element => {
-          element.name = showChip(element.name);
-          element.event = 'GW' + element.event;
-          chips.push(element);
-        })
-        this.setData({
-          chips: chips
-        });
-        // past
+        // history
         let list = [];
-        historyData.past.forEach(element => {
-          element.rank = showOverallRank(element.rank);
+        historyData.historyList.forEach(element => {
+          element.overallRank = showOverallRank(element.overallRank);
           list.push(element);
         });
         this.setData({
           historyInfoList: list
+        });
+        // chips
+        let chips = [];
+        historyData.chips.forEach(element => {
+          element.key = 'GW' + element.key;
+          element.value = showChip(element.value);
+          chips.push(element);
+        })
+        this.setData({
+          chips: chips
         });
       })
       .catch(res => {

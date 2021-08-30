@@ -51,6 +51,12 @@
   background-color: #e9eaec;
 }
 
+.entry .tips {
+  margin-left: 10px;
+  margin-top: 10px;
+  font-size: 10px;
+}
+
 ec-canvas {
   margin: 100px 0;
   width: 100%;
