@@ -1,8 +1,8 @@
 <view class="home">
 
   <view class="navBar">
-    <van-nav-bar title="{{entryName}}" left-text="GW{{gw}}" right-text="切换id"
-      safe-area-inset-top="{{false}}" bind:click-left="" bind:click-right="onClickChangeEntry" />
+    <van-nav-bar title="{{entryName}}" left-text="GW{{gw}}" right-text="切换id" safe-area-inset-top="{{false}}"
+      bind:click-left="" bind:click-right="onClickChangeEntry" />
   </view>
 
   <view class="img">
@@ -15,8 +15,7 @@
 
   <block wx:else>
     <view class="info">
-      <text>夏窗deadline: {{deadline}}</text>
-      <!-- <text>GW{{nextGw}}\n\ndeadline: {{deadline}}</text> -->
+      <text>GW{{nextGw}}\n\ndeadline: {{deadline}}</text>
     </view>
 
     <view class="countDown">

@@ -37,13 +37,13 @@ Page({
     switchPosition: true,
     switchPrice: true,
     switchSelected: true,
-    switchPoints: true,
-    switchMinutes: true,
-    switchGoalsScored: true,
-    switchAssists: true,
-    switchCleanSheets: true,
-    switchBonus: true,
-    switchBps: true,
+    switchPoints: false,
+    switchMinutes: false,
+    switchGoalsScored: false,
+    switchAssists: false,
+    switchCleanSheets: false,
+    switchBonus: false,
+    switchBps: false,
     switchTransfersInEvent: false,
     switchTransfersOutEvent: false,
     switchTransfersIn: false,
@@ -603,7 +603,7 @@ Page({
   defaultHeader() {
     let header = [{
         prop: 'webName',
-        width: 300,
+        width: 200,
         label: '球员'
       }, {
         prop: 'teamShortName',
@@ -624,31 +624,6 @@ Page({
         prop: 'selectedByPercent',
         width: 150,
         label: '持有(%)'
-      },
-      {
-        prop: 'points',
-        width: 120,
-        label: '总分'
-      },
-      {
-        prop: 'minutes',
-        width: 120,
-        label: '时间'
-      },
-      {
-        prop: 'goalsScored',
-        width: 120,
-        label: '进球'
-      },
-      {
-        prop: 'assists',
-        width: 120,
-        label: '助攻'
-      },
-      {
-        prop: 'cleanSheets',
-        width: 120,
-        label: '零封'
       }
     ];
     this.setData({
@@ -658,30 +633,38 @@ Page({
 
   setHeader() {
     let header = [{
-        prop: 'webName',
-        width: 300,
-        label: '球员'
-      }, {
+      prop: 'webName',
+      width: 300,
+      label: '球员'
+    }];
+    if (this.data.switchTeam) {
+      header.push({
         prop: 'teamShortName',
         width: 120,
         label: '球队'
-      },
-      {
+      });
+    }
+    if (this.data.switchPosition) {
+      header.push({
         prop: 'elementTypeName',
         width: 120,
         label: '位置'
-      },
-      {
+      });
+    }
+    if (this.data.switchPrice) {
+      header.push({
         prop: 'price',
         width: 150,
         label: '身价(m)'
-      },
-      {
+      });
+    }
+    if (this.data.switchSelected) {
+      header.push({
         prop: 'selectedByPercent',
         width: 150,
         label: '持有(%)'
-      }
-    ];
+      });
+    }
     if (this.data.switchPoints) {
       header.push({
         prop: 'points',
