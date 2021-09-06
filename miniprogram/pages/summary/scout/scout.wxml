@@ -1,0 +1,9 @@
+<view class="scout">
+
+  <view class="navBar">
+    <van-nav-bar title="{{entryName}}" left-text="" right-text="" safe-area-inset-top="{{false}}"
+      bind:click-left="" bind:click-right="" />
+  </view>
+
+
+</view>

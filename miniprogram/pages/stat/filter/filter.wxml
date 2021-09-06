@@ -101,5 +101,7 @@
   <view class="bottemNavBar">
     <bottomNavBar active="stat"></bottomNavBar>
   </view>
+  
+  <van-toast id="van-toast" />
 
 </view>

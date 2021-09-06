@@ -45,10 +45,10 @@
 
   </block>
 
-
-
   <view class="bottemNavBar">
     <bottomNavBar active="home"></bottomNavBar>
   </view>
+  
+  <van-toast id="van-toast" />
 
 </view>

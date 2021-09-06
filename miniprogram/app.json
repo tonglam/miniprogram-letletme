@@ -8,6 +8,7 @@
     "pages/live/match/match",
     "pages/summary/entry/entry",
     "pages/summary/league/league",
+    "pages/summary/scout/scout",
     "pages/stat/price/price",
     "pages/stat/select/select",
     "pages/stat/fixture/fixture",

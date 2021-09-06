@@ -6,6 +6,7 @@ import {
   diffDeadlineTime,
   redirectToEntryInput
 } from '../../../utils/utils';
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 const app = getApp();
 
@@ -21,6 +22,8 @@ Page({
     deadline: "",
     timeData: {},
     fixtureList: [],
+    // refresh
+    pullDownRefresh: false,
   },
 
   /**
@@ -48,6 +51,28 @@ Page({
       if (entryName === '' || typeof entryName === 'undefined') {
         this.initEntryInfo();
       }
+    });
+  },
+
+  onPullDownRefresh: function () {
+    this.setData({
+      pullDownRefresh: true
+    });
+    // 刷新gw
+    this.refreshEventAndDeadline();
+    // 拉取gw数据
+    app.setCurrentEventAndNextUtcDeadline();
+    delay(400).then(() => {
+      this.setData({
+        gw: app.globalData.gw,
+        entry: app.globalData.entry,
+        entryName: app.globalData.entryInfoData.entryName,
+        nextGw: app.globalData.nextGw,
+        deadline: app.globalData.deadline,
+        time: diffDeadlineTime(app.globalData.utcDeadline)
+      });
+      // 拉取赛程
+      this.getNextGwFixture();
     });
   },
 
@@ -102,5 +127,26 @@ Page({
         console.log('fail:', res);
       });
   },
+
+  refreshEventAndDeadline() {
+    get('common/refreshEventAndDeadline')
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 1000,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+      });
+  }
 
 });

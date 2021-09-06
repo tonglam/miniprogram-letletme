@@ -4,6 +4,7 @@ import {
 import {
   showOverallRank
 } from '../../../utils/utils';
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 const app = getApp();
 let playerFullList = [],
@@ -50,6 +51,8 @@ Page({
     switchTransfersOut: false,
     // table
     header: [],
+     // refresh
+     pullDownRefresh: false,
   },
 
   /**
@@ -76,6 +79,14 @@ Page({
     this.defaultHeader();
     // 拉取球员列表
     this.initFilterPlayers();
+  },
+
+  onPullDownRefresh: function () {
+    this.setData({
+      pullDownRefresh: true
+    });
+    // 刷新身价
+    this.refreshPlayerStat();
   },
 
   onShareAppMessage: function () {
@@ -979,6 +990,29 @@ Page({
       .catch(res => {
         console.log('fail:', res);
       });
+  },
+
+  refreshPlayerStat(){
+    get('player/refreshPlayerStat')
+    .then(() => {
+      // 下拉刷新
+      if (this.data.pullDownRefresh) {
+        wx.stopPullDownRefresh({
+          success: () => {
+            Toast({
+              type: 'success',
+              duration: 1000,
+              message: "刷新成功"
+            });
+            this.setData({
+              pullDownRefresh: false
+            });
+          },
+        });
+      }
+      // 更新
+      this.initFilterPlayers();
+    })
   }
 
 })

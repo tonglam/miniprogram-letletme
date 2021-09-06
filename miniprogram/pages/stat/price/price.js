@@ -62,7 +62,9 @@ Page({
       season: app.globalData.season
     });
     // 拉取身价
-    this.getPirceList();
+    if (this.data.riseList.length === 0 && this.data.fallerList.length === 0 && this.data.startList.length === 0) {
+      this.getPirceList();
+    }
     // 默认日期模式
     if (this.data.mode === '日期') {
       this.setData({
