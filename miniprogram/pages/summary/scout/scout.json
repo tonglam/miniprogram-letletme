@@ -1,5 +1,6 @@
 {
-  "navigationBarTitleText": "推荐阵容",
   "enablePullDownRefresh": true,
-  "usingComponents": {}
+  "usingComponents": {
+    "gwPicker": "../../../components/picker/gwPicker/gwPicker"
+  }
 }

@@ -1,6 +1,4 @@
 {
-  "navigationBarTitleText": "实时得分",
-  "enablePullDownRefresh": true,
   "usingComponents": {
     "playerPicker": "../../../components/picker/playerPicker/playerPicker"
   }

@@ -1,66 +1,162 @@
-// pages/summary/scout/scout.js
+import {
+  get
+} from "../../../utils/request";
+import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
+
+const app = getApp();
+
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    gw: 0,
+    season: '',
+    scoutName: '官方推荐阵容',
+    // picker
+    scouts: ['官方推荐阵容', 'fix推荐阵容', 'scout推荐阵容'],
+    showScoutPicker: false,
+    showGwPicker: false,
+    // refrsh
+    pullDownRefresh: false,
+    // uploader
+    fileList: [],
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * 原生
    */
-  onLoad: function (options) {
 
-  },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
-
+    this.setData({
+      gw: app.globalData.gw
+    });
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
   onPullDownRefresh: function () {
 
   },
 
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
+  onShareAppMessage: function () {
 
   },
 
   /**
-   * 用户点击右上角分享
+   * 操作
    */
-  onShareAppMessage: function () {
 
-  }
+  // 更换GW
+  onClickChangeGw() {
+    this.setData({
+      showGwPicker: true
+    });
+  },
+
+  // 更换球探
+  onClickChangeScout() {
+    this.setData({
+      showScoutPicker: true
+    });
+  },
+
+  // 关闭弹出层
+  onScoutPopClose() {
+    this.setData({
+      showScoutPicker: false
+    });
+  },
+
+  // picker确认
+  onScoutPickerConfirm(event) {
+    let scoutName = event.detail.value;
+    this.setData({
+      showScoutPicker: false,
+      scoutName: scoutName,
+      pullDownRefresh: false
+    });
+  },
+
+  // picker取消
+  onScoutPickerCancel() {
+    this.setData({
+      showScoutPicker: false
+    });
+  },
+
+  // GW选择回填
+  onPickGw(event) {
+    this.setData({
+      showGwPicker: false
+    });
+    let gw = event.detail;
+    if (gw === '' || gw === null) {
+      return false;
+    }
+    if (gw === this.data.gw) {
+      return false;
+    }
+    this.setData({
+      gw: gw
+    });
+    // 拉取数据
+
+  },
+
+  /**
+   * 数据
+   */
+
+  /**
+   * 图片
+   */
+
+  beforeRead(event) {
+    const {
+      file,
+      callback
+    } = event.detail;
+    callback(file.type === 'image');
+  },
+
+  uploadToCloud() {
+    wx.cloud.init();
+    const {
+      fileList
+    } = this.data;
+    if (!fileList.length) {
+      wx.showToast({
+        title: '请选择图片',
+        icon: 'none'
+      });
+    } else {
+      const uploadTasks = fileList.map((file, index) => this.uploadFilePromise(`my-photo${index}.png`, file));
+      Promise.all(uploadTasks)
+        .then(data => {
+          wx.showToast({
+            title: '上传成功',
+            icon: 'none'
+          });
+          const newFileList = data.map(item => ({
+            url: item.fileID
+          }));
+          this.setData({
+            cloudPath: data,
+            fileList: newFileList
+          });
+        })
+        .catch(e => {
+          wx.showToast({
+            title: '上传失败',
+            icon: 'none'
+          });
+          console.log(e);
+        });
+    }
+  },
+
+  uploadFilePromise(fileName, chooseResult) {
+    return wx.cloud.uploadFile({
+      cloudPath: fileName,
+      filePath: chooseResult.url
+    });
+  },
+  
 })

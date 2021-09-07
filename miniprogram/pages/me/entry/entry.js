@@ -303,6 +303,7 @@ Page({
         let pickList = [];
         if (data.pickList.length > 0) {
           data.pickList.forEach(element => {
+            element.mode = 'me';
             if (element.pickActive) {
               element.style = "pickFinished";
             } else {

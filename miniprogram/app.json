@@ -18,7 +18,8 @@
     "pages/stat/filter/filter",
     "pages/group/scout/scout",
     "pages/me/entry/entry",
-    "pages/me/tournament/tournament"
+    "pages/me/tournament/tournament",
+    "pages/me/element/element"
   ],
   "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {
@@ -66,6 +67,7 @@
     "van-tag": "@vant/weapp/tag/index",
     "van-toast": "@vant/weapp/toast/index",
     "van-transition": "@vant/weapp/transition/index",
+    "van-uploader": "@vant/weapp/uploader/index",
     "i-cell-group": "./dist/cell-group/index",
     "i-cell": "./dist/cell/index",
     "i-icon": "./dist/icon/index",

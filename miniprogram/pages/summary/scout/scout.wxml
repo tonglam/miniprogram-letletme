@@ -1,9 +1,31 @@
 <view class="scout">
 
   <view class="navBar">
-    <van-nav-bar title="{{entryName}}" left-text="" right-text="" safe-area-inset-top="{{false}}"
-      bind:click-left="" bind:click-right="" />
+    <van-nav-bar title="{{scoutName}}" left-text="GW{{gw}}" right-text="更换" safe-area-inset-top="{{false}}"
+      bind:click-left="onClickChangeGw" bind:click-right="onClickChangeScout" />
   </view>
 
+  <view class="picker">
+    <van-popup show="{{showScoutPicker}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onScoutPopClose">
+      <van-picker show-toolbar toolbar-position="top" item-height="30" title="" columns="{{scouts}}"
+        bind:confirm="onScoutPickerConfirm" bind:cancel="onScoutPickerCancel" />
+    </van-popup>
+  </view>
+
+  <view class="picker" wx:if="{{showGwPicker}}">
+    <gwPicker gw="{{gw}}" show="true" bind:pickGw="onPickGw"></gwPicker>
+  </view>
+
+  <view class="upload">
+    <van-uploader upload-icon="photograph" preview-size="100px" file-list="{{fileList}}" accept="image" upload-text="上传图片"
+      multiple="true" use-before-read bind:before-read="beforeRead" bind:after-read="afterRead" />
+  </view>
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="summary"></bottomNavBar>
+  </view>
+
+  <van-toast id="van-toast" />
 
 </view>

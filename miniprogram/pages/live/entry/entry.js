@@ -159,6 +159,7 @@ Page({
         liveData.chip = getChipName(liveData.chip);
         let list = [];
         liveData.pickList.forEach(element => {
+          element.mode = "live";
           element.webName = this.setWebName(element.webName, element.captain, element.viceCaptain);
           element.style = this.setStyle(element.pickActive, element.playStatus);
           list.push(element);

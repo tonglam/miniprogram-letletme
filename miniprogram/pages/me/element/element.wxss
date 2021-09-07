@@ -1,0 +1,7 @@
+.element .info {
+  margin: 10px 0;
+}
+
+.element .content {
+  margin: 10px 0;
+}
