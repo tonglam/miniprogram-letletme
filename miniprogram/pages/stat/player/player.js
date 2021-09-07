@@ -134,7 +134,7 @@ Page({
    */
 
   getPlayerInfo() {
-    get('stat/qryPlayerInfo', {
+    get('player/qryPlayerInfoByCode', {
         season: this.data.season,
         code: this.data.playerInfo.code
       })

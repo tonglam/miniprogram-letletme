@@ -10,10 +10,17 @@
   </view>
 
   <view class="search">
-    <van-search value="{{searchWebName}}" label="球员" placeholder="搜索阵容包含该球员的球队" shape="round" disabled use-action-slot
-      bind:change="onSearchChange">
-      <view id="{{searchValue}}" slot="action" style="color: teal;" bind:tap="onSearchClick">搜索</view>
+
+    <van-search wx:if="{{searchMode === 'entry'}}" value="{{searchEntry}}" label="球队" placeholder="输入fpl球队名称搜索"
+      shape="round" use-action-slot bind:change="onSearchChange">
+      <view slot="action" style="color: teal;" bind:tap="onSearchClick">选择</view>
     </van-search>
+
+    <van-search wx:else value="{{searchWebName}}" label="球员" placeholder="点击选择搜索阵容包含球员的球队" shape="round" disabled
+      use-action-slot>
+      <view slot="action" style="color: teal;" bind:tap="onSearchClick">选择</view>
+    </van-search>
+
   </view>
 
   <view class="picker">

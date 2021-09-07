@@ -103,7 +103,9 @@ Page({
    */
 
   getNextGwFixture() {
-    get('common/qryNextFixture')
+    get('common/qryNextFixture', {
+        event: this.data.gw
+      })
       .then(res => {
         this.setData({
           fixtureList: res.data

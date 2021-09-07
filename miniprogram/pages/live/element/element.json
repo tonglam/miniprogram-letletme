@@ -1,0 +1,6 @@
+{
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "playerPicker": "../../../components/picker/playerPicker/playerPicker"
+  }
+}

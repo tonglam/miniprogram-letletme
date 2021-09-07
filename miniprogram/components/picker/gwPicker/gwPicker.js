@@ -10,6 +10,7 @@ Component({
 
   data: {
     current: 0,
+    resultGw: 0,
     event: 'pickGw',
     gwMap: {},
     columns: [],
@@ -18,7 +19,8 @@ Component({
   lifetimes: {
     attached: function () {
       this.setData({
-        current: app.globalData.gw
+        current: app.globalData.gw,
+        resultGw: app.globalData.gw
       });
       this.initGwList();
     }
@@ -35,12 +37,12 @@ Component({
         value
       } = event.detail;
       this.setData({
-        gw: this.data.gwMap[value]
+        resultGw: this.data.gwMap[value]
       });
     },
 
     onConfirm() {
-      this.triggerEvent(this.data.event, this.data.gw);
+      this.triggerEvent(this.data.event, this.data.resultGw);
     },
 
     onCancel() {

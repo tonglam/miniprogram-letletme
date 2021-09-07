@@ -2,7 +2,7 @@
   <i-cell i-class="{{data.style}}"
     label="时间:{{data.minutes}}分钟;零封:{{data.cleanSheets}};扑救:{{data.saves}};黄牌:{{data.yellowCards}};红牌:{{data.redCards}}"
     title="【{{data.teamShortName}}】{{data.webName}} ({{data.elementTypeName}})"
-    value="得分:{{data.totalPoints}}({{data.bonus}})">
+    value="得分:{{data.totalPoints}}({{data.bonus}})" is-link url="/pages/live/element/element?element={{data.element}}">
   </i-cell>
 </template>
 
@@ -10,7 +10,7 @@
   <i-cell i-class="{{data.style}}"
     label="时间:{{data.minutes}}分钟;零封:{{data.cleanSheets}};进球:{{data.goalsScored}};助攻:{{data.assists}};黄牌:{{data.yellowCards}};红牌:{{data.redCards}}"
     title="【{{data.teamShortName}}】{{data.webName}} ({{data.elementTypeName}})"
-    value="得分:{{data.totalPoints}}({{data.bonus}})">
+    value="得分:{{data.totalPoints}}({{data.bonus}})" is-link url="/pages/live/element/element?element={{data.element}}">
   </i-cell>
 </template>
 
@@ -18,7 +18,7 @@
   <i-cell i-class="{{data.style}}"
     label="时间:{{data.minutes}}分钟;进球:{{data.goalsScored}};助攻:{{data.assists}};零封:{{data.cleanSheets}};黄牌:{{data.yellowCards}};红牌:{{data.redCards}}"
     title="【{{data.teamShortName}}】{{data.webName}} ({{data.elementTypeName}})"
-    value="得分:{{data.totalPoints}}({{data.bonus}})">
+    value="得分:{{data.totalPoints}}({{data.bonus}})" is-link url="/pages/live/element/element?element={{data.element}}">
   </i-cell>
 </template>
 
@@ -26,6 +26,6 @@
   <i-cell i-class="{{data.style}}"
     label="时间:{{data.minutes}}分钟;进球:{{data.goalsScored}};助攻:{{data.assists}};黄牌:{{data.yellowCards}};红牌:{{data.redCards}}"
     title="【{{data.teamShortName}}】{{data.webName}} ({{data.elementTypeName}})"
-    value="得分:{{data.totalPoints}}({{data.bonus}})">
+    value="得分:{{data.totalPoints}}({{data.bonus}})" is-link url="/pages/live/element/element?element={{data.element}}">
   </i-cell>
 </template>

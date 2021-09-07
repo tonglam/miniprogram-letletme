@@ -31,7 +31,7 @@ Page({
     showTournamentPicker: false,
     showModePicker: false,
     showPlayerPicker: false,
-    modes: ['选择球员', '清空选择'],
+    modes: ['选择fpl球队', '选择球员', '清空选择'],
     // dropdown
     sortOptions: [{
         text: '总分',
@@ -95,6 +95,8 @@ Page({
     ],
     chipValue: '全部',
     // 搜索
+    searchMode: 'entry',
+    searchEntry: '',
     searchElement: 0,
     searchWebName: ''
   },
@@ -238,14 +240,31 @@ Page({
   // 搜索模式picker确认
   onModePickerConfirm(event) {
     let mode = event.detail.value;
-    if (mode === '选择球员') {
+    if (mode === '选择fpl球队') {
       this.setData({
+        searchMode: 'entry',
+        searchElement: 0,
+        searchWebName: '',
+        showModePicker: false,
+        showPlayerPicker: false
+      });
+      // 拉取tournament数据
+      this.initTournamentResult();
+    } else if (mode === '选择球员') {
+      tournamentResultList = tournamentResultFullList;
+      this.setData({
+        searchMode: 'element',
+        searchEntry: '',
         showModePicker: false,
         showPlayerPicker: true
       });
+      this.datafilter();
     } else if (mode === '清空选择') {
       this.setData({
         showModePicker: false,
+        searchMode: 'entry',
+        showModePicker: false,
+        searchEntry: '',
         searchElement: 0,
         searchWebName: ''
       });
@@ -328,6 +347,13 @@ Page({
   },
 
   // 搜索
+  onSearchChange(event) {
+    this.setData({
+      searchEntry: event.detail,
+    });
+    this.datafilter();
+  },
+
   onSearchClick() {
     this.setData({
       showModePicker: true,
@@ -343,8 +369,10 @@ Page({
       sortValue: 'overallPoints',
       sortTypeValue: 'desc',
       captainValue: '',
-      captainNameValue:'全部',
+      captainNameValue: '全部',
       chipValue: '全部',
+      searchMode: 'entry',
+      searchEntry: '',
       searchElement: 0,
       searchWebName: ''
     });
@@ -477,6 +505,22 @@ Page({
         }
       });
     }
+    return list;
+  },
+
+  // 搜索
+  searchList(fullList) {
+    let list = [],
+      search = this.data.searchEntry.toLowerCase();
+    if (search === '') {
+      return fullList;
+    }
+    fullList.forEach(element => {
+      let entryName = (element.entryName + '').toLowerCase()
+      if (entryName.includes(search) > 0) {
+        list.push(element);
+      }
+    });
     return list;
   },
 

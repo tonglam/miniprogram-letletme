@@ -69,7 +69,7 @@ Page({
       pullDownRefresh: true
     });
     // 拉取实时分数
-    this.initEntryLive();
+    this.refreshEntryLive();
   },
 
   /**
@@ -129,7 +129,7 @@ Page({
   initEntryLive() {
     let gw = this.data.gw,
       entry = this.data.entry;
-    if (gw == 0 || entry == 0) {
+    if (gw <= 0 || entry <= 0) {
       return false;
     }
     // 刷新live

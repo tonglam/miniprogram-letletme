@@ -6,6 +6,7 @@
     "pages/live/entry/entry",
     "pages/live/tournament/tournament",
     "pages/live/match/match",
+    "pages/live/element/element",
     "pages/summary/entry/entry",
     "pages/summary/league/league",
     "pages/summary/scout/scout",

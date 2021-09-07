@@ -1,0 +1,97 @@
+<view class="element">
+
+  <view class="navBar">
+    <van-nav-bar title="{{playerInfo.webName}}" title-class="title" safe-area-inset-top="{{false}}"
+      left-text="{{playerInfo.teamShortName}}" right-text="更换球员" bind:click-right="onClickChangePlayer" />
+  </view>
+
+  <view class="playerPicker">
+    <van-popup show="{{playerPickerShow}}" overlay="{{true}}" position="top" custom-style="height: 50%"
+      bind:close="onPlayerPopClose">
+      <playerPicker type="5" show="true" bind:pickResult="onPlayerPickResult"></playerPicker>
+    </van-popup>
+  </view>
+
+  <view class="info">
+    <van-cell title="位置：{{playerInfo.elementTypeName}}" value="实时分数：{{liveData.livePoints}}" />
+    <van-cell title="BOUNUS：{{playerInfo.livebonus}}" value="BPS：{{liveData.bps}}" />
+  </view>
+
+  <view class="content">
+
+    <van-cell title="上场时间：{{liveData.minutes}}" value="{{liveData.minutesPoints}})分" />
+
+    <van-cell-group wx:if="{{playerInfo.elementType === 1}}">
+      <van-cell wx:if="{{liveData.saves > 0}}" title="扑救：{{liveData.saves}}" value="{{liveData.savesPoints}})分" />
+      <van-cell wx:if="{{liveData.cleanSheets > 0}}" title="零封：{{liveData.cleanSheets}}"
+        value="{{liveData.cleanSheetsPoints}})分" />
+      <van-cell wx:if="{{liveData.goalsScored > 0}}" title="进球：{{liveData.goalsScored}}"
+        value="{{liveData.goalsScoredPoints}})分" />
+      <van-cell wx:if="{{liveData.assists > 0}}" title="助攻：{{liveData.assists}}" value="{{liveData.assistsPoints}})分" />
+      <van-cell wx:if="{{liveData.penaltiesSaved > 0}}" title="扑点：{{liveData.penaltiesSaved}}"
+        value="{{liveData.penaltiesSavedPoints}})分" />
+      <van-cell wx:if="{{liveData.goalsConceded > 0}}" title="丢球：{{liveData.goalsConceded}}"
+        value="{{liveData.goalsConcededPoints}})分" />
+      <van-cell wx:if="{{liveData.ownGoals > 0}}" title="乌龙：{{liveData.ownGoals}}"
+        value="{{liveData.ownGoalsPoints}})分" />
+      <van-cell wx:if="{{liveData.penaltiesMissed > 0}}" title="丢点：{{liveData.penaltiesMissed}}"
+        value="{{liveData.penaltiesMissedPoints}})分" />
+      <van-cell wx:if="{{liveData.yellowCards > 0}}" title="黄牌：{{liveData.yellowCards}}"
+        value="{{liveData.yellowCardsPoints}})分" />
+      <van-cell wx:if="{{liveData.redCards > 0}}" title="红牌：{{liveData.redCards}}"
+        value="{{liveData.redCardsPoints}})分" />
+    </van-cell-group>
+
+    <van-cell-group wx:if="{{playerInfo.elementType === 2}}">
+      <van-cell wx:if="{{liveData.goalsScored > 0}}" title="进球：{{liveData.goalsScored}}"
+        value="{{liveData.goalsScoredPoints}})分" />
+      <van-cell wx:if="{{liveData.assists > 0}}" title="助攻：{{liveData.assists}}" value="{{liveData.assistsPoints}})分" />
+      <van-cell wx:if="{{liveData.cleanSheets > 0}}" title="零封：{{liveData.cleanSheets}}"
+        value="{{liveData.cleanSheetsPoints}})分" />
+      <van-cell wx:if="{{liveData.goalsConceded > 0}}" title="丢球：{{liveData.goalsConceded}}"
+        value="{{liveData.goalsConcededPoints}})分" />
+      <van-cell wx:if="{{liveData.ownGoals > 0}}" title="乌龙：{{liveData.ownGoals}}"
+        value="{{liveData.ownGoalsPoints}})分" />
+      <van-cell wx:if="{{liveData.penaltiesMissed > 0}}" title="丢点：{{liveData.penaltiesMissed}}"
+        value="{{liveData.penaltiesMissedPoints}})分" />
+      <van-cell wx:if="{{liveData.yellowCards > 0}}" title="黄牌：{{liveData.yellowCards}}"
+        value="{{liveData.yellowCardsPoints}})分" />
+      <van-cell wx:if="{{liveData.redCards > 0}}" title="红牌：{{liveData.redCards}}"
+        value="{{liveData.redCardsPoints}})分" />
+    </van-cell-group>
+
+    <van-cell-group wx:if="{{playerInfo.elementType === 3}}">
+      <van-cell wx:if="{{liveData.goalsScored > 0}}" title="进球：{{liveData.goalsScored}}"
+        value="{{liveData.goalsScoredPoints}})分" />
+      <van-cell wx:if="{{liveData.assists > 0}}" title="助攻：{{liveData.assists}}" value="{{liveData.assistsPoints}})分" />
+      <van-cell wx:if="{{liveData.cleanSheets > 0}}" title="零封：{{liveData.cleanSheets}}"
+        value="{{liveData.cleanSheetsPoints}})分" />
+      <van-cell wx:if="{{liveData.ownGoals > 0}}" title="乌龙：{{liveData.ownGoals}}"
+        value="{{liveData.ownGoalsPoints}})分" />
+      <van-cell wx:if="{{liveData.penaltiesMissed > 0}}" title="丢点：{{liveData.penaltiesMissed}}"
+        value="{{liveData.penaltiesMissedPoints}})分" />
+      <van-cell wx:if="{{liveData.yellowCards > 0}}" title="黄牌：{{liveData.yellowCards}}"
+        value="{{liveData.yellowCardsPoints}})分" />
+      <van-cell wx:if="{{liveData.redCards > 0}}" title="红牌：{{liveData.redCards}}"
+        value="{{liveData.redCardsPoints}})分" />
+    </van-cell-group>
+
+    <van-cell-group wx:if="{{playerInfo.elementType === 4}}">
+      <van-cell wx:if="{{liveData.goalsScored > 0}}" title="进球：{{liveData.goalsScored}}"
+        value="{{liveData.goalsScoredPoints}})分" />
+      <van-cell wx:if="{{liveData.assists > 0}}" title="助攻：{{liveData.assists}}" value="{{liveData.assistsPoints}})分" />
+      <van-cell wx:if="{{liveData.ownGoals > 0}}" title="乌龙：{{liveData.ownGoals}}"
+        value="{{liveData.ownGoalsPoints}})分" />
+      <van-cell wx:if="{{liveData.penaltiesMissed > 0}}" title="丢点：{{liveData.penaltiesMissed}}"
+        value="{{liveData.penaltiesMissedPoints}})分" />
+      <van-cell wx:if="{{liveData.yellowCards > 0}}" title="黄牌：{{liveData.yellowCards}}"
+        value="{{liveData.yellowCardsPoints}})分" />
+      <van-cell wx:if="{{liveData.redCards > 0}}" title="红牌：{{liveData.redCards}}"
+        value="{{liveData.redCardsPoints}})分" />
+    </van-cell-group>
+
+  </view>
+
+  <van-toast id="van-toast" />
+
+</view>
