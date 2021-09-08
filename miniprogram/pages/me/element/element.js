@@ -1,66 +1,113 @@
-// pages/me/element/element.js
+import {
+  get
+} from "../../../utils/request";
+
+const app = getApp();
+
 Page({
 
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    gw: 0,
+    element: 0,
+    resultData: {},
+    // picker
+    playerPickerShow: false,
   },
 
   /**
-   * 生命周期函数--监听页面加载
+   * 原生
    */
+
   onLoad: function (options) {
-
+    this.setData({
+      gw: app.globalData.gw
+    });
+    if (JSON.stringify(options) !== '{}') { // 传入要查询的element
+      let element = parseInt(options.element);
+      this.setData({
+        element: element
+      });
+    }
   },
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
-
+    // 拉取数据
+    this.initEventExplainResult();
   },
 
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  /**
+   * 操作
+   */
+
+  onClickChangePlayer() {
+    this.setData({
+      playerPickerShow: true
+    });
+  },
+
+  onPlayerPopClose() {
+    this.setData({
+      playerPickerShow: false
+    });
+  },
+
+  onPlayerPickResult(event) {
+    this.setData({
+      playerPickerShow: false
+    });
+    let playerInfo = event.detail;
+    if (playerInfo === '' || playerInfo === null) {
+      return false;
+    }
+    // 设置
+    this.setData({
+      element: playerInfo.element
+    });
+    // 拉取数据
+    this.initEventExplainResult();
+  },
+
+  /**
+   * 数据
+   */
+
+  initEventExplainResult() {
+    let gw = this.data.gw,
+      element = this.data.element;
+    if (gw <= 0 || element <= 0) {
+      return false;
+    }
+    get('stat/qryElementEventExplainResult', {
+        event: gw,
+        element: element
+      })
+      .then(res => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 1000,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        this.setData({
+          resultData: res.data
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
 })

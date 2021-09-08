@@ -18,8 +18,8 @@
   </view>
 
   <view class="upload">
-    <van-uploader upload-icon="photograph" preview-size="100px" file-list="{{fileList}}" accept="image" upload-text="上传图片"
-      multiple="true" use-before-read bind:before-read="beforeRead" bind:after-read="afterRead" />
+    <van-uploader upload-icon="photograph" preview-size="100px" file-list="{{fileList}}" accept="image"
+      upload-text="上传图片" bind:after-read="uploadToCloud" />
   </view>
 
   <view class="bottemNavBar">

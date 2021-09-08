@@ -108,25 +108,13 @@ Page({
    * 图片
    */
 
-  beforeRead(event) {
-    const {
-      file,
-      callback
-    } = event.detail;
-    callback(file.type === 'image');
-  },
-
-  uploadToCloud() {
+  uploadToCloud(event) {
+    const { file } = event.detail;
+    console.log(file); //返回的图片临时地址
     wx.cloud.init();
     const {
       fileList
     } = this.data;
-    if (!fileList.length) {
-      wx.showToast({
-        title: '请选择图片',
-        icon: 'none'
-      });
-    } else {
       const uploadTasks = fileList.map((file, index) => this.uploadFilePromise(`my-photo${index}.png`, file));
       Promise.all(uploadTasks)
         .then(data => {
@@ -149,7 +137,6 @@ Page({
           });
           console.log(e);
         });
-    }
   },
 
   uploadFilePromise(fileName, chooseResult) {
@@ -158,5 +145,5 @@ Page({
       filePath: chooseResult.url
     });
   },
-  
+
 })

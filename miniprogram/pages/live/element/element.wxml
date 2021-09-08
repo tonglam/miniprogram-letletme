@@ -20,7 +20,7 @@
   <view class="content">
 
     <van-cell-group title="详情">
-      <van-cell title="上场：{{liveData.minutes}}分钟" value="{{liveData.minutesPoints}}分" />
+      <van-cell title="出场：{{liveData.minutes}}" value="{{liveData.minutesPoints}}分" />
 
       <view wx:if="{{playerInfo.elementType === 1}}">
         <van-cell wx:if="{{liveData.saves > 0}}" title="扑救：{{liveData.saves}}" value="{{liveData.savesPoints}}分" />

@@ -25,11 +25,16 @@ const map = {
       {
         name: "联赛",
         subname: '查看联赛统计数据',
+      },
+      {
+        name: "推荐阵容",
+        subname: '查看各类推荐阵容',
       }
     ],
     "url": {
       "球队": "/pages/summary/entry/entry",
       "联赛": "/pages/summary/league/league",
+      "推荐阵容": "/pages/summary/scout/scout",
     },
     "show": true
   },
