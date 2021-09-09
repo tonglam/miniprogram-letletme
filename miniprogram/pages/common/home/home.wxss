@@ -1,9 +1,5 @@
 .home {
-  margin-top: 20%;
-}
-
-.home .index {
-  text-align: center;
+  margin-top: 15%;
 }
 
 .home .navBar {
@@ -13,8 +9,8 @@
   right: 0;
 }
 
-swiper,swiper-item{
-  height:100vh!important;
+.home .index {
+  text-align: center;
 }
 
 .home .img {
@@ -48,5 +44,6 @@ swiper,swiper-item{
 }
 
 .home .fixture {
+  margin-top: 30px;
   font-weight: bold;
 }

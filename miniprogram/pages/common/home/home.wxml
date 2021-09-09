@@ -1,54 +1,44 @@
 <view class="home">
 
   <view class="navBar">
-    <van-nav-bar title="{{entryName}}" left-text="GW{{gw}}" right-text="切换id" safe-area-inset-top="{{false}}"
+    <van-nav-bar title="{{title}}" left-text="GW{{titleGw}}" right-text="切换id" safe-area-inset-top="{{false}}"
       bind:click-left="" bind:click-right="onClickChangeEntry" />
   </view>
 
-  <view class="swiper">
+  <view class="content">
+    <van-tabs>
 
-    <swiper bindchange="onSwipperChange">
+      <van-tab title="首页" name="index">
 
-      <swiper-item item-id="index">
         <view class="index">
 
           <view class="img">
             <image class="begbeg" src="../../../images/begbeg.jpg" mode="aspectFit"></image>
           </view>
 
-          <block wx:if="{{nextGw > 38}}">
-            <text>下赛季见</text>
-          </block>
+          <view class="info">
+            <text>GW{{nextGw}}\n\ndeadline: {{deadline}}</text>
+          </view>
 
-          <block wx:else>
+          <view class="countDown">
+            <van-count-down use-slot time="{{time}}" bind:change="onChange">
+              <text class="item">{{timeData.days}}天</text>
+              <text class="item">{{timeData.hours}}时</text>
+              <text class="item">{{timeData.minutes}}分</text>
+              <text class="item">{{timeData.seconds}}秒</text>
+            </van-count-down>
+          </view>
 
-            <view class="info">
-              <text>GW{{nextGw}}\n\ndeadline: {{deadline}}</text>
-            </view>
+          <view class="bottom">
+            <van-row>
+              <van-transition show="{{true}}" custom-class="block">
+                这破游戏
+              </van-transition>
+            </van-row>
+          </view>
 
-            <view class="countDown">
-              <van-count-down use-slot time="{{time}}" bind:change="onChange">
-                <text class="item">{{timeData.days}}天</text>
-                <text class="item">{{timeData.hours}}时</text>
-                <text class="item">{{timeData.minutes}}分</text>
-                <text class="item">{{timeData.seconds}}秒</text>
-              </van-count-down>
-            </view>
-
-            <view class="bottom">
-              <van-row>
-                <van-transition show="{{true}}" custom-class="block">
-                  这破游戏
-                </van-transition>
-              </van-row>
-            </view>
-
-          </block>
         </view>
 
-      </swiper-item>
-
-      <swiper-item item-id="fixture">
         <view class="fixture">
           <van-cell-group title="GW{{nextGw}} - 赛程">
             <block wx:for="{{fixtureList}}" wx:for-item="data" wx:key="index">
@@ -56,34 +46,92 @@
             </block>
           </van-cell-group>
         </view>
-      </swiper-item>
 
-      <swiper-item item-id="dreamTeam">
-        <view class="dreamTeam">
-          <van-cell-group title="GW{{lastGw}} - 梦之队">
-            <block wx:for="{{dreamTeamList}}" wx:for-item="data" wx:key="index">
-              <van-cell-group wx:if="{{data.elementType === 1}}" title="门将">
-                <van-cell title="【{{data.teamShortName}}】{{data.webName}}"
-                  value="{{data.points}} ({{data.selectedByPercent}})%" />
-              </van-cell-group>
-            </block>
-          </van-cell-group>
-        </view>
-      </swiper-item>
+      </van-tab>
 
-      <swiper-item item-id="elite">
-        <view class="elite">
-          <van-cell-group title="GW{{lastGw}} - 高分球员">
-            <block wx:for="{{eliteElmentList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="门将 【{{data.teamShortName}}】{{data.webName}}"
-                value="{{data.points}}({{data.selectedByPercent}})" />
-            </block>
-          </van-cell-group>
-        </view>
-      </swiper-item>
+      <van-tab title="梦之队" name="dreamTeam">
 
-    </swiper>
+        <van-cell-group title="门将">
+          <block wx:for="{{dreamTeamGkpList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="【{{data.teamShortName}}】{{data.webName}}"
+              value="{{data.points}}分({{data.selectedByPercent}}%)" />
+          </block>
+        </van-cell-group>
 
+        <van-cell-group title="后卫">
+          <block wx:for="{{dreamTeamDefList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="【{{data.teamShortName}}】{{data.webName}}"
+              value="{{data.points}}分({{data.selectedByPercent}}%)" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="中场">
+          <block wx:for="{{dreamTeamMidList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="【{{data.teamShortName}}】{{data.webName}}"
+              value="{{data.points}}分({{data.selectedByPercent}}%)" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="前锋">
+          <block wx:for="{{dreamTeamFwdList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="【{{data.teamShortName}}】{{data.webName}}"
+              value="{{data.points}}分({{data.selectedByPercent}}%)" />
+          </block>
+        </van-cell-group>
+
+      </van-tab>
+
+      <van-tab title="高分球员" name="elite">
+
+        <van-cell-group title="门将">
+          <block wx:for="{{eliteElmentGkpList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="【{{data.teamShortName}}】{{data.webName}}"
+              value="{{data.points}}分({{data.selectedByPercent}}%)" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="后卫">
+          <block wx:for="{{eliteElmentDefList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="【{{data.teamShortName}}】{{data.webName}}"
+              value="{{data.points}}分({{data.selectedByPercent}}%)" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="中场">
+          <block wx:for="{{eliteElmentMidList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="【{{data.teamShortName}}】{{data.webName}}"
+              value="{{data.points}}分({{data.selectedByPercent}}%)" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="前锋">
+          <block wx:for="{{eliteElmentFwdList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="【{{data.teamShortName}}】{{data.webName}}"
+              value="{{data.points}}分({{data.selectedByPercent}}%)" />
+          </block>
+        </van-cell-group>
+
+      </van-tab>
+
+      <van-tab title="转会" name="transfers">
+        
+        <van-cell-group title="转入最多">
+          <block wx:for="{{eliteElmentFwdList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="{{index+1}} - {{data.webName}}"
+              value="{{data.transfersInEvent}} ({{data.selectedByPercent}}%)" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="转出最多">
+          <block wx:for="{{transfersInList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="{{index+1}} - {{data.webName}}"
+              value="{{data.transfersOutEvent}} ({{data.selectedByPercent}}%)" />
+          </block>
+        </van-cell-group>
+
+      </van-tab>
+
+    </van-tabs>
   </view>
 
   <view class="bottemNavBar">

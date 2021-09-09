@@ -38,7 +38,7 @@
   <view class="content">
 
     <view class="dateValue" wx:if="{{mode === '日期'}}">
-      <van-tabs swipeable type="card">
+      <van-tabs type="card">
 
         <van-tab title="涨价" name="涨价">
           <view class="info">
