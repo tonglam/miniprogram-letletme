@@ -1,5 +1,8 @@
 .home {
   margin-top: 20%;
+}
+
+.home .index {
   text-align: center;
 }
 
@@ -8,6 +11,10 @@
   top: 0;
   left: 0;
   right: 0;
+}
+
+swiper,swiper-item{
+  height:100vh!important;
 }
 
 .home .img {
@@ -41,6 +48,5 @@
 }
 
 .home .fixture {
-  margin: 60px 0;
   font-weight: bold;
 }

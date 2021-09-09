@@ -5,50 +5,91 @@
       bind:click-left="" bind:click-right="onClickChangeEntry" />
   </view>
 
-  <view class="img">
-    <image class="begbeg" src="../../../images/begbeg.jpg" mode="aspectFit"></image>
+  <view class="swiper">
+
+    <swiper bindchange="onSwipperChange">
+
+      <swiper-item item-id="index">
+        <view class="index">
+
+          <view class="img">
+            <image class="begbeg" src="../../../images/begbeg.jpg" mode="aspectFit"></image>
+          </view>
+
+          <block wx:if="{{nextGw > 38}}">
+            <text>下赛季见</text>
+          </block>
+
+          <block wx:else>
+
+            <view class="info">
+              <text>GW{{nextGw}}\n\ndeadline: {{deadline}}</text>
+            </view>
+
+            <view class="countDown">
+              <van-count-down use-slot time="{{time}}" bind:change="onChange">
+                <text class="item">{{timeData.days}}天</text>
+                <text class="item">{{timeData.hours}}时</text>
+                <text class="item">{{timeData.minutes}}分</text>
+                <text class="item">{{timeData.seconds}}秒</text>
+              </van-count-down>
+            </view>
+
+            <view class="bottom">
+              <van-row>
+                <van-transition show="{{true}}" custom-class="block">
+                  这破游戏
+                </van-transition>
+              </van-row>
+            </view>
+
+          </block>
+        </view>
+
+      </swiper-item>
+
+      <swiper-item item-id="fixture">
+        <view class="fixture">
+          <van-cell-group title="GW{{nextGw}} - 赛程">
+            <block wx:for="{{fixtureList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{data.teamShortName}} vs {{data.againstTeamShortName}}" value="{{data.kickoffTime}}" />
+            </block>
+          </van-cell-group>
+        </view>
+      </swiper-item>
+
+      <swiper-item item-id="dreamTeam">
+        <view class="dreamTeam">
+          <van-cell-group title="GW{{lastGw}} - 梦之队">
+            <block wx:for="{{dreamTeamList}}" wx:for-item="data" wx:key="index">
+              <van-cell-group wx:if="{{data.elementType === 1}}" title="门将">
+                <van-cell title="【{{data.teamShortName}}】{{data.webName}}"
+                  value="{{data.points}} ({{data.selectedByPercent}})%" />
+              </van-cell-group>
+            </block>
+          </van-cell-group>
+        </view>
+      </swiper-item>
+
+      <swiper-item item-id="elite">
+        <view class="elite">
+          <van-cell-group title="GW{{lastGw}} - 高分球员">
+            <block wx:for="{{eliteElmentList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="门将 【{{data.teamShortName}}】{{data.webName}}"
+                value="{{data.points}}({{data.selectedByPercent}})" />
+            </block>
+          </van-cell-group>
+        </view>
+      </swiper-item>
+
+    </swiper>
+
   </view>
-
-  <block wx:if="{{nextGw > 38}}">
-    <text>下赛季见</text>
-  </block>
-
-  <block wx:else>
-    <view class="info">
-      <text>GW{{nextGw}}\n\ndeadline: {{deadline}}</text>
-    </view>
-
-    <view class="countDown">
-      <van-count-down use-slot time="{{time}}" bind:change="onChange">
-        <text class="item">{{timeData.days}}天</text>
-        <text class="item">{{timeData.hours}}时</text>
-        <text class="item">{{timeData.minutes}}分</text>
-        <text class="item">{{timeData.seconds}}秒</text>
-      </van-count-down>
-    </view>
-
-    <view class="bottom">
-      <van-row>
-        <van-transition show="{{true}}" custom-class="block">
-          这破游戏
-        </van-transition>
-      </van-row>
-    </view>
-
-    <view class="fixture">
-      <van-cell-group title="GW{{nextGw}}赛程">
-        <block wx:for="{{fixtureList}}" wx:for-item="data" wx:key="index">
-          <van-cell title="{{data.teamShortName}} vs {{data.againstTeamShortName}}" value="{{data.kickoffTime}}" />
-        </block>
-      </van-cell-group>
-    </view>
-
-  </block>
 
   <view class="bottemNavBar">
     <bottomNavBar active="home"></bottomNavBar>
   </view>
-  
+
   <van-toast id="van-toast" />
 
 </view>
