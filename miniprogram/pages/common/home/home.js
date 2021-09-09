@@ -355,6 +355,7 @@ Page({
      
       })
     })
+  })
     .catch(res => {
       console.log('fail:', res);
     })
