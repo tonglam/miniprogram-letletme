@@ -1,8 +1,8 @@
 <view class="element">
 
   <view class="navBar">
-    <van-nav-bar title="{{playerInfo.webName}}" title-class="title" safe-area-inset-top="{{false}}"
-      left-text="{{playerInfo.teamShortName}}" right-text="更换球员" bind:click-right="onClickChangePlayer" />
+    <van-nav-bar title="{{playerInfo.webName}}" title-class="title" safe-area-inset-top="{{false}}" left-text=""
+      right-text="更换球员" bind:click-right="onClickChangePlayer" />
   </view>
 
   <view class="playerPicker">
@@ -13,7 +13,8 @@
   </view>
 
   <view class="info">
-    <van-cell title="位置：{{playerInfo.elementTypeName}}" value="实时分数：{{liveData.livePoints}}分" />
+    <van-cell title="球队：{{playerInfo.teamName}}" value="位置：{{playerInfo.elementTypeName}}" />
+    <van-cell title="实时分数：{{liveData.livePoints}}分" value="持有率：{{playerInfo.selectedByPercent}}%" />
     <van-cell title="BPS：{{liveData.bps}}" value="BOUNUS：{{liveData.liveBonus}}分" />
   </view>
 

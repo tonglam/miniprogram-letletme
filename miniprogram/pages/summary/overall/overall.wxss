@@ -1,0 +1,15 @@
+.overall .summary {
+  margin: 10px 0;
+}
+
+.overall .elite {
+  margin: 10px 0;
+}
+
+.overall .dreamTeam {
+  margin: 10px 0;
+}
+
+.overall .transfers {
+  margin: 10px 0;
+}

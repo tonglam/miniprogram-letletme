@@ -1,0 +1,111 @@
+<view class="overall">
+
+
+  <view class="content">
+    <van-tabs bind:change="tabOnChange">
+
+      <van-tab title="总结" name="summary">
+
+        <view class="summary">
+          <van-cell-group title="GW{{gw}}">
+            <van-cell title="平均分" value="{{summaryData.averageEntryScore}}" />
+            <van-cell title="最高分" value="{{summaryData.highestScore}}" />
+            <van-cell title="选择最多球员" value="{{summaryData.mostSelectedWebName}}" />
+            <van-cell title="转入最多球员" value="{{summaryData.mostTransferredInWebName}}" />
+            <van-cell title="选择最多队长" value="{{summaryData.mostCaptainedWebName}}" />
+            <van-cell title="选择最多副队长" value="{{summaryData.mostViceCaptainedWebName}}" />
+          </van-cell-group>
+
+          <van-cell-group title="开卡情况">
+            <block wx:for="{{summaryData.chipPlays}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{data.chipName}}" value="数量：{{data.numberPlayed}}" />
+            </block>
+          </van-cell-group>
+
+        </view>
+
+      </van-tab>
+
+      <van-tab title="梦之队" name="dreamTeam">
+
+        <view class="dreamTeam">
+
+          <van-cell-group title="门将">
+            <block wx:for="{{dreamTeamGkpList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="【{{data.teamShortName}}】{{data.webName}}" value="{{data.points}}分" is-link
+                url="/pages/me/element/element?element={{data.element}}" />
+            </block>
+          </van-cell-group>
+
+          <van-cell-group title="后卫">
+            <block wx:for="{{dreamTeamDefList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="【{{data.teamShortName}}】{{data.webName}}" value="{{data.points}}分" is-link
+                url="/pages/me/element/element?element={{data.element}}" />
+            </block>
+          </van-cell-group>
+
+          <van-cell-group title="中场">
+            <block wx:for="{{dreamTeamMidList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="【{{data.teamShortName}}】{{data.webName}}" value="{{data.points}}分" is-link
+                url="/pages/me/element/element?element={{data.element}}" />
+            </block>
+          </van-cell-group>
+
+          <van-cell-group title="前锋">
+            <block wx:for="{{dreamTeamFwdList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="【{{data.teamShortName}}】{{data.webName}}" value="{{data.points}}分" is-link
+                url="/pages/me/element/element?element={{data.element}}" />
+            </block>
+          </van-cell-group>
+
+        </view>
+
+      </van-tab>
+
+      <van-tab title="高分球员" name="elite">
+
+        <view class="elite">
+
+          <van-cell-group title="">
+            <block wx:for="{{eliteElmentList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{index+1}} - 【{{data.teamShortName}}】{{data.webName}}" value="{{data.points}}分" is-link
+                url="/pages/me/element/element?element={{data.element}}" />
+            </block>
+          </van-cell-group>
+
+        </view>
+
+      </van-tab>
+
+      <van-tab title="转会" name="transfers">
+
+        <view class="transfers">
+
+          <van-cell-group title="转入最多">
+            <block wx:for="{{transfersInList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{index+1}} - {{data.webName}}" value="{{data.transfersInEvent}}" is-link
+                url="/pages/me/element/element?element={{data.element}}" />
+            </block>
+          </van-cell-group>
+
+          <van-cell-group title="转出最多">
+            <block wx:for="{{transfersOutList}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{index+1}} - {{data.webName}}" value="{{data.transfersOutEvent}}" is-link
+                url="/pages/me/element/element?element={{data.element}}" />
+            </block>
+          </van-cell-group>
+
+        </view>
+
+      </van-tab>
+
+    </van-tabs>
+  </view>
+
+  <van-toast id="van-toast" />
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="summary"></bottomNavBar>
+  </view>
+
+</view>

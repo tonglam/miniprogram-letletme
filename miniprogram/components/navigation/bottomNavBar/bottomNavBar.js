@@ -19,6 +19,9 @@ const map = {
   },
   "summary": {
     "pages": [{
+        name: "比赛周",
+        subname: '查看比赛周总体数据',
+      }, {
         name: "球队",
         subname: '查看球队统计数据',
       },
@@ -32,6 +35,7 @@ const map = {
       }
     ],
     "url": {
+      "比赛周": "/pages/summary/overall/overall",
       "球队": "/pages/summary/entry/entry",
       "联赛": "/pages/summary/league/league",
       "推荐阵容": "/pages/summary/scout/scout",

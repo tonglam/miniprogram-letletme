@@ -19,7 +19,7 @@
     </van-popup>
   </view>
 
-  <van-tabs swipeable type="card">
+  <van-tabs type="card">
 
     <van-tab title="数据" name="数据">
 

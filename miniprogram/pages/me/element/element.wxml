@@ -2,7 +2,7 @@
 
   <view class="navBar">
     <van-nav-bar title="{{resultData.webName}}" title-class="title" safe-area-inset-top="{{false}}"
-      left-text="{{resultData.teamShortName}}" right-text="更换球员" bind:click-right="onClickChangePlayer" />
+      left-text="GW{{gw}}" right-text="更换球员" bind:click-right="onClickChangePlayer" />
   </view>
 
   <view class="playerPicker">
@@ -13,8 +13,9 @@
   </view>
 
   <view class="info">
-    <van-cell title="位置：{{resultData.elementTypeName}}" value="得分：{{resultData.totalPoints}}分" />
-    <van-cell title="BPS：{{resultData.bps}}" value="BOUNUS：{{resultData.bonus}}分" />
+    <van-cell title="球队：{{resultData.teamShortName}}" value="位置：{{resultData.elementTypeName}}" />
+    <van-cell title="得分：{{resultData.totalPoints}}分" value="持有率：{{resultData.selectedByPercent}}%" />
+    <van-cell title="BPS：{{resultData.bps}}" value="BOUNUS：{{resultData.bonus}}" />
   </view>
 
   <view class="content">
