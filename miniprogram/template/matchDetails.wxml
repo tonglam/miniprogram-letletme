@@ -4,7 +4,7 @@
     <block wx:for="{{detailsData.goals}}" wx:for-item="element" wx:key="index">
       <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
         value="{{element.goalsScored}}" is-link link-type="navigateTo"
-        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+        url="/pages/live/element/element?element={{element.element}}" />
     </block>
   </van-cell-group>
 
@@ -12,7 +12,7 @@
     <block wx:for="{{detailsData.assists}}" wx:for-item="element" wx:key="index">
       <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
         value="{{element.assists}}" is-link link-type="navigateTo"
-        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+        url="/pages/live/element/element?element={{element.element}}" />
     </block>
   </van-cell-group>
 
@@ -20,7 +20,7 @@
     <block wx:for="{{detailsData.redCards}}" wx:for-item="element" wx:key="index">
       <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
         value="{{element.redCards}}" is-link link-type="navigateTo"
-        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+        url="/pages/live/element/element?element={{element.element}}" />
     </block>
   </van-cell-group>
 
@@ -28,7 +28,7 @@
     <block wx:for="{{detailsData.yellowCards}}" wx:for-item="element" wx:key="index">
       <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
         value="{{element.yellowCards}}" is-link link-type="navigateTo"
-        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+        url="/pages/live/element/element?element={{element.element}}" />
     </block>
   </van-cell-group>
 
@@ -36,7 +36,7 @@
     <block wx:for="{{detailsData.ownGoals}}" wx:for-item="element" wx:key="index">
       <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
         value="{{element.ownGoals}}" is-link link-type="navigateTo"
-        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+        url="/pages/live/element/element?element={{element.element}}" />
     </block>
   </van-cell-group>
 
@@ -44,7 +44,7 @@
     <block wx:for="{{detailsData.penaltiesSaved}}" wx:for-item="element" wx:key="index">
       <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
         value="{{element.penaltiesSaved}}" is-link link-type="navigateTo"
-        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+        url="/pages/live/element/element?element={{element.element}}" />
     </block>
   </van-cell-group>
 
@@ -52,7 +52,7 @@
     <block wx:for="{{detailsData.penaltiesMissed}}" wx:for-item="element" wx:key="index">
       <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
         value="{{element.penaltiesMissed}}" is-link link-type="navigateTo"
-        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+        url="/pages/live/element/element?element={{element.element}}" />
     </block>
   </van-cell-group>
 
@@ -60,7 +60,7 @@
     <block wx:for="{{detailsData.saves}}" wx:for-item="element" wx:key="index">
       <van-cell title-class="title" label-class="label" title="【{{element.teamShortName}}】{{element.webName}}"
         value="{{element.saves}}" is-link link-type="navigateTo"
-        url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+        url="/pages/live/element/element?element={{element.element}}" />
     </block>
   </van-cell-group>
 

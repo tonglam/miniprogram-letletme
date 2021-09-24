@@ -36,7 +36,7 @@
                     title="{{homeMatch.webName}} ({{homeMatch.elementTypeName}})"
                     value="{{homeMatch.totalPoints}}({{homeMatch.bonus}})"
                     label="【{{homeMatch.teamShortName}}】上场时间:{{homeMatch.minutes}}分钟" is-link link-type="navigateTo"
-                    url="/pages/live/player/player?element={{homeMatch.element}}&&elementType={{homeMatch.elementType}}" />
+                    url="/pages/live/element/element?element={{homeMatch.element}}" />
                 </block>
 
                 <van-divider borderColor="black" />
@@ -46,7 +46,7 @@
                     title="{{awayMatch.webName}} ({{awayMatch.elementTypeName}})"
                     value="{{awayMatch.totalPoints}}({{awayMatch.bonus}})"
                     label="【{{awayMatch.teamShortName}}】上场时间:{{awayMatch.minutes}}分钟" is-link link-type="navigateTo"
-                    url="/pages/live/player/player?element={{awayMatch.element}}&&elementType={{awayMatch.elementType}}" />
+                    url="/pages/live/element/element?element={{awayMatch.element}}" />
                 </block>
 
               </van-collapse-item>
@@ -73,7 +73,7 @@
                   <van-cell title-class="title" label-class="label"
                     title="【{{element.teamShortName}}】{{element.webName}}" value="{{element.totalPoints}}({{element.bonus}})"
                     is-link link-type="navigateTo"
-                    url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+                    url="/pages/live/element/element?element={{element.element}}" />
                 </block>
 
               </van-collapse-item>
@@ -100,7 +100,7 @@
                   <van-cell title-class="title" label-class="label"
                     title="【{{element.teamShortName}}】{{element.webName}}" value="{{element.bps}}({{element.bonus}})" is-link
                     link-type="navigateTo"
-                    url="/pages/live/player/player?element={{element.element}}&&elementType={{element.elementType}}" />
+                    url="/pages/live/element/element?element={{element.element}}" />
                 </block>
 
               </van-collapse-item>
