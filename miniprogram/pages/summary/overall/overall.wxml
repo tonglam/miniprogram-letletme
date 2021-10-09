@@ -32,31 +32,33 @@
 
           <van-cell-group title="门将">
             <block wx:for="{{dreamTeamGkpList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="【{{data.teamShortName}}】{{data.webName}}" value="{{data.points}}分" is-link
+              <van-cell title="【{{data.teamShortName}}】{{data.webName}}" value="{{data.totalPoints}}({{data.points}})" is-link
                 url="/pages/me/element/element?element={{data.element}}" />
             </block>
           </van-cell-group>
 
           <van-cell-group title="后卫">
             <block wx:for="{{dreamTeamDefList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="【{{data.teamShortName}}】{{data.webName}}" value="{{data.points}}分" is-link
+              <van-cell title="【{{data.teamShortName}}】{{data.webName}}" value="{{data.totalPoints}}({{data.points}})" is-link
                 url="/pages/me/element/element?element={{data.element}}" />
             </block>
           </van-cell-group>
 
           <van-cell-group title="中场">
             <block wx:for="{{dreamTeamMidList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="【{{data.teamShortName}}】{{data.webName}}" value="{{data.points}}分" is-link
+              <van-cell title="【{{data.teamShortName}}】{{data.webName}}" value="{{data.totalPoints}}({{data.points}})" is-link
                 url="/pages/me/element/element?element={{data.element}}" />
             </block>
           </van-cell-group>
 
           <van-cell-group title="前锋">
             <block wx:for="{{dreamTeamFwdList}}" wx:for-item="data" wx:key="index">
-              <van-cell title="【{{data.teamShortName}}】{{data.webName}}" value="{{data.points}}分" is-link
+              <van-cell title="【{{data.teamShortName}}】{{data.webName}}" value="{{data.totalPoints}}({{data.points}})" is-link
                 url="/pages/me/element/element?element={{data.element}}" />
             </block>
           </van-cell-group>
+
+          <text class="tips">*总得分（本轮得分）</text>
 
         </view>
 

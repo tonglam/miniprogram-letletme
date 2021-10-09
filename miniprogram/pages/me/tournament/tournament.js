@@ -413,6 +413,7 @@ Page({
     list = this.sortValue(tournamentResultFullList);
     list = this.captainFilter(list);
     list = this.chipFilter(list);
+    list = this.searchList(list);
     list = this.rankList(list);
     tournamentResultList = list;
     this.setPageData();

@@ -84,6 +84,11 @@ Page({
     });
   },
 
+  // 倒计时归零
+  onFinish(){
+    this.refreshEventAndDeadline();
+  },
+
   // 重新输入team_id
   onClickChangeEntry() {
     // 清缓存

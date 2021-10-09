@@ -230,7 +230,6 @@ Page({
         showModePicker: false,
         showPlayerPicker: true
       });
-      this.datafilter();
     }
   },
 
@@ -256,6 +255,7 @@ Page({
       searchWebName: webName
     });
     this.initLiveSearchDataList();
+    this.datafilter();
   },
 
   // dropDown选择

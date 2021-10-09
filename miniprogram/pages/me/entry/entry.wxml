@@ -126,16 +126,16 @@
       <van-tab title="转会" name="转会">
 
         <view class="transfers">
-          <van-cell-group wx:if="{{noTransfers}}" title="本周无转会">
-          </van-cell-group>
-          <van-cell-group wx:else title="本周转会">
-            <block wx:for="{{entryTransfersList}}" wx:for-item="data" wx:key="index">
+          <block wx:for="{{entryTransfersList}}" wx:for-item="data" wx:key="index">
+            <van-cell-group title="GW{{data.event}}">
               <van-cell title="转入：{{data.elementInWebName}}({{data.elementInPoints}}分)"
                 value="转出：{{data.elementOutWebName}}({{data.elementOutPoints}}分)"
                 label="转入:£{{data.elementInCost}}m -> 转出:£{{data.elementOutCost}}m" />
-            </block>
-          </van-cell-group>
+            </van-cell-group>
+          </block>
         </view>
+
+        <text class="tips">*WC和FH不计算在内</text>
 
       </van-tab>
 

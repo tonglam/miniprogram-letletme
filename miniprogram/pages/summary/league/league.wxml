@@ -56,6 +56,22 @@
         </view>
 
         <view class="info">
+          <van-cell-group title="阵容身价排行榜">
+            <block wx:for="{{summaryData.topTeamValue}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{index+1}} - {{data.entryName}}" value="£{{data.teamValue}}m" />
+            </block>
+          </van-cell-group>
+        </view>
+
+        <view class="info">
+          <van-cell-group title="存款排行榜">
+            <block wx:for="{{summaryData.topBank}}" wx:for-item="data" wx:key="index">
+              <van-cell title="{{index+1}} - {{data.entryName}}" value="£{{data.bank}}m" />
+            </block>
+          </van-cell-group>
+        </view>
+
+        <view class="info">
           <van-cell-group title="转会数量排行榜" wx:if="{{summaryData.topTransfers.length>0}}">
             <block wx:for="{{summaryData.topTransfers}}" wx:for-item="data" wx:key="index">
               <van-cell title="{{index+1}} - {{data.entryName}}" value="{{data.totalTransfers}}" />

@@ -29,7 +29,6 @@ Page({
     // 得分页
     entryResultData: {},
     // 转会页
-    noTransfers: false,
     entryTransfersList: [],
     // 排名页
     entryEventSummaryList: [],
@@ -128,8 +127,8 @@ Page({
         this.initEntryEventResult();
       }
     } else if (tab === '转会') {
-      if (!this.data.noTransfers && this.data.entryTransfersList.length === 0) {
-        this.initEntryEventTransfers();
+      if (this.data.entryTransfersList.length === 0) {
+        this.initEntryAllTransfers();
       }
     } else if (tab === '排行') {
 
@@ -174,7 +173,7 @@ Page({
       this.initEntryEventResult();
     } else if (this.data.tab === '转会') {
       // 拉取周转会数据
-      this.initEntryEventTransfers();
+      this.initEntryAllTransfers();
     }
   },
 
@@ -323,22 +322,15 @@ Page({
   },
 
   // 拉取周转会数据
-  initEntryEventTransfers() {
+  initEntryAllTransfers() {
     let gw = this.data.resultGw;
     if (gw <= 1) {
       return false;
     }
-    get('entry/qryEntryEventTransfers', {
-        event: gw,
+    get('entry/qryEntryAllTransfers', {
         entry: this.data.entry
       })
       .then(res => {
-        let list = res.data;
-        if (list.length === 0) {
-          this.setData({
-            noTransfers: true
-          });
-        }
         this.setData({
           entryTransfersList: res.data
         });
@@ -429,7 +421,7 @@ Page({
           });
         }
         // 拉取周得分数据
-        this.initEntryEventTransfers();
+        this.initEntryAllTransfers();
       })
       .catch(res => {
         console.log('fail:', res);
