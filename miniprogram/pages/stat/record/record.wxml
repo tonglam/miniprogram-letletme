@@ -1,0 +1,74 @@
+<view class="record">
+
+  <view class="navBar">
+    <van-nav-bar title="{{title}}" safe-area-inset-top="{{false}}" />
+  </view>
+
+  <view class="notice">
+    <van-notice-bar scrollable="{{false}}" left-icon="info-o" text="数据统计时间：2016/2017赛季至今" border="{{false}}" />
+  </view>
+
+  <view class="content">
+
+    <van-tabs type="card" bind:change="tabOnChange">
+
+      <van-tab title="历史战绩" name="info">
+
+        <view class="info">
+          <van-cell title="交手：{{infoData.played}}次"
+            value="{{infoData.win}}胜 - {{infoData.draw}}平 - {{infoData.lose}}负" />
+          <van-cell title="得失球：{{infoData.goalScoreed}} - {{infoData.goalsConceded}}"
+            value="平均得失球：{{infoData.averageGoalScoreed}} - {{infoData.averageGoalsConceded}}" />
+        </view>
+
+        <view class="history">
+          <block wx:for="{{infoData.recordDataMap}}" wx:for-index="key">
+            <van-cell-group title="{{key}}赛季">
+              <block wx:for="{{item}}" wx:for-item="data" wx:key="index">
+                <van-cell-group
+                  title="【GW{{data.event}}】{{data.teamHShortName}} {{data.teamHScore}} - {{data.teamAScore}} {{data.teamAShortName}}">
+                  <block ws:if="{{data.goalScored.length>0}}" wx:for="{{data.goalScored}}" wx:for-item="goalScoredData"
+                    wx:key="goalScoredIndex">
+                    <van-cell title="进球：{{goalScoredData.key}}" value="{{goalScoredData.value}}" />
+                    <!-- <block ws:if="{{data.assists.length>0}}" wx:for="{{data.assists}}" wx:for-item="assistsData"
+                      wx:key="assistsIndex">
+                      <van-cell title="助攻：{{assistsData.key}}" value="{{assistsData.value}}" />
+                    </block>
+                    <block ws:if="{{data.ownGoals.length>0}}" wx:for="{{data.ownGoals}}" wx:for-item="ownGoalsData"
+                      wx:key="ownGoalsIndex">
+                      <van-cell title="乌龙：{{ownGoalsData.key}}" value="{{ownGoalsData.value}}" />
+                    </block>
+                    <block ws:if="{{data.penaltiesSaved.length>0}}" wx:for="{{data.penaltiesSaved}}"
+                      wx:for-item="penaltiesSavedData" wx:key="penaltiesSavedIndex">
+                      <van-cell title="扑点：{{penaltiesSavedData.key}}" value="{{penaltiesSavedData.value}}" />
+                    </block>
+                    <block ws:if="{{data.penaltiesMissed.length>0}}" wx:for="{{data.penaltiesMissed}}"
+                      wx:for-item="penaltiesMissedData" wx:key="penaltiesMissedIndex">
+                      <van-cell title="丢点：{{penaltiesMissedData.key}}" value="{{penaltiesMissedData.value}}" />
+                    </block>
+                    <block ws:if="{{data.redCards.length>0}}" wx:for="{{data.redCards}}" wx:for-item="redCardsData"
+                      wx:key="redCardsIndex">
+                      <van-cell title="红牌：{{redCardsData.key}}" value="{{redCardsData.value}}" />
+                    </block> -->
+                  </block>
+                </van-cell-group>
+              </block>
+            </van-cell-group>
+          </block>
+        </view>
+
+      </van-tab>
+
+      <van-tab title="高分球员" name="element">
+
+        <block wx:for="{{topElementList}}" wx:for-item="data" wx:key="index">
+
+        </block>
+
+      </van-tab>
+
+    </van-tabs>
+
+  </view>
+
+</view>
