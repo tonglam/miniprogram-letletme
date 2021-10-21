@@ -13,7 +13,6 @@ Page({
     teamAId: 0,
     active: true,
     infoData: {},
-    resultList: [],
     topElementList: [],
   },
 
@@ -44,6 +43,23 @@ Page({
    * 操作
    */
 
+  // tab切换
+  tabOnChange(event) {
+    let tab = event.detail.name;
+    this.setData({
+      tab: tab
+    });
+    if (tab === 'info') {
+      if (JSON.stringify(this.data.infoData) === '{}') {
+        this.initAgainstRecordInfo();
+      }
+    } else if (tab === 'element') {
+      if (this.data.topElementList.length === 0) {
+        this.initTopElementAgainstInfo();
+      }
+    }
+  },
+
   /**
    * 数据（得分页）
    */
@@ -64,27 +80,9 @@ Page({
       });
   },
 
-  // 对阵记录得分结果
-  initAgainstRecordResult() {
-    get('stat/qryTeamAgainstRecordResult', {
-      season: this.data.season,
-      event: this.data.event,
-      teamHId: this.data.teamHId,
-      teamAId: this.data.teamAId
-    })
-      .then(res => {
-        this.setData({
-          resultList: res.data
-        });
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
-  },
-
   // 对阵历史得分最高球员（active：现役球员）
-  initTopElementAgainstRecord() {
-    get('stat/qryTopElementTeamAgainstRecord', {
+  initTopElementAgainstInfo() {
+    get('stat/qryTopElementAgainstInfo', {
       teamId: this.data.teamId,
       againstId: this.data.againstId,
       active: this.data.active

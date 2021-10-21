@@ -71,8 +71,8 @@
 
                 <block wx:for="{{bonusData.list}}" wx:for-item="element" wx:key="bonusElement">
                   <van-cell title-class="title" label-class="label"
-                    title="【{{element.teamShortName}}】{{element.webName}}" value="{{element.totalPoints}}({{element.bonus}})"
-                    is-link link-type="navigateTo"
+                    title="【{{element.teamShortName}}】{{element.webName}}"
+                    value="{{element.totalPoints}}({{element.bonus}})" is-link link-type="navigateTo"
                     url="/pages/live/element/element?element={{element.element}}" />
                 </block>
 
@@ -98,9 +98,8 @@
 
                 <block wx:for="{{bpsData.list}}" wx:for-item="element" wx:key="bpsElement">
                   <van-cell title-class="title" label-class="label"
-                    title="【{{element.teamShortName}}】{{element.webName}}" value="{{element.bps}}({{element.bonus}})" is-link
-                    link-type="navigateTo"
-                    url="/pages/live/element/element?element={{element.element}}" />
+                    title="【{{element.teamShortName}}】{{element.webName}}" value="{{element.bps}}({{element.bonus}})"
+                    is-link link-type="navigateTo" url="/pages/live/element/element?element={{element.element}}" />
                 </block>
 
               </van-collapse-item>
@@ -144,8 +143,10 @@
 
     <block wx:for="{{liveFixtureList}}" wx:for-item="fixtureData" wx:key="fixtureMatchId">
       <i-cell-group>
-        <i-cell title="{{fixtureData.homeTeamName}} vs {{fixtureData.awayTeamName}}"
-          value="{{fixtureData.kickoffTime}}"></i-cell>
+        <i-cell title="{{fixtureData.homeTeamName}} vs {{fixtureData.awayTeamName}}" value="{{fixtureData.kickoffTime}}"
+          is-link
+          url="/pages/stat/record/record?title={{fixtureData.homeTeamName}} vs {{fixtureData.awayTeamName}}&&teamId={{fixtureData.homeTeamId}}&&againstId={{fixtureData.awayTeamId}}">
+        </i-cell>
       </i-cell-group>
     </block>
   </view>

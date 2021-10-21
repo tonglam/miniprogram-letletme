@@ -42,7 +42,9 @@ Page({
         time: diffDeadlineTime(app.globalData.utcDeadline)
       });
       // 拉取赛程 
-      this.initNextGwFixture();
+      if (this.data.fixtureList.length == 0) {
+        this.initNextGwFixture();
+      }
       // 设置标题 
       let entryName = this.data.entryName;
       if (entryName === '' || typeof entryName === 'undefined') {
@@ -85,7 +87,7 @@ Page({
   },
 
   // 倒计时归零
-  onFinish(){
+  onFinish() {
     this.refreshEventAndDeadline();
   },
 
@@ -127,8 +129,8 @@ Page({
 
   initNextGwFixture() {
     get('common/qryNextFixture', {
-        event: this.data.gw
-      })
+      event: this.data.gw
+    })
       .then(res => {
         this.setData({
           fixtureList: res.data
@@ -141,8 +143,8 @@ Page({
 
   initEntryInfo() {
     get('entry/qryEntryInfo', {
-        entry: this.data.entry
-      }, false)
+      entry: this.data.entry
+    }, false)
       .then(res => {
         let data = res.data;
         this.setData({

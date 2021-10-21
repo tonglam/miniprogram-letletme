@@ -18,6 +18,8 @@
     "pages/stat/team/team",
     "pages/stat/filter/filter",
     "pages/stat/record/record",
+    "pages/stat/record/player/player",
+    "pages/stat/record/team/team",
     "pages/group/scout/scout",
     "pages/me/entry/entry",
     "pages/me/tournament/tournament",

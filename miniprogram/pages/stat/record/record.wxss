@@ -1,7 +1,13 @@
-.record .notice{
+.record .notice {
   margin: 0 0 10px 0;
 }
 
-.record .info{
+.record .info {
   margin: 10px 0;
+}
+
+.record .title {
+  font-size: 14px;
+  font-weight: bold;
+  text-align: center;
 }

@@ -22,49 +22,39 @@
         </view>
 
         <view class="history">
-          <block wx:for="{{infoData.recordDataMap}}" wx:for-index="key">
-            <van-cell-group title="{{key}}赛季">
-              <block wx:for="{{item}}" wx:for-item="data" wx:key="index">
-                <van-cell-group
-                  title="【GW{{data.event}}】{{data.teamHShortName}} {{data.teamHScore}} - {{data.teamAScore}} {{data.teamAShortName}}">
+          <view class="info">
+            <block wx:for="{{infoData.recordDataList}}" wx:for-item="recordData" wx:key="recordIndex">
+              <van-cell-group title="{{recordData.season}}赛季">
+                <block wx:for="{{recordData.seasonDataList}}" wx:for-item="data" wx:key="index">
+                  <van-cell title="{{data.teamHName}} {{data.teamHScore}} - {{data.teamAScore}} {{data.teamAName}}"
+                    value="{{data.kickoffDate}}" custom-class="title" is-link
+                    url="/pages/stat/record/team/team?season={{data.season}}&&event={{data.event}}&&teamHId={{data.teamHId}}&&teamAId={{data.teamAId}}" />
                   <block ws:if="{{data.goalScored.length>0}}" wx:for="{{data.goalScored}}" wx:for-item="goalScoredData"
                     wx:key="goalScoredIndex">
-                    <van-cell title="进球：{{goalScoredData.key}}" value="{{goalScoredData.value}}" />
-                    <!-- <block ws:if="{{data.assists.length>0}}" wx:for="{{data.assists}}" wx:for-item="assistsData"
-                      wx:key="assistsIndex">
-                      <van-cell title="助攻：{{assistsData.key}}" value="{{assistsData.value}}" />
-                    </block>
-                    <block ws:if="{{data.ownGoals.length>0}}" wx:for="{{data.ownGoals}}" wx:for-item="ownGoalsData"
-                      wx:key="ownGoalsIndex">
-                      <van-cell title="乌龙：{{ownGoalsData.key}}" value="{{ownGoalsData.value}}" />
-                    </block>
-                    <block ws:if="{{data.penaltiesSaved.length>0}}" wx:for="{{data.penaltiesSaved}}"
-                      wx:for-item="penaltiesSavedData" wx:key="penaltiesSavedIndex">
-                      <van-cell title="扑点：{{penaltiesSavedData.key}}" value="{{penaltiesSavedData.value}}" />
-                    </block>
-                    <block ws:if="{{data.penaltiesMissed.length>0}}" wx:for="{{data.penaltiesMissed}}"
-                      wx:for-item="penaltiesMissedData" wx:key="penaltiesMissedIndex">
-                      <van-cell title="丢点：{{penaltiesMissedData.key}}" value="{{penaltiesMissedData.value}}" />
-                    </block>
-                    <block ws:if="{{data.redCards.length>0}}" wx:for="{{data.redCards}}" wx:for-item="redCardsData"
-                      wx:key="redCardsIndex">
-                      <van-cell title="红牌：{{redCardsData.key}}" value="{{redCardsData.value}}" />
-                    </block> -->
+                    <van-cell border="{{false}}" title="进球：{{goalScoredData.key}}" value="{{goalScoredData.value}}" />
                   </block>
-                </van-cell-group>
-              </block>
-            </van-cell-group>
-          </block>
+                </block>
+              </van-cell-group>
+            </block>
+          </view>
         </view>
 
       </van-tab>
 
       <van-tab title="高分球员" name="element">
-
-        <block wx:for="{{topElementList}}" wx:for-item="data" wx:key="index">
-
-        </block>
-
+        <view class="info">
+          <block wx:for="{{topElementList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="{{index+1}} - {{data.webName}}" value="【{{data.teamShortName}}】{{data.elementTypeName}}"
+              is-link
+              url="/pages/stat/record/player/player?teamId={{infoData.teamId}}&&againstId={{infoData.againstId}}&&elementCode={{data.code}}" />
+            <van-cell title="总得分：{{data.totalPoints}}" value="平均得分：{{data.averagePoints}}" />
+            <van-cell title="总上场({{data.totalPlayed}}次)：共{{data.totalMinutes}}分钟"
+              value="平均上场：{{data.averageMinutes}}分钟" />
+            <van-cell title="总进球：{{data.totalGoalsScored}}" value="总助攻：{{data.totalAssists}}" />
+            <van-cell title="总零封：{{data.totalCleanSheets}}" value="总BOUNS：{{data.totalBonus}}" />
+            <van-cell title="总黄牌：{{data.totalYellowCards}}" value="总红牌：{{data.totalRedCards}}" />
+          </block>
+        </view>
       </van-tab>
 
     </van-tabs>
