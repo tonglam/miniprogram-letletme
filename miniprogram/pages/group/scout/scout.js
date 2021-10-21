@@ -77,7 +77,13 @@ Page({
     // 拉取球探名单
     this.initScout();
     // 拉取当前球探推荐结果
-    this.initEntryScoutResult();
+    if (JSON.stringify(this.data.pickGkpInfo) === '{}' ||
+      JSON.stringify(this.data.pickDefInfo) === '{}' ||
+      JSON.stringify(this.data.pickMidInfo) === '{}' ||
+      JSON.stringify(this.data.pickFwdInfo) === '{}' ||
+      JSON.stringify(this.data.pickCapInfo) === '{}') {
+      this.initEntryScoutResult();
+    }
   },
 
   onPullDownRefresh: function () {
