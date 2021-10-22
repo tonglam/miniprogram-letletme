@@ -1,12 +1,13 @@
 import {
   get
-} from '../../../utils/request';
+} from '../../../../utils/request';
 
 Page({
 
   data: {
     season: '',
-    event: 0,
+    gw: 0,
+    title: '',
     teamHId: 0,
     teamAId: 0,
     resultList: [],
@@ -18,18 +19,15 @@ Page({
 
   onLoad: function (options) {
     if (JSON.stringify(options) !== '{}') { // 传入要查询的teamId和againstId
-      let season = options.season, event = parseInt(options.event), teamHId = parseInt(options.teamHId), teamAId = parseInt(options.teamAId);
+      let season = options.season, gw = parseInt(options.event), teamHId = parseInt(options.teamHId), teamAId = parseInt(options.teamAId);
       this.setData({
         season: season,
-        event: event,
+        gw: gw,
         teamHId: teamHId,
         teamAId: teamAId
       });
-
-      // 设置标题
-      wx.setNavigationBarTitle({
-        title: entryInfoData.playerName,
-      });
+      // 拉取数据
+      this.initAgainstRecordResult();
     }
   },
 
@@ -45,13 +43,15 @@ Page({
   initAgainstRecordResult() {
     get('stat/qryTeamAgainstRecordResult', {
       season: this.data.season,
-      event: this.data.event,
+      event: this.data.gw,
       teamHId: this.data.teamHId,
       teamAId: this.data.teamAId
     })
       .then(res => {
+        let list = res.data, baseData = list[0], title = baseData.teamShortName + " " + baseData.teamScore + "-" + baseData.againstTeamScore + " " + baseData.againstTeamShortName;
         this.setData({
-          resultList: res.data
+          title: title,
+          resultList: list
         });
       })
       .catch(res => {

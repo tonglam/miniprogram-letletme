@@ -1,0 +1,12 @@
+.team .navBar {
+  margin: 10px 0;
+}
+
+.team .info {
+  margin: 10px 0;
+}
+
+.team .title {
+  font-size: 14px;
+  font-weight: bold;
+}

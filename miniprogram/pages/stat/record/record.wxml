@@ -33,6 +33,10 @@
                     wx:key="goalScoredIndex">
                     <van-cell border="{{false}}" title="进球：{{goalScoredData.key}}" value="{{goalScoredData.value}}" />
                   </block>
+                  <block ws:if="{{data.ownGoals.length>0}}" wx:for="{{data.ownGoals}}" wx:for-item="ownGoalsData"
+                    wx:key="ownGoalsIndex">
+                    <van-cell border="{{false}}" title="乌龙：{{ownGoalsData.key}}" value="{{ownGoalsData.value}}" />
+                  </block>
                 </block>
               </van-cell-group>
             </block>
@@ -44,9 +48,9 @@
       <van-tab title="高分球员" name="element">
         <view class="info">
           <block wx:for="{{topElementList}}" wx:for-item="data" wx:key="index">
-            <van-cell title="{{index+1}} - {{data.webName}}" value="【{{data.teamShortName}}】{{data.elementTypeName}}"
-              is-link
-              url="/pages/stat/record/player/player?teamId={{infoData.teamId}}&&againstId={{infoData.againstId}}&&elementCode={{data.code}}" />
+            <van-cell title="{{index+1}} - {{data.webName}}" value="【{{data.teamShortName}}】【{{data.elementTypeName}}】"
+              custom-class="title" is-link
+              url="/pages/stat/record/player/player?teamId={{infoData.teamId}}&&againstId={{infoData.againstId}}&&elementCode={{data.code}}&&teamShortName={{data.teamShortName}}" />
             <van-cell title="总得分：{{data.totalPoints}}" value="平均得分：{{data.averagePoints}}" />
             <van-cell title="总上场({{data.totalPlayed}}次)：共{{data.totalMinutes}}分钟"
               value="平均上场：{{data.averageMinutes}}分钟" />

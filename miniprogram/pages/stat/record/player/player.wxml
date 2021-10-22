@@ -1,5 +1,29 @@
 <view class="player">
 
+  <view class="navBar">
+    <van-nav-bar title="{{playerInfo.webName}}" title-class="title" left-text="{{playerInfo.elementTypeName}}"
+      right-text="{{teamShortName}}" safe-area-inset-top="{{false}}" />
+  </view>
 
+  <view class="info">
+    <block wx:for="{{recordList}}" wx:for-item="data" wx:key="index">
+      <van-cell-group title="{{data.season}}赛季 - GW{{data.event}}">
+        <van-cell title="{{data.teamHName}}  {{data.teamHScore}} - {{data.teamAName}} {{data.teamAScore}}"
+          value="{{data.kickoffDate}}" custom-class="title" />
+        <van-cell title="得分：{{data.points}}" value="上场时间：{{data.minutes}}" />
+        <van-cell wx:if="{{data.goalsScored > 0}}" title="进球" value="{{data.goalsScored}}" />
+        <van-cell wx:if="{{data.assists > 0}}" title="助攻" value="{{data.assists}}" />
+        <van-cell wx:if="{{data.cleanSheets > 0}}" title="零封" value="{{data.cleanSheets}}" />
+        <van-cell wx:if="{{data.goalsConceded > 0}}" title="丢球" value="{{data.goalsConceded}}" />
+        <van-cell wx:if="{{data.ownGoals > 0}}" title="乌龙" value="{{data.ownGoals}}" />
+        <van-cell wx:if="{{data.penaltiesSaved > 0}}" title="扑点" value="{{data.penaltiesSaved}}" />
+        <van-cell wx:if="{{data.penaltiesMissed > 0}}" title="丢点" value="{{data.penaltiesMissed}}" />
+        <van-cell wx:if="{{data.yellowCards > 0}}" title="黄牌" value="{{data.yellowCards}}" />
+        <van-cell wx:if="{{data.redCards > 0}}" title="红牌" value="{{data.redCards}}" />
+        <van-cell wx:if="{{data.bonus > 0}}" title="BONUS" value="{{data.bonus}}" />
+        <!-- <text>\n</text> -->
+      </van-cell-group>
+    </block>
+  </view>
 
 </view>

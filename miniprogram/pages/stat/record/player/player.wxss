@@ -1,0 +1,12 @@
+.player .navBar {
+  margin: 10px 0;
+}
+
+.player .info {
+  margin: 10px 0;
+}
+
+.player .title {
+  font-size: 14px;
+  font-weight: bold;
+}
