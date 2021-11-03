@@ -1,8 +1,8 @@
 <view class="entry">
 
   <view class="navBar">
-    <van-nav-bar title="{{entryName}}" left-text="" right-text="" safe-area-inset-top="{{false}}"
-      bind:click-left="" bind:click-right="" />
+    <van-nav-bar title="{{entryName}}" left-text="" right-text="" safe-area-inset-top="{{false}}" bind:click-left=""
+      bind:click-right="" />
   </view>
 
   <view class="pop" style="text-align:center;">
@@ -14,7 +14,7 @@
       <text>\n</text>
       <van-field size="large" left-icon="search" model:value="{{entry}}" placeholder="team_id" border="{{ true }}"
         clearable />
-        <text>\n</text>
+      <text>\n</text>
       <van-button type="primary" plain size="normal" bind:click="onClickInput">更换</van-button>
       <text>\n</text>
       <text>\n</text>
@@ -58,22 +58,31 @@
         </van-cell-group>
 
         <van-cell-group title="板凳得分">
-          <van-cell title="最高：{{summaryData.highestBenchPoints}}" value="GW{{summaryData.highestBenchPointsEvent}}" />
-          <block wx:for="{{summaryData.highestBench}}" wx:for-item="bench" wx:key="index">
-            <van-cell title="{{bench.webName}}" value="{{bench.points}}" />
-          </block>
+          <van-collapse value="{{activeHighestBenchNames}}" bind:change="onHighestBenchChange">
+            <block wx:for="{{summaryData.highestBench}}" wx:for-item="highestBench" wx:key="highestBenchIndex">
+              <van-collapse-item title="最高分：{{highestBench.benchPoints}}" value="GW{{highestBench.event}}">
+                <block wx:for="{{highestBench.elementList}}" wx:for-item="data" wx:key="index">
+                  <van-cell title="{{data.webName}}" value="{{data.points}}分" />
+                </block>
+              </van-collapse-item>
+            </block>
+          </van-collapse>
         </van-cell-group>
 
         <van-cell-group title="自动替补得分">
-          <van-cell title="最高：{{summaryData.highestAutoSubsPoints}}"
-            value="GW{{summaryData.highestAutoSubsPointsEvent}}" />
-          <block wx:for="{{summaryData.highestAutoSubs}}" wx:for-item="autoSubs" wx:key="index">
-            <van-cell title="{{autoSubs.elementInWebName}} ({{autoSubs.elementInPoints}})"
-              value="{{autoSubs.elementOutWebName}} ({{autoSubs.elementOutPoints}})">
-              <van-icon slot="icon" name="arrow-up" class="greenArrow" />
-              <van-icon slot="right-icon" name="arrow-down" class="redArrow" />
-            </van-cell>
-          </block>
+          <van-collapse value="{{activeHighestAutoSubsNames}}" bind:change="onHighestAutoSubsChange">
+            <block wx:for="{{summaryData.highestAutoSubs}}" wx:for-item="highestAutoSubs" wx:key="highestAutoSubsIndex">
+              <van-collapse-item title="最高分：{{highestAutoSubs.autoSubsPoints}}" value="GW{{highestAutoSubs.event}}">
+                <block wx:for="{{highestAutoSubs.elementList}}" wx:for-item="data" wx:key="index">
+                  <van-cell title="{{data.elementInWebName}} ({{data.elementInPoints}})"
+                    value="{{data.elementOutWebName}} ({{data.elementOutPoints}})">
+                    <van-icon slot="icon" name="arrow-up" class="greenArrow" />
+                    <van-icon slot="right-icon" name="arrow-down" class="redArrow" />
+                  </van-cell>
+                </block>
+              </van-collapse-item>
+            </block>
+          </van-collapse>
         </van-cell-group>
 
         <van-cell-group title="开卡 - 得分(收益)" wx:if="{{summaryData.chips.length>0}}">

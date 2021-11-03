@@ -25,6 +25,8 @@ Page({
     // pop
     popShow: false,
     // collapse-cards
+    activeHighestBenchNames: [],
+    activeHighestAutoSubsNames: [],
     activeBestTransfersNames: [],
     activeWorstTransfersNames: [],
     activeMostTransfersInNames: [],
@@ -139,6 +141,18 @@ Page({
   },
 
   // 折叠面板切换
+  onHighestBenchChange(event) {
+    this.setData({
+      activeHighestBenchNames: event.detail,
+    });
+  },
+
+  onHighestAutoSubsChange(event) {
+    this.setData({
+      activeHighestAutoSubsNames: event.detail,
+    });
+  },
+
   onBestTransfersChange(event) {
     this.setData({
       activeBestTransfersNames: event.detail,

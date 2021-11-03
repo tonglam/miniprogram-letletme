@@ -44,7 +44,7 @@
 
         <van-cell-group wx:if="{{playerInfo.elementType === 1}}">
           <van-cell title="上场时间：{{playerSummary.detailData.minutes}}"
-            value="周得分：{{playerSummary.eventPoints}} (GW{{playerSummary.event}})" />
+            value="GW{{playerSummary.detailData.event}}得分：{{playerSummary.detailData.eventPoints}}" />
           <van-cell title="零封：{{playerSummary.detailData.cleanSheets}}"
             value="丢球：{{playerSummary.detailData.goalsConceded}}" />
           <van-cell title="扑救：{{playerSummary.detailData.saves}}"
@@ -60,7 +60,7 @@
 
         <van-cell-group wx:if="{{playerInfo.elementType === 2}}">
           <van-cell title="上场时间：{{playerSummary.detailData.minutes}}"
-            value="周得分：{{playerSummary.eventPoints}} (GW{{playerSummary.event}})" />
+            value="GW{{playerSummary.detailData.event}}得分：{{playerSummary.detailData.eventPoints}}" />
           <van-cell title="零封：{{playerSummary.detailData.cleanSheets}}"
             value="丢球：{{playerSummary.detailData.goalsConceded}}" />
           <van-cell title="进球：{{playerSummary.detailData.goalsScored}}"
@@ -78,7 +78,7 @@
 
         <van-cell-group wx:if="{{playerInfo.elementType === 3}}">
           <van-cell title="上场时间：{{playerSummary.detailData.minutes}}"
-            value="周得分：{{playerSummary.eventPoints}} (GW{{playerSummary.event}})" />
+            value="GW{{playerSummary.detailData.event}}得分：{{playerSummary.detailData.eventPoints}})" />
           <van-cell title="进球：{{playerSummary.detailData.goalsScored}}"
             value="助攻：{{playerSummary.detailData.assists}}" />
           <van-cell title="零封：{{playerSummary.detailData.cleanSheets}}"
@@ -96,7 +96,7 @@
 
         <van-cell-group wx:if="{{playerInfo.elementType === 4}}">
           <van-cell title="上场时间：{{playerSummary.detailData.minutes}}"
-            value="周得分：{{playerSummary.eventPoints}} (GW{{playerSummary.event}})" />
+            value="GW{{playerSummary.detailData.event}}得分：{{playerSummary.detailData.eventPoints}}" />
           <van-cell title="进球：{{playerSummary.detailData.goalsScored}}"
             value="助攻：{{playerSummary.detailData.assists}}" />
           <van-cell title="bonus：{{playerSummary.detailData.bonus}}" value="bps：{{playerSummary.detailData.bps}}" />

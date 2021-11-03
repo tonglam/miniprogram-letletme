@@ -40,12 +40,10 @@ Component({
       this.setData({
         season: value[0]
       });
-      console.log(this.data.season);
     },
 
     onConfirm() {
       this.triggerEvent(this.data.event, this.data.season);
-      console.log(this.data.season);
     },
 
     onCancel() {
