@@ -120,6 +120,12 @@
           </block>
         </van-cell-group>
 
+        <van-cell-group title="每周队长">
+          <block wx:for="{{captainData.captainList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="GW{{data.event}}" value="{{data.webName}} ({{data.points}})" />
+          </block>
+        </van-cell-group>
+
       </van-tab>
 
       <van-tab title="转会" name="transfers">
