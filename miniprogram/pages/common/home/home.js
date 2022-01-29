@@ -24,6 +24,9 @@ Page({
     fixtureList: [],
     // refresh
     pullDownRefresh: false,
+    // 虎年倒计时新增
+    tigerTime: 0,
+    tigerTimeData: {},
   },
 
   /**
@@ -31,6 +34,10 @@ Page({
    */
 
   onShow: function () {
+      // 虎年倒计时新增
+      this.setData({
+        tigerTime:diffDeadlineTime("2022-01-31T17:00:00Z")
+      });
     // 设置
     delay(400).then(() => {
       this.setData({
@@ -78,6 +85,13 @@ Page({
   /**
    * 操作
    */
+
+   // 虎年倒计时变化
+   onChangeTigerTime(event) {
+    this.setData({
+      tigerTimeData: event.detail,
+    });
+  },
 
   // 倒计时变化
   onChange(event) {

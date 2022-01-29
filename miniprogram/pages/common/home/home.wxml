@@ -9,8 +9,39 @@
 
     <view class="index">
 
+
+
+
       <view class="img">
-        <image class="begbeg" src="/images/begbeg.jpg" mode="aspectFit"></image>
+        <image class="begbeg" src="/images/duck4tiger.jpg" mode="aspectFit"></image>
+      </view>
+
+      <view class="info2">
+        <text>距离虎年还有</text>
+      </view>
+
+      <view class="countDown2">
+        <van-count-down use-slot time="{{tigerTime}}" bind:change="onChangeTigerTime" bind:finish="onFinish">
+          <text class="item">{{tigerTimeData.days}}天</text>
+          <text class="item">{{tigerTimeData.hours}}时</text>
+          <text class="item">{{tigerTimeData.minutes}}分</text>
+          <text class="item">{{tigerTimeData.seconds}}秒</text>
+        </van-count-down>
+      </view>
+
+
+
+
+
+
+
+
+
+
+
+
+      <view class="img">
+        <image class="begbeg" src="/images/hi.jpg" mode="aspectFit"></image>
       </view>
 
       <view class="info">
