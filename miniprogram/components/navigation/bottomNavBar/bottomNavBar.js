@@ -91,11 +91,16 @@ const map = {
       {
         name: "我的联赛",
         subname: '查看我的联赛数据',
+      },
+      {
+        name: "FPLDLE",
+        subname: '每日猜球员',
       }
     ],
     "url": {
       "我的球队": "/pages/me/entry/entry",
-      "我的联赛": "/pages/me/tournament/tournament"
+      "我的联赛": "/pages/me/tournament/tournament",
+      "FPLDLE": "/pages/me/fpldle/fpldle"
     },
     "show": true
   }

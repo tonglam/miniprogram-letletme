@@ -1,0 +1,42 @@
+page {
+  background-color: black;
+}
+
+.fpldle .info {
+  margin-top: 10px;
+  color: white;
+}
+
+.fpldle .grip {
+  margin-top: 10px;
+}
+
+.fpldle .gripItemContent {
+  background-color: black;
+}
+
+.fpldle .field {
+  background-color: black;
+}
+
+.fpldle .input {
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  font-weight: bolder;
+}
+
+.fpldle .keybord {
+  margin-top: 10px;
+}
+
+.fpldle .keyboardContent {
+  background-color: gray;
+}
+
+.fpldle .keyboardText {
+  text-align: center;
+  color: white;
+  font-size: 16px;
+  font-weight: bolder;
+}

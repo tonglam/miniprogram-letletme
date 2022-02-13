@@ -1,0 +1,151 @@
+<view class="fpldle">
+
+  <view class="info">
+    <text>{{tryTimes}}/{{total}}</text>
+  </view>
+
+  <view class="grip">
+    <van-grid column-num="5">
+
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{AAStyle}}" input-class="input" readonly model:value="{{AA}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{ABStyle}}" input-class="input" readonly model:value="{{AB}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{ACStyle}}" input-class="input" readonly model:value="{{AC}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{ADStyle}}" input-class="input" readonly model:value="{{AD}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{AEStyle}}" input-class="input" readonly model:value="{{AE}}" border="{{false}}" />
+      </van-grid-item>
+
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{BAStyle}}" input-class="input" readonly model:value="{{BA}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{BBStyle}}" input-class="input" readonly model:value="{{BB}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{BCStyle}}" input-class="input" readonly model:value="{{BC}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{BDStyle}}" input-class="input" readonly model:value="{{BD}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{BEStyle}}" input-class="input" readonly model:value="{{BE}}" border="{{false}}" />
+      </van-grid-item>
+
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{CAStyle}}" input-class="input" readonly model:value="{{CA}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{CBStyle}}" input-class="input" readonly model:value="{{CB}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{CCStyle}}" input-class="input" readonly model:value="{{CC}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{CDStyle}}" input-class="input" readonly model:value="{{CD}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{CEStyle}}" input-class="input" readonly model:value="{{CE}}" border="{{false}}" />
+      </van-grid-item>
+
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{DAStyle}}" input-class="input" readonly model:value="{{DA}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{DBStyle}}" input-class="input" readonly model:value="{{DB}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{DCStyle}}" input-class="input" readonly model:value="{{DC}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{DDStyle}}" input-class="input" readonly model:value="{{DD}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{DEStyle}}" input-class="input" readonly model:value="{{DE}}" border="{{false}}" />
+      </van-grid-item>
+
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{EAStyle}}" input-class="input" readonly model:value="{{EA}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{EBStyle}}" input-class="input" readonly model:value="{{EB}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{ECStyle}}" input-class="input" readonly model:value="{{EC}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{EDStyle}}" input-class="input" readonly model:value="{{ED}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{EEStyle}}" input-class="input" readonly model:value="{{EE}}" border="{{false}}" />
+      </van-grid-item>
+
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{FAStyle}}" input-class="input" readonly model:value="{{FA}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{FBStyle}}" input-class="input" readonly model:value="{{FB}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{FCStyle}}" input-class="input" readonly model:value="{{FC}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{FDStyle}}" input-class="input" readonly model:value="{{FD}}" border="{{false}}" />
+      </van-grid-item>
+      <van-grid-item content-class="gripItemContent" square use-slot>
+        <van-field custom-style="{{FEStyle}}" input-class="input" readonly model:value="{{FE}}" border="{{false}}" />
+      </van-grid-item>
+
+    </van-grid>
+  </view>
+
+  <view class="keybord">
+    <van-grid direction="horizontal" column-num="10" clickable="true">
+      <van-grid-item id="Q" content-class="keyboardContent" text-class="keyboardText" text="Q" bind:click="input" />
+      <van-grid-item id="W" content-class="keyboardContent" text-class="keyboardText" text="W" bind:click="input" />
+      <van-grid-item id="E" content-class="keyboardContent" text-class="keyboardText" text="E" bind:click="input" />
+      <van-grid-item id="R" content-class="keyboardContent" text-class="keyboardText" text="R" bind:click="input" />
+      <van-grid-item id="T" content-class="keyboardContent" text-class="keyboardText" text="T" bind:click="input" />
+      <van-grid-item id="Y" content-class="keyboardContent" text-class="keyboardText" text="Y" bind:click="input" />
+      <van-grid-item id="U" content-class="keyboardContent" text-class="keyboardText" text="U" bind:click="input" />
+      <van-grid-item id="I" content-class="keyboardContent" text-class="keyboardText" text="I" bind:click="input" />
+      <van-grid-item id="O" content-class="keyboardContent" text-class="keyboardText" text="O" bind:click="input" />
+      <van-grid-item id="P" content-class="keyboardContent" text-class="keyboardText" text="P" bind:click="input" />
+    </van-grid>
+
+    <van-grid direction="horizontal" column-num="9">
+      <van-grid-item id="A" content-class="keyboardContent" text-class="keyboardText" text="A" bind:click="input" />
+      <van-grid-item id="S" content-class="keyboardContent" text-class="keyboardText" text="S" bind:click="input" />
+      <van-grid-item id="D" content-class="keyboardContent" text-class="keyboardText" text="D" bind:click="input" />
+      <van-grid-item id="F" content-class="keyboardContent" text-class="keyboardText" text="F" bind:click="input" />
+      <van-grid-item id="G" content-class="keyboardContent" text-class="keyboardText" text="G" bind:click="input" />
+      <van-grid-item id="H" content-class="keyboardContent" text-class="keyboardText" text="H" bind:click="input" />
+      <van-grid-item id="J" content-class="keyboardContent" text-class="keyboardText" text="J" bind:click="input" />
+      <van-grid-item id="K" content-class="keyboardContent" text-class="keyboardText" text="K" bind:click="input" />
+      <van-grid-item id="L" content-class="keyboardContent" text-class="keyboardText" text="L" bind:click="input" />
+    </van-grid>
+
+    <van-grid direction="horizontal" column-num="9">
+      <van-grid-item id="entry" content-class="keyboardContent" text-class="keyboardText" text="确认" bind:click="inputEnter" />
+      <van-grid-item id="Z" content-class="keyboardContent" text-class="keyboardText" text="Z" bind:click="input" />
+      <van-grid-item id="X" content-class="keyboardContent" text-class="keyboardText" text="X" bind:click="input" />
+      <van-grid-item id="C" content-class="keyboardContent" text-class="keyboardText" text="C" bind:click="input" />
+      <van-grid-item id="V" content-class="keyboardContent" text-class="keyboardText" text="V" bind:click="input" />
+      <van-grid-item id="B" content-class="keyboardContent" text-class="keyboardText" text="B" bind:click="input" />
+      <van-grid-item id="N" content-class="keyboardContent" text-class="keyboardText" text="N" bind:click="input" />
+      <van-grid-item id="M" content-class="keyboardContent" text-class="keyboardText" text="M" bind:click="input" />
+      <van-grid-item id="back" content-class="keyboardContent" text-class="keyboardText" text="退格" bind:click="inputBack" />
+    </van-grid>
+
+  </view>
+
+  <van-toast id="van-toast" />
+
+</view>
