@@ -26,7 +26,7 @@
     "pages/me/element/element",
     "pages/me/fpldle/fpldle"
   ],
-  "entryPagePath": "pages/me/fpldle/fpldle",
+  "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",
@@ -74,7 +74,7 @@
     "van-transition": "@vant/weapp/transition/index",
     "van-uploader": "@vant/weapp/uploader/index",
     "van-grid": "@vant/weapp/grid/index",
-  "van-grid-item": "@vant/weapp/grid-item/index",
+    "van-grid-item": "@vant/weapp/grid-item/index",
     "i-cell-group": "./dist/cell-group/index",
     "i-cell": "./dist/cell/index",
     "i-icon": "./dist/icon/index",

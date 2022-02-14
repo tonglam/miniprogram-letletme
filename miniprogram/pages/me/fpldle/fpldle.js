@@ -199,7 +199,7 @@ Page({
         this.setData({
           solve: true
         });
-        Toast('恭喜，今日答案: MINGS');
+        Toast('恭喜，今日答案: ' + fpldleName);
       }
     }
   },
