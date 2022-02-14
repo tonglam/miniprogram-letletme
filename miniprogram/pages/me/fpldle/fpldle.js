@@ -112,7 +112,6 @@ Page({
 
   // 将键盘输入传到格子
   inputLetter(letter) {
-    console.log("letter: " + letter);
     if (this.data.solve) {
       return false;
     }
@@ -186,7 +185,6 @@ Page({
       let dailyResultList = this.data.dailyResultList,
         roundResult = resultList.toString(),
         tryTimes = this.data.tryTimes + 1;
-      console.log(roundResult);
       dailyResultList.push(roundResult);
       this.setData({
         tryTimes: tryTimes,
@@ -194,12 +192,13 @@ Page({
       });
       if (tryTimes === 6) {
         Toast('很遗憾，明天再来');
+        return false;
       }
       if (roundResult === "2,2,2,2,2") {
         this.setData({
           solve: true
         });
-        Toast('恭喜，今日答案: ' + fpldleName);
+        Toast('恭喜，今日答案: ' + this.data.fpldle.fullName);
       }
     }
   },
