@@ -146,10 +146,14 @@ Page({
     }
     let group = String.fromCharCode(tryTimes + 65),
       inputList = this.data.inputList,
+      inputSize = inputList.length,
       resultList = this.data.resultList,
       resultSize = resultList.length,
       fpldleName = this.data.fpldleName;
     if (resultSize === 5) {
+      return false;
+    }
+    if (inputSize !== 5) {
       return false;
     }
     this.setData({
