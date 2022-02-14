@@ -31,12 +31,19 @@ page {
 }
 
 .fpldle .keyboardContent {
-  background-color: gray;
+  background-color: #87CEFA;
 }
 
 .fpldle .keyboardText {
   text-align: center;
   color: white;
   font-size: 16px;
+  font-weight: bolder;
+}
+
+.fpldle .keyboardText2 {
+  text-align: center;
+  color: white;
+  font-size: 13px;
   font-weight: bolder;
 }
