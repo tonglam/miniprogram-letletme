@@ -1,7 +1,15 @@
 <view class="fpldle">
 
   <view class="info">
-    <text>{{tryTimes}}/{{total}}</text>
+    <van-row>
+      <van-col span="3" offset="1">
+        <van-icon name="question-o" color="white" size="26px" bind:click="onQuestion"/>
+      </van-col>
+      <van-col span="13" offset="4">{{date}}期({{tryTimes}}/{{total}})</van-col>
+      <van-col span="3">
+        <van-icon name="records" color="white" size="26px" bind:click="onRecords"/>
+      </van-col>
+    </van-row>
   </view>
 
   <view class="grip">
@@ -133,7 +141,7 @@
     </van-grid>
 
     <van-grid direction="horizontal" column-num="9">
-      <van-grid-item id="entry" content-class="keyboardContent" text-class="keyboardText" text="确认" bind:click="inputEnter" />
+      <van-grid-item id="entry" custom-class="keyboardCustom" content-class="keyboardContent" text-class="keyboardText" text="确认" bind:click="inputEnter" />
       <van-grid-item id="Z" content-class="keyboardContent" text-class="keyboardText" text="Z" bind:click="input" />
       <van-grid-item id="X" content-class="keyboardContent" text-class="keyboardText" text="X" bind:click="input" />
       <van-grid-item id="C" content-class="keyboardContent" text-class="keyboardText" text="C" bind:click="input" />

@@ -124,13 +124,13 @@ Page({
       inputList = this.data.inputList,
       inputSize = inputList.length,
       column = String.fromCharCode(inputSize + 65),
-      positon = group + column;
+      position = group + column;
     if (inputList.length === 5) {
       return false;
     }
     inputList.push(letter);
     this.setData({
-      [positon]: letter,
+      [position]: letter,
     });
   },
 
@@ -141,22 +141,28 @@ Page({
     }
     let tryTimes = this.data.tryTimes;
     if (tryTimes === 6) {
+      Toast('很遗憾，明天再来');
       return false;
     }
     let group = String.fromCharCode(tryTimes + 65),
       inputList = this.data.inputList,
       resultList = this.data.resultList,
-      column = String.fromCharCode(inputSize + 65),
-      positon = group + column,
-      colourPosition = positon + 'Style',
-      fpldleName = this.data.fpldleName,
-      fpldleLetter = fpldleName[resultSize],
-      color = defaultColour,
-      result = 0;
+      resultSize = resultList.length,
+      fpldleName = this.data.fpldleName;
     if (resultSize === 5) {
       return false;
     }
-    inputList.forEach(letter => {
+    this.setData({
+      inputList: []
+    });
+    for (let index = 0; index < inputList.length; index++) {
+      let letter = inputList[index],
+        fpldleLetter = fpldleName[index],
+        column = String.fromCharCode(index + 65),
+        position = group + column,
+        colourPosition = position + 'Style',
+        color = defaultColour,
+        result = 0;
       if (letter === fpldleLetter) { // correct
         color = green;
         result = 2;
@@ -171,30 +177,55 @@ Page({
         [colourPosition]: color,
       });
       resultList.push(result);
-    });
+    }
     if (resultList.length == 5) {
       let dailyResultList = this.data.dailyResultList,
-        roundResult = resultList.toString();
+        roundResult = resultList.toString(),
+        tryTimes = this.data.tryTimes + 1;
       console.log(roundResult);
       dailyResultList.push(roundResult);
       this.setData({
-        tryTimes: tryTimes + 1,
+        tryTimes: tryTimes,
         resultList: [],
       });
+      if (tryTimes === 6) {
+        Toast('很遗憾，明天再来');
+      }
       if (roundResult === "2,2,2,2,2") {
         this.setData({
           solve: true
         });
-        console.log("solved");
+        Toast('恭喜，今日答案: MINGS');
       }
     }
   },
 
   // 退格
   inputBack() {
-    let inputList = this.data.inputList;
+    let tryTimes = this.data.tryTimes,
+      group = String.fromCharCode(tryTimes + 65),
+      inputList = this.data.inputList,
+      inputSize = inputList.length,
+      column = String.fromCharCode(inputSize - 1 + 65),
+      position = group + column;
+    if (inputSize === 0) {
+      return false;
+    }
     inputList.pop();
-    console.log(inputList);
+    this.setData({
+      [position]: '',
+      inputList: inputList
+    });
+  },
+
+  // 规则展示
+  onQuestion() {
+    console.log("question");
+  },
+
+  // 统计
+  onRecords() {
+    console.log("records");
   },
 
   /**
