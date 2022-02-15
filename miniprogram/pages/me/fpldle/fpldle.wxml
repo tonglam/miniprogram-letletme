@@ -2,11 +2,17 @@
 
   <view class="info">
     <van-row>
-      <van-col span="3" offset="1">
+      <van-col span="2" offset="1">
         <van-icon name="question-o" color="white" size="26px" bind:click="onQuestion" />
       </van-col>
-      <van-col span="13" offset="4">{{date}}期({{tryTimes}}/{{total}})</van-col>
-      <van-col span="3">
+      <van-col span="2">
+        <van-icon name="search" color="white" size="26px" bind:click="onSearch" />
+      </van-col>
+      <van-col span="11" offset="3">{{date}}期({{tryTimes}}/{{total}})</van-col>
+      <van-col span="2">
+        <van-icon name="point-gift-o" color="white" size="26px" bind:click="onGift" />
+      </van-col>
+      <van-col span="2">
         <van-icon name="records" color="white" size="26px" bind:click="onRecords" />
       </van-col>
     </van-row>
@@ -152,6 +158,52 @@
       <van-grid-item id="back" content-class="keyboardContent" text-class="keyboardText2" text="删" bind:click="inputBack" />
     </van-grid>
 
+  </view>
+
+  <view class="pop">
+    <van-popup closeable show="{{questionShow}}" overlay="{{true}}" position="top" custom-style="height: 100%" bind:close="onQuestionClose">
+      <text>\n</text>
+      <text class="popHead">每日猜球员</text>
+      <text>\n\n</text>
+      <text class="popContent">每天6次机会，猜出今天的球员名字，每天北京时间0点更新</text>
+      <image class="fpldle-1" src="/images/fpldle-1.png"></image>
+      <text>\n</text>
+      <text class="popContent">如果名字大于5个字母，截取前5个字母</text>
+      <image class="fpldle-3" src="/images/fpldle-3.png"></image>
+      <text>\n</text>
+      <text class="popContent">如果名字小于5个字母，在后面补x，直至填满5格</text>
+      <image class="fpldle-4" src="/images/fpldle-4.png"></image>
+      <text>\n</text>
+      <text class="popContent">每次填完5个格子以后，按下“冲”进行验证</text>
+      <image class="fpldle-3" src="/images/fpldle-5.png"></image>
+      <text>\n</text>
+      <text class="popContent">A.如果填写的字母和顺序完全正确，验证后格子变成绿色</text>
+      <text>\n</text>
+      <text class="popContent">B.如果填写的字母正确但是顺序不正确，验证后格子变成黄色</text>
+      <text>\n</text>
+      <text class="popContent">C.如果填写的字母和顺序都不正确，验证后格子变成灰色</text>
+      <image class="fpldle-2" src="/images/fpldle-2.png"></image>
+      <text>\n\n\n</text>
+    </van-popup>
+  </view>
+
+  <view class="pop">
+    <van-popup closeable show="{{searchShow}}" overlay="{{true}}" position="top" custom-style="height: 100%" bind:close="onSearchClose">
+    </van-popup>
+  </view>
+
+  <view class="pop">
+    <van-popup closeable show="{{giftShow}}" overlay="{{true}}" position="top" custom-style="height: 30%" bind:close="onGiftClose">
+      <text>\n\n\n</text>
+      <text class="infoHead">该球员出现的赛季：{{fpldle.season}}赛季</text>
+      <text>\n\n</text>
+      <text class="infoHead">该球员的位置：{{fpldle.position}}</text>
+    </van-popup>
+  </view>
+
+  <view class="pop">
+    <van-popup closeable show="{{recordsShow}}" overlay="{{true}}" position="top" custom-style="height: 100%" bind:close="onRecordsClose">
+    </van-popup>
   </view>
 
   <van-toast id="van-toast" />

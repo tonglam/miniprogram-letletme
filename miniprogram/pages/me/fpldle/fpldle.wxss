@@ -43,7 +43,20 @@ page {
 
 .fpldle .keyboardText2 {
   text-align: center;
-  color: white;
+  color: #FF5722;
   font-size: 13px;
   font-weight: bolder;
+}
+
+.fpldle .pop{
+  text-align: center;
+}
+
+.fpldle .popHead{
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.fpldle .popContent{
+  font-size: 14px;
 }

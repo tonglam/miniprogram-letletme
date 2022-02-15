@@ -1,9 +1,7 @@
 import {
   get
 } from "../../../utils/request";
-import moment, {
-  RFC_2822
-} from 'moment';
+import moment from 'moment';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 let defaultColour = "background-color:black",
@@ -14,6 +12,7 @@ let defaultColour = "background-color:black",
 Page({
 
   data: {
+    // 格子
     AA: "",
     AAStyle: defaultColour,
     AB: "",
@@ -74,6 +73,7 @@ Page({
     FDStyle: defaultColour,
     FE: "",
     FEStyle: defaultColour,
+    // 公共数据
     date: "",
     fpldle: {},
     fpldleName: "",
@@ -84,6 +84,12 @@ Page({
     resultList: [],
     dailyResultList: [],
     solve: false,
+    openId: '',
+    // pop
+    questionShow: false,
+    searchShow: false,
+    giftShow: false,
+    recordsShow: false,
   },
 
   /**
@@ -91,6 +97,7 @@ Page({
    */
 
   onShow: function () {
+    this.getOpenId();
     this.setData({
       date: moment().format("YYYYMMDD")
     });
@@ -194,11 +201,23 @@ Page({
         Toast('很遗憾，明天再来');
         return false;
       }
-      if (roundResult === "2,2,2,2,2") {
+      if (roundResult === "2,2,2,2,2") { // 猜对了
         this.setData({
           solve: true
         });
         Toast('恭喜，今日答案: ' + this.data.fpldle.fullName);
+        // 清空答案
+        for (let groupIndex = 0; groupIndex < 5; groupIndex++) {
+          let group = String.fromCharCode(groupIndex + 65);
+          for (let columnIndex = 0; columnIndex < 5; columnIndex++) {
+            let column = String.fromCharCode(columnIndex + 65),
+              position = group + column;
+            this.setData({
+              [position]: ""
+            });
+          }
+
+        }
       }
     }
   },
@@ -223,12 +242,58 @@ Page({
 
   // 规则展示
   onQuestion() {
-    console.log("question");
+    this.setData({
+      questionShow: true
+    });
+  },
+
+  // 规则展示关闭
+  onQuestionClose() {
+    this.setData({
+      questionShow: false
+    });
+  },
+
+  // 搜索
+  onSearch() {
+    this.setData({
+      searchShow: true
+    });
+  },
+
+  // 搜索关闭
+  onSearchClose() {
+    this.setData({
+      searchShow: false
+    });
+  },
+
+  // 提示
+  onGift(){
+    this.setData({
+      giftShow: true
+    });
+  },
+
+  // 提示关闭
+  onGiftClose(){
+    this.setData({
+      giftShow: false
+    });
   },
 
   // 统计
   onRecords() {
-    console.log("records");
+    this.setData({
+      recordsShow: true
+    });
+  },
+
+  // 统计关闭
+  onRecordsClose() {
+    this.setData({
+      recordsShow: false
+    });
   },
 
   /**
@@ -249,5 +314,28 @@ Page({
         console.log('fail:', res);
       });
   },
+
+  getOpenId() {
+    let that = this;
+    wx.login({
+      success(res) {
+        if (res.code) {
+          get('fpldle/getWechatUserOpenId', {
+              openId: res.code
+            })
+            .then(res => {
+              that.setData({
+                openId: res.data
+              });
+            })
+            .catch(res => {
+              console.log('fail:', res);
+            });
+        }
+      }
+    })
+  },
+
+  
 
 })
