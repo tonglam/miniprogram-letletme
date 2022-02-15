@@ -197,27 +197,37 @@ Page({
         tryTimes: tryTimes,
         resultList: [],
       });
-      if (tryTimes === 6) {
-        Toast('很遗憾，明天再来');
-        return false;
-      }
       if (roundResult === "2,2,2,2,2") { // 猜对了
         this.setData({
           solve: true
         });
         Toast('恭喜，今日答案: ' + this.data.fpldle.fullName);
         // 清空答案
-        for (let groupIndex = 0; groupIndex < 5; groupIndex++) {
+        for (let groupIndex = 0; groupIndex < 6; groupIndex++) {
           let group = String.fromCharCode(groupIndex + 65);
-          for (let columnIndex = 0; columnIndex < 5; columnIndex++) {
+          for (let columnIndex = 0; columnIndex < 6; columnIndex++) {
             let column = String.fromCharCode(columnIndex + 65),
               position = group + column;
             this.setData({
               [position]: ""
             });
           }
-
         }
+        return false;
+      }
+      if (tryTimes === 6) {
+        Toast('很遗憾，明天再来');
+        for (let groupIndex = 0; groupIndex < 6; groupIndex++) {
+          let group = String.fromCharCode(groupIndex + 65);
+          for (let columnIndex = 0; columnIndex < 6; columnIndex++) {
+            let column = String.fromCharCode(columnIndex + 65),
+              position = group + column;
+            this.setData({
+              [position]: ""
+            });
+          }
+        }
+        return false;
       }
     }
   },
@@ -269,14 +279,14 @@ Page({
   },
 
   // 提示
-  onGift(){
+  onGift() {
     this.setData({
       giftShow: true
     });
   },
 
   // 提示关闭
-  onGiftClose(){
+  onGiftClose() {
     this.setData({
       giftShow: false
     });
@@ -336,6 +346,6 @@ Page({
     })
   },
 
-  
+
 
 })
