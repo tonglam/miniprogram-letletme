@@ -1,5 +1,6 @@
 import {
-  get
+  get,
+  post
 } from "../../../utils/request";
 import moment from 'moment';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
@@ -193,6 +194,7 @@ Page({
         roundResult = resultList.toString(),
         tryTimes = this.data.tryTimes + 1;
       dailyResultList.push(roundResult);
+      this.insertDailyResult();
       this.setData({
         tryTimes: tryTimes,
         resultList: [],
@@ -309,6 +311,8 @@ Page({
   /**
    * 数据
    */
+
+  // 获取每日谜底
   initDailyFpldle() {
     get('fpldle/getDailyFpldle', {
         date: this.data.date
@@ -325,18 +329,21 @@ Page({
       });
   },
 
+  // 获取openId
   getOpenId() {
     let that = this;
     wx.login({
       success(res) {
         if (res.code) {
           get('fpldle/getWechatUserOpenId', {
-              openId: res.code
+              code: res.code
             })
             .then(res => {
+              let openId = res.data;
               that.setData({
-                openId: res.data
+                openId: openId
               });
+              console.log("openId: " + openId);
             })
             .catch(res => {
               console.log('fail:', res);
@@ -346,6 +353,26 @@ Page({
     })
   },
 
+  // // 每日结果
+  // initDailyResult(){
+  //   get('fpldle/getDailyResult', {
+  //     openId: this.data.openId
+  //   })
+  //   .then(res => {
+  //   })
+  //   .catch(res => {
+  //     console.log('fail:', res);
+  //   });
+  // },
+
+  // 插结果
+  insertDailyResult() {
+    let data = {
+      openId: this.data.openId,
+      resultList: this.data.resultList
+    };
+    post('fpldle/insertDailyResult', data)
+  },
 
 
 })
