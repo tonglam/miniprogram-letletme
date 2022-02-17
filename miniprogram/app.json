@@ -26,7 +26,7 @@
     "pages/me/element/element",
     "pages/me/fpldle/fpldle"
   ],
-  "entryPagePath": "pages/me/fpldle/fpldle",
+  "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {
     "backgroundColor": "#F6F6F6",
     "backgroundTextStyle": "dark",
