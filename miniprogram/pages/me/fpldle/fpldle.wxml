@@ -1,19 +1,22 @@
 <view class="fpldle">
 
+
+
   <view class="info">
     <van-row>
       <van-col span="2" offset="1">
-        <van-icon name="question-o" color="white" size="24px" bind:click="onQuestion" />
+        <open-data type="userAvatarUrl"></open-data>
       </van-col>
+      <van-col span="9" offset="6">{{date}}期({{tryTimes}}/{{total}})</van-col>
       <van-col span="2">
-        <van-icon name="search" color="white" size="26px" bind:click="onSearch" />
+        <van-icon name="question-o" color="white" size="26px" bind:click="onQuestion" />
       </van-col>
-      <van-col span="11" offset="3">{{date}}期({{tryTimes}}/{{total}})</van-col>
       <van-col span="2">
         <van-icon name="point-gift-o" color="white" size="26px" bind:click="onGift" />
       </van-col>
       <van-col span="2">
-        <van-icon name="records" color="white" size="26px" bind:click="onRecords" />
+        <van-icon name="more-o" color="white" size="26px" bind:click="onMore" />
+        <van-action-sheet show="{{actionShow}}" actions="{{actions}}" bind:close="onActionClose" bind:select="onActionSelect" />
       </van-col>
     </van-row>
   </view>
@@ -161,17 +164,6 @@
   </view>
 
   <view class="pop">
-    <van-popup closeable show="{{questionShow}}" overlay="{{true}}" position="top" custom-style="height: 100%" bind:close="onQuestionClose">
-      <image class="fpldle-rule" src="/images/fpldle-rule.png" style="height: 1200px;"></image>
-    </van-popup>
-  </view>
-
-  <view class="pop">
-    <van-popup closeable show="{{searchShow}}" overlay="{{true}}" position="top" custom-style="height: 100%" bind:close="onSearchClose">
-    </van-popup>
-  </view>
-
-  <view class="pop">
     <van-popup closeable show="{{giftShow}}" overlay="{{true}}" position="top" custom-style="height: 30%" bind:close="onGiftClose">
       <text>\n\n\n</text>
       <text class="infoHead">该球员出现的赛季：{{fpldle.season}}赛季</text>
@@ -181,7 +173,18 @@
   </view>
 
   <view class="pop">
+    <van-popup closeable show="{{questionShow}}" overlay="{{true}}" position="top" custom-style="height: 100%" bind:close="onQuestionClose">
+      <image class="fpldle-rule" src="/images/fpldle-rule.png" style="height: 1200px;"></image>
+    </van-popup>
+  </view>
+
+  <view class="pop">
     <van-popup closeable show="{{recordsShow}}" overlay="{{true}}" position="top" custom-style="height: 100%" bind:close="onRecordsClose">
+    </van-popup>
+  </view>
+
+  <view class="pop">
+    <van-popup closeable show="{{medalShow}}" overlay="{{true}}" position="top" custom-style="height: 100%" bind:close="onMedalClose">
     </van-popup>
   </view>
 

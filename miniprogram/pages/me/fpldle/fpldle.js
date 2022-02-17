@@ -1,14 +1,15 @@
 import {
-  get,
-  post
+  getFpldle,
+  postFpldle
 } from "../../../utils/request";
 import moment from 'moment';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
-let defaultColour = "background-color:black",
+const defaultColour = "background-color:black",
   green = "background-color:#6aaa64",
   yellow = "background-color:#c9b458",
-  gray = "background-color:#787c7e";
+  gray = "background-color:#787c7e",
+  defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0';
 
 Page({
 
@@ -88,20 +89,36 @@ Page({
     openId: '',
     // pop
     questionShow: false,
-    searchShow: false,
     giftShow: false,
     recordsShow: false,
+    medalShow: false,
+    actionShow: false,
+    // userInfo
+    avatarUrl: defaultAvatarUrl,
+    // action
+    actions: [{
+        name: '个人记录',
+      },
+      {
+        name: '排行榜',
+      },
+      {
+        name: '生成海报',
+      },
+    ],
   },
 
   /**
    * 原生
    */
-
-  onShow: function () {
+  onLoad: function () {
     this.getOpenId();
     this.setData({
-      date: moment().format("YYYYMMDD")
+      date: moment().format("MMDD")
     });
+  },
+
+  onShow: function () {
     this.initDailyFpldle();
   },
 
@@ -266,20 +283,6 @@ Page({
     });
   },
 
-  // 搜索
-  onSearch() {
-    this.setData({
-      searchShow: true
-    });
-  },
-
-  // 搜索关闭
-  onSearchClose() {
-    this.setData({
-      searchShow: false
-    });
-  },
-
   // 提示
   onGift() {
     this.setData({
@@ -294,19 +297,59 @@ Page({
     });
   },
 
-  // 统计
+  // 更多
+  onMore() {
+    this.setData({
+      actionShow: true
+    });
+  },
+
+  // 面板关闭
+  onActionClose() {
+    this.setData({
+      actionShow: false
+    });
+  },
+
+  // 面板选择
+  onActionSelect(event) {
+    console.log(event.detail);
+  },
+
+  // 记录
   onRecords() {
     this.setData({
       recordsShow: true
     });
   },
 
-  // 统计关闭
+  // 记录关闭
   onRecordsClose() {
     this.setData({
       recordsShow: false
     });
   },
+
+  // 排行榜
+  onMedal() {
+    this.setData({
+      medalShow: true
+    });
+  },
+
+  // 排行榜关闭
+  onMedalClose() {
+    this.setData({
+      medalShow: false
+    });
+  },
+
+  // onChooseAvatar(e) {
+  //   const { avatarUrl } = e.detail 
+  //   this.setData({
+  //     avatarUrl,
+  //   })
+  // },
 
   /**
    * 数据
@@ -314,9 +357,7 @@ Page({
 
   // 获取每日谜底
   initDailyFpldle() {
-    get('fpldle/getDailyFpldle', {
-        date: this.data.date
-      })
+    getFpldle('getDailyFpldle', {}, false)
       .then(res => {
         let data = res.data;
         this.setData({
@@ -335,9 +376,9 @@ Page({
     wx.login({
       success(res) {
         if (res.code) {
-          get('fpldle/getWechatUserOpenId', {
+          getFpldle('getWechatUserOpenId', {
               code: res.code
-            })
+            }, false)
             .then(res => {
               let openId = res.data;
               that.setData({
@@ -371,8 +412,7 @@ Page({
       openId: this.data.openId,
       resultList: this.data.resultList
     };
-    post('fpldle/insertDailyResult', data)
+    postFpldle('insertDailyResult', data, false)
   },
-
 
 })
