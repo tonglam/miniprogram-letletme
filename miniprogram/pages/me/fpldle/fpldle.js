@@ -1,6 +1,5 @@
 import {
-  getFpldle,
-  postFpldle
+  getFpldle
 } from "../../../utils/request";
 import moment from 'moment';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
@@ -106,20 +105,28 @@ Page({
         name: '生成海报',
       },
     ],
+    // picture
+    // imgData: '',
   },
 
   /**
    * 原生
    */
-  onLoad: function () {
-    this.getOpenId();
+
+  onShow: function () {
+    let openId = wx.getStorageSync('openId');
+    if (openId === '') {
+      this.getOpenId();
+    } else {
+      this.setData({
+        openId: openId
+      });
+    }
     this.setData({
       date: moment().format("MMDD")
     });
-  },
-
-  onShow: function () {
     this.initDailyFpldle();
+    this.initDailyResult();
   },
 
   onShareAppMessage: function () {
@@ -180,6 +187,7 @@ Page({
     if (inputSize !== 5) {
       return false;
     }
+    this.insertDailyResult(inputList);
     this.setData({
       inputList: []
     });
@@ -211,7 +219,6 @@ Page({
         roundResult = resultList.toString(),
         tryTimes = this.data.tryTimes + 1;
       dailyResultList.push(roundResult);
-      this.insertDailyResult();
       this.setData({
         tryTimes: tryTimes,
         resultList: [],
@@ -384,7 +391,6 @@ Page({
               that.setData({
                 openId: openId
               });
-              console.log("openId: " + openId);
             })
             .catch(res => {
               console.log('fail:', res);
@@ -392,27 +398,51 @@ Page({
         }
       }
     })
+    wx.setStorageSync('openId', this.data.openId);
   },
 
-  // // 每日结果
-  // initDailyResult(){
-  //   get('fpldle/getDailyResult', {
-  //     openId: this.data.openId
-  //   })
-  //   .then(res => {
-  //   })
-  //   .catch(res => {
-  //     console.log('fail:', res);
-  //   });
-  // },
+  // 每日结果
+  initDailyResult() {
+    getFpldle('getDailyResult', {
+        openId: this.data.openId
+      }, false)
+      .then(res => {
+        let list = res.data;
+        console.log(list.length);
+        console.log(list[0]);
+        console.log(list[1]);
+        console.log(list[2]);
+        console.log(list[3]);
+        console.log(list[4]);
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
 
   // 插结果
-  insertDailyResult() {
-    let data = {
+  insertDailyResult(inputList) {
+    getFpldle('insertDailyResult', {
       openId: this.data.openId,
-      resultList: this.data.resultList
-    };
-    postFpldle('insertDailyResult', data, false)
+      result: inputList.toString()
+    }, false)
   },
+
+  // 获取球员图片
+  // initPlayerPicture() {
+  //   getFpldle('getPlayerPicture', {
+  //       code: this.data.fpldle.code
+  //     }, false)
+  //     .then(res => {
+  //       let imgData = res.data.replace(/[\r\n]/g, '');
+  //       this.setData({
+  //         imgData: imgData
+  //       });
+  //       console.log(this.data.imgData);
+  //     })
+  //     .catch(res => {
+  //       console.log('fail:', res);
+  //     });
+  // }
 
 })

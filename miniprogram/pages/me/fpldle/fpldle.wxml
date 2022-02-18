@@ -3,7 +3,7 @@
   <view class="info">
     <van-row>
       <van-col span="2" offset="1">
-        <!-- <open-data type="userAvatarUrl"></open-data> -->
+        <open-data type="userAvatarUrl"></open-data>
       </van-col>
       <van-col span="9" offset="6">{{date}}期({{tryTimes}}/{{total}})</van-col>
       <van-col span="2">
