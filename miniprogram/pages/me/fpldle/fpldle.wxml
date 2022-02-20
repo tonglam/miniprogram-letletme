@@ -162,11 +162,9 @@
   </view>
 
   <view class="pop">
-    <van-popup closeable show="{{giftShow}}" overlay="{{true}}" position="top" custom-style="height: 30%" bind:close="onGiftClose">
+    <van-popup closeable show="{{giftShow}}" overlay="{{true}}" position="top" custom-style="height: 20%" bind:close="onGiftClose">
       <text>\n\n\n</text>
       <text class="infoHead">该球员出现的赛季：{{fpldle.season}}赛季</text>
-      <text>\n\n</text>
-      <text class="infoHead">该球员的位置：{{fpldle.position}}</text>
     </van-popup>
   </view>
 

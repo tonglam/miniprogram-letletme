@@ -83,7 +83,6 @@ Page({
     total: 6,
     inputList: [],
     resultList: [],
-    dailyResultList: [],
     solve: false,
     openId: '',
     // pop
@@ -215,10 +214,8 @@ Page({
       resultList.push(result);
     }
     if (resultList.length == 5) {
-      let dailyResultList = this.data.dailyResultList,
-        roundResult = resultList.toString(),
+      let roundResult = resultList.toString(),
         tryTimes = this.data.tryTimes + 1;
-      dailyResultList.push(roundResult);
       this.setData({
         tryTimes: tryTimes,
         resultList: [],
@@ -407,13 +404,61 @@ Page({
         openId: this.data.openId
       }, false)
       .then(res => {
-        let list = res.data;
-        console.log(list.length);
-        console.log(list[0]);
-        console.log(list[1]);
-        console.log(list[2]);
-        console.log(list[3]);
-        console.log(list[4]);
+        let list = res.data,
+          tryTimes = list.length;
+        this.setData({
+          tryTimes: tryTimes,
+          inputList: [],
+          resultList: []
+        });
+        for (let i = 0; i < tryTimes; i++) {
+          let group = String.fromCharCode(i + 65),
+            letterList = list[i].split(","),
+            resultList = [];
+          for (let j = 0; j < 5; j++) {
+            let column = String.fromCharCode(j + 65),
+              position = group + column,
+              letter = letterList[j],
+              fpldleName = this.data.fpldleName,
+              fpldleLetter = fpldleName[j],
+              colourPosition = position + 'Style',
+              colour = defaultColour,
+              result = 0;;
+            if (letter === fpldleLetter) { // correct
+              colour = green;
+              result = 2;
+            } else if (fpldleName.indexOf(letter) != -1) { // order
+              colour = yellow;
+              result = 1;
+            } else { // wrong
+              colour = gray;
+              result = 0;
+            }
+            resultList.push(result);
+            this.setData({
+              [colourPosition]: colour,
+            });
+            this.setData({
+              [position]: letter
+            });
+            if (resultList.toString() === "2,2,2,2,2") { // 猜对了
+              this.setData({
+                solve: true
+              });
+              // 清空答案
+              for (let groupIndex = 0; groupIndex < 6; groupIndex++) {
+                let group = String.fromCharCode(groupIndex + 65);
+                for (let columnIndex = 0; columnIndex < 6; columnIndex++) {
+                  let column = String.fromCharCode(columnIndex + 65),
+                    position = group + column;
+                  this.setData({
+                    [position]: ""
+                  });
+                }
+              }
+            }
+          }
+        }
       })
       .catch(res => {
         console.log('fail:', res);
