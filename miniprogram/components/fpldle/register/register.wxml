@@ -1,0 +1,18 @@
+<view class="register">
+
+  <van-notice-bar scrollable="{{false}}" left-icon="info-o" text="绑定用户：请点击灰色头像并输入昵称" border="{{false}}" />
+
+  <button class="avatar-wrapper" open-type="chooseAvatar" bind:chooseavatar="onChooseAvatar">
+    <image class="avatar" src="{{avatarUrl}}"></image>
+  </button>
+  <input type="nickname" class="nickname" value="{{nickname}}" placeholder="请输入昵称" bindinput="onInput" bindconfirm="onConfirm" />
+
+  <view class="button">
+    <van-row>
+      <van-col offset="10">
+        <van-button type="primary" size="normal" bind:click="onConfirm">确认</van-button>
+      </van-col>
+    </van-row>
+  </view>
+
+</view>

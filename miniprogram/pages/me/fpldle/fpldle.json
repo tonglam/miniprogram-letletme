@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "FPLDLE",
-  "usingComponents": {}
+  "usingComponents": {
+    "register": "../../../components/fpldle/register/register"
+  }
 }

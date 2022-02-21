@@ -7,12 +7,16 @@ import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 const defaultColour = "background-color:black",
   green = "background-color:#6aaa64",
   yellow = "background-color:#c9b458",
-  gray = "background-color:#787c7e",
-  defaultAvatarUrl = 'https://mmbiz.qpic.cn/mmbiz/icTdbqWNOwNRna42FI242Lcia07jQodd2FJGIYQfG0LAJGFxM4FbnQP6yfMxBgJ0F3YRqJCJ1aPAK2dQagdusBZg/0';
+  gray = "background-color:#787c7e";
 
 Page({
 
   data: {
+    // 用户信息
+    userInfo: {},
+    // 显示
+    registerShow: false,
+    riddleShow: false,
     // 格子
     AA: "",
     AAStyle: defaultColour,
@@ -84,15 +88,12 @@ Page({
     inputList: [],
     resultList: [],
     solve: false,
-    openId: '',
     // pop
     questionShow: false,
     giftShow: false,
     recordsShow: false,
     medalShow: false,
     actionShow: false,
-    // userInfo
-    avatarUrl: defaultAvatarUrl,
     // action
     actions: [{
         name: '个人记录',
@@ -118,8 +119,10 @@ Page({
       this.getOpenId();
     } else {
       this.setData({
-        openId: openId
+        "userInfo.openId": openId
       });
+      // userInfo
+      this.initUserInfo();
     }
     this.setData({
       date: moment().format("MMDD")
@@ -348,12 +351,23 @@ Page({
     });
   },
 
-  // onChooseAvatar(e) {
-  //   const { avatarUrl } = e.detail 
-  //   this.setData({
-  //     avatarUrl,
-  //   })
-  // },
+  // register回填
+  onRegister(event) {
+    let data = event.detail;
+    if (data === '') {
+      return false;
+    }
+    let userInfo = this.data.userInfo;
+    userInfo.nickname = data.nickname;
+    userInfo.avatarUrl = data.avatarUrl;
+    console.log("userInfo: " + userInfo);
+    this.setData({
+      registerShow: false,
+      userInfo: userInfo
+    });
+    // 新增到后台
+    this.insertUserInfo();
+  },
 
   /**
    * 数据
@@ -386,8 +400,10 @@ Page({
             .then(res => {
               let openId = res.data;
               that.setData({
-                openId: openId
+                "userInfo.openId": openId
               });
+              // userInfo
+              this.initUserInfo();
             })
             .catch(res => {
               console.log('fail:', res);
@@ -395,13 +411,13 @@ Page({
         }
       }
     })
-    wx.setStorageSync('openId', this.data.openId);
+    wx.setStorageSync('openId', this.data.userInfo.openId);
   },
 
   // 每日结果
   initDailyResult() {
     getFpldle('getDailyResult', {
-        openId: this.data.openId
+        openId: this.data.userInfo.openId
       }, false)
       .then(res => {
         let list = res.data,
@@ -468,7 +484,7 @@ Page({
   // 插结果
   insertDailyResult(inputList) {
     getFpldle('insertDailyResult', {
-      openId: this.data.openId,
+      openId: this.data.userInfo.openId,
       result: inputList.toString()
     }, false)
   },
@@ -488,6 +504,37 @@ Page({
   //     .catch(res => {
   //       console.log('fail:', res);
   //     });
-  // }
+  // },
+
+  // 获取用户信息
+  initUserInfo() {
+    getFpldle('getUserInfo', {
+        openId: this.data.userInfo.openId
+      }, false)
+      .then(res => {
+        let data = res.data;
+        if (data === '') {
+          this.setData({
+            registerShow: true
+          });
+          return false;
+        }
+        this.setData({
+          userInfo: data
+        });
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  },
+
+  // 新增用户信息
+  insertUserInfo() {
+    getFpldle('insertUserInfo', {
+      openId: this.data.userInfo.openId,
+      nickName: this.data.userInfo.nickName,
+      avatarUrl: this.data.userInfo.avatarUrl
+    }, false);
+  }
 
 })
