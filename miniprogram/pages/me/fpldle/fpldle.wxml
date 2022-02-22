@@ -1,22 +1,22 @@
 <view class="fpldle">
 
-  <view wx:if="{{registerShow}}">
-    <register bind:register="onRegister"></register>
-  </view>
+  <block wx:if="{{!hasUserInfo}}">
+    <van-button type="primary" hairline class="userInfoButton" size="large" bind:click="wxGetUserProfile">点我点我</van-button>
+  </block>
 
-  <view wx:else>
+  <block wx:else>
 
     <view class="info">
       <van-row>
         <van-col span="2" offset="1">
-          <open-data type="userAvatarUrl"></open-data>
+          <image class="avatar" bindtap="wxGetUserProfile" src="{{avatarUrl}}"></image>
         </van-col>
         <van-col span="9" offset="6">{{date}}期({{tryTimes}}/{{total}})</van-col>
         <van-col span="2">
           <van-icon name="question-o" color="white" size="26px" bind:click="onQuestion" />
         </van-col>
         <van-col span="2">
-          <van-icon name="point-gift-o" color="white" size="26px" bind:click="onGift" />
+          <van-icon name=eye-o" color="white" size="26px" bind:click="onGift" />
         </van-col>
         <van-col span="2">
           <van-icon name="more-o" color="white" size="26px" bind:click="onMore" />
@@ -192,6 +192,6 @@
 
     <van-toast id="van-toast" />
 
-  </view>
+  </block>
 
 </view>
