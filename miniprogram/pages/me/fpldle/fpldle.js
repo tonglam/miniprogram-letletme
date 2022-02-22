@@ -7,13 +7,15 @@ import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 const defaultColour = "background-color:black",
   green = "background-color:#6aaa64",
   yellow = "background-color:#c9b458",
-  gray = "background-color:#787c7e";
+  gray = "background-color:#787c7e",
+  roundLength = 5,
+  maxTryTimes = 6;
 
 Page({
 
   data: {
     // 用户信息
-    hasUserInfo: false,
+    hasUserInfo: true,
     openId: '',
     nickName: '',
     avatarUrl: '',
@@ -22,8 +24,9 @@ Page({
     fpldle: {},
     fpldleNameList: [],
     tryTimes: 0,
-    total: 6,
+    total: maxTryTimes,
     inputList: [],
+    verifyList: [],
     resultList: [],
     solve: false,
     // 格子
@@ -89,12 +92,14 @@ Page({
     FEStyle: defaultColour,
     // pop
     questionShow: false,
-    giftShow: false,
-    recordsShow: false,
-    medalShow: false,
+    hideShow: true,
+    recordShow: false,
+    rankShow: false,
     actionShow: false,
     // action
     actions: [{
+        name: '往期答案',
+      }, {
         name: '个人记录',
       },
       {
@@ -144,8 +149,6 @@ Page({
     this.setData({
       date: moment().format("MMDD")
     });
-    // 插用户信息
-    this.insertUserInfo();
   },
 
   onShareAppMessage: function () {
@@ -167,7 +170,7 @@ Page({
       return false;
     }
     let tryTimes = this.data.tryTimes;
-    if (tryTimes === 6) {
+    if (tryTimes === maxTryTimes) {
       return false;
     }
     let group = String.fromCharCode(tryTimes + 65),
@@ -175,9 +178,10 @@ Page({
       inputSize = inputList.length,
       column = String.fromCharCode(inputSize + 65),
       position = group + column;
-    if (inputList.length === 5) {
+    if (inputList.length === roundLength) {
       return false;
     }
+    // 显示输入的字母
     inputList.push(letter);
     this.setData({
       [position]: letter,
@@ -186,93 +190,32 @@ Page({
 
   // 点确认时触发验证
   inputEnter() {
+    // 已猜出
     if (this.data.solve) {
       return false;
     }
+    // 机会用完
     let tryTimes = this.data.tryTimes;
-    if (tryTimes === 6) {
+    if (tryTimes === maxTryTimes) {
       Toast('很遗憾，明天再来');
       return false;
     }
     let group = String.fromCharCode(tryTimes + 65),
       inputList = this.data.inputList,
-      inputSize = inputList.length,
-      resultList = this.data.resultList,
-      resultSize = resultList.length,
-      fpldleName = this.data.fpldle.name;
-    if (resultSize === 5) {
+      inputSize = inputList.length;
+    if (inputSize !== roundLength) {
       return false;
     }
-    if (inputSize !== 5) {
-      return false;
-    }
-    this.insertDailyResult(inputList);
+    // 验证
+    this.verifyLetter(group);
+    // 清空输入列表
     this.setData({
-      inputList: []
+      tryTimes: tryTimes + 1,
+      inputList: [],
+      verifyList: [],
     });
-    for (let index = 0; index < inputList.length; index++) {
-      let letter = inputList[index],
-        fpldleLetter = fpldleName[index],
-        column = String.fromCharCode(index + 65),
-        position = group + column,
-        colourPosition = position + 'Style',
-        color = defaultColour,
-        result = 0;
-      if (letter === fpldleLetter) { // correct
-        color = green;
-        result = 2;
-      } else if (fpldleName.indexOf(letter) != -1) { // order
-        color = yellow;
-        result = 1;
-      } else { // wrong
-        color = gray;
-        result = 0;
-      }
-      this.setData({
-        [colourPosition]: color,
-      });
-      resultList.push(result);
-    }
-    if (resultList.length == 5) {
-      let roundResult = resultList.toString(),
-        tryTimes = this.data.tryTimes + 1;
-      this.setData({
-        tryTimes: tryTimes,
-        resultList: [],
-      });
-      if (roundResult === "2,2,2,2,2") { // 猜对了
-        this.setData({
-          solve: true
-        });
-        Toast('恭喜，今日答案: ' + this.data.fpldle.fullName);
-        // 清空答案
-        for (let groupIndex = 0; groupIndex < 6; groupIndex++) {
-          let group = String.fromCharCode(groupIndex + 65);
-          for (let columnIndex = 0; columnIndex < 6; columnIndex++) {
-            let column = String.fromCharCode(columnIndex + 65),
-              position = group + column;
-            this.setData({
-              [position]: ""
-            });
-          }
-        }
-        return false;
-      }
-      if (tryTimes === 6) {
-        Toast('很遗憾，明天再来');
-        for (let groupIndex = 0; groupIndex < 6; groupIndex++) {
-          let group = String.fromCharCode(groupIndex + 65);
-          for (let columnIndex = 0; columnIndex < 6; columnIndex++) {
-            let column = String.fromCharCode(columnIndex + 65),
-              position = group + column;
-            this.setData({
-              [position]: ""
-            });
-          }
-        }
-        return false;
-      }
-    }
+    // 插每日结果
+    this.insertDailyResult(inputList);
   },
 
   // 退格
@@ -307,18 +250,17 @@ Page({
     });
   },
 
-  // 提示
-  onGift() {
+  // 显示字母
+  onEye() {
+    let hideShow = !this.data.hideShow;
     this.setData({
-      giftShow: true
+      hideShow: hideShow
     });
-  },
-
-  // 提示关闭
-  onGiftClose() {
-    this.setData({
-      giftShow: false
-    });
+    if (hideShow) {
+      this.showLetter();
+    } else {
+      this.hideLetter();
+    }
   },
 
   // 更多
@@ -341,35 +283,134 @@ Page({
   },
 
   // 记录
-  onRecords() {
+  onRecord() {
     this.setData({
-      recordsShow: true
+      recordShow: true
     });
   },
 
   // 记录关闭
-  onRecordsClose() {
+  onRecordClose() {
     this.setData({
-      recordsShow: false
+      recordShow: false
     });
   },
 
   // 排行榜
-  onMedal() {
+  onRank() {
     this.setData({
-      medalShow: true
+      rankShow: true
     });
   },
 
   // 排行榜关闭
-  onMedalClose() {
+  onRankClose() {
     this.setData({
-      medalShow: false
+      rankShow: false
     });
   },
 
   // 显示字母
+  showLetter() {
+    let dailyResultList = this.data.resultList,
+      tryTimes = dailyResultList.length;
+    for (let i = 0; i < tryTimes; i++) {
+      let group = String.fromCharCode(i + 65),
+        letterList = dailyResultList[i].split(","),
+        resultList = [];
+      for (let j = 0; j < roundLength; j++) {
+        let column = String.fromCharCode(j + 65),
+          position = group + column,
+          letter = letterList[j],
+          fpldleName = this.data.fpldle.name,
+          fpldleLetter = fpldleName[j],
+          colourPosition = position + 'Style',
+          colour = defaultColour,
+          result = 0;;
+        if (letter === fpldleLetter) { // correct
+          colour = green;
+          result = 2;
+        } else if (fpldleName.indexOf(letter) != -1) { // order
+          colour = yellow;
+          result = 1;
+        } else { // wrong
+          colour = gray;
+          result = 0;
+        }
+        resultList.push(result);
+        this.setData({
+          [colourPosition]: colour,
+        });
+        this.setData({
+          [position]: letter
+        });
+      }
+    }
+  },
 
+  // 隐藏字母
+  hideLetter() {
+    for (let i = 0; i < maxTryTimes; i++) {
+      let group = String.fromCharCode(i + 65);
+      for (let j = 0; j < roundLength; j++) {
+        let column = String.fromCharCode(j + 65),
+          position = group + column;
+        this.setData({
+          [position]: ''
+        });
+      }
+    }
+  },
+
+  // 验证字母
+  verifyLetter(group) {
+    let fpldleName = this.data.fpldle.name,
+      tryTimes = this.data.tryTimes + 1,
+      inputList = this.data.inputList,
+      verifyList = this.data.verifyList,
+      resultList = this.data.resultList,
+      roundResultList = [];
+    for (let index = 0; index < roundLength; index++) {
+      let letter = inputList[index],
+        fpldleLetter = fpldleName[index],
+        column = String.fromCharCode(index + 65),
+        position = group + column,
+        colourPosition = position + 'Style',
+        color = defaultColour,
+        verify = 0;
+      // add letter
+      roundResultList.push(letter);
+      // colour
+      if (letter === fpldleLetter) { // correct
+        color = green;
+        verify = 2;
+      } else if (fpldleName.indexOf(letter) != -1) { // order
+        color = yellow;
+        verify = 1;
+      } else { // wrong
+        color = gray;
+        verify = 0;
+      }
+      verifyList.push(verify);
+      this.setData({
+        [colourPosition]: color,
+      });
+    }
+    let verifyResult = verifyList.toString(),
+      roundResult = roundResultList.toString();
+    // 猜对了
+    if (verifyResult === "2,2,2,2,2") {
+      this.setData({
+        solve: true
+      });
+      Toast('恭喜，今日答案: ' + this.data.fpldle.fullName);
+    }
+    resultList.push(roundResult);
+    // 全错
+    if (tryTimes === maxTryTimes && verifyResult !== "2,2,2,2,2") {
+      Toast('很遗憾，明天再来');
+    }
+  },
 
   /**
    * 数据
@@ -426,56 +467,10 @@ Page({
         this.setData({
           tryTimes: tryTimes,
           inputList: [],
-          resultList: []
+          resultList: list
         });
-        for (let i = 0; i < tryTimes; i++) {
-          let group = String.fromCharCode(i + 65),
-            letterList = list[i].split(","),
-            resultList = [];
-          for (let j = 0; j < 5; j++) {
-            let column = String.fromCharCode(j + 65),
-              position = group + column,
-              letter = letterList[j],
-              fpldleName = this.data.fpldle.name,
-              fpldleLetter = fpldleName[j],
-              colourPosition = position + 'Style',
-              colour = defaultColour,
-              result = 0;;
-            if (letter === fpldleLetter) { // correct
-              colour = green;
-              result = 2;
-            } else if (fpldleName.indexOf(letter) != -1) { // order
-              colour = yellow;
-              result = 1;
-            } else { // wrong
-              colour = gray;
-              result = 0;
-            }
-            resultList.push(result);
-            this.setData({
-              [colourPosition]: colour,
-            });
-            this.setData({
-              [position]: letter
-            });
-            if (resultList.toString() === "2,2,2,2,2") { // 猜对了
-              this.setData({
-                solve: true
-              });
-              // 清空答案
-              for (let groupIndex = 0; groupIndex < 6; groupIndex++) {
-                let group = String.fromCharCode(groupIndex + 65);
-                for (let columnIndex = 0; columnIndex < 6; columnIndex++) {
-                  let column = String.fromCharCode(columnIndex + 65),
-                    position = group + column;
-                  this.setData({
-                    [position]: ""
-                  });
-                }
-              }
-            }
-          }
-        }
+        // 显示结果
+        this.showLetter();
       })
       .catch(res => {
         console.log('fail:', res);
@@ -514,7 +509,7 @@ Page({
   insertUserInfo() {
     getFpldle('insertUserInfo', {
         openId: this.data.openId,
-        nickName: this.data.nickname,
+        nickName: this.data.nickName,
         avatarUrl: this.data.avatarUrl
       }, false)
       .catch(res => {
