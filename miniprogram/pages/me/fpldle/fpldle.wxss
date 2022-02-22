@@ -2,9 +2,20 @@ page {
   background-color: black;
 }
 
+.fpldle .userInfoButton {
+  margin-top: 200px;
+  display: flex;
+  justify-content: center;
+}
+
 .fpldle .info {
   margin-top: 10px;
   color: white;
+}
+
+.fpldle .avatar{
+  height: 30px;
+  width: 30px;
 }
 
 .fpldle .grip {
@@ -48,15 +59,15 @@ page {
   font-weight: bolder;
 }
 
-.fpldle .pop{
+.fpldle .pop {
   text-align: center;
 }
 
-.fpldle .popHead{
+.fpldle .popHead {
   font-size: 18px;
   font-weight: bold;
 }
 
-.fpldle .popContent{
+.fpldle .popContent {
   font-size: 14px;
 }

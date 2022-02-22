@@ -13,10 +13,19 @@ Page({
 
   data: {
     // 用户信息
-    userInfo: {},
-    // 显示
-    registerShow: false,
-    riddleShow: false,
+    hasUserInfo: false,
+    openId: '',
+    nickName: '',
+    avatarUrl: '',
+    // 公共数据
+    date: "",
+    fpldle: {},
+    fpldleNameList: [],
+    tryTimes: 0,
+    total: 6,
+    inputList: [],
+    resultList: [],
+    solve: false,
     // 格子
     AA: "",
     AAStyle: defaultColour,
@@ -78,16 +87,6 @@ Page({
     FDStyle: defaultColour,
     FE: "",
     FEStyle: defaultColour,
-    // 公共数据
-    date: "",
-    fpldle: {},
-    fpldleName: "",
-    fpldleNameList: [],
-    tryTimes: 0,
-    total: 6,
-    inputList: [],
-    resultList: [],
-    solve: false,
     // pop
     questionShow: false,
     giftShow: false,
@@ -114,21 +113,39 @@ Page({
    */
 
   onShow: function () {
+    // 拿用户信息
+    let nickName = wx.getStorageSync('nickName'),
+      avatarUrl = wx.getStorageSync('avatarUrl');
+    if (nickName === '' || nickName === 'undefined' || avatarUrl === '' || avatarUrl === 'undefined') {
+      this.setData({
+        hasUserInfo: false
+      });
+    } else {
+      this.setData({
+        hasUserInfo: true,
+        nickName: nickName,
+        avatarUrl: avatarUrl
+      });
+    }
+    // 拿谜底
+    this.initDailyFpldle();
+    // 拿openId和当日结果
     let openId = wx.getStorageSync('openId');
-    if (openId === '') {
+    if (openId === '' || openId === 'undefined') {
       this.getOpenId();
     } else {
       this.setData({
-        "userInfo.openId": openId
+        openId: openId
       });
-      // userInfo
-      this.initUserInfo();
+      // daily result
+      this.initDailyResult();
     }
+    // 其他数据
     this.setData({
       date: moment().format("MMDD")
     });
-    this.initDailyFpldle();
-    this.initDailyResult();
+    // 插用户信息
+    this.insertUserInfo();
   },
 
   onShareAppMessage: function () {
@@ -182,7 +199,7 @@ Page({
       inputSize = inputList.length,
       resultList = this.data.resultList,
       resultSize = resultList.length,
-      fpldleName = this.data.fpldleName;
+      fpldleName = this.data.fpldle.name;
     if (resultSize === 5) {
       return false;
     }
@@ -351,23 +368,8 @@ Page({
     });
   },
 
-  // register回填
-  onRegister(event) {
-    let data = event.detail;
-    if (data === '') {
-      return false;
-    }
-    let userInfo = this.data.userInfo;
-    userInfo.nickname = data.nickname;
-    userInfo.avatarUrl = data.avatarUrl;
-    console.log("userInfo: " + userInfo);
-    this.setData({
-      registerShow: false,
-      userInfo: userInfo
-    });
-    // 新增到后台
-    this.insertUserInfo();
-  },
+  // 显示字母
+
 
   /**
    * 数据
@@ -377,10 +379,8 @@ Page({
   initDailyFpldle() {
     getFpldle('getDailyFpldle', {}, false)
       .then(res => {
-        let data = res.data;
         this.setData({
-          fpldle: data,
-          fpldleName: data.name
+          fpldle: res.data
         });
       })
       .catch(res => {
@@ -400,10 +400,12 @@ Page({
             .then(res => {
               let openId = res.data;
               that.setData({
-                "userInfo.openId": openId
+                openId: openId
               });
-              // userInfo
-              this.initUserInfo();
+              // 缓存
+              wx.setStorageSync('openId', openId);
+              // daily result
+              that.initDailyResult();
             })
             .catch(res => {
               console.log('fail:', res);
@@ -411,13 +413,12 @@ Page({
         }
       }
     })
-    wx.setStorageSync('openId', this.data.userInfo.openId);
   },
 
   // 每日结果
   initDailyResult() {
     getFpldle('getDailyResult', {
-        openId: this.data.userInfo.openId
+        openId: this.data.openId
       }, false)
       .then(res => {
         let list = res.data,
@@ -435,7 +436,7 @@ Page({
             let column = String.fromCharCode(j + 65),
               position = group + column,
               letter = letterList[j],
-              fpldleName = this.data.fpldleName,
+              fpldleName = this.data.fpldle.name,
               fpldleLetter = fpldleName[j],
               colourPosition = position + 'Style',
               colour = defaultColour,
@@ -484,9 +485,12 @@ Page({
   // 插结果
   insertDailyResult(inputList) {
     getFpldle('insertDailyResult', {
-      openId: this.data.userInfo.openId,
-      result: inputList.toString()
-    }, false)
+        openId: this.data.openId,
+        result: inputList.toString()
+      }, false)
+      .catch(res => {
+        console.log('fail:', res);
+      });
   },
 
   // 获取球员图片
@@ -506,35 +510,43 @@ Page({
   //     });
   // },
 
-  // 获取用户信息
-  initUserInfo() {
-    getFpldle('getUserInfo', {
-        openId: this.data.userInfo.openId
+  // 新增用户信息
+  insertUserInfo() {
+    getFpldle('insertUserInfo', {
+        openId: this.data.openId,
+        nickName: this.data.nickname,
+        avatarUrl: this.data.avatarUrl
       }, false)
-      .then(res => {
-        let data = res.data;
-        if (data === '') {
-          this.setData({
-            registerShow: true
-          });
-          return false;
-        }
-        this.setData({
-          userInfo: data
-        });
-      })
       .catch(res => {
         console.log('fail:', res);
       });
   },
 
-  // 新增用户信息
-  insertUserInfo() {
-    getFpldle('insertUserInfo', {
-      openId: this.data.userInfo.openId,
-      nickName: this.data.userInfo.nickName,
-      avatarUrl: this.data.userInfo.avatarUrl
-    }, false);
-  }
+  /**
+   * 微信能力
+   */
+
+  wxGetUserProfile() {
+    wx.getUserProfile({
+      desc: '用于展示头像和昵称信息',
+      success: (res) => {
+        let nickName = res.userInfo.nickName,
+          avatarUrl = res.userInfo.avatarUrl;
+        this.setData({
+          nickName: nickName,
+          avatarUrl: avatarUrl,
+          hasUserInfo: true
+        })
+        // 缓存
+        wx.setStorageSync('nickName', nickName);
+        wx.setStorageSync('avatarUrl', avatarUrl);
+        // 新增到后台
+        this.insertUserInfo();
+      },
+      fail: (res) => {
+        console.log('fail:', res)
+      }
+    })
+  },
 
 })
