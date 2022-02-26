@@ -1,0 +1,72 @@
+<view class="special">
+
+  <view class="content">
+    <van-tabs type="card" bind:change="tabOnChange">
+
+      <van-tab title="团战" name="shuffled">
+
+        <van-cell-group title="A组">
+          <block wx:for="{{shuffledAList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="{{data.groupRank}} - {{data.entryName}}" value="得分：{{data.points}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="B组">
+          <block wx:for="{{shuffledBList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="{{data.groupRank}} - {{data.entryName}}" value="得分：{{data.points}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="C组">
+          <block wx:for="{{shuffledCList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="{{data.groupRank}} - {{data.entryName}}" value="得分：{{data.points}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="D组">
+          <block wx:for="{{shuffledDList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="{{data.groupRank}} - {{data.entryName}}" value="得分：{{data.points}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+          </block>
+        </van-cell-group>
+
+      </van-tab>
+
+      <van-tab title="排名" name="group">
+
+        <van-cell-group title="积分榜">
+          <block wx:for="{{groupRankList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="{{data.rank}} - {{data.groupName}}" value="总积分：{{data.totalGroupPoints}}" label="总得分:{{data.totalPoints}}"/>
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="{{groupAName}}">
+          <block wx:for="{{groupAResult.groupEntryList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="{{data.entryName}}" value="积分：{{data.groupPoints}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" label="得分:{{data.points}};进球:{{data.totalGoalScored}};失球:{{data.totalGoalsConceded}}"/>
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="{{groupBName}}">
+          <block wx:for="{{groupBResult.groupEntryList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="{{data.entryName}}" value="积分：{{data.groupPoints}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" label="得分:{{data.points}};进球:{{data.totalGoalScored}};失球:{{data.totalGoalsConceded}}"/>
+          </block>
+        </van-cell-group>
+
+        <van-cell-group title="{{groupCName}}">
+          <block wx:for="{{groupCResult.groupEntryList}}" wx:for-item="data" wx:key="index">
+            <van-cell title="{{data.entryName}}" value="积分：{{data.groupPoints}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" label="得分:{{data.points}};进球:{{data.totalGoalScored}};失球:{{data.totalGoalsConceded}}"/>
+          </block>
+        </van-cell-group>
+
+      </van-tab>
+
+    </van-tabs>
+  </view>
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="summary"></bottomNavBar>
+  </view>
+
+  <van-toast id="van-toast" />
+
+
+</view>

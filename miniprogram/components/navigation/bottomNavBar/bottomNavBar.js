@@ -29,16 +29,21 @@ const map = {
         name: "联赛",
         subname: '查看联赛统计数据',
       },
+      // {
+      //   name: "推荐阵容",
+      //   subname: '查看各类推荐阵容'
+      // },
       {
-        name: "推荐阵容",
-        subname: '查看各类推荐阵容',
+        name: "团战",
+        subname: '浙江团战',
       }
     ],
     "url": {
       "比赛周": "/pages/summary/overall/overall",
       "球队": "/pages/summary/entry/entry",
       "联赛": "/pages/summary/league/league",
-      "推荐阵容": "/pages/summary/scout/scout",
+      // "推荐阵容": "/pages/summary/scout/scout",
+      "团战": "/pages/summary/special/special"
     },
     "show": true
   },
