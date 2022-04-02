@@ -13,6 +13,7 @@ Page({
     shuffledBList: [],
     shuffledCList: [],
     shuffledDList: [],
+    shuffledEList: [],
     groupAResult: [],
     groupBResult: [],
     groupCResult: [],
@@ -83,7 +84,8 @@ Page({
 
   // 团战
   initShuffled() {
-    get('specail_tournament/getShuffledGroupResult', {
+    get('special_tournament/getShuffledGroupResult', {
+        tournamentId: 2,
         event: this.data.gw
       })
       .then(res => {
@@ -107,7 +109,8 @@ Page({
           shuffledAList: map['1'],
           shuffledBList: map['2'],
           shuffledCList: map['3'],
-          shuffledDList: map['4']
+          shuffledDList: map['4'],
+          shuffledEList: map['5']
         });
       })
       .catch(res => {
@@ -117,7 +120,8 @@ Page({
 
   // 积分榜
   initGroupRank() {
-    get('specail_tournament/getGroupRankResult', {
+    get('special_tournament/getGroupRankResult', {
+        tournamentId: 2,
         event: this.data.gw
       })
       .then(res => {
@@ -147,7 +151,8 @@ Page({
 
   // 排名
   initGroup() {
-    get('specail_tournament/getEventGroupResult', {
+    get('special_tournament/getEventGroupResult', {
+        tournamentId: 2,
         event: this.data.gw
       })
       .then(res => {
@@ -196,7 +201,8 @@ Page({
 
   // 刷新团战数据
   refreshShuffled() {
-    get('specail_tournament/refreshShuffledGroupResult', {
+    get('special_tournament/refreshShuffledGroupResult', {
+        tournamentId: 2,
         event: this.data.gw
       }, false)
       .then(() => {
@@ -206,7 +212,8 @@ Page({
 
   // 刷新排名数据
   refreshGroup() {
-    get('specail_tournament/refreshEventGroupResult', {
+    get('special_tournament/refreshEventGroupResult', {
+        tournamentId: 2,
         event: this.data.gw
       }, false)
       .then(() => {
