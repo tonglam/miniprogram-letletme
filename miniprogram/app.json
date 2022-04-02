@@ -24,8 +24,7 @@
     "pages/group/scout/scout",
     "pages/me/entry/entry",
     "pages/me/tournament/tournament",
-    "pages/me/element/element",
-    "pages/me/fpldle/fpldle"
+    "pages/me/element/element"
   ],
   "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {
