@@ -8,7 +8,7 @@ import {
 
 App({
   globalData: {
-    season: '2122',
+    season: '2223',
     gw: 0,
     lastGw: 0,
     nextGw: 0,

@@ -2,6 +2,8 @@ import {
   get
 } from '../../../utils/request';
 
+const app = getApp();
+
 Component({
 
   properties: {
@@ -24,7 +26,7 @@ Component({
         });
       } else {
         this.setData({
-          selectSeason: '2122'
+          selectSeason: app.globalData.season
         });
       }
       this.initLeagueNameList();

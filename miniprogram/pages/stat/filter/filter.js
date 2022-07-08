@@ -51,8 +51,8 @@ Page({
     switchTransfersOut: false,
     // table
     header: [],
-     // refresh
-     pullDownRefresh: false,
+    // refresh
+    pullDownRefresh: false,
   },
 
   /**
@@ -362,6 +362,10 @@ Page({
 
   defaultSeasonDropDown() {
     let seasonOptions = [{
+        text: '2223赛季',
+        value: '2223'
+      },
+      {
         text: '2122赛季',
         value: '2122'
       },
@@ -992,27 +996,27 @@ Page({
       });
   },
 
-  refreshPlayerStat(){
+  refreshPlayerStat() {
     get('player/refreshPlayerStat')
-    .then(() => {
-      // 下拉刷新
-      if (this.data.pullDownRefresh) {
-        wx.stopPullDownRefresh({
-          success: () => {
-            Toast({
-              type: 'success',
-              duration: 1000,
-              message: "刷新成功"
-            });
-            this.setData({
-              pullDownRefresh: false
-            });
-          },
-        });
-      }
-      // 更新
-      this.initFilterPlayers();
-    })
+      .then(() => {
+        // 下拉刷新
+        if (this.data.pullDownRefresh) {
+          wx.stopPullDownRefresh({
+            success: () => {
+              Toast({
+                type: 'success',
+                duration: 1000,
+                message: "刷新成功"
+              });
+              this.setData({
+                pullDownRefresh: false
+              });
+            },
+          });
+        }
+        // 更新
+        this.initFilterPlayers();
+      })
   }
 
 })

@@ -51,7 +51,7 @@ Component({
     },
 
     initSeasonList() {
-      let list = ['2122', '2021', '1920'];
+      let list = ['2223', '2122', '2021', '1920'];
       let columns = [{
         values: list,
         className: 'season',
