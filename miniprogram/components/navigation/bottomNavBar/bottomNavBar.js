@@ -83,11 +83,11 @@ const map = {
     },
     "show": true
   },
-  "group": {
-    "pages": [],
-    "url": "/pages/group/scout/scout",
-    "show": false
-  },
+  // "group": {
+  //   "pages": [],
+  //   "url": "/pages/group/scout/scout",
+  //   "show": false
+  // },
   "me": {
     "pages": [{
         name: "我的球队",
