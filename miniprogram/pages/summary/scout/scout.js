@@ -1,7 +1,6 @@
 import {
   get
 } from "../../../utils/request";
-import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
 
 const app = getApp();
 
@@ -10,9 +9,12 @@ Page({
   data: {
     gw: 0,
     season: '',
-    scoutName: '官方推荐阵容',
+    source: 'Overall',
+    dataList: [],
+    data: {},
+    average: 0,
     // picker
-    scouts: ['官方推荐阵容', 'fix推荐阵容', 'scout推荐阵容'],
+    scouts: [],
     showScoutPicker: false,
     showGwPicker: false,
     // refrsh
@@ -29,10 +31,21 @@ Page({
     this.setData({
       gw: app.globalData.gw
     });
+    // 拉取所有推荐渠道
+    this.initAllPopularScoutSource();
+    // 拉取数据
+    if (this.data.source === 'Overall') {
+      this.initOverallEventScoutResult();
+    } else {
+      this.initEventSourceScoutResult();
+    }
   },
 
   onPullDownRefresh: function () {
-
+    this.setData({
+      pullDownRefresh: true
+    });
+    this.refreshEventSourceScoutResult();
   },
 
   onShareAppMessage: function () {
@@ -66,12 +79,18 @@ Page({
 
   // picker确认
   onScoutPickerConfirm(event) {
-    let scoutName = event.detail.value;
+    let source = event.detail.value;
     this.setData({
       showScoutPicker: false,
-      scoutName: scoutName,
+      source: source,
       pullDownRefresh: false
     });
+    // 拉取数据
+    if (source === 'Overall') {
+      this.initAllPopularScoutSource();
+    } else {
+      this.initEventSourceScoutResult();
+    }
   },
 
   // picker取消
@@ -96,7 +115,6 @@ Page({
     this.setData({
       gw: gw
     });
-    // 拉取数据
 
   },
 
@@ -104,46 +122,59 @@ Page({
    * 数据
    */
 
-  /**
-   * 图片
-   */
-
-  uploadToCloud(event) {
-    const { file } = event.detail;
-    console.log(file); //返回的图片临时地址
-    wx.cloud.init();
-    const {
-      fileList
-    } = this.data;
-      const uploadTasks = fileList.map((file, index) => this.uploadFilePromise(`my-photo${index}.png`, file));
-      Promise.all(uploadTasks)
-        .then(data => {
-          wx.showToast({
-            title: '上传成功',
-            icon: 'none'
-          });
-          const newFileList = data.map(item => ({
-            url: item.fileID
-          }));
-          this.setData({
-            cloudPath: data,
-            fileList: newFileList
-          });
-        })
-        .catch(e => {
-          wx.showToast({
-            title: '上传失败',
-            icon: 'none'
-          });
-          console.log(e);
+  // 获取所有推荐渠道
+  initAllPopularScoutSource() {
+    get('common/qryAllPopularScoutSource', false)
+      .then(res => {
+        let scouts = res.data;
+        this.setData({
+          scouts: scouts
         });
+      });
   },
 
-  uploadFilePromise(fileName, chooseResult) {
-    return wx.cloud.uploadFile({
-      cloudPath: fileName,
-      filePath: chooseResult.url
-    });
+  // 获取渠道比赛周结果
+  initEventSourceScoutResult() {
+    get('summary/qryEventSourceScoutResult', {
+        event: this.data.gw,
+        source: this.data.source
+      }, false)
+      .then(res => {
+        let data = res.data;
+        this.setData({
+          data: data,
+          average: data.averagePoints
+        });
+      });
+  },
+
+  // 获取所有比赛周结果
+  initOverallEventScoutResult() {
+    get('summary/qryOverallEventScoutResult', {
+        event: this.data.gw
+      }, false)
+      .then(res => {
+        let dataList = res.data;
+        this.setData({
+          dataList: dataList,
+          average: dataList[0].averagePoints
+        });
+        console.log(dataList);
+      });
+  },
+
+  // 刷新比赛周数据
+  refreshEventSourceScoutResult() {
+    get('summary/refreshEventSourceScoutResult', {
+        event: this.data.gw
+      }, false)
+      .then(() => {
+        if (this.data.source == 'Overall') {
+          this.initOverallEventScoutResult();
+        } else {
+          this.initEventSourceScoutResult();
+        }
+      });
   },
 
 })

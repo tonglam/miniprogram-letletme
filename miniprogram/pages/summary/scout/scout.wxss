@@ -1,0 +1,7 @@
+.scout .navBar {
+  margin: 10px 0;
+}
+
+.scout .info {
+  margin: 20px 0;
+}

@@ -139,7 +139,7 @@
       </view>
     </van-tab>
 
-    <van-tab title="比较" name="比较">
+    <van-tab title="历史" name="历史">
 
       <text>\n先占个坑 </text>
 

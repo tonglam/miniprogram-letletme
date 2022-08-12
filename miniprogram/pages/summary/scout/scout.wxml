@@ -1,15 +1,16 @@
 <view class="scout">
 
   <view class="navBar">
-    <van-nav-bar title="{{scoutName}}" left-text="GW{{gw}}" right-text="更换" safe-area-inset-top="{{false}}"
-      bind:click-left="onClickChangeGw" bind:click-right="onClickChangeScout" />
+    <van-nav-bar title="{{source}}" left-text="GW{{gw}}" right-text="更换" safe-area-inset-top="{{false}}" bind:click-left="onClickChangeGw" bind:click-right="onClickChangeScout" />
+  </view>
+
+  <view class="notice">
+    <van-notice-bar scrollable="{{false}}" left-icon="clock-o" text="GW{{gw}}平均分：{{average}}" border="{{false}}" />
   </view>
 
   <view class="picker">
-    <van-popup show="{{showScoutPicker}}" overlay="{{true}}" position="top" custom-style="height: 50%"
-      bind:close="onScoutPopClose">
-      <van-picker show-toolbar toolbar-position="top" item-height="30" title="" columns="{{scouts}}"
-        bind:confirm="onScoutPickerConfirm" bind:cancel="onScoutPickerCancel" />
+    <van-popup show="{{showScoutPicker}}" overlay="{{true}}" position="top" custom-style="height: 50%" bind:close="onScoutPopClose">
+      <van-picker show-toolbar toolbar-position="top" item-height="30" title="" columns="{{scouts}}" bind:confirm="onScoutPickerConfirm" bind:cancel="onScoutPickerCancel" />
     </van-popup>
   </view>
 
@@ -17,9 +18,27 @@
     <gwPicker gw="{{gw}}" show="true" bind:pickGw="onPickGw"></gwPicker>
   </view>
 
-  <view class="upload">
-    <van-uploader upload-icon="photograph" preview-size="100px" file-list="{{fileList}}" accept="image"
-      upload-text="上传图片" bind:after-read="uploadToCloud" />
+  <view class="result" wx:if="{{source==='Overall'}}">
+    <view class="detail" wx:for="{{dataList}}" wx:for-item="data" wx:key="index">
+      <i-cell-group>
+        <i-cell title="{{index+1}} - {{data.source}}【{{data.playedCaptainName}}】" value="{{data.totalPoints}}({{data.rawTotalPoints}})分" />
+      </i-cell-group>
+    </view>
+  </view>
+
+  <view class="result" wx:if="{{source!=='Overall'}}">
+
+    <view class="info">
+      <van-cell title="得分：{{data.totalPoints}}" value="不计队长：{{data.rawTotalPoints}}" />
+      <van-cell title="上场队长：{{data.playedCaptainName}}" value="开卡：{{data.chip}}" />
+    </view>
+
+    <view class="detail" wx:for="{{data.elementList}}" wx:for-item="data" wx:key="index">
+      <i-cell-group>
+        <i-cell title="【{{data.elementTypeName}}】{{data.webName}} ({{data.teamShortName}})" value="{{data.totalPoints}}分" />
+      </i-cell-group>
+    </view>
+
   </view>
 
   <view class="bottemNavBar">
