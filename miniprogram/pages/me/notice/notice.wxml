@@ -1,0 +1,17 @@
+<view class="notice">
+
+  <view class="notice">
+    <van-notice-bar scrollable="{{false}}" left-icon="clock-o" text="共{{num}}件商品，更新时间：{{updateTime}}" border="{{false}}" />
+  </view>
+
+  <view class="content">
+    <block wx:for="{{infoList}}" wx:for-item="data" wx:key="index">
+      <van-card num="1" price="{{data.price}}" tag="{{data.tag}}" currency="" title="{{data.name}}" thumb="{{data.img}}">
+        <view slot="footer">
+          <van-button size="mini" bind:click="onclikeCopy" id="{{data.href}}">复制链接</van-button>
+        </view>
+      </van-card>
+    </block>
+  </view>
+
+</view>

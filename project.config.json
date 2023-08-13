@@ -43,7 +43,8 @@
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
     "ignoreUploadUnusedFiles": true,
-    "useStaticServer": true
+    "useStaticServer": true,
+    "condition": false
   },
   "appid": "wx4b37f3f2c2c7f169",
   "projectname": "miniprogram-letletme",

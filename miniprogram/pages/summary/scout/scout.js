@@ -27,6 +27,18 @@ Page({
    * 原生
    */
 
+  onLoad: function (options) {
+    if (JSON.stringify(options) !== '{}') { // 传入要查询的source
+      let source = options.source;
+      if (source !== '') {
+        this.setData({
+          source: source
+        });
+        this.initEventSourceScoutResult();
+      }
+    }
+  },
+
   onShow: function () {
     this.setData({
       gw: app.globalData.gw

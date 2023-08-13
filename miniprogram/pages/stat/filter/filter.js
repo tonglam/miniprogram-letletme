@@ -362,6 +362,9 @@ Page({
 
   defaultSeasonDropDown() {
     let seasonOptions = [{
+      text: '2324赛季',
+      value: '2324'
+    },{
         text: '2223赛季',
         value: '2223'
       },

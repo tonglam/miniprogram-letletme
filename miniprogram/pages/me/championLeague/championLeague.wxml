@@ -1,0 +1,45 @@
+<view class="championLeague">
+
+  <view class="navBar">
+    <van-nav-bar title="{{stage}}" title-class="title" safe-area-inset-top="{{false}}" left-text="GW{{gw}}" bind:click-left="onClickChangeGw" right-text="更换" bind:click-right="onClickChange" />
+  </view>
+
+  <view class="gwPicker" wx:if="{{showGwPicker}}">
+    <championLeagueGwPicker startGw="{{startGw}}" endGw="{{endGw}}" show="true" bind:pickGw="onPickGw"></championLeagueGwPicker>
+  </view>
+
+  <view class="picker" wx:if="{{showChampionLeaguePicker}}">
+    <championLeaguePicker show="true" bind:pickChampionLeague="onPickChampionLeague"></championLeaguePicker>
+  </view>
+
+  <view class="page">
+    <i-page current="{{current}}" total="5" simple bind:change="handleChange">
+      <view slot="prev">上一组</view>
+      <view slot="next">下一组</view>
+    </i-page>
+  </view>
+
+  <view class="search">
+    <van-search value="{{searchEntry}}" label="球队" placeholder="输入fpl球队名称搜索" shape="round" use-action-slot bind:change="onSearchChange">
+    </van-search>
+  </view>
+
+  <view class="content">
+
+    <view class="stadge">
+      <i-cell-group wx:for="{{livePageDataList}}" wx:for-item="list" wx:key="num">
+        <block wx:for="{{list}}" wx:for-item="data" wx:key="index">
+          <i-cell title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveNetPoints}}" label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+        </block>
+      </i-cell-group>
+    </view>
+
+  </view>
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="live"></bottomNavBar>
+  </view>
+
+  <van-toast id="van-toast" />
+
+</view>

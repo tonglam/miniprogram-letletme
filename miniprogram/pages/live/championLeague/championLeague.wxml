@@ -1,0 +1,87 @@
+<view class="championLeague">
+
+  <view class="navBar">
+    <van-nav-bar title="{{championLeagueName}}-GW{{gw}}" title-class="title" safe-area-inset-top="{{false}}" left-text="{{stage}}" bind:click-left="onClickGroup" right-text="更换" bind:click-right="onClickChange" />
+  </view>
+
+  <view class="picker" wx:if="{{showChampionLeaguePicker}}">
+    <championLeaguePicker show="true" bind:pickChampionLeague="onPickChampionLeague"></championLeaguePicker>
+  </view>
+
+  <view class="picker" wx:if="{{showChampionLeagueStagePicker}}">
+    <championLeagueStagePicker championLeagueId="{{championLeagueId}}" show="true" knockout="true" bind:pickChampionLeagueStadge="onPickChampionLeagueStage"></championLeagueStagePicker>
+  </view>
+
+  <view class="dropdown" wx:if="{{groupShow}}">
+    <van-dropdown-menu>
+      <van-dropdown-item value="{{gwValue}}" options="{{gwOptions}}" bind:change="onDropDownGw" />
+      <van-dropdown-item value="{{sortValue}}" options="{{sortOptions}}" bind:change="onDropDownSortValue" />
+    </van-dropdown-menu>
+  </view>
+
+  <view class="search" wx:if="{{groupShow||knockoutShow}}">
+    <van-search value="{{searchEntry}}" label="球队" placeholder="输入fpl球队名称搜索" shape="round" use-action-slot bind:change="onSearchChange">
+    </van-search>
+  </view>
+
+  <view class="content">
+
+    <view class="stage">
+
+      <view class="group" wx:if="{{groupShow}}">
+        <view wx:if="{{sortValue==='liveNetPoints'}}">
+          <i-cell-group wx:for="{{livePageDataList}}" wx:for-item="list" wx:key="num">
+            <block wx:for="{{list}}" wx:for-item="data" wx:key="index">
+              <i-cell title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveNetPoints}}" label="剁手:{{data.transferCost}} 开卡:{{data.chip}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+            </block>
+          </i-cell-group>
+        </view>
+
+        <view wx:if="{{sortValue==='liveTotalPoints'}}">
+          <i-cell-group wx:for="{{livePageDataList}}" wx:for-item="list" wx:key="num">
+            <block wx:for="{{list}}" wx:for-item="data" wx:key="index">
+              <i-cell i-class="{{data.style}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveTotalPoints}}" label="本周得分:{{data.liveNetPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+            </block>
+          </i-cell-group>
+        </view>
+      </view>
+
+      <view class="qualification" wx:if="{{qualificationShow}}">
+        <swiper indicator-dots="true" interval="3000" style="height:740px">
+          <view wx:for="{{livePageDataList}}" wx:for-item="data" wx:key="index">
+            <swiper-item>
+              <van-cell-group title="{{data[0].groupName}}组">
+                <block wx:for="{{data}}" wx:for-item="item" wx:key="itemIndex">
+                  <van-cell title="{{item.groupRank}} - {{item.entryName}}" value="{{item.groupPoints}}">
+                  </van-cell>
+                </block>
+              </van-cell-group>
+            </swiper-item>
+          </view>
+        </swiper>
+      </view>
+
+      <view class="knockout" wx:if="{{knockoutShow}}">
+        <view wx:for="{{livePageDataList}}" wx:for-item="data" wx:key="index">
+          <i-cell-group class="knockoutItem">
+            <van-cell-group title="🏅晋级: {{data[0].roundWinnerName}}">
+              <block wx:for="{{data}}" wx:for-item="item" wx:key="index">
+                <i-cell title="GW{{item.event}}" value="{{item.homeEntryName}} ({{item.homeEntryNetPoints}}) vs ({{item.awayEntryNetPoints}}) {{item.awayEntryName}}">
+                </i-cell>
+              </block>
+            </van-cell-group>
+          </i-cell-group>
+        </view>
+      </view>
+
+    </view>
+
+  </view>
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="live"></bottomNavBar>
+  </view>
+
+  <van-toast id="van-toast" />
+
+</view>

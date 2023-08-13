@@ -1,10 +1,12 @@
 import {
-  get
+  get,
+  post
 } from "../../../utils/request";
 import {
   getChipName
 } from '../../../utils/utils';
 import Toast from '../../../miniprogram_npm/@vant/weapp/toast/toast';
+import Dialog from '../../../miniprogram_npm/@vant/weapp/dialog/dialog';
 
 const app = getApp();
 let liveDataFullList = [],
@@ -22,11 +24,13 @@ Page({
     currentPage: 1,
     totalNum: 0,
     livePageDataList: [],
+    lineup: true,
     // picker
     showTournamentPicker: false,
     showModePicker: false,
     showPlayerPicker: false,
-    modes: ['选择fpl球队', '选择球员'],
+    modes: ['选择fpl球队', '选择球员（首发）', '选择球员（阵容）'],
+    mode: '',
     // refrsh
     pullDownRefresh: false,
     // dropdown
@@ -45,14 +49,6 @@ Page({
       {
         text: '剁手',
         value: 'transferCost'
-      },
-      {
-        text: '已出场',
-        value: 'played'
-      },
-      {
-        text: '待出场',
-        value: 'toPlay'
       }
     ],
     sortValue: 'livePoints',
@@ -95,7 +91,9 @@ Page({
     // 搜索
     searchMode: 'entry',
     searchEntry: '',
-    searchElement: 0,
+    searchElements: [],
+    searchElementWebNames: [],
+    showSearchNotice: false,
     searchWebName: ''
   },
 
@@ -165,7 +163,9 @@ Page({
       searchMode: 'entry',
       showModePicker: false,
       searchEntry: '',
-      searchElement: 0,
+      searchElements: [],
+      searchElementWebNames: [],
+      showSearchNotice: false,
       searchWebName: ''
     });
     // 刷新live
@@ -216,19 +216,36 @@ Page({
     if (mode === '选择fpl球队') {
       this.setData({
         searchMode: 'entry',
-        searchElement: 0,
+        searchElements: [],
+        searchElementWebNames: [],
+        showSearchNotice: false,
         searchWebName: '',
         showModePicker: false,
         showPlayerPicker: false
       });
       // 刷新live
       this.initLiveTournament();
-    } else if (mode === '选择球员') {
+    } else if (mode === '选择球员（首发）') {
       this.setData({
+        mode: mode,
         searchMode: 'element',
         searchEntry: '',
         showModePicker: false,
-        showPlayerPicker: true
+        showPlayerPicker: true,
+        searchElements: [],
+        searchElementWebNames: [],
+        lineup: true
+      });
+    } else if (mode === '选择球员（阵容）') {
+      this.setData({
+        mode: mode,
+        searchMode: 'element',
+        searchEntry: '',
+        showModePicker: false,
+        showPlayerPicker: true,
+        searchElements: [],
+        searchElementWebNames: [],
+        lineup: false
       });
     }
   },
@@ -245,17 +262,41 @@ Page({
     this.setData({
       showPlayerPicker: false
     });
-    let element = event.detail.element,
-      webName = event.detail.webName;
-    if (element === 0 || webName === '') {
+    if (event.detail === '') {
       return false;
     }
+    let element = parseInt(event.detail.element),
+      webName = event.detail.webName,
+      searchElements = this.data.searchElements,
+      searchElementWebNames = this.data.searchElementWebNames;
+    if (element === 0 || element === NaN || webName === '' || webName === 'undefined') {
+      return false;
+    }
+    if (searchElements.indexOf(element) === -1) {
+      searchElements.push(element);
+      searchElementWebNames.push(webName);
+    }
     this.setData({
-      searchElement: element,
-      searchWebName: webName
+      searchElements: searchElements,
+      searchElementWebNames: searchElementWebNames
     });
-    this.initLiveSearchDataList();
-    this.datafilter();
+    // 提示框，是否继续添加
+    Dialog.confirm({
+        closeOnClickOverlay: true,
+        title: this.data.mode,
+        message: '已选择：' + searchElementWebNames + '\n是否搜索下一位球员',
+        confirmButtonText: '结束',
+        cancelButtonText: '继续'
+      })
+      .then(() => {
+        this.initLiveSearchDataList();
+        this.datafilter();
+      })
+      .catch(() => {
+        this.setData({
+          showPlayerPicker: true,
+        });
+      });
   },
 
   // dropDown选择
@@ -334,7 +375,9 @@ Page({
       chipValue: '全部',
       searchMode: 'entry',
       searchEntry: '',
-      searchElement: 0,
+      searchElements: [],
+      searchElementWebNames: [],
+      showSearchNotice: false,
       searchWebName: ''
     });
   },
@@ -584,11 +627,13 @@ Page({
 
   // 球员搜索
   initLiveSearchDataList() {
-    get('live/calcSearchLivePointsByTournament', {
-        event: this.data.gw,
-        tournamentId: this.data.tournamentId,
-        element: this.data.searchElement
-      })
+    let liveCalcSearchParamData = {
+      event: this.data.gw,
+      tournamentId: this.data.tournamentId,
+      elementList: this.data.searchElements,
+      lineup: this.data.lineup
+    };
+    post('live/calcSearchLivePointsByTournament', liveCalcSearchParamData)
       .then(res => {
         if (res.data.length === 0) {
           return false;
@@ -599,8 +644,16 @@ Page({
           list.push(element);
         });
         liveDataFullList = list;
+        let webNames = '';
+        res.data.webNameList.forEach(webName => {
+          webNames += webName + "+";
+        })
+        let lastIndex = webNames.lastIndexOf("+");
+        webNames = webNames.substring(0, lastIndex);
+        let searchWebName = this.data.mode + "：" + webNames + " - " + res.data.selectByPercent + " (" + res.data.selectNum + "队)";
         this.setData({
-          searchWebName: this.data.searchWebName + " - " + res.data.selectByPercent + "(" + res.data.selectNum + "队)"
+          showSearchNotice: true,
+          searchWebName: searchWebName
         });
         this.datafilter();
       })

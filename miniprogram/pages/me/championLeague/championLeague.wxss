@@ -1,0 +1,17 @@
+.championLeague .title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.championLeague .page {
+  background: white;
+  border: 100%;
+}
+
+.championLeague .search {
+  margin: 5px 0;
+}
+
+.championLeague .content {
+  font-weight: bold;
+}

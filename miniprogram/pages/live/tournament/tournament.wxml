@@ -1,8 +1,7 @@
 <view class="tournament">
 
   <view class="navBar">
-    <van-nav-bar title="{{tournamentName}}" title-class="title" safe-area-inset-top="{{false}}" left-text="重置"
-      bind:click-left="onClickReset" right-text="更换" bind:click-right="onClickChange" />
+    <van-nav-bar title="{{tournamentName}}" title-class="title" safe-area-inset-top="{{false}}" left-text="重置" bind:click-left="onClickReset" right-text="更换" bind:click-right="onClickChange" />
   </view>
 
   <view class="picker" wx:if="{{showTournamentPicker}}">
@@ -11,23 +10,21 @@
 
   <view class="search">
 
-    <van-search wx:if="{{searchMode === 'entry'}}" value="{{searchEntry}}" label="球队" placeholder="输入fpl球队名称搜索"
-      shape="round" use-action-slot bind:change="onSearchChange">
+    <van-notice-bar wx:if="{{showSearchNotice}}" speed="100" scrollable="{{true}}" text="{{searchWebName}}" />
+
+    <van-search wx:if="{{searchMode === 'entry'}}" value="{{searchEntry}}" label="球队" placeholder="输入fpl球队名称搜索" shape="round" use-action-slot bind:change="onSearchChange">
       <view slot="action" style="color: teal;" bind:tap="onSearchClick">选择</view>
     </van-search>
 
-    <van-search wx:else value="{{searchWebName}}" label="球员" placeholder="点击选择搜索阵容包含球员的球队" shape="round" disabled
-      use-action-slot>
+    <van-search wx:else value="{{searchWebName}}" label="球员" placeholder="点击选择搜索阵容包含球员的球队" shape="round" disabled use-action-slot>
       <view slot="action" style="color: teal;" bind:tap="onSearchClick">选择</view>
     </van-search>
 
   </view>
 
   <view class="picker">
-    <van-popup show="{{showModePicker}}" overlay="{{true}}" position="top" custom-style="height: 50%"
-      bind:close="onModePopClose">
-      <van-picker show-toolbar toolbar-position="top" item-height="30" title="" columns="{{modes}}"
-        bind:confirm="onModePickerConfirm" bind:cancel="onModePickerCancel" />
+    <van-popup show="{{showModePicker}}" overlay="{{true}}" position="top" custom-style="height: 50%" bind:close="onModePopClose">
+      <van-picker show-toolbar toolbar-position="top" item-height="30" title="" columns="{{modes}}" bind:confirm="onModePickerConfirm" bind:cancel="onModePickerCancel" />
     </van-popup>
   </view>
 
@@ -38,10 +35,8 @@
   <view class="dropdown">
     <van-dropdown-menu>
       <van-dropdown-item value="{{sortValue}}" options="{{sortOptions}}" bind:change="onDropDownSortValue" />
-      <van-dropdown-item value="{{sortTypeValue}}" options="{{sortTypeOptions}}"
-        bind:change="onDropDownSortTypeValue" />
-      <van-dropdown-item title="队长" value="{{captainValue}}" options="{{captainOptions}}"
-        bind:change="onDropDownCaptain" />
+      <van-dropdown-item value="{{sortTypeValue}}" options="{{sortTypeOptions}}" bind:change="onDropDownSortTypeValue" />
+      <van-dropdown-item title="队长" value="{{captainValue}}" options="{{captainOptions}}" bind:change="onDropDownCaptain" />
       <van-dropdown-item value="{{chipValue}}" options="{{chipOptions}}" bind:change="onDropDownChip" />
     </van-dropdown-menu>
   </view>
@@ -50,35 +45,13 @@
     <i-cell-group wx:for="{{livePageDataList}}" wx:for-item="list" wx:key="num">
       <block wx:for="{{list}}" wx:for-item="data" wx:key="index">
 
-        <i-cell wx:if="{{sortValue==='livePoints'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
-          value="{{data.livePoints}}"
-          label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
-          is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+        <i-cell wx:if="{{sortValue==='livePoints'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.livePoints}}" label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
 
-        <i-cell wx:if="{{sortValue==='liveNetPoints'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
-          value="{{data.liveNetPoints}}"
-          label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
-          is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+        <i-cell wx:if="{{sortValue==='liveNetPoints'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveNetPoints}}" label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
 
-        <i-cell wx:if="{{sortValue==='liveTotalPoints'}}"
-          title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveTotalPoints}}"
-          label="周得分:{{data.livePoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
-          is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+        <i-cell wx:if="{{sortValue==='liveTotalPoints'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveTotalPoints}}" label="周得分:{{data.livePoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
 
-        <i-cell wx:if="{{sortValue==='transferCost'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
-          value="{{data.transferCost}}"
-          label="总分:{{data.liveTotalPoints}} 周得分:{{data.livePoints}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}"
-          is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
-
-        <i-cell wx:if="{{sortValue==='played'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
-          value="{{data.played}}"
-          label="总分:{{data.liveTotalPoints}} 周得分:{{data.livePoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 待出场:{{data.toPlay}}"
-          is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
-
-        <i-cell wx:if="{{sortValue==='toPlay'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】"
-          value="{{data.toPlay}}"
-          label="总分:{{data.liveTotalPoints}} 周得分:{{data.livePoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.toPlay}}"
-          is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+        <i-cell wx:if="{{sortValue==='transferCost'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.transferCost}}" label="总分:{{data.liveTotalPoints}} 周得分:{{data.livePoints}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
 
       </block>
     </i-cell-group>
@@ -89,5 +62,7 @@
   </view>
 
   <van-toast id="van-toast" />
+
+  <van-dialog id="van-dialog" />
 
 </view>

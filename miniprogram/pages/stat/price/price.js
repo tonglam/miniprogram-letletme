@@ -11,7 +11,7 @@ Page({
 
   data: {
     // 公共
-    mode: '日期',
+    mode: '模式-日期',
     modeTitle: '',
     season: '',
     // 日期数据
@@ -24,18 +24,10 @@ Page({
     // 球员数据
     playerInfo: {},
     playerValueList: {},
-    // 球队数据
-    teamData: {},
-    teamWebNameMap: {},
-    teamGkpValueList: [],
-    teamDefValueList: [],
-    teamMidValueList: [],
-    teamFwdValueList: [],
     // picker
     modePickerShow: false,
     datePickerShow: false,
     playerPickerShow: false,
-    teamPickerShow: false,
     date: moment().format("YYYY-MM-DD"),
     currentDate: new Date().getTime(),
     maxDate: new Date().getTime(),
@@ -48,7 +40,7 @@ Page({
       }
       return `${value}日`;
     },
-    modes: ['日期', '球员', '球队'],
+    modes: ['模式-日期', '模式-球员'],
     // refresh
     pullDownRefresh: false,
   },
@@ -66,7 +58,7 @@ Page({
       this.getPirceList();
     }
     // 默认日期模式
-    if (this.data.mode === '日期') {
+    if (this.data.mode === '模式-日期') {
       this.setData({
         modeTitle: this.data.date
       });
@@ -102,17 +94,13 @@ Page({
   },
 
   onClickModeDetail() {
-    if (this.data.mode === '日期') {
+    if (this.data.mode === '模式-日期') {
       this.setData({
         datePickerShow: true
       });
-    } else if (this.data.mode === '球员') {
+    } else if (this.data.mode === '模式-球员') {
       this.setData({
         playerPickerShow: true
-      });
-    } else if (this.data.mode === '球队') {
-      this.setData({
-        teamPickerShow: true
       });
     }
   },
@@ -136,9 +124,11 @@ Page({
     });
   },
 
-  onTeamPopClose() {
-    this.setData({
-      teamPickerShow: false
+  // 标签选择
+  onTabsClick(event) {
+    wx.showToast({
+      title: `点击标签 ${event.detail.name}`,
+      icon: 'none',
     });
   },
 
@@ -150,22 +140,14 @@ Page({
       mode: mode,
       pullDownRefresh: false
     });
-    if (mode === '日期') {
+    if (mode === '模式-日期') {
       this.setData({
         playerPickerShow: false,
-        teamPickerShow: false,
         modeTitle: this.data.date,
       });
-    } else if (mode === '球员') {
+    } else if (mode === '模式-球员') {
       this.setData({
         playerPickerShow: true,
-        teamPickerShow: false,
-        modeTitle: '',
-      });
-    } else if (mode === '球队') {
-      this.setData({
-        playerPickerShow: false,
-        teamPickerShow: true,
         modeTitle: '',
       });
     }
@@ -175,7 +157,7 @@ Page({
     let date = moment(event.detail).format("YYYY-MM-DD");
     this.setData({
       datePickerShow: false,
-      mode: '日期'
+      mode: '模式-日期'
     });
     if (date === this.data.date) {
       return false;
@@ -216,16 +198,6 @@ Page({
     this.getPirceList();
   },
 
-  onTeamPickResult(event) {
-    let teamData = event.detail;
-    this.setData({
-      teamPickerShow: false,
-      teamData: teamData,
-      modeTitle: teamData.name
-    });
-    this.getPirceList();
-  },
-
   // cell 点击
   onClickTeamElement(event) {
     let element = event.target.id,
@@ -234,7 +206,7 @@ Page({
         webName: this.data.teamWebNameMap[element]
       };
     this.setData({
-      mode: '球员',
+      mode: '模式-球员',
       playerInfo: playerInfo,
       modeTitle: playerInfo.webName
     });
@@ -248,12 +220,10 @@ Page({
   // 拉取球员身价
   getPirceList() {
     let mode = this.data.mode;
-    if (mode === '日期') {
+    if (mode === '模式-日期') {
       this.getPirceListByDate();
-    } else if (mode === '球员') {
+    } else if (mode === '模式-球员') {
       this.getPirceListByElement();
-    } else if (mode === '球队') {
-      this.getPirceListByTeamId();
     }
   },
 
@@ -319,36 +289,6 @@ Page({
         this.setData({
           refreshDone: true,
           playerValueList: res.data
-        });
-      })
-      .catch(res => {
-        console.log('fail:', res);
-      });
-  },
-
-  getPirceListByTeamId() {
-    let teamId = this.data.teamData.id;
-    if (teamId <= 0) {
-      return false;
-    }
-    get('stat/qryPlayerValueByTeamId', {
-        teamId: teamId
-      })
-      .then(res => {
-        let map = res.data,
-          teamWebNameMap = {};
-        for (let key in map) {
-          map[key].forEach(data => {
-            teamWebNameMap[data.element] = data.webName
-          });
-        }
-        this.setData({
-          refreshDone: true,
-          teamGkpValueList: map['GKP'],
-          teamDefValueList: map['DEF'],
-          teamMidValueList: map['MID'],
-          teamFwdValueList: map['FWD'],
-          teamWebNameMap: teamWebNameMap
         });
       })
       .catch(res => {

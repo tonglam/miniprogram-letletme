@@ -1,0 +1,10 @@
+<view class="championLeaguePicker">
+
+<van-popup show="{{show}}" overlay="{{true}}" position="top" custom-style="height: 35%" bind:close="onClose">
+  <view class="picker">
+    <van-picker show-toolbar toolbar-position="bottom" item-height="30" title="选择联赛" columns="{{columns}}"
+      bind:change="onChange" bind:confirm="onConfirm" bind:cancel="onCancel" />
+  </view>
+</van-popup>
+
+</view>

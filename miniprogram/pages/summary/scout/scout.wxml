@@ -5,7 +5,7 @@
   </view>
 
   <view class="notice">
-    <van-notice-bar scrollable="{{false}}" left-icon="clock-o" text="GW{{gw}}平均分：{{average}}" border="{{false}}" />
+    <van-notice-bar scrollable="{{false}}" left-icon="clock-o" text="GW{{gw}}平均分：{{average}}分" border="{{false}}" />
   </view>
 
   <view class="picker">
@@ -21,7 +21,7 @@
   <view class="result" wx:if="{{source==='Overall'}}">
     <view class="detail" wx:for="{{dataList}}" wx:for-item="data" wx:key="index">
       <i-cell-group>
-        <i-cell title="{{index+1}} - {{data.source}}【{{data.playedCaptainName}}】" value="{{data.totalPoints}}({{data.rawTotalPoints}})分" />
+        <i-cell title="{{index+1}} - {{data.source}}【{{data.playedCaptainName}}】" value="{{data.totalPoints}}({{data.rawTotalPoints}})分" is-link url="/pages/summary/scout/scout?source={{data.source}}" />
       </i-cell-group>
     </view>
   </view>

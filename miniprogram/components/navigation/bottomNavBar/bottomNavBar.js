@@ -9,11 +9,16 @@ const map = {
     }, {
       name: "比赛",
       subname: '查看实时更新的比赛结果',
-    }],
+    },{
+      name: "冠军杯",
+      subname: '查看实时更新的冠军杯结果',
+    }
+  ],
     "url": {
       "球队": "/pages/live/entry/entry",
       "联赛": "/pages/live/tournament/tournament",
-      "比赛": "/pages/live/match/match"
+      "比赛": "/pages/live/match/match",
+      "冠军杯":"/pages/live/championLeague/championLeague"
     },
     "show": true
   },
@@ -97,10 +102,20 @@ const map = {
         name: "我的联赛",
         subname: '查看我的联赛数据',
       },
+      {
+        name: "冠军杯",
+        subname: '查看我的冠军杯结果',
+      },
+      {
+        name: "通知",
+        subname: "Hermes"
+      }
     ],
     "url": {
       "我的球队": "/pages/me/entry/entry",
-      "我的联赛": "/pages/me/tournament/tournament"
+      "我的联赛": "/pages/me/tournament/tournament",
+      "冠军杯":"/pages/me/championLeague/championLeague",
+      "通知":"/pages/me/notice/notice"
     },
     "show": true
   }

@@ -92,7 +92,7 @@ Component({
     setTeamFixture(shortName) {
       get('player/qryTeamFixtureByShortName', {
           shortName: shortName
-        })
+        }, false)
         .then(res => {
           this.setData({
             teamFixtureMap: res.data,
@@ -165,7 +165,7 @@ Component({
         elementIndex = indexes[2];
       get('player/qryPlayerInfoByElementType', {
           elementType: this.data.elementType
-        })
+        }, false)
         .then(res => {
           this.setData({
             playerInfoMap: res.data,
@@ -192,7 +192,7 @@ Component({
     setPlayerDetail(element) {
       get('player/qryPlayerDetailByElement', {
           element: element
-        })
+        }, false)
         .then(res => {
           this.setData({
             playerDetailData: res.data

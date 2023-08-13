@@ -75,6 +75,10 @@ Page({
     });
   },
 
+  onShareAppMessage: function () {
+
+  },
+
   /**
    * 操作
    */
@@ -129,8 +133,8 @@ Page({
 
   initNextGwFixture() {
     get('common/qryNextFixture', {
-      event: this.data.gw
-    })
+        event: this.data.gw
+      })
       .then(res => {
         this.setData({
           fixtureList: res.data
@@ -143,8 +147,8 @@ Page({
 
   initEntryInfo() {
     get('entry/qryEntryInfo', {
-      entry: this.data.entry
-    }, false)
+        entry: this.data.entry
+      }, false)
       .then(res => {
         let data = res.data;
         this.setData({

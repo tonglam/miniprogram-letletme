@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "我的冠军杯",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "championLeagueGwPicker": "../../../components/picker/championLeagueGwPicker/championLeagueGwPicker",
+    "championLeaguePicker": "../../../components/picker/championLeaguePicker/championLeaguePicker",
+    "championLeagueStagePicker": "../../../components/picker/championLeagueStagePicker/championLeagueStagePicker"
+  }
+}

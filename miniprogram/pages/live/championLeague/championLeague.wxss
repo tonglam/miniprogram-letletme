@@ -1,0 +1,21 @@
+.championLeague .title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.championLeague .search {
+  margin: 5px 0;
+}
+
+.championLeague .content {
+  font-weight: bold;
+}
+
+.championLeague .unqualified {
+  color: grey;
+  background-color: #e9eaec;
+}
+
+.championLeague .knockoutItem {
+  margin: 10px 5px 0 0;
+}
