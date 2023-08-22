@@ -150,15 +150,4 @@
 
   <van-toast id="van-toast" />
 
-  <view class="chart" wx:if="{{chartShow}}">
-    <swiper indicator-dots="true" interval="3000" style="height:560px">
-      <swiper-item>
-        <seasonResult id="seasonResultChart" resultList="{{seasonResultList}}"></seasonResult>
-      </swiper-item>
-      <swiper-item>
-        <eventResult id="eventResultChart" resultList="{{scoutResultList}}"></eventResult>
-      </swiper-item>
-    </swiper>
-  </view>
-
 </view>

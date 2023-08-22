@@ -4,8 +4,6 @@
   "usingComponents": {
     "playerPicker": "../../../components/picker/playerPicker/playerPicker",
     "gwPicker": "../../../components/picker/gwPicker/gwPicker",
-    "scoutResult": "../../../components/dataTemplate/scoutResult/scoutResult",
-    "seasonResult": "../../../components/echart/scout/seasonResult/seasonResult",
-    "eventResult": "../../../components/echart/scout/eventResult/eventResult"
+    "scoutResult": "../../../components/dataTemplate/scoutResult/scoutResult"
   }
 }

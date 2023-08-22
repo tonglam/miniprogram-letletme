@@ -6,10 +6,14 @@
 
   <view class="content">
 
+    <view class="notice">
+      <van-notice-bar scrollable="{{false}}" left-icon="info-o" wx:if="{{noticeShow}}" text="{{noticeText}}" border="{{false}}" />
+    </view>
+
     <view class="index">
 
       <view class="img">
-        <image class="begbeg" src="/images/flag.jpeg" mode="aspectFit"></image>
+        <image class="begbeg" src="/images/real_thankyou.jpg" mode="aspectFit" opacity="0"></image>
       </view>
 
       <view class="info">

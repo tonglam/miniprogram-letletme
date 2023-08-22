@@ -25,6 +25,10 @@ Page({
     totalNum: 0,
     livePageDataList: [],
     lineup: true,
+    league_type: 'Classic',
+    eventEliminatedList: [],
+    eliminatedList: [],
+    liveEliminatedList: [],
     // picker
     showTournamentPicker: false,
     showModePicker: false,
@@ -94,7 +98,12 @@ Page({
     searchElements: [],
     searchElementWebNames: [],
     showSearchNotice: false,
-    searchWebName: ''
+    searchWebName: '',
+    // 大逃生
+    royaleShow: false,
+    eventEliminatedNum: 0,
+    waitingEliminatedList: [],
+    eliminatedList: []
   },
 
   /**
@@ -419,6 +428,7 @@ Page({
     list = this.chipFilter(list);
     list = this.searchList(list);
     list = this.rankList(list);
+    list = this.setStyle(list);
     liveDataList = list;
     this.setPageData();
   },
@@ -549,6 +559,29 @@ Page({
     return list;
   },
 
+  // 设置样式
+  setStyle(list) {
+    if (this.data.leagueType !== 'Royale') {
+      return list;
+    }
+    let minNumber = this.data.eventEliminatedNum,
+      eventEliminatedList = this.data.eventEliminatedList,
+      netPointsList = list.map(o => o.liveNetPoints);
+    if (this.data.waitingEliminatedList.length > 0) {
+      minNumber = minNumber - 1;
+    }
+    let minPointsList = netPointsList.slice(0, minNumber);
+    list.forEach((element) => {
+      if (minPointsList.indexOf(element.liveNetPoints) !== -1) {
+        element.style = "lowestRank";
+      }
+      if (eventEliminatedList.indexOf(element.entry) !== -1) {
+        element.style = "eventElinimated";
+      }
+    });
+    return list;
+  },
+
   // 分页数据
   setPageData() {
     let currentPage = this.data.currentPage,
@@ -565,6 +598,27 @@ Page({
     this.setData({
       [key]: list
     });
+  },
+
+  // 大逃生处理
+  dealWithRoyale() {
+    if (this.data.leagueType === 'Royale') {
+      let eventEliminatedList = this.data.eventEliminatedList,
+        num = eventEliminatedList.length;
+      this.setData({
+        sortValue: "liveNetPoints",
+        sortTypeValue: "asc",
+        royaleShow: true,
+        eventEliminatedNum: num
+      });
+    } else {
+      this.setData({
+        sortValue: "livePoints",
+        sortTypeValue: "desc",
+        royaleShow: false,
+        eventEliminatedNum: 0
+      });
+    }
   },
 
   /**
@@ -597,14 +651,35 @@ Page({
         }
         // 更新
         let list = [];
-        res.data.forEach(element => {
+        res.data.liveCalcDataList.forEach(element => {
           element.chip = getChipName(element.chip);
           list.push(element);
         });
         liveDataFullList = list;
-        this.setData({
-          totalNum: list.length
+        let leagueType = res.data.leagueType,
+          waitingEliminatedList = res.data.waitingEliminatedList,
+          eventEliminatedList = res.data.eventEliminatedList,
+          eliminatedList = res.data.eliminatedList;
+        waitingEliminatedList.forEach(element => {
+          element.chip = getChipName(element.chip);
+          if (eventEliminatedList.indexOf(element.entry) !== -1) {
+            element.style = "eventElinimated";
+          }
         });
+        let royaleShow = false;
+        if (leagueType === 'Royale') {
+          royaleShow = true;
+        }
+        this.setData({
+          totalNum: list.length,
+          leagueType: leagueType,
+          waitingEliminatedList: waitingEliminatedList,
+          eventEliminatedList: eventEliminatedList,
+          eliminatedList: eliminatedList,
+          royaleShow: royaleShow
+        });
+        // 大逃杀改默认升序
+        this.dealWithRoyale()
         // 过滤数据
         this.datafilter();
         // 组装队长下拉菜单

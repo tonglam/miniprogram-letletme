@@ -21,10 +21,10 @@
   <view class="content">
 
     <view class="info">
-      <van-cell title="得分(净得分)：{{liveData.livePoints}}({{liveData.liveNetPoints}})"
+      <van-cell title="实时得分(净得分)：{{liveData.livePoints}}({{liveData.liveNetPoints}})"
         value="剁手：{{liveData.transferCost}}" />
       <van-cell title="上场队长：{{liveData.captainName}}" value="开卡：{{liveData.chip}}" />
-      <van-cell title="总分：{{liveData.liveTotalPoints}}" value="上周排名：{{liveData.lastOverallRank}}" />
+      <van-cell title="实时总分：{{liveData.liveTotalPoints}}" value="上周排名：{{liveData.lastOverallRank}}" />
       <van-cell title="已上场：{{liveData.played}}" value="待出场：{{liveData.toPlay}}" />
     </view>
 

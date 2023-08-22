@@ -11,6 +11,7 @@ Page({
     // 数据
     season: '',
     gw: 0,
+    id: 0,
     name: "",
     selectData: {},
     // picker
@@ -30,7 +31,13 @@ Page({
       season: app.globalData.season
     });
     // 取缓存
-    let name = wx.getStorageSync('stat-select');
+    let id = wx.getStorageSync('stat-select-id');
+    if (id !== 0) {
+      this.setData({
+        id: id
+      });
+    }
+    let name = wx.getStorageSync('stat-select-name');
     if (name !== '') {
       this.setData({
         name: name
@@ -105,14 +112,18 @@ Page({
     this.setData({
       showLeaguePicker: false
     });
-    let name = event.detail;
-    if (name === '') {
+    let data = event.detail;
+    if (JSON.stringify(data) === '{}') {
       return false;
     }
+    let id = data.id,
+      name = data.name;
     // 存缓存
-    wx.setStorageSync('stat-select', name);
+    wx.setStorageSync('stat-select-id', id);
+    wx.setStorageSync('stat-select-name', name);
     // 设置
     this.setData({
+      id: id,
       name: name,
     });
     // 拉取select
@@ -126,6 +137,7 @@ Page({
   initLeagueSelect() {
     get('stat/qryLeagueSelectByName', {
         event: this.data.gw,
+        leagueId: this.data.id,
         leagueName: this.data.name
       })
       .then(res => {

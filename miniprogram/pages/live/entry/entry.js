@@ -72,6 +72,10 @@ Page({
     this.refreshEntryLive();
   },
 
+  onShareAppMessage: function () {
+
+  },
+
   /**
    * 操作
    */

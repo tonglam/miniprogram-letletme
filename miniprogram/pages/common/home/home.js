@@ -22,6 +22,9 @@ Page({
     deadline: "",
     timeData: {},
     fixtureList: [],
+    // notice
+    noticeShow: false,
+    noticeText: '',
     // refresh
     pullDownRefresh: false,
   },
@@ -32,7 +35,7 @@ Page({
 
   onShow: function () {
     // 设置
-    delay(400).then(() => {
+    delay(600).then(() => {
       this.setData({
         gw: app.globalData.gw,
         entry: app.globalData.entry,
@@ -50,6 +53,8 @@ Page({
       if (entryName === '' || typeof entryName === 'undefined') {
         this.initEntryInfo();
       }
+      // 通知
+      this.getNoticeText()
     });
   },
 
@@ -159,5 +164,26 @@ Page({
         console.log('fail:', res);
       });
   },
+
+  getNoticeText() {
+    get('common/qryMiniProgramNotice', {}, false)
+      .then(res => {
+        let text = res.data;
+        if (text.length > 0) {
+          this.setData({
+            noticeShow: true,
+            noticeText: text
+          });
+        } else {
+          this.setData({
+            noticeShow: false,
+            noticeText: ''
+          });
+        }
+      })
+      .catch(res => {
+        console.log('fail:', res);
+      });
+  }
 
 });

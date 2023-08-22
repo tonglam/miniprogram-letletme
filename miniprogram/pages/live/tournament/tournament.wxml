@@ -8,7 +8,7 @@
     <tournamentPicker show="true" bind:pickTournament="onPickTournament"></tournamentPicker>
   </view>
 
-  <view class="search">
+  <view class="search" wx:if="{{!royaleShow}}">
 
     <van-notice-bar wx:if="{{showSearchNotice}}" speed="100" scrollable="{{true}}" text="{{searchWebName}}" />
 
@@ -32,7 +32,7 @@
     <playerPicker type="5" show="true" detailShow="{{false}}" bind:pickResult="onPickPlayer"></playerPicker>
   </view>
 
-  <view class="dropdown">
+  <view class="dropdown" wx:if="{{!royaleShow}}">
     <van-dropdown-menu>
       <van-dropdown-item value="{{sortValue}}" options="{{sortOptions}}" bind:change="onDropDownSortValue" />
       <van-dropdown-item value="{{sortTypeValue}}" options="{{sortTypeOptions}}" bind:change="onDropDownSortTypeValue" />
@@ -42,19 +42,62 @@
   </view>
 
   <view class="content">
-    <i-cell-group wx:for="{{livePageDataList}}" wx:for-item="list" wx:key="num">
-      <block wx:for="{{list}}" wx:for-item="data" wx:key="index">
 
-        <i-cell wx:if="{{sortValue==='livePoints'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.livePoints}}" label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+    <van-notice-bar scrollable="{{false}}" left-icon="good-job-o" wx:if="{{royaleShow}}" text="本周将淘汰【{{eventEliminatedNum}}】队，会是阁下吗" border="{{false}}" />
 
-        <i-cell wx:if="{{sortValue==='liveNetPoints'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveNetPoints}}" label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+    <view class="royale" wx:if="{{waitingEliminatedList.length > 0}}">
+      <van-cell-group title="平分pk区">
+        <i-cell-group>
+          <block wx:for="{{waitingEliminatedList}}" wx:for-item="data" wx:key="index">
+            <i-cell i-class="{{data.style}}" title="{{data.entryName}}【{{data.captainName}}】" value="{{data.liveNetPoints}}" label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+          </block>
+        </i-cell-group>
+      </van-cell-group>
+    </view>
 
-        <i-cell wx:if="{{sortValue==='liveTotalPoints'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveTotalPoints}}" label="周得分:{{data.livePoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+    <van-cell-group wx:if="{{royaleShow}}" title="逃生区">
+      <i-cell-group wx:for="{{livePageDataList}}" wx:for-item="list" wx:key="num">
+        <block wx:for="{{list}}" wx:for-item="data" wx:key="index">
 
-        <i-cell wx:if="{{sortValue==='transferCost'}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.transferCost}}" label="总分:{{data.liveTotalPoints}} 周得分:{{data.livePoints}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+          <i-cell wx:if="{{sortValue==='livePoints'}}" i-class="{{data.style}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.livePoints}}" label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
 
-      </block>
-    </i-cell-group>
+          <i-cell wx:if="{{sortValue==='liveNetPoints'}}" i-class="{{data.style}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveNetPoints}}" label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
+          <i-cell wx:if="{{sortValue==='liveTotalPoints'}}" i-class="{{data.style}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveTotalPoints}}" label="周得分:{{data.livePoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
+          <i-cell wx:if="{{sortValue==='transferCost'}}" i-class="{{data.style}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.transferCost}}" label="总分:{{data.liveTotalPoints}} 周得分:{{data.livePoints}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
+        </block>
+      </i-cell-group>
+    </van-cell-group>
+
+    <van-cell-group wx:else>
+      <i-cell-group wx:for="{{livePageDataList}}" wx:for-item="list" wx:key="num">
+        <block wx:for="{{list}}" wx:for-item="data" wx:key="index">
+
+          <i-cell wx:if="{{sortValue==='livePoints'}}" i-class="{{data.style}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.livePoints}}" label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
+          <i-cell wx:if="{{sortValue==='liveNetPoints'}}" i-class="{{data.style}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveNetPoints}}" label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
+          <i-cell wx:if="{{sortValue==='liveTotalPoints'}}" i-class="{{data.style}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.liveTotalPoints}}" label="周得分:{{data.livePoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
+          <i-cell wx:if="{{sortValue==='transferCost'}}" i-class="{{data.style}}" title="[{{data.rank}}] {{data.entryName}}【{{data.captainName}}】" value="{{data.transferCost}}" label="总分:{{data.liveTotalPoints}} 周得分:{{data.livePoints}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+
+        </block>
+      </i-cell-group>
+    </van-cell-group>
+
+    <view class="eliminated" wx:if="{{royaleShow & eliminatedList.length > 0}}">
+
+      <van-cell-group title="阵亡区">
+        <i-cell-group>
+          <block wx:for="{{liveEliminatedList}}" wx:for-item="data" wx:key="index">
+            <i-cell i-class="{{data.style}}" title="{{data.entryName}}【{{data.captainName}}】" value="{{data.liveNetPoints}}" label="总分:{{data.liveTotalPoints}} 剁手:{{data.transferCost}} 开卡:{{data.chip}} 已出场:{{data.played}} 待出场:{{data.toPlay}}" is-link url="/pages/live/entry/entry?entry={{data.entry}}" />
+          </block>
+        </i-cell-group>
+      </van-cell-group>
+    </view>
+
   </view>
 
   <view class="bottemNavBar">

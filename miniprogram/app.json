@@ -2,19 +2,14 @@
   "pages": [
     "pages/common/entryInput/entryInput",
     "pages/common/home/home",
-    "pages/common/chartTest/chartTest",
-    "pages/group/scout/scout",
-    "pages/live/championLeague/championLeague",
     "pages/live/element/element",
     "pages/live/entry/entry",
     "pages/live/match/match",
     "pages/live/tournament/tournament",
-    "pages/me/championLeague/championLeague",
     "pages/me/element/element",
     "pages/me/entry/entry",
     "pages/me/tournament/tournament",
     "pages/stat/filter/filter",
-    "pages/stat/fixture/fixture",
     "pages/stat/player/player",
     "pages/stat/price/price",
     "pages/stat/record/record",
@@ -25,9 +20,7 @@
     "pages/summary/entry/entry",
     "pages/summary/league/league",
     "pages/summary/overall/overall",
-    "pages/summary/scout/scout",
-    "pages/summary/special/special",
-    "pages/me/notice/notice"
+    "pages/summary/special/special"
   ],
   "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {

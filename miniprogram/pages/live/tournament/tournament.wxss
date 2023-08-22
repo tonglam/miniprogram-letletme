@@ -14,3 +14,18 @@
 .tournament .content {
   font-weight: bold;
 }
+
+.tournament .royale {
+  margin: 5px 0;
+}
+
+.tournament .lowestRank {
+  color: grey;
+  font-weight: bold;
+}
+
+.tournament .eventElinimated {
+  color: red;
+  background-color: #FFB800;
+  font-weight: bold;
+}

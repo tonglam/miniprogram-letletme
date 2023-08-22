@@ -15,6 +15,8 @@ Component({
     event: 'pickLeague',
     selectSeason: '',
     name: '',
+    map: {},
+    leagueData: {},
     columns: [],
   },
 
@@ -43,12 +45,12 @@ Component({
         value
       } = event.detail;
       this.setData({
-        name: value[0]
+        leagueData: this.data.map[value]
       });
     },
 
     onConfirm() {
-      this.triggerEvent(this.data.event, this.data.name);
+      this.triggerEvent(this.data.event, this.data.leagueData);
     },
 
     onCancel() {
@@ -60,19 +62,21 @@ Component({
           season: this.data.selectSeason
         })
         .then(res => {
-          let list = res.data,
-            columns = [{
-              values: list,
-              className: 'name'
-            }];
+          let map = {},
+            list = [];
+          res.data.forEach(element => {
+            list.push(element.name);
+            map[element.name] = element;
+          });
+          let columns = [{
+            values: list,
+            className: 'name'
+          }];
           this.setData({
+            map: map,
+            leagueData: map[Object.keys(map)[0]],
             columns: columns
           });
-          if (list.length > 0) {
-            this.setData({
-              name: list[0]
-            });
-          }
         })
         .catch(res => {
           console.log('fail:', res);
