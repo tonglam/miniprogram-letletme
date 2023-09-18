@@ -88,7 +88,7 @@ Page({
     this.setData({
       showLeaguePicker: false
     });
-    let name = event.detail;
+    let name = event.detail.name;
     if (name === '') {
       return false;
     }

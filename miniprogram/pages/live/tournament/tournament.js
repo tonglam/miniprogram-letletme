@@ -603,13 +603,10 @@ Page({
   // 大逃生处理
   dealWithRoyale() {
     if (this.data.leagueType === 'Royale') {
-      let eventEliminatedList = this.data.eventEliminatedList,
-        num = eventEliminatedList.length;
       this.setData({
         sortValue: "liveNetPoints",
         sortTypeValue: "asc",
         royaleShow: true,
-        eventEliminatedNum: num
       });
     } else {
       this.setData({
@@ -666,6 +663,9 @@ Page({
             element.style = "eventElinimated";
           }
         });
+        eliminatedList.forEach(element => {
+          element.chip = getChipName(element.chip);
+        });
         let royaleShow = false;
         if (leagueType === 'Royale') {
           royaleShow = true;
@@ -673,6 +673,7 @@ Page({
         this.setData({
           totalNum: list.length,
           leagueType: leagueType,
+          eventEliminatedNum: res.data.eventEliminatedNum,
           waitingEliminatedList: waitingEliminatedList,
           eventEliminatedList: eventEliminatedList,
           eliminatedList: eliminatedList,
