@@ -141,7 +141,7 @@ Page({
     this.setData({
       pullDownRefresh: true
     });
-    this.initLiveTournament();
+    this.refreshLiveTournament();
   },
 
   onReachBottom: function () {

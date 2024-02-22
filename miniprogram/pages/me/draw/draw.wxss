@@ -1,0 +1,12 @@
+.draw .title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.draw .notice {
+  margin: 10px 0;
+}
+
+.draw .content {
+  font-weight: bold;
+}

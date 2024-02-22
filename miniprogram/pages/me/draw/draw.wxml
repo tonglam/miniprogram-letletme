@@ -1,0 +1,56 @@
+<view class="draw">
+
+  <view class="navBar">
+    <van-nav-bar title="{{tournamentName}}" title-class="title" safe-area-inset-top="{{false}}" right-text="{{drawText}}" bind:click-right="onClickDraw" />
+  </view>
+
+  <view class="notice">
+    <van-notice-bar scrollable="{{true}}" left-icon="info-o" text="{{drawNoticeText}}" border="{{false}}" />
+  </view>
+
+  <view class="content">
+    <van-tabs type="card" bind:change="tabOnChange">
+
+      <van-tab title="抽签" name="draw">
+
+        <van-radio-group value="{{radio}}" bind:change="onCellChange">
+          <van-cell-group title="{{groupName}}">
+            <block wx:for="{{opponentList}}" wx:for-item="data" wx:key="index">
+              <van-cell wx:if="{{data.drawable}}" title="签位 {{index+1}}">
+                <van-radio slot="right-icon" name="{{index+1}}" />
+              </van-cell>
+              <van-cell wx:else="" title="签位 {{index+1}}">
+                <van-radio disabled slot="right-icon" name="{{index+1}}" />
+              </van-cell>
+            </block>
+          </van-cell-group>
+        </van-radio-group>
+
+      </van-tab>
+
+      <van-tab title="结果" name="result">
+
+        <block wx:for="{{pairResultList}}" wx:for-item="sublist" wx:key="listIndex">
+        <van-cell-group title="{{sublist[0].drawGroupName}}">
+          <block wx:for="{{sublist}}" wx:for-item="data" wx:key="listIndex">
+            <van-cell title="签位{{data.drawPosition}}" value="{{data.entryName}}" />
+          </block>
+        </van-cell-group>
+      </block>
+
+      </van-tab>
+
+    </van-tabs>
+  </view>
+
+  <van-toast id="van-toast" />
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="me"></bottomNavBar>
+  </view>
+
+  <van-toast id="van-toast" />
+
+  <van-dialog id="van-dialog" />
+
+</view>

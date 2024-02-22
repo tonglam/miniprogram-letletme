@@ -6,9 +6,11 @@
     "pages/live/entry/entry",
     "pages/live/match/match",
     "pages/live/tournament/tournament",
+    "pages/live/knockout/knockout",
     "pages/me/element/element",
     "pages/me/entry/entry",
     "pages/me/tournament/tournament",
+    "pages/me/draw/draw",
     "pages/stat/filter/filter",
     "pages/stat/player/player",
     "pages/stat/price/price",
@@ -20,7 +22,7 @@
     "pages/summary/entry/entry",
     "pages/summary/league/league",
     "pages/summary/overall/overall",
-    "pages/summary/special/special"
+    "pages/summary/groupTournament/groupTournament"
   ],
   "entryPagePath": "pages/common/entryInput/entryInput",
   "window": {
@@ -59,6 +61,8 @@
     "van-overlay": "@vant/weapp/overlay/index",
     "van-picker": "@vant/weapp/picker/index",
     "van-popup": "@vant/weapp/popup/index",
+    "van-radio": "@vant/weapp/radio/index",
+    "van-radio-group": "@vant/weapp/radio-group/index",
     "van-row": "@vant/weapp/row/index",
     "van-search": "@vant/weapp/search/index",
     "van-switch": "@vant/weapp/switch/index",

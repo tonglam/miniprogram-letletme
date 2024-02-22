@@ -1,0 +1,17 @@
+.knockout .title {
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.knockout .content {
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+.knockout .card {
+  margin: 5px 0;
+}
+
+.knockout .live {
+  background-color: #FFB800;
+}

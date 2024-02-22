@@ -1,0 +1,75 @@
+<view class="knockout">
+
+  <view class="navBar">
+    <van-nav-bar title="{{knockoutName}}" title-class="title" safe-area-inset-top="{{false}}" left-text="GW{{gw}}" bind:click-left="onClickGw" right-text="更换" bind:click-right="onClickChange" />
+  </view>
+
+  <view class="picker" wx:if="{{showKnockoutPicker}}">
+    <knockoutPicker show="true" bind:pickKnockout="onPickKnockout"></knockoutPicker>
+  </view>
+
+  <view class="content">
+
+    <block wx:for="{{liveAgainstDataList}}" wx:for-item="data" wx:key="listIndex">
+
+      <view wx:if="{{data.roundWinner==data.homeEntry}}">
+        <van-cell-group class="card" title="M{{data.matchId}} 🏅 {{data.homeEntryName}}">
+          <block wx:for="{{data.liveAgainstDataList}}" wx:for-item="result" wx:key="resultIndex">
+
+            <i-cell wx:if="{{result.live&&result.matchWinner==result.homeEntry}}" i-class="live" title="[{{result.playAgainstId}}] ✌🏻 {{result.homeEntryName}}({{result.homeEntryNetPoints}}) vs ({{result.awayEntryNetPoints}}){{result.awayEntryName}} 😞" />
+
+            <i-cell wx:if="{{!result.live&&result.matchWinner==result.homeEntry}}" title="[{{result.playAgainstId}}] ✌🏻 {{result.homeEntryName}}({{result.homeEntryNetPoints}}) vs ({{result.awayEntryNetPoints}}){{result.awayEntryName}} 😞" />
+
+            <i-cell wx:if="{{result.live&&result.matchWinner==result.awayEntry}}" i-class="live" title="[{{result.playAgainstId}}] 😞 {{result.homeEntryName}}({{result.homeEntryNetPoints}}) vs ({{result.awayEntryNetPoints}}){{result.awayEntryName}} ✌🏻" />
+
+            <i-cell wx:if="{{!result.live&&result.matchWinner==result.awayEntry}}" title="[{{result.playAgainstId}}] 😞 {{result.homeEntryName}}({{result.homeEntryNetPoints}}) vs ({{result.awayEntryNetPoints}}){{result.awayEntryName}} ✌🏻" />
+
+          </block>
+        </van-cell-group>
+      </view>
+
+      <view wx:if="{{data.roundWinner==data.awayEntry}}">
+        <van-cell-group class="card" title="M{{data.matchId}} 🏅 {{data.awayEntryName}}">
+          <block wx:for="{{data.liveAgainstDataList}}" wx:for-item="result" wx:key="resultIndex">
+
+            <i-cell wx:if="{{result.live&&result.matchWinner==result.homeEntry}}" i-class="live" title="[{{result.playAgainstId}}] ✌🏻 {{result.homeEntryName}}({{result.homeEntryNetPoints}}) vs ({{result.awayEntryNetPoints}}){{result.awayEntryName}} 😞" />
+
+            <i-cell wx:if="{{!result.live&&result.matchWinner==result.homeEntry}}" title="[{{result.playAgainstId}}] ✌🏻 {{result.homeEntryName}}({{result.homeEntryNetPoints}}) vs ({{result.awayEntryNetPoints}}){{result.awayEntryName}} 😞" />
+
+            <i-cell wx:if="{{result.live&&result.matchWinner==result.awayEntry}}" i-class="live" title="[{{result.playAgainstId}}] 😞 {{result.homeEntryName}}({{result.homeEntryNetPoints}}) vs ({{result.awayEntryNetPoints}}){{result.awayEntryName}} ✌🏻" />
+
+            <i-cell wx:if="{{!result.live&&result.matchWinner==result.awayEntry}}" title="[{{result.playAgainstId}}] 😞 {{result.homeEntryName}}({{result.homeEntryNetPoints}}) vs ({{result.awayEntryNetPoints}}){{result.awayEntryName}} ✌🏻" />
+
+          </block>
+        </van-cell-group>
+      </view>
+
+      <view wx:if="{{data.roundWinner==0}}">
+        <van-cell-group class="card" title="M{{data.matchId}} 👊🏻 {{data.homeEntryName}} vs {{data.awayEntryName}} 👊🏻">
+          <block wx:for="{{data.liveAgainstDataList}}" wx:for-item="result" wx:key="resultIndex">
+
+            <i-cell wx:if="{{result.live&&result.matchWinner==result.homeEntry}}" i-class="live" title="[{{result.playAgainstId}}] ✌🏻 {{result.homeEntryName}}({{result.homeEntryNetPoints}}) vs ({{result.awayEntryNetPoints}}){{result.awayEntryName}} 😞" />
+
+            <i-cell wx:if="{{!result.live&&result.matchWinner==result.homeEntry}}" title="[{{result.playAgainstId}}] ✌🏻 {{result.homeEntryName}}({{result.homeEntryNetPoints}}) vs ({{result.awayEntryNetPoints}}){{result.awayEntryName}} 😞" />
+
+            <i-cell wx:if="{{result.live&&result.matchWinner==result.awayEntry}}" i-class="live" title="[{{result.playAgainstId}}] 😞 {{result.homeEntryName}}({{result.homeEntryNetPoints}}) vs ({{result.awayEntryNetPoints}}){{result.awayEntryName}} ✌🏻" />
+
+            <i-cell wx:if="{{!result.live&&result.matchWinner==result.awayEntry}}" title="[{{result.playAgainstId}}] 😞 {{result.homeEntryName}}({{result.homeEntryNetPoints}}) vs ({{result.awayEntryNetPoints}}){{result.awayEntryName}} ✌🏻" />
+
+          </block>
+        </van-cell-group>
+      </view>
+
+    </block>
+
+  </view>
+
+  <view class="bottemNavBar">
+    <bottomNavBar active="live"></bottomNavBar>
+  </view>
+
+  <van-toast id="van-toast" />
+
+  <van-dialog id="van-dialog" />
+
+</view>

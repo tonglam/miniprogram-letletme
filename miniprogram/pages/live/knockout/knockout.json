@@ -1,0 +1,8 @@
+{
+  "navigationBarTitleText": "实时淘汰赛",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "knockoutPicker": "../../../components/picker/knockoutPicker/knockoutPicker",
+    "playerPicker": "../../../components/picker/playerPicker/playerPicker"
+  }
+}

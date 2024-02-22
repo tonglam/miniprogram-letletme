@@ -1,23 +1,27 @@
 const map = {
   "live": {
     "pages": [{
-      name: "球队",
-      subname: '查看球队实时得分',
-    }, {
-      name: "联赛",
-      subname: '查看联赛实时得分和排名',
-    }, {
-      name: "比赛",
-      subname: '查看实时更新的比赛结果',
-    }
-    // },{
-    //   name: "冠军杯",
-    //   subname: '查看实时更新的冠军杯结果',
-    // }
-  ],
+        name: "球队",
+        subname: '查看球队实时得分',
+      }, {
+        name: "联赛",
+        subname: '查看联赛实时得分和排名',
+      }, {
+        name: "淘汰赛",
+        subname: '查看淘汰赛实时得分',
+      }, {
+        name: "比赛",
+        subname: '查看实时更新的比赛结果',
+      }
+      // },{
+      //   name: "冠军杯",
+      //   subname: '查看实时更新的冠军杯结果',
+      // }
+    ],
     "url": {
       "球队": "/pages/live/entry/entry",
       "联赛": "/pages/live/tournament/tournament",
+      "淘汰赛": "/pages/live/knockout/knockout",
       "比赛": "/pages/live/match/match",
       // "冠军杯":"/pages/live/championLeague/championLeague"
     },
@@ -34,23 +38,23 @@ const map = {
       {
         name: "联赛",
         subname: '查看联赛统计数据',
-      }
+      },
       // },
       // {
       //   name: "推荐阵容",
       //   subname: '查看各类推荐阵容'
       // },
-      // {
-      //   name: "团战",
-      //   subname: '浙江团战',
-      // }
+      {
+        name: "团战",
+        subname: '浙江团战',
+      }
     ],
     "url": {
       "比赛周": "/pages/summary/overall/overall",
       "球队": "/pages/summary/entry/entry",
       "联赛": "/pages/summary/league/league",
       // "推荐阵容": "/pages/summary/scout/scout",
-      // "团战": "/pages/summary/special/special"
+      "团战": "/pages/summary/groupTournament/groupTournament"
     },
     "show": true
   },
@@ -103,6 +107,10 @@ const map = {
       {
         name: "我的联赛",
         subname: '查看我的联赛数据',
+      },
+      {
+        name: "我的抽签",
+        subname: "瑞士轮抽签"
       }
       // {
       //   name: "冠军杯",
@@ -111,7 +119,8 @@ const map = {
     ],
     "url": {
       "我的球队": "/pages/me/entry/entry",
-      "我的联赛": "/pages/me/tournament/tournament"
+      "我的联赛": "/pages/me/tournament/tournament",
+      "我的抽签": "/pages/me/draw/draw"
       // "冠军杯":"/pages/me/championLeague/championLeague",
     },
     "show": true
