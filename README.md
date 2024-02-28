@@ -104,3 +104,8 @@ And I am sure no developer wants to be controlled by a single company that much.
 
 For these reasons, the mini program will not be maintained anymore after the 2023-2024 Premier League season. 
 All the services will be moved to the website, which is more flexible and more powerful in the project [letletme-web](https://github.com/tonglam/letletme-web).
+
+# How to Use
+For now, the only way to access the mini program is by scanning the provided QR code with your WeChat app.
+
+![QR.jpg](miniprogram/images/QR.jpg)
