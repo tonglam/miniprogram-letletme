@@ -9,6 +9,14 @@ Consequently, the mini program was displayed in Chinese.
 
 As of 2024, the [miniprogram-letletme](https://github.com/tonglam/miniprogram-letletme) boasts a user base of over 650 and sees active engagement, particularly during Premier League gameweeks.
 
+In terms of technical aspects, during the development of the mini program, I had limited experience with frontend development, leading to some native design and implementation in this project. For instance, state management wasn't implemented using modern practices; instead, it utilized the memory space allowed by WeChat to store the state.
+
+Additionally, the mini program components were structured as class components, impacting the performance due to the less dedicated control of the component lifecycle. The reuse of components wasn't well-organized, resulting in a significant amount of duplicated code. Furthermore, data fetching didn't consider caching, leading to numerous unnecessary requests to the server.
+
+While there is ample room for improvement in the project, I plan to address these issues in the new frontend project. 
+
+As the old saying goes, "Learn good code by bad code."
+
 # Display
 some video here.
 
