@@ -12,6 +12,30 @@ As of 2024, the [miniprogram-letletme](https://github.com/tonglam/miniprogram-le
 # Display
 some video here.
 
+# Page Navigation
+
+```mermaid
+timeline
+    Home : Home
+         : Login
+    Live : Team
+         : Tournament
+         : Knockout
+         : Match
+ Summary : Gameweek
+         : Team
+         : Tournament
+         : Group Tournament
+    Stat : Price Change
+         : Selection
+         : Player Stat
+         : Team Stat
+         : Seclect Helper
+      My : My Team
+         : My Tournament
+         : My Draw
+```
+
 # What is a WeChat (Weixin) Mini Program
 A WeChat Mini Program is a lightweight version of an application, often referred to as a mini-app. 
 It is seamlessly integrated into the WeChat application, 
@@ -36,9 +60,6 @@ The framework incorporates _page management_ routers as a means of seamless page
 providing pages with a comprehensive lifecycle. 
 It implements full lifecycle management for components, 
 automatically triggering lifecycle functions at specific timepoints or in response to framework events.
-
-# Page Navigation
-
 
 # Why Get Rid of the Mini Program
 
