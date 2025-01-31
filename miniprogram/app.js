@@ -8,7 +8,7 @@ import {
 
 App({
   globalData: {
-    season: '2324',
+    season: '2425',
     gw: 0,
     lastGw: 0,
     nextGw: 0,
@@ -34,6 +34,7 @@ App({
     get('common/qryCurrentEventAndNextUtcDeadline')
       .then(res => {
         let gw = parseInt(res.data["event"]);
+        console.log("gw:" + gw);
         this.globalData.gw = gw;
         this.globalData.lastGw = gw - 1;
         this.globalData.nextGw = gw + 1;
